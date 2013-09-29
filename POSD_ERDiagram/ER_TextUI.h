@@ -6,6 +6,7 @@
 #include "ER_PresentationModel.h"
 #include "Tool_Function.h"
 
+
 class ER_TextUI
 {
 public:

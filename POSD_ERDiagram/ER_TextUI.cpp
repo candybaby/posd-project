@@ -74,10 +74,15 @@ void ER_TextUI::processCommand()
 	cin >> menuCommand;
 	if (menuCommand == MenuCommandNames[Option_1])  // Load ER diagram file
 	{
-		
+		string filePath;
+		cin >> filePath;
+		cout << presentationModel.loadComponents(filePath) << endl;
 	}
 	else if (menuCommand == MenuCommandNames[Option_2])  // Save ER diagram file
 	{
+		string filePath;
+		cin >> filePath;
+		cout << presentationModel.storeComponents(filePath) << endl;
 	}
 	else if (menuCommand == MenuCommandNames[Option_3])  // Add a node
 	{
@@ -243,7 +248,8 @@ void ER_TextUI::printNodes()  // without Connection
 	vector<int> nodesId = presentationModel.findNode();
 	for (vector<int>::iterator it = nodesId.begin(); it < nodesId.end(); it++)
 	{
-		cout << SPACE_TEXT_1 << ERD_Component::ComponentTypeNames[presentationModel.getType(*it)] << SEPARATOR_5 << presentationModel.getId(*it) << SEPARATOR_5 << presentationModel.getName(*it) << endl;
+		int id = *it;
+		cout << SPACE_TEXT_1 << ERD_Component::ComponentTypeNames[presentationModel.getTypeById(id)] << SEPARATOR_5 << id << SEPARATOR_5 << presentationModel.getNameById(id) << endl;
 	}
 	cout << SEPARATOR_1 << endl;
 }
@@ -257,7 +263,8 @@ void ER_TextUI::printConnections()
 	vector<int> connectionsId = presentationModel.findComponentType(ERD_Component::Connection);
 	for (vector<int>::iterator it = connectionsId.begin(); it < connectionsId.end(); it++) 
 	{
-		cout << SPACE_TEXT_2 << presentationModel.getId(*it) << SEPARATOR_3 << presentationModel.getConnectionNode1(*it) << SEPARATOR_3 << presentationModel.getConnectionNode2(*it) << endl;
+		int id = *it;
+		cout << SPACE_TEXT_2 << id << SEPARATOR_3 << presentationModel.getConnectionNode1ById(id) << SEPARATOR_3 << presentationModel.getConnectionNode2ById(id) << endl;
 	}
 	cout << SEPARATOR_1 << endl;
 }
@@ -268,9 +275,10 @@ void ER_TextUI::printComponents()
 	cout << SEPARATOR_1 << endl;
 	cout << COMPONENT_MENU << endl;
 	cout << SEPARATOR_2 << endl;
-	for (int i = 0; i < presentationModel.getCurrentId(); i++)
+	for (int i = 0; i < presentationModel.getCurrentId(); i++) // sort by id
 	{
-		cout << SPACE_TEXT_1 << ERD_Component::ComponentTypeNames[presentationModel.getType(i)] << SEPARATOR_5 << presentationModel.getId(i) << SEPARATOR_5 << presentationModel.getName(i) << endl;
+		int id = presentationModel.getIdByIndex(i);
+		cout << SPACE_TEXT_1 << ERD_Component::ComponentTypeNames[presentationModel.getTypeById(i)] << SEPARATOR_5 << i << SEPARATOR_5 << presentationModel.getNameById(i) << endl;
 	}
 	cout << SEPARATOR_1 << endl;
 }
@@ -284,7 +292,8 @@ void ER_TextUI::printEntities()
 	vector<int> entitiesId = presentationModel.findComponentType(ERD_Component::Entity);
 	for (vector<int>::iterator it = entitiesId.begin(); it < entitiesId.end(); it++) 
 	{
-		cout << SPACE_TEXT_1 << ERD_Component::ComponentTypeNames[presentationModel.getType(*it)] << SEPARATOR_5 << presentationModel.getId(*it) << SEPARATOR_5 << presentationModel.getName(*it) << endl;
+		int id = *it;
+		cout << SPACE_TEXT_1 << ERD_Component::ComponentTypeNames[presentationModel.getTypeById(id)] << SEPARATOR_5 << id << SEPARATOR_5 << presentationModel.getNameById(id) << endl;
 	}
 	cout << SEPARATOR_1 << endl;
 }
@@ -308,7 +317,8 @@ void ER_TextUI::printAttributesById(int id)
 	vector<int> attributesList = findAttributes(id);
 	for (vector<int>::iterator it = attributesList.begin(); it < attributesList.end(); it++) 
 	{
-		cout << SPACE_TEXT_1 << ERD_Component::ComponentTypeNames[presentationModel.getType(*it)] << SEPARATOR_5 << presentationModel.getId(*it) << SEPARATOR_5 << presentationModel.getName(*it) << endl;
+		int id = *it;
+		cout << SPACE_TEXT_1 << ERD_Component::ComponentTypeNames[presentationModel.getTypeById(id)] << SEPARATOR_5 << id << SEPARATOR_5 << presentationModel.getNameById(id) << endl;
 	}
 	cout << SEPARATOR_1 << endl;
 }

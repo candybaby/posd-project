@@ -62,28 +62,28 @@ int ER_PresentationModel::getCurrentId()
 	return model.getCurrentId();
 }
 
-int ER_PresentationModel::getId(int index)
+int ER_PresentationModel::getIdByIndex(int index)
 {
-	return model.getId(index);
+	return model.getIdByIndex(index);
 }
 
-int ER_PresentationModel::getConnectionNode1(int index)
+int ER_PresentationModel::getConnectionNode1ById(int index)
 {
-	return model.getConnectionNode1(index);
+	return model.getConnectionNode1ById(index);
 }
-int ER_PresentationModel::getConnectionNode2(int index)
+int ER_PresentationModel::getConnectionNode2ById(int index)
 {
-	return model.getConnectionNode2(index);
-}
-
-string ER_PresentationModel::getName(int index)
-{
-	return model.getName(index);
+	return model.getConnectionNode2ById(index);
 }
 
-ERD_Component::ComponentType ER_PresentationModel::getType(int index)
+string ER_PresentationModel::getNameById(int index)
 {
-	return model.getType(index);
+	return model.getNameById(index);
+}
+
+ERD_Component::ComponentType ER_PresentationModel::getTypeById(int index)
+{
+	return model.getTypeById(index);
 }
 
 string ER_PresentationModel::addConnection(int firstNodeId,int secondNodeId)
@@ -98,9 +98,9 @@ string ER_PresentationModel::addConnection(int firstNodeId,int secondNodeId, ERD
 
 bool ER_PresentationModel::isConnectCommandValid(string command)
 {
-	for (int i = 0; i < getCurrentId(); i++)
+	for (vector<ERD_Component *>::iterator it = model.getComponents().begin(); it < model.getComponents().end(); it++)
 	{
-		int id = getId(i);
+		int id = ((ERD_Component *)*it)->getId();
 		if (Tool_Function::intToString(id) == command)
 		{
 			return true;
@@ -111,12 +111,12 @@ bool ER_PresentationModel::isConnectCommandValid(string command)
 
 string ER_PresentationModel::checkEntitySelectedValid(string entityId)
 {
-	for (int i = 0; i < getCurrentId(); i++)
+	for (vector<ERD_Component *>::iterator it = model.getComponents().begin(); it < model.getComponents().end(); it++)
 	{
-		int currentId = getId(i);
+		int currentId = ((ERD_Component *)*it)->getId();
 		if (Tool_Function::intToString(currentId) == entityId)
 		{
-			if (getType(i) == ERD_Component::Entity)
+			if (((ERD_Component *)*it)->getType() == ERD_Component::Entity)
 			{
 				return FIND_ENTITY;
 			}
@@ -211,14 +211,19 @@ string ER_PresentationModel::getPrimaryKeyString(int id)
 vector<int> ER_PresentationModel::findNode()
 {
 	vector<int> nodesId;
-	for (int i = 0; i < getCurrentId(); i++)
+	for (vector<ERD_Component *>::iterator it = model.getComponents().begin(); it < model.getComponents().end(); it++)
 	{
-		if (getType(i) != ERD_Component::Connection)
+		if (((ERD_Component *)*it)->getType() != ERD_Component::Connection)
 		{
-			nodesId.push_back(getId(i));
+			nodesId.push_back(((ERD_Component *)*it)->getId());
 		}
 	}
 	return nodesId;
+}
+
+vector<int> ER_PresentationModel::findComponent()
+{
+	return model.findComponent();
 }
 
 vector<int> ER_PresentationModel::findTypeIdByComponentId(ERD_Component::ComponentType type, int id)
@@ -228,15 +233,7 @@ vector<int> ER_PresentationModel::findTypeIdByComponentId(ERD_Component::Compone
 
 vector<int> ER_PresentationModel::findComponentType(ERD_Component::ComponentType type)
 {
-	vector<int> entitiesId;
-	for (int i = 0; i < getCurrentId(); i++)
-	{
-		if (getType(i) == type)
-		{
-			entitiesId.push_back(getId(i));
-		}
-	}
-	return entitiesId;
+	return model.findComponentType(type);
 }
 
 bool ER_PresentationModel::isExistTable()
@@ -267,7 +264,7 @@ string ER_PresentationModel::getForeignKeyResult(int id)
 		{ 
 			for (vector<int>::size_type v = 0; v < foreignKeysVector[u].size(); v++) 
 			{
-				foreignKeystring += getName(foreignKeysVector[u][v]);
+				foreignKeystring += getNameById(foreignKeysVector[u][v]);
 				foreignKeystring += CAMMA;
 			}
 			foreignKeystring = foreignKeystring.substr(0,foreignKeystring.size() - CAMMA_SIZE);
@@ -293,13 +290,13 @@ string ER_PresentationModel::getAttributesForTable(int id)
 	{
 		if (getIsPrimaryKey(*it))
 		{
-			primaryKeyString += getName(*it);
+			primaryKeyString += getNameById(*it);
 			primaryKeyString += CAMMA;
 			primaryKeyCounter++;
 		}
 		else
 		{
-			result += getName(*it);
+			result += getNameById(*it);
 			result += CAMMA;
 			resultCounter++;
 		}
@@ -365,7 +362,7 @@ string ER_PresentationModel::getTable()
 		for (vector<int>::iterator it = entitiesId.begin(); it < entitiesId.end(); it++)
 		{
 			message += SPACE;
-			message += getName(*it);
+			message += getNameById(*it);
 			message += SEPARATOR_8;
 			message += getAttributesForTable(*it);
 			message += ENDL;
@@ -379,4 +376,14 @@ string ER_PresentationModel::getTable()
 	}
 
 	return message;
+}
+
+string ER_PresentationModel::loadComponents(string path)
+{
+	return model.loadComponents(path);
+}
+
+string ER_PresentationModel::storeComponents(string path)
+{
+	return model.storeComponents(path);
 }

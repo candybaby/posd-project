@@ -24,11 +24,11 @@ public:
 	int option1Mapping(string);
 	void addNode(ERD_Component::ComponentType, string);
 	int getCurrentId();
-	int getId(int);
-	int getConnectionNode1(int);
-	int getConnectionNode2(int);
-	string getName(int);
-	ERD_Component::ComponentType getType(int);
+	int getIdByIndex(int);
+	int getConnectionNode1ById(int);
+	int getConnectionNode2ById(int);
+	string getNameById(int);
+	ERD_Component::ComponentType getTypeById(int);
 	string addConnection(int ,int);
 	string addConnection(int ,int, ERD_Connection::ConnectionCardinality);
 	bool isConnectCommandValid(string);
@@ -39,6 +39,7 @@ public:
 	bool getIsPrimaryKey(int);
 	string getPrimaryKeyString(int);
 	vector<int> findNode();
+	vector<int> findComponent();
 	vector<int> findTypeIdByComponentId(ERD_Component::ComponentType, int);
 	vector<int> findComponentType(ERD_Component::ComponentType);
 	bool isExistTable();
@@ -46,6 +47,8 @@ public:
 	string getAttributesForTable(int);
 	vector<int> findOneByOneEntity();
 	string getTable();
+	string loadComponents(string);
+	string storeComponents(string);
 
 private:
 	ER_Model model;
