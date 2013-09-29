@@ -11,8 +11,8 @@ class ER_ComponentFactory
 public:
 	ER_ComponentFactory(void);
 	~ER_ComponentFactory(void);
-	ERD_Component* createNodeComponent(ComponentType, string, int);
+	ERD_Component* createNodeComponent(ERD_Component::ComponentType, string, int);
 	ERD_Component* createConnectionComponent(ERD_Component*, ERD_Component*, int);
-	ERD_Component* createConnectionComponent(ERD_Component*, ERD_Component*, int, ConnectionCardinality);
+	ERD_Component* createConnectionComponent(ERD_Component*, ERD_Component*, int, ERD_Connection::ConnectionCardinality);
 };
 #endif

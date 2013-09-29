@@ -16,7 +16,9 @@ int ERD_Component::getId()
 	return id;
 }
 
-ComponentType ERD_Component::getType()
+const char* ERD_Component::ComponentTypeNames[SIZE_OF_ComponentType] = { "A", "E", "R", "C"};
+
+ERD_Component::ComponentType ERD_Component::getType()
 {
 	return type;
 }

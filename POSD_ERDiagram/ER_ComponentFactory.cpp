@@ -8,17 +8,17 @@ ER_ComponentFactory::~ER_ComponentFactory(void)
 {
 }
 
-ERD_Component* ER_ComponentFactory::createNodeComponent(ComponentType type, string nodeName, int id)
+ERD_Component* ER_ComponentFactory::createNodeComponent(ERD_Component::ComponentType type, string nodeName, int id)
 {
-	if (type == Attribute)
+	if (type == ERD_Component::Attribute)
 	{
 		return new ERD_Attribute(nodeName, id);
 	}
-	else if (type == Entity)
+	else if (type == ERD_Component::Entity)
 	{
 		return new ERD_Entity(nodeName, id);
 	}
-	else if (type == Relationship)
+	else if (type == ERD_Component::Relationship)
 	{
 		return new ERD_Relationship(nodeName, id);
 	}
@@ -36,7 +36,7 @@ ERD_Component* ER_ComponentFactory::createConnectionComponent(ERD_Component* com
 	return connection;
 }
 
-ERD_Component* ER_ComponentFactory::createConnectionComponent(ERD_Component* component1, ERD_Component* component2, int id, ConnectionCardinality cardinality)
+ERD_Component* ER_ComponentFactory::createConnectionComponent(ERD_Component* component1, ERD_Component* component2, int id, ERD_Connection::ConnectionCardinality cardinality)
 {
 	ERD_Component* connection = new ERD_Connection(id, cardinality);
 	connection->connectTo(component1);

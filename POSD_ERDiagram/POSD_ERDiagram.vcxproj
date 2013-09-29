@@ -98,7 +98,6 @@
     <ClInclude Include="ERD_Node.h" />
     <ClInclude Include="ERD_Relationship.h" />
     <ClInclude Include="ER_ComponentFactory.h" />
-    <ClInclude Include="ER_Enum.h" />
     <ClInclude Include="ER_Model.h" />
     <ClInclude Include="ER_PresentationModel.h" />
     <ClInclude Include="ER_TextUI.h" />

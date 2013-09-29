@@ -62,9 +62,6 @@
     <ClInclude Include="ER_ComponentFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ER_Enum.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ER_Model.h">
       <Filter>Header Files</Filter>
     </ClInclude>

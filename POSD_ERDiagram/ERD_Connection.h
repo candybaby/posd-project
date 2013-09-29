@@ -6,6 +6,14 @@
 class ERD_Connection : public ERD_Component
 {
 public:
+	enum ConnectionCardinality
+	{
+		one,
+		n,
+		SIZE_OF_Cardinality 
+	};
+	static const char* ConnectionCardinalityNames[SIZE_OF_Cardinality];
+
 	ERD_Connection(void);
 	ERD_Connection(int);
 	ERD_Connection(int, ConnectionCardinality);

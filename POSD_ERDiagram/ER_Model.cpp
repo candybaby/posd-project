@@ -30,7 +30,7 @@ vector<ERD_Component*> ER_Model::getComponents()
 	return components;
 }
 
-void ER_Model::addNode(ComponentType type, string nodeName)
+void ER_Model::addNode(ERD_Component::ComponentType type, string nodeName)
 {
 	ERD_Component* component = factory.createNodeComponent(type, nodeName, currentId);
 	components.push_back(component);
@@ -60,7 +60,7 @@ string ER_Model::addConnection(int component1Id, int component2Id)
 	}
 	if (component1->canConnectTo(component2) && component2->canConnectTo(component1)) //¥i¥H³s
 	{
-		if ((component1->getType() == Entity && component2->getType() == Relationship) || (component1->getType() == Relationship && component2->getType() == Entity))
+		if ((component1->getType() == ERD_Component::Entity && component2->getType() == ERD_Component::Relationship) || (component1->getType() == ERD_Component::Relationship && component2->getType() == ERD_Component::Entity))
 		{
 			message += ASK_CARDINALITY;
 			return message;
@@ -70,11 +70,11 @@ string ER_Model::addConnection(int component1Id, int component2Id)
 		message	+= MESSAGE_NODE_2;
 		message	+= Tool_Function::intToString(component2Id);
 		message	+= MESSAGE_NODE_3;
-		if (component1->getType() == Attribute)
+		if (component1->getType() == ERD_Component::Attribute)
 		{
 			component1 = setAttributeTypeConnected(component1);
 		}
-		if (component2->getType() == Attribute)
+		if (component2->getType() == ERD_Component::Attribute)
 		{
 			component2 = setAttributeTypeConnected(component2);
 		}
@@ -101,7 +101,7 @@ string ER_Model::addConnection(int component1Id, int component2Id)
 	return message;
 }
 
-string ER_Model::addConnection(int component1Id, int component2Id, ConnectionCardinality cardinality)
+string ER_Model::addConnection(int component1Id, int component2Id, ERD_Connection::ConnectionCardinality cardinality)
 {
 	string message;
 	ERD_Component* component1 = findComponentById(component1Id);
@@ -113,7 +113,7 @@ string ER_Model::addConnection(int component1Id, int component2Id, ConnectionCar
 	message	+= MESSAGE_NODE_3;
 	message	+= MESSAGE_NODE_7;
 	message	+= MESSAGE_NODE_8;
-	message += ConnectionCardinalityNames[cardinality];
+	message += ERD_Connection::ConnectionCardinalityNames[cardinality];
 	message	+= MESSAGE_NODE_3;
 	ERD_Component* component = factory.createConnectionComponent(component1, component2, currentId, cardinality);
 	components.push_back(component);
@@ -151,7 +151,7 @@ string ER_Model::getName(int index)
 	return components.at(index)->getText();
 }
 
-ComponentType ER_Model::getType(int index)
+ERD_Component::ComponentType ER_Model::getType(int index)
 {
 	return components.at(index)->getType();
 }
@@ -172,7 +172,7 @@ bool ER_Model::isAlreadyConnect(ERD_Component* node1, ERD_Component* node2)
 {
 	for (int i = 0; i< components.size(); i++)
 	{
-		if (components[i]->getType() == Connection)
+		if (components[i]->getType() == ERD_Component::Connection)
 		{
 			if (components[i]->getConnections().at(0)->getId() == node1->getId() && components[i]->getConnections().at(1)->getId() == node2->getId())
 			{
@@ -213,7 +213,7 @@ bool ER_Model::getIsPrimaryKey(int id)
 }
 
 
-void ER_Model::setIdVector(int i, int targetId, ComponentType type, vector<int> &idVector)
+void ER_Model::setIdVector(int i, int targetId, ERD_Component::ComponentType type, vector<int> &idVector)
 {
 	int id = -1;
 	if (getConnectionNode1(components[i]->getId()) == targetId)
@@ -230,12 +230,12 @@ void ER_Model::setIdVector(int i, int targetId, ComponentType type, vector<int> 
 	}
 }
 
-vector<int> ER_Model::findTypeIdByComponentId(ComponentType type, int targetId)
+vector<int> ER_Model::findTypeIdByComponentId(ERD_Component::ComponentType type, int targetId)
 {
 	vector<int> idVector;
 	for (int i = 0; i< components.size(); i++)
 	{
-		if (components[i]->getType() == Connection)
+		if (components[i]->getType() == ERD_Component::Connection)
 		{
 			setIdVector(i, targetId, type, idVector);
 		}
@@ -243,15 +243,15 @@ vector<int> ER_Model::findTypeIdByComponentId(ComponentType type, int targetId)
 	return idVector;
 }
 
-vector<int> ER_Model::findTypeIdByComponentIdWithCardinality(ComponentType type, int targetId)
+vector<int> ER_Model::findTypeIdByComponentIdWithCardinality(ERD_Component::ComponentType type, int targetId)
 {
 	vector<int> idVector;
 	for (int i = 0; i< components.size(); i++)
 	{
-		if (components[i]->getType() == Connection)
+		if (components[i]->getType() == ERD_Component::Connection)
 		{
 			ERD_Connection* connection = (ERD_Connection*)components[i];
-			if (connection->getCardinality() == one)
+			if (connection->getCardinality() == ERD_Connection::one)
 			{
 				setIdVector(i, targetId, type, idVector);
 			}
@@ -263,7 +263,7 @@ vector<int> ER_Model::findTypeIdByComponentIdWithCardinality(ComponentType type,
 vector<int> ER_Model::findPrimaryKeyByEntityId(int entityId)
 {
 	vector<int> primaryKeys;
-	vector<int> attributesId = findTypeIdByComponentId(Attribute, entityId);
+	vector<int> attributesId = findTypeIdByComponentId(ERD_Component::Attribute, entityId);
 	for (vector<int>::iterator it = attributesId.begin(); it < attributesId.end(); it++)
 	{
 		ERD_Attribute* attribute = (ERD_Attribute*)components[*it];
@@ -300,10 +300,10 @@ vector<int> ER_Model::findOneByOneRelationEntityId(int targetId)
 {
 	vector<int> idVector;
 	vector<int> relationIdVector;
-	relationIdVector = findTypeIdByComponentIdWithCardinality(Relationship, targetId);
+	relationIdVector = findTypeIdByComponentIdWithCardinality(ERD_Component::Relationship, targetId);
 	for (vector<int>::iterator it = relationIdVector.begin(); it < relationIdVector.end(); it++) 
 	{
-		vector<int> entityIdVector = findTypeIdByComponentIdWithCardinality(Entity, *it);
+		vector<int> entityIdVector = findTypeIdByComponentIdWithCardinality(ERD_Component::Entity, *it);
 		for (vector<int>::iterator entityIt = entityIdVector.begin(); entityIt < entityIdVector.end(); entityIt++)
 		{
 			if (*entityIt != targetId)

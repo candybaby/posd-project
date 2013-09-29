@@ -1,5 +1,5 @@
 #include "ER_TextUI.h"
-#define MENU_TEXT "1. Add a node \n2. Connect two nodes \n3. Display the current diagram \n4. Set a primary key \n5. Display the table \n6. Exit"
+#define MENU_TEXT "1. Load ER diagram file \n2. Save ER diagram file \n3. Add a node \n4. Connect two nodes \n5. Display the current diagram \n6. Set a primary key \n7. Display the table \n8. Delete a component \n9. Undo \n10.Redo \n11.Exit"
 #define ERROR_TEXT "You entered an invalid value."
 #define RE_ENTER "Please enter a valid one again."
 #define ENTER_FIRST_NODE "Please enter the first node ID"
@@ -45,7 +45,6 @@
 #define NODE_ADDED_NAME ", Name: \""
 #define NODE_ADDED_END "\""
 
-
 using namespace std;
 
 ER_TextUI::ER_TextUI(void)
@@ -61,6 +60,8 @@ ER_TextUI::~ER_TextUI(void)
 {
 }
 
+const char* ER_TextUI::MenuCommandNames[SIZE_OF_MenuCommand] = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11" };
+
 void ER_TextUI::displayMenu()
 {
 	cout << MENU_TEXT << endl;
@@ -71,105 +72,46 @@ void ER_TextUI::processCommand()
 {
 	string menuCommand;
 	cin >> menuCommand;
-	if (menuCommand == MenuCommandNames[Option_1])
+	if (menuCommand == MenuCommandNames[Option_1])  // Load ER diagram file
 	{
-		string addNodeCommand, addNodeName;
-		int type = -1, id = 0;
-		cout << ADD_NODE_TEXT << endl;
-		type = option1Question(addNodeCommand, type);
-
-		while (type == -1)
-		{
-			cout << ERROR_TEXT << RE_ENTER << endl;
-			type = option1Question(addNodeCommand, type);
-		}
-		cout << ADD_NODE_NAME_TEXT << endl;
-		cin >> addNodeName;
-		presentationModel.addNode((ComponentType)type, addNodeName);
-		id = presentationModel.getCurrentId() - 1;
-		printAddNodeResult(type, id, addNodeName);
-		printNodes();
+		
 	}
-	else if (menuCommand == MenuCommandNames[Option_2])
+	else if (menuCommand == MenuCommandNames[Option_2])  // Save ER diagram file
 	{
-		string connectFirstNode, connectSecondNode;
-		cout << ENTER_FIRST_NODE << endl;
-		option2Question(connectFirstNode);
-
-		cout << ENTER_SECOND_NODE << endl;
-		option2Question(connectSecondNode);
-
-		int firstNodeId, secondNodeId;
-		string message, cardinality;
-		firstNodeId = stoi(connectFirstNode);
-		secondNodeId = stoi(connectSecondNode);
-		message = presentationModel.addConnection(firstNodeId, secondNodeId);
-		if (message.find(ASK_CARDINALITY) != std::string::npos)
-		{
-			while (!(message.find(CONNECT_MESSAGE) != std::string::npos))
-			{
-				cout << ASK_CARDINALITY_TEXT << endl;
-				cin >> cardinality;
-				if (cardinality == "0")
-				{
-					message = presentationModel.addConnection(firstNodeId, secondNodeId, one);
-				}
-				else if (cardinality == "1")
-				{
-					message = presentationModel.addConnection(firstNodeId, secondNodeId, n);
-				}
-			}
-		}
-
-		cout << message << endl;
-		if (message.find(CONNECT_MESSAGE) != std::string::npos)
-		{
-			printConnections();
-		}
 	}
-	else if (menuCommand == MenuCommandNames[Option_3])
+	else if (menuCommand == MenuCommandNames[Option_3])  // Add a node
 	{
-		printComponents();
-		cout << endl;
-		printConnections();
+		addNode();
 	}
-	else if (menuCommand == MenuCommandNames[Option_4])
+	else if (menuCommand == MenuCommandNames[Option_4])  // Connect two nodes
 	{
-		string entityId, messageOfEntity, attributesQuery, messageOfAttributes;
-		printEntities();
-		cout << ENTER_ENTITY_ID << endl;
-		while (messageOfEntity != FIND_ENTITY)
-		{
-			cin >> entityId;
-			messageOfEntity = presentationModel.checkEntitySelectedValid(entityId);
-			if (messageOfEntity.find(NOT_ENTITY) != std::string::npos)
-			{
-				cout << THE_NODE << entityId << IS_NOT_AN_ENTITY << RE_ENTER << endl;
-			}
-			else if (messageOfEntity.find(ID_NOT_EXIST) != std::string::npos)
-			{
-				cout << ID_NOT_EXIST_MESSAGE << RE_ENTER << endl;
-			}
-		}
-		int entityIntId = std::stoi(entityId);
-		printAttributesById(entityIntId); 
-		cout << ENTER_ATTRIBUTES_ID << endl;
-		while (messageOfAttributes != SET_DONE_PRIMARY_KEY)
-		{
-			cin >> attributesQuery;
-			messageOfAttributes = presentationModel.checkAttributesSelectedValid(attributesQuery, entityIntId);
-			if (messageOfAttributes.find(RE_ENTER) != std::string::npos)
-			{
-				cout << messageOfAttributes << endl;
-			}
-		}
-		printEntityPrimaryKey(entityIntId);
+		connectTwoNodes();
 	}
-	else if (menuCommand == MenuCommandNames[Option_5])
+	else if (menuCommand == MenuCommandNames[Option_5])  // Display the current diagram
+	{
+		displayCurrentDiagram();
+	}
+	else if (menuCommand == MenuCommandNames[Option_6])  // Set a primary key
+	{
+		setPrimaryKey();
+	}
+	else if (menuCommand == MenuCommandNames[Option_7])  // Display the table
 	{
 		printTables();
 	}
-	else if (menuCommand == MenuCommandNames[Option_6])
+	else if (menuCommand == MenuCommandNames[Option_8])  // Delete a component
+	{
+		
+	}
+	else if (menuCommand == MenuCommandNames[Option_9])  // Undo
+	{
+		
+	}
+	else if (menuCommand == MenuCommandNames[Option_10])  // Redo
+	{
+		
+	}
+	else if (menuCommand == MenuCommandNames[Option_11])  // Exit
 	{
 		cout << BYE_TEXT << endl;
 		return ;
@@ -179,6 +121,104 @@ void ER_TextUI::processCommand()
 		cout << ERROR_TEXT << RE_ENTER << endl;
 	}
 	displayMenu();
+}
+
+void ER_TextUI::addNode()
+{
+	string addNodeCommand, addNodeName;
+	int type = -1, id = 0;
+	cout << ADD_NODE_TEXT << endl;
+	type = option1Question(addNodeCommand, type);
+
+	while (type == -1)
+	{
+		cout << ERROR_TEXT << RE_ENTER << endl;
+		type = option1Question(addNodeCommand, type);
+	}
+	cout << ADD_NODE_NAME_TEXT << endl;
+	cin >> addNodeName;
+	presentationModel.addNode((ERD_Component::ComponentType)type, addNodeName);
+	id = presentationModel.getCurrentId() - 1;
+	printAddNodeResult(type, id, addNodeName);
+	printNodes();
+}
+
+void ER_TextUI::connectTwoNodes()
+{
+	string connectFirstNode, connectSecondNode;
+	cout << ENTER_FIRST_NODE << endl;
+	option2Question(connectFirstNode);
+
+	cout << ENTER_SECOND_NODE << endl;
+	option2Question(connectSecondNode);
+
+	int firstNodeId, secondNodeId;
+	string message, cardinality;
+	firstNodeId = stoi(connectFirstNode);
+	secondNodeId = stoi(connectSecondNode);
+	message = presentationModel.addConnection(firstNodeId, secondNodeId);
+	if (message.find(ASK_CARDINALITY) != std::string::npos)
+	{
+		while (!(message.find(CONNECT_MESSAGE) != std::string::npos))
+		{
+			cout << ASK_CARDINALITY_TEXT << endl;
+			cin >> cardinality;
+			if (cardinality == "0")
+			{
+				message = presentationModel.addConnection(firstNodeId, secondNodeId, ERD_Connection::one);
+			}
+			else if (cardinality == "1")
+			{
+				message = presentationModel.addConnection(firstNodeId, secondNodeId, ERD_Connection::n);
+			}
+		}
+	}
+
+	cout << message << endl;
+	if (message.find(CONNECT_MESSAGE) != std::string::npos)
+	{
+		printConnections();
+	}
+}
+
+void ER_TextUI::displayCurrentDiagram()
+{
+	printComponents();
+	cout << endl;
+	printConnections();
+}
+
+void ER_TextUI::setPrimaryKey()
+{
+	string entityId, messageOfEntity, attributesQuery, messageOfAttributes;
+	printEntities();
+	cout << ENTER_ENTITY_ID << endl;
+	while (messageOfEntity != FIND_ENTITY)
+	{
+		cin >> entityId;
+		messageOfEntity = presentationModel.checkEntitySelectedValid(entityId);
+		if (messageOfEntity.find(NOT_ENTITY) != std::string::npos)
+		{
+			cout << THE_NODE << entityId << IS_NOT_AN_ENTITY << RE_ENTER << endl;
+		}
+		else if (messageOfEntity.find(ID_NOT_EXIST) != std::string::npos)
+		{
+			cout << ID_NOT_EXIST_MESSAGE << RE_ENTER << endl;
+		}
+	}
+	int entityIntId = std::stoi(entityId);
+	printAttributesById(entityIntId); 
+	cout << ENTER_ATTRIBUTES_ID << endl;
+	while (messageOfAttributes != SET_DONE_PRIMARY_KEY)
+	{
+		cin >> attributesQuery;
+		messageOfAttributes = presentationModel.checkAttributesSelectedValid(attributesQuery, entityIntId);
+		if (messageOfAttributes.find(RE_ENTER) != std::string::npos)
+		{
+			cout << messageOfAttributes << endl;
+		}
+	}
+	printEntityPrimaryKey(entityIntId);
 }
 
 int ER_TextUI::option1Question(string addNodeCommand, int type)
@@ -191,7 +231,7 @@ int ER_TextUI::option1Question(string addNodeCommand, int type)
 
 void ER_TextUI::printAddNodeResult(int type, int id, string addNodeName)
 {
-	cout << A_NODE << Option1TypeNames[type + SHIFT_THREE] << NODE_ADDED << id << NODE_ADDED_NAME << addNodeName << NODE_ADDED_END << endl;
+	cout << A_NODE << ER_PresentationModel::EntityOptionTypeNames[type + SHIFT_THREE] << NODE_ADDED << id << NODE_ADDED_NAME << addNodeName << NODE_ADDED_END << endl;
 }
 
 void ER_TextUI::printNodes()  // without Connection
@@ -203,7 +243,7 @@ void ER_TextUI::printNodes()  // without Connection
 	vector<int> nodesId = presentationModel.findNode();
 	for (vector<int>::iterator it = nodesId.begin(); it < nodesId.end(); it++)
 	{
-		cout << SPACE_TEXT_1 << ComponentTypeNames[presentationModel.getType(*it)] << SEPARATOR_5 << presentationModel.getId(*it) << SEPARATOR_5 << presentationModel.getName(*it) << endl;
+		cout << SPACE_TEXT_1 << ERD_Component::ComponentTypeNames[presentationModel.getType(*it)] << SEPARATOR_5 << presentationModel.getId(*it) << SEPARATOR_5 << presentationModel.getName(*it) << endl;
 	}
 	cout << SEPARATOR_1 << endl;
 }
@@ -214,7 +254,7 @@ void ER_TextUI::printConnections()
 	cout << SEPARATOR_1 << endl;
 	cout << CONNECTION_MENU << endl;
 	cout << SEPARATOR_4 << endl;
-	vector<int> connectionsId = presentationModel.findComponentType(Connection);
+	vector<int> connectionsId = presentationModel.findComponentType(ERD_Component::Connection);
 	for (vector<int>::iterator it = connectionsId.begin(); it < connectionsId.end(); it++) 
 	{
 		cout << SPACE_TEXT_2 << presentationModel.getId(*it) << SEPARATOR_3 << presentationModel.getConnectionNode1(*it) << SEPARATOR_3 << presentationModel.getConnectionNode2(*it) << endl;
@@ -230,7 +270,7 @@ void ER_TextUI::printComponents()
 	cout << SEPARATOR_2 << endl;
 	for (int i = 0; i < presentationModel.getCurrentId(); i++)
 	{
-		cout << SPACE_TEXT_1 << ComponentTypeNames[presentationModel.getType(i)] << SEPARATOR_5 << presentationModel.getId(i) << SEPARATOR_5 << presentationModel.getName(i) << endl;
+		cout << SPACE_TEXT_1 << ERD_Component::ComponentTypeNames[presentationModel.getType(i)] << SEPARATOR_5 << presentationModel.getId(i) << SEPARATOR_5 << presentationModel.getName(i) << endl;
 	}
 	cout << SEPARATOR_1 << endl;
 }
@@ -241,10 +281,10 @@ void ER_TextUI::printEntities()
 	cout << SEPARATOR_1 << endl;
 	cout << COMPONENT_MENU << endl;
 	cout << SEPARATOR_2 << endl;
-	vector<int> entitiesId = presentationModel.findComponentType(Entity);
+	vector<int> entitiesId = presentationModel.findComponentType(ERD_Component::Entity);
 	for (vector<int>::iterator it = entitiesId.begin(); it < entitiesId.end(); it++) 
 	{
-		cout << SPACE_TEXT_1 << ComponentTypeNames[presentationModel.getType(*it)] << SEPARATOR_5 << presentationModel.getId(*it) << SEPARATOR_5 << presentationModel.getName(*it) << endl;
+		cout << SPACE_TEXT_1 << ERD_Component::ComponentTypeNames[presentationModel.getType(*it)] << SEPARATOR_5 << presentationModel.getId(*it) << SEPARATOR_5 << presentationModel.getName(*it) << endl;
 	}
 	cout << SEPARATOR_1 << endl;
 }
@@ -268,14 +308,14 @@ void ER_TextUI::printAttributesById(int id)
 	vector<int> attributesList = findAttributes(id);
 	for (vector<int>::iterator it = attributesList.begin(); it < attributesList.end(); it++) 
 	{
-		cout << SPACE_TEXT_1 << ComponentTypeNames[presentationModel.getType(*it)] << SEPARATOR_5 << presentationModel.getId(*it) << SEPARATOR_5 << presentationModel.getName(*it) << endl;
+		cout << SPACE_TEXT_1 << ERD_Component::ComponentTypeNames[presentationModel.getType(*it)] << SEPARATOR_5 << presentationModel.getId(*it) << SEPARATOR_5 << presentationModel.getName(*it) << endl;
 	}
 	cout << SEPARATOR_1 << endl;
 }
 
 vector<int> ER_TextUI::findAttributes(int id)
 {
-	return presentationModel.findTypeIdByComponentId(Attribute, id);
+	return presentationModel.findTypeIdByComponentId(ERD_Component::Attribute, id);
 }
 
 void ER_TextUI::printEntityPrimaryKey(int id)

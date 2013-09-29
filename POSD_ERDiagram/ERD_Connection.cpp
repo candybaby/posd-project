@@ -19,6 +19,8 @@ ERD_Connection::ERD_Connection(int id, ConnectionCardinality cardinality)
 	this->text = ConnectionCardinalityNames[cardinality];
 }
 
+const char* ERD_Connection::ConnectionCardinalityNames[SIZE_OF_Cardinality] = {"1", "N"};
+
 void ERD_Connection::setCardinality(ConnectionCardinality cardinality)
 {
 	this->cardinality = cardinality;
@@ -29,7 +31,7 @@ ERD_Connection::~ERD_Connection(void)
 {
 }
 
-ConnectionCardinality ERD_Connection::getCardinality()
+ERD_Connection::ConnectionCardinality ERD_Connection::getCardinality()
 {
 	return this->cardinality;
 }

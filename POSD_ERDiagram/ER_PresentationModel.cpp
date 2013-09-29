@@ -37,12 +37,14 @@ ER_PresentationModel::~ER_PresentationModel(void)
 {
 }
 
+const char* ER_PresentationModel::EntityOptionTypeNames[SIZE_OF_EntityOptionType] = { "A", "E", "R", "Attribute", "Entity", "Relation"};
+
 int ER_PresentationModel::option1Mapping(string command)
 {
 	int result = -1;
-	for (int i = 0; i < SIZE_OF_Option1Type; i++)
+	for (int i = 0; i < SIZE_OF_EntityOptionType; i++)
 	{
-		if(command == Option1TypeNames[i])
+		if(command == EntityOptionTypeNames[i])
 		{
 			result = i;
 		}
@@ -50,7 +52,7 @@ int ER_PresentationModel::option1Mapping(string command)
 	return result;
 }
 
-void ER_PresentationModel::addNode(ComponentType componentType, string nodeName)
+void ER_PresentationModel::addNode(ERD_Component::ComponentType componentType, string nodeName)
 {
 	model.addNode(componentType, nodeName);
 }
@@ -79,7 +81,7 @@ string ER_PresentationModel::getName(int index)
 	return model.getName(index);
 }
 
-ComponentType ER_PresentationModel::getType(int index)
+ERD_Component::ComponentType ER_PresentationModel::getType(int index)
 {
 	return model.getType(index);
 }
@@ -89,7 +91,7 @@ string ER_PresentationModel::addConnection(int firstNodeId,int secondNodeId)
 	return model.addConnection(firstNodeId, secondNodeId);
 }
 
-string ER_PresentationModel::addConnection(int firstNodeId,int secondNodeId, ConnectionCardinality cardinality)
+string ER_PresentationModel::addConnection(int firstNodeId,int secondNodeId, ERD_Connection::ConnectionCardinality cardinality)
 {
 	return model.addConnection(firstNodeId, secondNodeId, cardinality);
 }
@@ -114,7 +116,7 @@ string ER_PresentationModel::checkEntitySelectedValid(string entityId)
 		int currentId = getId(i);
 		if (Tool_Function::intToString(currentId) == entityId)
 		{
-			if (getType(i) == Entity)
+			if (getType(i) == ERD_Component::Entity)
 			{
 				return FIND_ENTITY;
 			}
@@ -164,7 +166,7 @@ string ER_PresentationModel::checkAttributesSelectedValid(string queryMessage,in
 
 bool ER_PresentationModel::isAttributeBelongEntity(int attributeId, int entityId)
 {
-	vector<int> attributesId = findTypeIdByComponentId(Attribute, entityId);
+	vector<int> attributesId = findTypeIdByComponentId(ERD_Component::Attribute, entityId);
 	for (vector<int>::iterator it = attributesId.begin(); it < attributesId.end(); it++)
 	{
 		if (attributeId == *it)
@@ -188,7 +190,7 @@ bool ER_PresentationModel::getIsPrimaryKey(int id)
 string ER_PresentationModel::getPrimaryKeyString(int id)
 {
 	string result;
-	vector<int> attributesVector = model.findTypeIdByComponentId(Attribute, id);
+	vector<int> attributesVector = model.findTypeIdByComponentId(ERD_Component::Attribute, id);
 	if (attributesVector.size() == 0)
 	{
 		return result;
@@ -211,7 +213,7 @@ vector<int> ER_PresentationModel::findNode()
 	vector<int> nodesId;
 	for (int i = 0; i < getCurrentId(); i++)
 	{
-		if (getType(i) != Connection)
+		if (getType(i) != ERD_Component::Connection)
 		{
 			nodesId.push_back(getId(i));
 		}
@@ -219,12 +221,12 @@ vector<int> ER_PresentationModel::findNode()
 	return nodesId;
 }
 
-vector<int> ER_PresentationModel::findTypeIdByComponentId(ComponentType type, int id)
+vector<int> ER_PresentationModel::findTypeIdByComponentId(ERD_Component::ComponentType type, int id)
 {
 	return model.findTypeIdByComponentId(type, id);
 }
 
-vector<int> ER_PresentationModel::findComponentType(ComponentType type)
+vector<int> ER_PresentationModel::findComponentType(ERD_Component::ComponentType type)
 {
 	vector<int> entitiesId;
 	for (int i = 0; i < getCurrentId(); i++)
@@ -239,7 +241,7 @@ vector<int> ER_PresentationModel::findComponentType(ComponentType type)
 
 bool ER_PresentationModel::isExistTable()
 {
-	vector<int> entitiesId = findComponentType(Entity);
+	vector<int> entitiesId = findComponentType(ERD_Component::Entity);
 	if (entitiesId.size() == 0)
 	{
 		return false;
@@ -279,7 +281,7 @@ string ER_PresentationModel::getForeignKeyResult(int id)
 string ER_PresentationModel::getAttributesForTable(int id)
 {
 	string result, primaryKeyString = PRIMARY_KEY;
-	vector<int> attributesId = findTypeIdByComponentId(Attribute, id);
+	vector<int> attributesId = findTypeIdByComponentId(ERD_Component::Attribute, id);
 	if (attributesId.size() == 0)
 	{
 		return result;
@@ -333,7 +335,7 @@ string ER_PresentationModel::getAttributesForTable(int id)
 
 vector<int> ER_PresentationModel::findOneByOneEntity()
 {
-	vector<int> entitiesId = findComponentType(Entity);
+	vector<int> entitiesId = findComponentType(ERD_Component::Entity);
 	vector<int> entitiesOneByOneId;
 	for (vector<int>::iterator it = entitiesId.begin(); it < entitiesId.end(); it++)
 	{

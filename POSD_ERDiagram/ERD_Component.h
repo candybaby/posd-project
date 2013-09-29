@@ -4,12 +4,20 @@
 
 #include <string>
 #include <vector>
-#include "ER_Enum.h"
 using namespace std;
 
 class ERD_Component
 {
 public:
+	enum ComponentType
+	{
+		Attribute,
+		Entity,
+		Relationship,
+		Connection,
+		SIZE_OF_ComponentType
+	};
+	static const char* ComponentTypeNames[SIZE_OF_ComponentType];
 	ERD_Component(void);
 	virtual ~ERD_Component(void);
 	int getId();
