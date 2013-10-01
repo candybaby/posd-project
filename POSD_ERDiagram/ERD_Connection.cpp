@@ -16,15 +16,15 @@ ERD_Connection::ERD_Connection(int id, ConnectionCardinality cardinality)
 	this->cardinality = cardinality;
 	this->type = Connection;
 	this->id = id;
-	this->text = ConnectionCardinalityNames[cardinality];
+	this->text = connectionCardinalityNames[cardinality];
 }
 
-const char* ERD_Connection::ConnectionCardinalityNames[SIZE_OF_Cardinality] = {"1", "N"};
+const char* ERD_Connection::connectionCardinalityNames[SIZE_OF_Cardinality] = {"1", "N"};
 
 void ERD_Connection::setCardinality(ConnectionCardinality cardinality)
 {
 	this->cardinality = cardinality;
-	this->text = ConnectionCardinalityNames[cardinality];
+	this->text = connectionCardinalityNames[cardinality];
 }
 
 ERD_Connection::~ERD_Connection(void)

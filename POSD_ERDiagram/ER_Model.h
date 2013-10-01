@@ -21,9 +21,10 @@ public:
 		Connection,
 		SIZE_OF_ComponentTypeMap
 	};
-	static const char* ComponentTypeMapNames[SIZE_OF_ComponentTypeMap];
+	static const char* componentTypeMapNames[SIZE_OF_ComponentTypeMap];
 	ER_Model(void);
 	~ER_Model(void);
+	void clearCurrentComponents();
 	vector<ERD_Component*> getComponents();
 	void addNode(ERD_Component::ComponentType, string);
 	void addNode(string, string);
@@ -45,8 +46,9 @@ public:
 	bool getIsPrimaryKey(int);
 	void setIdVector(int, int, ERD_Component::ComponentType, vector<int> &);
 	int findComponentIdWithConnection(vector<ERD_Component*>, int);
-	vector<int> findComponent();
-	vector<int> findComponentType(ERD_Component::ComponentType);
+	vector<int> findNodes();
+	vector<int> findComponents();
+	vector<int> findComponentsByType(ERD_Component::ComponentType);
 	vector<int> findTypeIdByComponentId(ERD_Component::ComponentType, int);
 	vector<int> findTypeIdByComponentIdWithCardinality(ERD_Component::ComponentType, int);
 	vector<int> findPrimaryKeyByEntityId(int);
@@ -54,6 +56,8 @@ public:
 	vector<int> findOneByOneRelationEntityId(int);
 	string loadComponents(string);
 	string storeComponents(string);
+	bool isConnectCommandValid(string);
+	string checkEntitySelectedValid(string);
 
 private:
 	vector<ERD_Component *> components;

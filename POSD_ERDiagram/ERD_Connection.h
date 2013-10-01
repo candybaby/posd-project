@@ -12,7 +12,7 @@ public:
 		n,
 		SIZE_OF_Cardinality 
 	};
-	static const char* ConnectionCardinalityNames[SIZE_OF_Cardinality];
+	static const char* connectionCardinalityNames[SIZE_OF_Cardinality];
 
 	ERD_Connection(void);
 	ERD_Connection(int);

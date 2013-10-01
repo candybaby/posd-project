@@ -2,17 +2,28 @@
 #define CAMMA_SIZE 2
 #define CAMMA ", "
 #define TABLE_TEXT "Tables:"
+#define CONNECTION_TEXT "Connections:"
+#define ENTITY_TEXT "Entities:"
+#define COMPONENTS_TEXT "The ER diagram is displayed as follows:\nComponents:"
+#define ATTRIBUTE_TEXT "Attributes of the entity \'"
+#define CONNECTION_MENU "Connection | node | node"
+#define NODES_TEXT "Nodes:"
+#define COMPONENT_MENU " Type |  ID  |  Name "
+#define SEPARATOR_1 "------------------------------------"
+#define SEPARATOR_2 "------+------+----------------------"
+#define SEPARATOR_3 "   |  "
+#define SEPARATOR_4 "-----------+------+-----------------"
+#define SEPARATOR_5 "   |   "
 #define SEPARATOR_6 "----------------------------------------------------------"
 #define TABLE_MENU "  Entity  |  Attribute"
 #define SEPARATOR_7 "----------+-----------------------------------------------"
 #define SEPARATOR_8 " | "
 #define SPACE " "
+#define SPACE_TEXT_1 "  "
+#define SPACE_TEXT_2 "       "
 #define NO_TABLE "It has no table to display. "
 #define ENDL "\n"
 #define CAMMA_TEXT ','
-#define FIND_ENTITY "Find Right Entity"
-#define NOT_ENTITY "Not an Entity"
-#define ID_NOT_EXIST "Id Not Exist"
 #define NOT_BELONG_ENTITY "\' does not belong to Entity \'"
 #define THE_NODE "The node \'"
 #define APOSTROPHE_TEXT "\'"
@@ -37,14 +48,14 @@ ER_PresentationModel::~ER_PresentationModel(void)
 {
 }
 
-const char* ER_PresentationModel::EntityOptionTypeNames[SIZE_OF_EntityOptionType] = { "A", "E", "R", "Attribute", "Entity", "Relation"};
+const char* ER_PresentationModel::entityOptionTypeNames[SIZE_OF_EntityOptionType] = { "A", "E", "R", "Attribute", "Entity", "Relation"};
 
 int ER_PresentationModel::option1Mapping(string command)
 {
 	int result = -1;
 	for (int i = 0; i < SIZE_OF_EntityOptionType; i++)
 	{
-		if(command == EntityOptionTypeNames[i])
+		if(command == entityOptionTypeNames[i])
 		{
 			result = i;
 		}
@@ -71,6 +82,7 @@ int ER_PresentationModel::getConnectionNode1ById(int index)
 {
 	return model.getConnectionNode1ById(index);
 }
+
 int ER_PresentationModel::getConnectionNode2ById(int index)
 {
 	return model.getConnectionNode2ById(index);
@@ -98,35 +110,12 @@ string ER_PresentationModel::addConnection(int firstNodeId,int secondNodeId, ERD
 
 bool ER_PresentationModel::isConnectCommandValid(string command)
 {
-	for (vector<ERD_Component *>::iterator it = model.getComponents().begin(); it < model.getComponents().end(); it++)
-	{
-		int id = ((ERD_Component *)*it)->getId();
-		if (Tool_Function::intToString(id) == command)
-		{
-			return true;
-		}
-	}
-	return false;
+	return model.isConnectCommandValid(command);
 }
 
 string ER_PresentationModel::checkEntitySelectedValid(string entityId)
 {
-	for (vector<ERD_Component *>::iterator it = model.getComponents().begin(); it < model.getComponents().end(); it++)
-	{
-		int currentId = ((ERD_Component *)*it)->getId();
-		if (Tool_Function::intToString(currentId) == entityId)
-		{
-			if (((ERD_Component *)*it)->getType() == ERD_Component::Entity)
-			{
-				return FIND_ENTITY;
-			}
-			else
-			{
-				return NOT_ENTITY;
-			}
-		}
-	}
-	return ID_NOT_EXIST;
+	return model.checkEntitySelectedValid(entityId);
 }
 
 string ER_PresentationModel::checkAttributesSelectedValid(string queryMessage,int id)
@@ -208,22 +197,14 @@ string ER_PresentationModel::getPrimaryKeyString(int id)
 	return result;
 }
 
-vector<int> ER_PresentationModel::findNode()
+vector<int> ER_PresentationModel::findNodes()
 {
-	vector<int> nodesId;
-	for (vector<ERD_Component *>::iterator it = model.getComponents().begin(); it < model.getComponents().end(); it++)
-	{
-		if (((ERD_Component *)*it)->getType() != ERD_Component::Connection)
-		{
-			nodesId.push_back(((ERD_Component *)*it)->getId());
-		}
-	}
-	return nodesId;
+	return model.findNodes();
 }
 
-vector<int> ER_PresentationModel::findComponent()
+vector<int> ER_PresentationModel::findComponents()
 {
-	return model.findComponent();
+	return model.findComponents();
 }
 
 vector<int> ER_PresentationModel::findTypeIdByComponentId(ERD_Component::ComponentType type, int id)
@@ -231,14 +212,14 @@ vector<int> ER_PresentationModel::findTypeIdByComponentId(ERD_Component::Compone
 	return model.findTypeIdByComponentId(type, id);
 }
 
-vector<int> ER_PresentationModel::findComponentType(ERD_Component::ComponentType type)
+vector<int> ER_PresentationModel::findComponentsByType(ERD_Component::ComponentType type)
 {
-	return model.findComponentType(type);
+	return model.findComponentsByType(type);
 }
 
 bool ER_PresentationModel::isExistTable()
 {
-	vector<int> entitiesId = findComponentType(ERD_Component::Entity);
+	vector<int> entitiesId = findComponentsByType(ERD_Component::Entity);
 	if (entitiesId.size() == 0)
 	{
 		return false;
@@ -332,7 +313,7 @@ string ER_PresentationModel::getAttributesForTable(int id)
 
 vector<int> ER_PresentationModel::findOneByOneEntity()
 {
-	vector<int> entitiesId = findComponentType(ERD_Component::Entity);
+	vector<int> entitiesId = findComponentsByType(ERD_Component::Entity);
 	vector<int> entitiesOneByOneId;
 	for (vector<int>::iterator it = entitiesId.begin(); it < entitiesId.end(); it++)
 	{
@@ -374,16 +355,176 @@ string ER_PresentationModel::getTable()
 	{
 		message += NO_TABLE;
 	}
-
+	message += ENDL;
 	return message;
 }
 
 string ER_PresentationModel::loadComponents(string path)
 {
-	return model.loadComponents(path);
+	string message = model.loadComponents(path);
+	if (message.find("Success") != std::string::npos)
+	{
+		string result;
+		result += getComponentsTable();
+		result += ENDL;
+		result += getConnectionsTable();
+		return result;
+	}
+	else
+	{
+		return "File not found!!\n";
+	}
 }
 
 string ER_PresentationModel::storeComponents(string path)
 {
-	return model.storeComponents(path);
+	string message = model.storeComponents(path);
+	if (message.find("Success") != std::string::npos)
+	{
+		return "\n";
+	}
+	else
+	{
+		return "Fail to Save!!\n";
+	}
+}
+
+string ER_PresentationModel::getConnectionsTable()
+{
+	string result;
+	result += CONNECTION_TEXT;
+	result += ENDL;
+	result += SEPARATOR_1;
+	result += ENDL;
+	result += CONNECTION_MENU;
+	result += ENDL;
+	result += SEPARATOR_4;
+	result += ENDL;
+	vector<int> connectionsId = findComponentsByType(ERD_Component::Connection);
+	for (vector<int>::iterator it = connectionsId.begin(); it < connectionsId.end(); it++) 
+	{
+		int id = *it, node1Id = getConnectionNode1ById(id), node2Id = getConnectionNode2ById(id);
+		result += SPACE_TEXT_2;
+		result += Tool_Function::intToString(id);
+		result += SEPARATOR_3;
+		result += Tool_Function::intToString(node1Id);
+		result += SEPARATOR_3;
+		result += Tool_Function::intToString(node2Id);
+		result += ENDL;
+	}
+	result += SEPARATOR_1;
+	result += ENDL;
+	return result;
+}
+
+string ER_PresentationModel::getNodesTable()
+{
+	string result;
+	result += NODES_TEXT;
+	result += ENDL;
+	result += SEPARATOR_1;
+	result += ENDL;
+	result += COMPONENT_MENU;
+	result += ENDL;
+	result += SEPARATOR_2;
+	result += ENDL;
+	vector<int> nodesId = findNodes();
+	for (vector<int>::iterator it = nodesId.begin(); it < nodesId.end(); it++)
+	{
+		int id = *it;
+		result +=  SPACE_TEXT_1;
+		result +=  ERD_Component::componentTypeNames[getTypeById(id)];
+		result +=  SEPARATOR_5;
+		result +=  Tool_Function::intToString(id);
+		result +=  SEPARATOR_5;
+		result +=  getNameById(id);
+		result += ENDL;
+	}
+	result += SEPARATOR_1;
+	result += ENDL;
+	return result;
+}
+
+string ER_PresentationModel::getComponentsTable()
+{
+	string result;
+	result += COMPONENTS_TEXT;
+	result += ENDL;
+	result += SEPARATOR_1;
+	result += ENDL;
+	result += COMPONENT_MENU;
+	result += ENDL;
+	result += SEPARATOR_2;
+	result += ENDL;
+	for (int i = 0; i < getCurrentId(); i++) // sort by id
+	{
+		result +=  SPACE_TEXT_1;
+		result +=  ERD_Component::componentTypeNames[getTypeById(i)];
+		result +=  SEPARATOR_5;
+		result +=  Tool_Function::intToString(i);
+		result +=  SEPARATOR_5;
+		result += getNameById(i);
+		result += ENDL;
+	}
+	result += SEPARATOR_1;
+	result += ENDL;
+	return result;
+}
+
+string ER_PresentationModel::getEntitiesTable()
+{
+	string result;
+	result += ENTITY_TEXT;
+	result += ENDL;
+	result += SEPARATOR_1;
+	result += ENDL;
+	result += COMPONENT_MENU;
+	result += ENDL;
+	result += SEPARATOR_2;
+	result += ENDL;
+	vector<int> entitiesId = findComponentsByType(ERD_Component::Entity);
+	for (vector<int>::iterator it = entitiesId.begin(); it < entitiesId.end(); it++) 
+	{
+		int id = *it;
+		result += SPACE_TEXT_1;
+		result += ERD_Component::componentTypeNames[getTypeById(id)];
+		result += SEPARATOR_5;
+		result += Tool_Function::intToString(id);
+		result += SEPARATOR_5;
+		result += getNameById(id);
+		result += ENDL;
+	}
+	result += SEPARATOR_1;
+	result += ENDL;
+	return result;
+}
+
+string ER_PresentationModel::getAttributesTableById(int id)
+{
+	string result;
+	result += ATTRIBUTE_TEXT;
+	result += Tool_Function::intToString(id);
+	result += APOSTROPHE_TEXT;
+	result += ENDL;
+	result += SEPARATOR_1;
+	result += ENDL;
+	result += COMPONENT_MENU;
+	result += ENDL;
+	result += SEPARATOR_2;
+	result += ENDL;
+	vector<int> attributesList = findTypeIdByComponentId(ERD_Component::Attribute, id);
+	for (vector<int>::iterator it = attributesList.begin(); it < attributesList.end(); it++) 
+	{
+		int id = *it;
+		result += SPACE_TEXT_1;
+		result += ERD_Component::componentTypeNames[getTypeById(id)];
+		result += SEPARATOR_5;
+		result += Tool_Function::intToString(id);
+		result += SEPARATOR_5;
+		result += getNameById(id);
+		result += ENDL;
+	}
+	result += SEPARATOR_1;
+	result += ENDL;
+	return result;
 }

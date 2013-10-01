@@ -16,7 +16,7 @@ public:
 		SIZE_OF_EntityOptionType 
 	};
 
-	static const char* EntityOptionTypeNames[SIZE_OF_EntityOptionType];
+	static const char* entityOptionTypeNames[SIZE_OF_EntityOptionType];
 
 	ER_PresentationModel(void);
 	ER_PresentationModel(ER_Model*);
@@ -38,10 +38,10 @@ public:
 	void setIsPrimaryKey(int, bool);
 	bool getIsPrimaryKey(int);
 	string getPrimaryKeyString(int);
-	vector<int> findNode();
-	vector<int> findComponent();
+	vector<int> findNodes();
+	vector<int> findComponents();
 	vector<int> findTypeIdByComponentId(ERD_Component::ComponentType, int);
-	vector<int> findComponentType(ERD_Component::ComponentType);
+	vector<int> findComponentsByType(ERD_Component::ComponentType);
 	bool isExistTable();
 	string getForeignKeyResult(int);
 	string getAttributesForTable(int);
@@ -49,6 +49,11 @@ public:
 	string getTable();
 	string loadComponents(string);
 	string storeComponents(string);
+	string getConnectionsTable();
+	string getNodesTable();
+	string getComponentsTable();
+	string getEntitiesTable();
+	string getAttributesTableById(int);
 
 private:
 	ER_Model model;

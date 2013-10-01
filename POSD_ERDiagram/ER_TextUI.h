@@ -25,7 +25,7 @@ public:
 		Option_11,
 		SIZE_OF_MenuCommand 
 	};
-	static const char* MenuCommandNames[SIZE_OF_MenuCommand];
+	static const char* menuCommandNames[SIZE_OF_MenuCommand];
 
 	ER_TextUI(void);
 	ER_TextUI(ER_PresentationModel*);
@@ -38,15 +38,8 @@ public:
 	void setPrimaryKey();
 	int option1Question(string addNodeCommand, int type );
 	void printAddNodeResult(int type, int id, string addNodeName);
-	void printNodes();
-	void printConnections();
-	void printComponents();
-	void printEntities();
-	void printAttributesById(int);
 	void option2Question(string &);
-	vector<int> findAttributes(int);
 	void printEntityPrimaryKey(int);
-	void printTables();
 
 private:
 	ER_PresentationModel presentationModel;

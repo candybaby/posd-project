@@ -17,7 +17,7 @@ public:
 		Connection,
 		SIZE_OF_ComponentType
 	};
-	static const char* ComponentTypeNames[SIZE_OF_ComponentType];
+	static const char* componentTypeNames[SIZE_OF_ComponentType];
 	ERD_Component(void);
 	virtual ~ERD_Component(void);
 	int getId();
