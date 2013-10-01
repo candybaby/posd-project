@@ -1,0 +1,23 @@
+#pragma once
+#ifndef _ER_COMMANDMANAGER_ 
+#define _ER_COMMANDMANAGER_
+
+#include "ER_Command.h"
+#include <stack>
+
+using namespace std;
+
+class ER_CommandManager
+{
+public:
+	ER_CommandManager(void);
+	virtual ~ER_CommandManager(void);
+	void execute(ER_Command*);
+	void redo();
+	void undo();
+
+private:
+	stack<ER_Command*> undoCmds;
+	stack<ER_Command*> redoCmds;
+};
+#endif

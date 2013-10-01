@@ -83,6 +83,8 @@
     <ClCompile Include="ERD_Entity.cpp" />
     <ClCompile Include="ERD_Node.cpp" />
     <ClCompile Include="ERD_Relationship.cpp" />
+    <ClCompile Include="ER_Command.cpp" />
+    <ClCompile Include="ER_CommandManager.cpp" />
     <ClCompile Include="ER_ComponentFactory.cpp" />
     <ClCompile Include="ER_FileManager.cpp" />
     <ClCompile Include="ER_Model.cpp" />
@@ -98,6 +100,8 @@
     <ClInclude Include="ERD_Entity.h" />
     <ClInclude Include="ERD_Node.h" />
     <ClInclude Include="ERD_Relationship.h" />
+    <ClInclude Include="ER_Command.h" />
+    <ClInclude Include="ER_CommandManager.h" />
     <ClInclude Include="ER_ComponentFactory.h" />
     <ClInclude Include="ER_FileManager.h" />
     <ClInclude Include="ER_Model.h" />

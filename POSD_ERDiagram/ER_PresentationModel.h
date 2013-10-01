@@ -2,6 +2,8 @@
 #ifndef _ER_PRESENTATION_MODEL_ 
 #define _ER_PRESENTATION_MODEL_
 #include "ER_Model.h"
+#include "ER_CommandManager.h"
+
 class ER_PresentationModel
 {
 public:
@@ -54,9 +56,13 @@ public:
 	string getComponentsTable();
 	string getEntitiesTable();
 	string getAttributesTableById(int);
+	void redo();
+	void undo();
+
 
 private:
 	ER_Model model;
+	ER_CommandManager cmdManager;
 };
 
 #endif

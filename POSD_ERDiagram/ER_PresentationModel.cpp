@@ -528,3 +528,13 @@ string ER_PresentationModel::getAttributesTableById(int id)
 	result += ENDL;
 	return result;
 }
+
+void ER_PresentationModel::redo()
+{
+	cmdManager.redo();
+}
+
+void ER_PresentationModel::undo()
+{
+	cmdManager.undo();
+}
