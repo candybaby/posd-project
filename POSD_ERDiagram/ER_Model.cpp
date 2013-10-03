@@ -165,6 +165,10 @@ void ER_Model::addConnection(int component1Id, int component2Id, int id, string 
 		{
 			component = factory.createConnectionComponent(component1, component2, id, (ERD_Connection::ConnectionCardinality)i);
 		}
+		else if (cardinalityStr == EMPTY_TEXT)
+		{
+			component = factory.createConnectionComponent(component1, component2, id);
+		}
 	}
 	components.push_back(component);
 }
@@ -614,9 +618,37 @@ string ER_Model::checkEntitySelectedValid(string entityId)
 	return ID_NOT_EXIST;
 }
 
-void ER_Model::deleteComponent(int id)
+bool ER_Model::deleteComponent(int id)
 {
 	ERD_Component* delData = findComponentById(id);
-	components.erase(find(components.begin(), components.end(), delData));
-	delete delData;
+	if (delData == NULL)
+	{
+		return false;
+	}
+	else
+	{
+		components.erase(find(components.begin(), components.end(), delData));
+		delete delData;
+		return true;
+	}
+}
+
+// 找出與給定ID(targetId)有關的所有Connection的ID
+vector<int> ER_Model::findRelatedConnectionById(int targetId) 
+{
+	vector<int> connectsId = findComponentsByType(ERD_Component::Connection);
+	vector<int> resultVector;
+	for (vector<int>::iterator it = connectsId.begin(); it < connectsId.end(); it++)
+	{
+		if (((ERD_Connection *)findComponentById(*it))->isConnectToId(targetId))
+		{
+			resultVector.push_back(*it);
+		}
+	}
+	return resultVector;
+}
+
+void ER_Model::addComponent(ERD_Component* component)
+{
+	components.push_back(component);
 }

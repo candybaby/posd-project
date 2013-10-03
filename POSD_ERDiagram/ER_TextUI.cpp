@@ -96,17 +96,16 @@ void ER_TextUI::processCommand()
 	{
 		string deleteIdStr;
 		cin >> deleteIdStr;
-		presentationModel.deleteComponent(stoi(deleteIdStr));
+		cout << presentationModel.deleteComponent(stoi(deleteIdStr)) << endl;
+
 	}
 	else if (menuCommand == menuCommandNames[Option_9])  // Undo
 	{
 		cout << presentationModel.undo() << endl;
-		cout << endl;
 	}
 	else if (menuCommand == menuCommandNames[Option_10])  // Redo
 	{
 		cout << presentationModel.redo() << endl;
-		cout << endl;
 	}
 	else if (menuCommand == menuCommandNames[Option_11])  // Exit
 	{

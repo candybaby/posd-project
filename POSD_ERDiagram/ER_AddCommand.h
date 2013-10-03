@@ -8,7 +8,7 @@ class ER_AddCommand : public ER_Command
 public:
 	ER_AddCommand(void);
 	~ER_AddCommand(void);
-	void execute();
-	void unexecute();
+	string execute();
+	string unexecute();
 };
 #endif

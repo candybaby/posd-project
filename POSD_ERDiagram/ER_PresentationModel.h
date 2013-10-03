@@ -3,6 +3,9 @@
 #define _ER_PRESENTATION_MODEL_
 #include "ER_Model.h"
 #include "ER_CommandManager.h"
+#include "ER_AddCommand.h"
+#include "ER_ConnectCommand.h"
+#include "ER_DeleteCommand.h"
 
 class ER_PresentationModel
 {

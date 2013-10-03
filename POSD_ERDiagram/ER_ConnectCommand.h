@@ -7,7 +7,7 @@ class ER_ConnectCommand : public ER_Command
 public:
 	ER_ConnectCommand(void);
 	~ER_ConnectCommand(void);
-	void execute();
-	void unexecute();
+	string execute();
+	string unexecute();
 };
 #endif

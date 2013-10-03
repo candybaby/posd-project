@@ -10,11 +10,11 @@ ER_ConnectCommand::~ER_ConnectCommand(void)
 {
 }
 
-void ER_ConnectCommand::execute()
+string ER_ConnectCommand::execute()
 {
-
+	return "";
 }
-void ER_ConnectCommand::unexecute()
+string ER_ConnectCommand::unexecute()
 {
-
+	return "";
 }

@@ -20,8 +20,10 @@ ER_CommandManager::~ER_CommandManager(void)
 	}
 }
 
-void ER_CommandManager::execute(ER_Command* cmd) {
-	cmd->execute();
+string ER_CommandManager::execute(ER_Command* cmd) 
+{
+	string result;
+	result = cmd->execute();
 	undoCmds.push(cmd);
 
 	// cleanup and release redoable commands
@@ -30,9 +32,11 @@ void ER_CommandManager::execute(ER_Command* cmd) {
 		redoCmds.pop();
 		delete c;
 	}
+	return result;
 }
 
-bool ER_CommandManager::redo() {
+bool ER_CommandManager::redo() 
+{
 	if (redoCmds.size() == 0)
 	{
 		return false; // or throw exception
@@ -47,7 +51,8 @@ bool ER_CommandManager::redo() {
 	}
 }
 
-bool ER_CommandManager::undo() {
+bool ER_CommandManager::undo() 
+{
 	if (undoCmds.size() == 0)
 	{
 		return false;

@@ -12,7 +12,7 @@ class ER_CommandManager
 public:
 	ER_CommandManager(void);
 	virtual ~ER_CommandManager(void);
-	void execute(ER_Command*);
+	string execute(ER_Command*);
 	bool redo();
 	bool undo();
 

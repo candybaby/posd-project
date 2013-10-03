@@ -47,7 +47,6 @@ public:
 	void setIsPrimaryKey(int, bool);
 	bool getIsPrimaryKey(int);
 	void setIdVector(int, int, ERD_Component::ComponentType, vector<int> &);
-	int findComponentIdWithConnection(vector<ERD_Component*>, int);
 	vector<int> findNodes();
 	vector<int> findComponents();
 	vector<int> findComponentsByType(ERD_Component::ComponentType);
@@ -60,7 +59,9 @@ public:
 	string storeComponents(string);
 	bool isConnectCommandValid(string);
 	string checkEntitySelectedValid(string);
-	void deleteComponent(int);
+	bool deleteComponent(int);
+	vector<int> findRelatedConnectionById(int);
+	void addComponent(ERD_Component*);
 
 private:
 	vector<ERD_Component *> components;

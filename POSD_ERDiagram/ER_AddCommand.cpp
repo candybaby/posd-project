@@ -10,11 +10,12 @@ ER_AddCommand::~ER_AddCommand(void)
 {
 }
 
-void ER_AddCommand::execute()
+string ER_AddCommand::execute()
 {
-
+	return "";
 }
-void ER_AddCommand::unexecute()
-{
 
+string ER_AddCommand::unexecute()
+{
+	return "";
 }

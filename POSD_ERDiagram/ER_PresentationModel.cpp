@@ -401,6 +401,7 @@ string ER_PresentationModel::getConnectionsTable()
 	result += SEPARATOR_4;
 	result += ENDL;
 	vector<int> connectionsId = findComponentsByType(ERD_Component::Connection);
+	sort(connectionsId.begin(), connectionsId.end());
 	for (vector<int>::iterator it = connectionsId.begin(); it < connectionsId.end(); it++) 
 	{
 		int id = *it, node1Id = getConnectionNode1ById(id), node2Id = getConnectionNode2ById(id);
@@ -429,6 +430,7 @@ string ER_PresentationModel::getNodesTable()
 	result += SEPARATOR_2;
 	result += ENDL;
 	vector<int> nodesId = findNodes();
+	sort(nodesId.begin(), nodesId.end());
 	for (vector<int>::iterator it = nodesId.begin(); it < nodesId.end(); it++)
 	{
 		int id = *it;
@@ -457,7 +459,7 @@ string ER_PresentationModel::getComponentsTable()
 	result += SEPARATOR_2;
 	result += ENDL;
 	vector<int> componentsId = findComponents();
-	sort(componentsId.begin(),componentsId.end());
+	sort(componentsId.begin(), componentsId.end());
 	for (vector<int>::iterator it = componentsId.begin(); it < componentsId.end(); it++)
 	{
 		int id = *it;
@@ -486,6 +488,7 @@ string ER_PresentationModel::getEntitiesTable()
 	result += SEPARATOR_2;
 	result += ENDL;
 	vector<int> entitiesId = findComponentsByType(ERD_Component::Entity);
+	sort(entitiesId.begin(), entitiesId.end());
 	for (vector<int>::iterator it = entitiesId.begin(); it < entitiesId.end(); it++) 
 	{
 		int id = *it;
@@ -516,6 +519,7 @@ string ER_PresentationModel::getAttributesTableById(int id)
 	result += SEPARATOR_2;
 	result += ENDL;
 	vector<int> attributesList = findTypeIdByComponentId(ERD_Component::Attribute, id);
+	sort(attributesList.begin(), attributesList.end());
 	for (vector<int>::iterator it = attributesList.begin(); it < attributesList.end(); it++) 
 	{
 		int id = *it;
@@ -547,6 +551,7 @@ string ER_PresentationModel::redo()
 	else
 	{
 		message += "Cannot redo.";
+		message += ENDL;
 	}
 	return message;
 }
@@ -566,12 +571,28 @@ string ER_PresentationModel::undo()
 	else
 	{
 		message += "Cannot undo.";
+		message += ENDL;
 	}
 	return message;
 }
 
 string ER_PresentationModel::deleteComponent(int id)
 {
-	model.deleteComponent(id);
-	return "";
+	string cmdResult = cmdManager.execute(new ER_DeleteCommand(&model, id));
+	if (cmdResult != "")
+	{
+		string message;
+		message += "The component \"";
+		message += cmdResult;
+		message += "\" has been deleted.";
+		message += ENDL;
+		message += getComponentsTable();
+		message += ENDL;
+		message += getConnectionsTable();
+		return message;
+	}
+	else
+	{
+		return "fail to delete!";
+	}
 }
