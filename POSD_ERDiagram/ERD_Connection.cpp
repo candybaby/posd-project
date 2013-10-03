@@ -36,3 +36,16 @@ ERD_Connection::ConnectionCardinality ERD_Connection::getCardinality()
 	return this->cardinality;
 }
 
+bool ERD_Connection::isConnectToId(int id)
+{
+	for (vector<ERD_Component *>::iterator it = connections.begin(); it < connections.end(); it++)
+	{
+		ERD_Component* target = *it;
+		if (target->getId() == id)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+

@@ -20,6 +20,7 @@ public:
 	~ERD_Connection(void);
 	ConnectionCardinality getCardinality();
 	void setCardinality(ConnectionCardinality);
+	bool isConnectToId(int);
 
 private:
 	ConnectionCardinality cardinality;
