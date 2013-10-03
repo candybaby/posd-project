@@ -13,8 +13,8 @@ public:
 	ER_CommandManager(void);
 	virtual ~ER_CommandManager(void);
 	void execute(ER_Command*);
-	void redo();
-	void undo();
+	bool redo();
+	bool undo();
 
 private:
 	stack<ER_Command*> undoCmds;

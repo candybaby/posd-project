@@ -529,12 +529,40 @@ string ER_PresentationModel::getAttributesTableById(int id)
 	return result;
 }
 
-void ER_PresentationModel::redo()
+string ER_PresentationModel::redo()
 {
-	cmdManager.redo();
+	string message;
+	bool redoResult;
+	redoResult = cmdManager.redo();
+	if (redoResult)
+	{
+		message += "Redo Succeed!";
+		message += getComponentsTable();
+		message += ENDL;
+		message += getConnectionsTable();
+	}
+	else
+	{
+		message += "Cannot redo.";
+	}
+	return message;
 }
 
-void ER_PresentationModel::undo()
+string ER_PresentationModel::undo()
 {
-	cmdManager.undo();
+	string message;
+	bool undoResult;
+	undoResult = cmdManager.undo();
+	if (undoResult)
+	{
+		message += "Undo Succeed!";
+		message += getComponentsTable();
+		message += ENDL;
+		message += getConnectionsTable();
+	}
+	else
+	{
+		message += "Cannot undo.";
+	}
+	return message;
 }

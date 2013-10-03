@@ -56,8 +56,8 @@ public:
 	string getComponentsTable();
 	string getEntitiesTable();
 	string getAttributesTableById(int);
-	void redo();
-	void undo();
+	string redo();
+	string undo();
 
 
 private:

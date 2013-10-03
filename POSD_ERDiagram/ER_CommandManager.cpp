@@ -32,22 +32,32 @@ void ER_CommandManager::execute(ER_Command* cmd) {
 	}
 }
 
-void ER_CommandManager::redo() {
+bool ER_CommandManager::redo() {
 	if (redoCmds.size() == 0)
-		return; // or throw exception
-
-	ER_Command* c = redoCmds.top();
-	redoCmds.pop();
-	c->execute(); // redo the command
-	undoCmds.push(c);
+	{
+		return false; // or throw exception
+	}
+	else
+	{
+		ER_Command* c = redoCmds.top();
+		redoCmds.pop();
+		c->execute(); // redo the command
+		undoCmds.push(c);
+		return true;
+	}
 }
 
-void ER_CommandManager::undo() {
+bool ER_CommandManager::undo() {
 	if (undoCmds.size() == 0)
-		return;
-
-	ER_Command* c = undoCmds.top();
-	undoCmds.pop();
-	c->unexecute(); // undo the command
-	redoCmds.push(c);
+	{
+		return false;
+	}
+	else
+	{
+		ER_Command* c = undoCmds.top();
+		undoCmds.pop();
+		c->unexecute(); // undo the command
+		redoCmds.push(c);
+		return true;
+	}
 }
