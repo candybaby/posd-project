@@ -13,6 +13,8 @@
 #define NOT_ENTITY "Not an Entity"
 #define ID_NOT_EXIST "Id Not Exist"
 
+using namespace std;
+
 ER_Model::ER_Model(void)
 {
 	currentId = 0;
@@ -610,4 +612,11 @@ string ER_Model::checkEntitySelectedValid(string entityId)
 		}
 	}
 	return ID_NOT_EXIST;
+}
+
+void ER_Model::deleteComponent(int id)
+{
+	ERD_Component* delData = findComponentById(id);
+	components.erase(find(components.begin(), components.end(), delData));
+	delete delData;
 }

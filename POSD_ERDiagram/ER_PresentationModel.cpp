@@ -432,12 +432,12 @@ string ER_PresentationModel::getNodesTable()
 	for (vector<int>::iterator it = nodesId.begin(); it < nodesId.end(); it++)
 	{
 		int id = *it;
-		result +=  SPACE_TEXT_1;
-		result +=  ERD_Component::componentTypeNames[getTypeById(id)];
-		result +=  SEPARATOR_5;
-		result +=  Tool_Function::intToString(id);
-		result +=  SEPARATOR_5;
-		result +=  getNameById(id);
+		result += SPACE_TEXT_1;
+		result += ERD_Component::componentTypeNames[getTypeById(id)];
+		result += SEPARATOR_5;
+		result += Tool_Function::intToString(id);
+		result += SEPARATOR_5;
+		result += getNameById(id);
 		result += ENDL;
 	}
 	result += SEPARATOR_1;
@@ -456,14 +456,17 @@ string ER_PresentationModel::getComponentsTable()
 	result += ENDL;
 	result += SEPARATOR_2;
 	result += ENDL;
-	for (int i = 0; i < getCurrentId(); i++) // sort by id
+	vector<int> componentsId = findComponents();
+	sort(componentsId.begin(),componentsId.end());
+	for (vector<int>::iterator it = componentsId.begin(); it < componentsId.end(); it++)
 	{
-		result +=  SPACE_TEXT_1;
-		result +=  ERD_Component::componentTypeNames[getTypeById(i)];
-		result +=  SEPARATOR_5;
-		result +=  Tool_Function::intToString(i);
-		result +=  SEPARATOR_5;
-		result += getNameById(i);
+		int id = *it;
+		result += SPACE_TEXT_1;
+		result += ERD_Component::componentTypeNames[getTypeById(id)];
+		result += SEPARATOR_5;
+		result += Tool_Function::intToString(id);
+		result += SEPARATOR_5;
+		result += getNameById(id);
 		result += ENDL;
 	}
 	result += SEPARATOR_1;
@@ -565,4 +568,10 @@ string ER_PresentationModel::undo()
 		message += "Cannot undo.";
 	}
 	return message;
+}
+
+string ER_PresentationModel::deleteComponent(int id)
+{
+	model.deleteComponent(id);
+	return "";
 }

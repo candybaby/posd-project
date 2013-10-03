@@ -94,7 +94,9 @@ void ER_TextUI::processCommand()
 	}
 	else if (menuCommand == menuCommandNames[Option_8])  // Delete a component
 	{
-		
+		string deleteIdStr;
+		cin >> deleteIdStr;
+		presentationModel.deleteComponent(stoi(deleteIdStr));
 	}
 	else if (menuCommand == menuCommandNames[Option_9])  // Undo
 	{

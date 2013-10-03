@@ -3,11 +3,13 @@
 #define _ER_MODEL_
 #include <string>
 #include <vector>
+#include <algorithm>
 #include <map>
 #include "ERD_Component.h"
 #include "ER_ComponentFactory.h"
 #include "Tool_Function.h"
 #include "ER_FileManager.h"
+
 
 using namespace std;
 class ER_Model
@@ -58,6 +60,7 @@ public:
 	string storeComponents(string);
 	bool isConnectCommandValid(string);
 	string checkEntitySelectedValid(string);
+	void deleteComponent(int);
 
 private:
 	vector<ERD_Component *> components;

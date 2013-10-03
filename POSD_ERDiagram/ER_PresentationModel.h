@@ -58,6 +58,7 @@ public:
 	string getAttributesTableById(int);
 	string redo();
 	string undo();
+	string deleteComponent(int);
 
 
 private:
