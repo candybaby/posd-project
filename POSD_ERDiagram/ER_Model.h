@@ -23,10 +23,17 @@ public:
 		Connection,
 		SIZE_OF_ComponentTypeMap
 	};
+	struct ComponentSorter
+	{
+		bool ComponentSorter::operator ()(ERD_Component* lhs, ERD_Component* rhs) {
+			return lhs->getId() > rhs->getId();
+		}
+	};
 	static const char* componentTypeMapNames[SIZE_OF_ComponentTypeMap];
 	ER_Model(void);
 	~ER_Model(void);
 	void clearCurrentComponents();
+	void sortComponents();
 	vector<ERD_Component*> getComponents();
 	void addNode(ERD_Component::ComponentType, string);
 	void addNode(string, string);
@@ -35,29 +42,27 @@ public:
 	string addConnection(int, int, ERD_Connection::ConnectionCardinality);
 	void addConnection(int, int, int);
 	void addConnection(int, int, int, string);
-	string getTable();
 	int getCurrentId();
 	int getIdByIndex(int);
-	int getConnectionNode1ById(int);
-	int getConnectionNode2ById(int);
+	int getConnectionNodeById(int, int);
 	string getNameById(int);
 	ERD_Component::ComponentType getTypeById(int);
 	ERD_Component* findComponentById(int);
 	bool isAlreadyConnect(ERD_Component*, ERD_Component*);
 	void setIsPrimaryKey(int, bool);
 	bool getIsPrimaryKey(int);
-	void setIdVector(int, int, ERD_Component::ComponentType, vector<int> &);
+	void setRelatedIdVector(int, int, ERD_Component::ComponentType, vector<int> &);
 	vector<int> findNodes();
 	vector<int> findComponents();
 	vector<int> findComponentsByType(ERD_Component::ComponentType);
-	vector<int> findTypeIdByComponentId(ERD_Component::ComponentType, int);
-	vector<int> findTypeIdByComponentIdWithCardinality(ERD_Component::ComponentType, int);
+	vector<int> findIdWithTypeByTargetId(ERD_Component::ComponentType, int);
+	vector<int> findIdWithTypeByTargetIdWithCardinality(ERD_Component::ComponentType, int);
 	vector<int> findPrimaryKeyByEntityId(int);
 	vector<vector<int>> findForeignKeyByEntityId(int);
 	vector<int> findOneByOneRelationEntityId(int);
 	string loadComponents(string);
 	string storeComponents(string);
-	bool isConnectCommandValid(string);
+	bool isExistComponentId(string);
 	string checkEntitySelectedValid(string);
 	bool deleteComponent(int);
 	vector<int> findRelatedConnectionById(int);

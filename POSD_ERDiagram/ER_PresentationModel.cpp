@@ -50,7 +50,8 @@ ER_PresentationModel::~ER_PresentationModel(void)
 
 const char* ER_PresentationModel::entityOptionTypeNames[SIZE_OF_EntityOptionType] = { "A", "E", "R", "Attribute", "Entity", "Relation"};
 
-int ER_PresentationModel::option1Mapping(string command)
+// 新增Node時輸入與Type之間的對應
+int ER_PresentationModel::addNodeOptionMapping(string command)
 {
 	int result = -1;
 	for (int i = 0; i < SIZE_OF_EntityOptionType; i++)
@@ -63,61 +64,67 @@ int ER_PresentationModel::option1Mapping(string command)
 	return result;
 }
 
+// 新增節點
 void ER_PresentationModel::addNode(ERD_Component::ComponentType componentType, string nodeName)
 {
 	model.addNode(componentType, nodeName);
 }
 
+// 取得現在的ID
 int ER_PresentationModel::getCurrentId()
 {
 	return model.getCurrentId();
 }
 
+// 取得ID藉由index
 int ER_PresentationModel::getIdByIndex(int index)
 {
 	return model.getIdByIndex(index);
 }
 
-int ER_PresentationModel::getConnectionNode1ById(int index)
+// 取得connection(by ID)連接兩端的ID以nodeNumber來區分0 1
+int ER_PresentationModel::getConnectionNodeById(int id, int nodeNumber)
 {
-	return model.getConnectionNode1ById(index);
+	return model.getConnectionNodeById(id, nodeNumber);
 }
 
-int ER_PresentationModel::getConnectionNode2ById(int index)
+// 取得text的值藉由id
+string ER_PresentationModel::getNameById(int id)
 {
-	return model.getConnectionNode2ById(index);
+	return model.getNameById(id);
 }
 
-string ER_PresentationModel::getNameById(int index)
+// 取得Type藉由id
+ERD_Component::ComponentType ER_PresentationModel::getTypeById(int id)
 {
-	return model.getNameById(index);
+	return model.getTypeById(id);
 }
 
-ERD_Component::ComponentType ER_PresentationModel::getTypeById(int index)
-{
-	return model.getTypeById(index);
-}
-
+// 新增連線
 string ER_PresentationModel::addConnection(int firstNodeId,int secondNodeId)
 {
 	return model.addConnection(firstNodeId, secondNodeId);
 }
 
+// 新增連線
 string ER_PresentationModel::addConnection(int firstNodeId,int secondNodeId, ERD_Connection::ConnectionCardinality cardinality)
 {
 	return model.addConnection(firstNodeId, secondNodeId, cardinality);
 }
 
-bool ER_PresentationModel::isConnectCommandValid(string command)
+// 判斷idStr是不是已存在的componentId
+bool ER_PresentationModel::isExistComponentId(string idStr)
 {
-	return model.isConnectCommandValid(command);
+	return model.isExistComponentId(idStr);
 }
 
+// 判斷entityId是不是Entity
 string ER_PresentationModel::checkEntitySelectedValid(string entityId)
 {
 	return model.checkEntitySelectedValid(entityId);
 }
 
+// 處理設定primaryKey的字串
 string ER_PresentationModel::checkAttributesSelectedValid(string queryMessage,int id)
 {
 	string message;
@@ -153,9 +160,10 @@ string ER_PresentationModel::checkAttributesSelectedValid(string queryMessage,in
 	return message;
 }
 
+// 判斷Attribute是不是屬於特定Entity的
 bool ER_PresentationModel::isAttributeBelongEntity(int attributeId, int entityId)
 {
-	vector<int> attributesId = findTypeIdByComponentId(ERD_Component::Attribute, entityId);
+	vector<int> attributesId = findIdWithTypeByTargetId(ERD_Component::Attribute, entityId);
 	for (vector<int>::iterator it = attributesId.begin(); it < attributesId.end(); it++)
 	{
 		if (attributeId == *it)
@@ -166,20 +174,23 @@ bool ER_PresentationModel::isAttributeBelongEntity(int attributeId, int entityId
 	return false;
 }
 
+// 設定id為PrimaryKey
 void ER_PresentationModel::setIsPrimaryKey(int id, bool flag)
 {
 	model.setIsPrimaryKey(id, flag);
 }
 
+// 取得id是否為primaryKey
 bool ER_PresentationModel::getIsPrimaryKey(int id)
 {
 	return model.getIsPrimaryKey(id);
 }
 
+// 取得primaryKey的顯示字串
 string ER_PresentationModel::getPrimaryKeyString(int id)
 {
 	string result;
-	vector<int> attributesVector = model.findTypeIdByComponentId(ERD_Component::Attribute, id);
+	vector<int> attributesVector = model.findIdWithTypeByTargetId(ERD_Component::Attribute, id);
 	if (attributesVector.size() == 0)
 	{
 		return result;
@@ -197,26 +208,31 @@ string ER_PresentationModel::getPrimaryKeyString(int id)
 	return result;
 }
 
+// 找Node集合(不包含connection)
 vector<int> ER_PresentationModel::findNodes()
 {
 	return model.findNodes();
 }
 
+// 找component集合(全部)
 vector<int> ER_PresentationModel::findComponents()
 {
 	return model.findComponents();
 }
 
-vector<int> ER_PresentationModel::findTypeIdByComponentId(ERD_Component::ComponentType type, int id)
+// 找targetId與特定type相連的NodeID(不包含connection)
+vector<int> ER_PresentationModel::findIdWithTypeByTargetId(ERD_Component::ComponentType type, int id)
 {
-	return model.findTypeIdByComponentId(type, id);
+	return model.findIdWithTypeByTargetId(type, id);
 }
 
+// 找特定型態的component集合
 vector<int> ER_PresentationModel::findComponentsByType(ERD_Component::ComponentType type)
 {
 	return model.findComponentsByType(type);
 }
 
+// 是否存在table
 bool ER_PresentationModel::isExistTable()
 {
 	vector<int> entitiesId = findComponentsByType(ERD_Component::Entity);
@@ -234,6 +250,7 @@ bool ER_PresentationModel::isExistTable()
 	return false;
 }
 
+// 取得特定ID的ForeignKey
 string ER_PresentationModel::getForeignKeyResult(int id)
 {
 	string foreignKeystring;
@@ -256,10 +273,11 @@ string ER_PresentationModel::getForeignKeyResult(int id)
 	return foreignKeystring;
 }
 
+// 回傳特定id的Attribute字串
 string ER_PresentationModel::getAttributesForTable(int id)
 {
 	string result, primaryKeyString = PRIMARY_KEY;
-	vector<int> attributesId = findTypeIdByComponentId(ERD_Component::Attribute, id);
+	vector<int> attributesId = findIdWithTypeByTargetId(ERD_Component::Attribute, id);
 	if (attributesId.size() == 0)
 	{
 		return result;
@@ -311,6 +329,7 @@ string ER_PresentationModel::getAttributesForTable(int id)
 	return result;
 }
 
+// 找出有1對1關係的entity
 vector<int> ER_PresentationModel::findOneByOneEntity()
 {
 	vector<int> entitiesId = findComponentsByType(ERD_Component::Entity);
@@ -325,6 +344,7 @@ vector<int> ER_PresentationModel::findOneByOneEntity()
 	return entitiesOneByOneId;
 }
 
+// 回傳table字串
 string ER_PresentationModel::getTable()
 {
 	string message;
@@ -348,7 +368,6 @@ string ER_PresentationModel::getTable()
 			message += getAttributesForTable(*it);
 			message += ENDL;
 		}
-
 		message += SEPARATOR_6;
 	}
 	else
@@ -359,6 +378,7 @@ string ER_PresentationModel::getTable()
 	return message;
 }
 
+// 讀檔
 string ER_PresentationModel::loadComponents(string path)
 {
 	string message = model.loadComponents(path);
@@ -376,6 +396,7 @@ string ER_PresentationModel::loadComponents(string path)
 	}
 }
 
+// 存檔
 string ER_PresentationModel::storeComponents(string path)
 {
 	string message = model.storeComponents(path);
@@ -389,6 +410,7 @@ string ER_PresentationModel::storeComponents(string path)
 	}
 }
 
+// 回傳connection字串
 string ER_PresentationModel::getConnectionsTable()
 {
 	string result;
@@ -404,7 +426,7 @@ string ER_PresentationModel::getConnectionsTable()
 	sort(connectionsId.begin(), connectionsId.end());
 	for (vector<int>::iterator it = connectionsId.begin(); it < connectionsId.end(); it++) 
 	{
-		int id = *it, node1Id = getConnectionNode1ById(id), node2Id = getConnectionNode2ById(id);
+		int id = *it, node1Id = getConnectionNodeById(id, 0), node2Id = getConnectionNodeById(id, 1);
 		result += SPACE_TEXT_2;
 		result += Tool_Function::intToString(id);
 		result += SEPARATOR_3;
@@ -418,6 +440,7 @@ string ER_PresentationModel::getConnectionsTable()
 	return result;
 }
 
+// 回傳node字串
 string ER_PresentationModel::getNodesTable()
 {
 	string result;
@@ -447,6 +470,7 @@ string ER_PresentationModel::getNodesTable()
 	return result;
 }
 
+// 回傳component字串
 string ER_PresentationModel::getComponentsTable()
 {
 	string result;
@@ -476,6 +500,7 @@ string ER_PresentationModel::getComponentsTable()
 	return result;
 }
 
+// 回傳entity字串
 string ER_PresentationModel::getEntitiesTable()
 {
 	string result;
@@ -505,6 +530,7 @@ string ER_PresentationModel::getEntitiesTable()
 	return result;
 }
 
+// 回傳特定id Attribute字串
 string ER_PresentationModel::getAttributesTableById(int id)
 {
 	string result;
@@ -518,7 +544,7 @@ string ER_PresentationModel::getAttributesTableById(int id)
 	result += ENDL;
 	result += SEPARATOR_2;
 	result += ENDL;
-	vector<int> attributesList = findTypeIdByComponentId(ERD_Component::Attribute, id);
+	vector<int> attributesList = findIdWithTypeByTargetId(ERD_Component::Attribute, id);
 	sort(attributesList.begin(), attributesList.end());
 	for (vector<int>::iterator it = attributesList.begin(); it < attributesList.end(); it++) 
 	{
@@ -536,6 +562,7 @@ string ER_PresentationModel::getAttributesTableById(int id)
 	return result;
 }
 
+// redo
 string ER_PresentationModel::redo()
 {
 	string message;
@@ -556,6 +583,7 @@ string ER_PresentationModel::redo()
 	return message;
 }
 
+// undo
 string ER_PresentationModel::undo()
 {
 	string message;
@@ -576,6 +604,7 @@ string ER_PresentationModel::undo()
 	return message;
 }
 
+// 刪除特定id的component
 string ER_PresentationModel::deleteComponent(int id)
 {
 	string cmdResult = cmdManager.execute(new ER_DeleteCommand(&model, id));

@@ -221,7 +221,7 @@ int ER_TextUI::option1Question(string addNodeCommand, int type)
 {
 	cout << ADD_NODE_CHOOSE_TEXT << endl;
 	cin >> addNodeCommand;
-	type = presentationModel.option1Mapping(addNodeCommand);
+	type = presentationModel.addNodeOptionMapping(addNodeCommand);
 	return type;
 }
 
@@ -233,7 +233,7 @@ void ER_TextUI::printAddNodeResult(int type, int id, string addNodeName)
 void ER_TextUI::option2Question(string &connectNode)
 {
 	cin >> connectNode;
-	while (!presentationModel.isConnectCommandValid(connectNode))
+	while (!presentationModel.isExistComponentId(connectNode))
 	{
 		cout << NODE_NOT_EXIST << RE_ENTER << endl;
 		cin >> connectNode;

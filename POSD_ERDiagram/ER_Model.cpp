@@ -35,6 +35,13 @@ void ER_Model::clearCurrentComponents()
 	}
 }
 
+// 依據id將components重新sort一遍 (未測試)
+void ER_Model::sortComponents()
+{
+	ComponentSorter cs;
+	std::sort(components.begin(), components.end(), cs);
+}
+
 const char* ER_Model::componentTypeMapNames[SIZE_OF_ComponentTypeMap] = {"A", "E", "R", "C"};
 
 vector<ERD_Component*> ER_Model::getComponents()
@@ -42,26 +49,28 @@ vector<ERD_Component*> ER_Model::getComponents()
 	return components;
 }
 
+// 新增節點(不包含connection)
 void ER_Model::addNode(ERD_Component::ComponentType type, string nodeName)
 {
 	ERD_Component* component = factory.createNodeComponent(type, nodeName, currentId);
 	components.push_back(component);
 	currentId++;
+	sortComponents();
 }
 
+// 新增節點(不包含connection) Type為字串
 void ER_Model::addNode(string type, string nodeName)
 {
 	for (int i = 0; i < SIZE_OF_ComponentTypeMap; i++)
 	{
 		if (componentTypeMapNames[i] == type)
 		{
-			ERD_Component* component = factory.createNodeComponent((ERD_Component::ComponentType)i, nodeName, currentId);
-			components.push_back(component);
-			currentId++;
+			addNode((ERD_Component::ComponentType)i, nodeName);
 		}
 	}
 }
 
+// 設定Attribute為以連線狀態
 ERD_Component* ER_Model::setAttributeTypeConnected(ERD_Component* component)
 {
 	ERD_Attribute* attribute = (ERD_Attribute*) component;
@@ -69,17 +78,20 @@ ERD_Component* ER_Model::setAttributeTypeConnected(ERD_Component* component)
 	return attribute;
 }
 
+// 新增連線 參數為兩個Node要連接的ID
 string ER_Model::addConnection(int component1Id, int component2Id)
 {
 	string message;
 	ERD_Component* component1 = findComponentById(component1Id);
 	ERD_Component* component2 = findComponentById(component2Id);
+	string component1IdStr = Tool_Function::intToString(component1Id);
+	string component2IdStr = Tool_Function::intToString(component2Id);
 	if (isAlreadyConnect(component1, component2)) //已經相連了
 	{
 		message += MESSAGE_NODE_1;
-		message	+= Tool_Function::intToString(component1Id);
+		message	+= component1IdStr;
 		message	+= MESSAGE_NODE_5;
-		message	+= Tool_Function::intToString(component2Id);
+		message	+= component2IdStr;
 		message	+= MESSAGE_NODE_3;
 		return message;
 	}
@@ -91,9 +103,9 @@ string ER_Model::addConnection(int component1Id, int component2Id)
 			return message;
 		}
 		message += MESSAGE_NODE_1;
-		message	+= Tool_Function::intToString(component1Id);
+		message	+= component1IdStr;
 		message	+= MESSAGE_NODE_2;
-		message	+= Tool_Function::intToString(component2Id);
+		message	+= component2IdStr;
 		message	+= MESSAGE_NODE_3;
 		if (component1->getType() == ERD_Component::Attribute)
 		{
@@ -106,35 +118,39 @@ string ER_Model::addConnection(int component1Id, int component2Id)
 		ERD_Component* component = factory.createConnectionComponent(component1, component2, currentId);
 		components.push_back(component);
 		currentId++;
+		sortComponents();
 		return message;
 	}
 	else if (component1Id == component2Id)
 	{
 		message += MESSAGE_NODE_1;
-		message	+= Tool_Function::intToString(component1Id);
+		message	+= component1IdStr;
 		message	+= MESSAGE_NODE_4;
 	}
 	else
 	{
 		message += MESSAGE_NODE_1;
-		message	+= Tool_Function::intToString(component2Id);
+		message	+= component2IdStr;
 		message	+= MESSAGE_NODE_6;
-		message	+= Tool_Function::intToString(component1Id);
+		message	+= component1IdStr;
 		message	+= MESSAGE_NODE_3;
 	}
 
 	return message;
 }
 
+// 新增連線 此連線有Cardinality屬性
 string ER_Model::addConnection(int component1Id, int component2Id, ERD_Connection::ConnectionCardinality cardinality)
 {
 	string message;
 	ERD_Component* component1 = findComponentById(component1Id);
 	ERD_Component* component2 = findComponentById(component2Id);
+	string component1IdStr = Tool_Function::intToString(component1Id);
+	string component2IdStr = Tool_Function::intToString(component2Id);
 	message += MESSAGE_NODE_1;
-	message	+= Tool_Function::intToString(component1Id);
+	message	+= component1IdStr;
 	message	+= MESSAGE_NODE_2;
-	message	+= Tool_Function::intToString(component2Id);
+	message	+= component2IdStr;
 	message	+= MESSAGE_NODE_3;
 	message	+= MESSAGE_NODE_7;
 	message	+= MESSAGE_NODE_8;
@@ -143,17 +159,21 @@ string ER_Model::addConnection(int component1Id, int component2Id, ERD_Connectio
 	ERD_Component* component = factory.createConnectionComponent(component1, component2, currentId, cardinality);
 	components.push_back(component);
 	currentId++;
+	sortComponents();
 	return message;
 }
 
+// 新增連線 特定ID位置的新增 主要用於讀檔時的新增
 void ER_Model::addConnection(int component1Id, int component2Id, int id)
 {
 	ERD_Component* component1 = findComponentById(component1Id);
 	ERD_Component* component2 = findComponentById(component2Id);
 	ERD_Component* component = factory.createConnectionComponent(component1, component2, id);
 	components.push_back(component);
+	sortComponents();
 }
 
+// 新增連線 特定ID位置的新增包含cardinality屬性 主要用於讀檔時的新增
 void ER_Model::addConnection(int component1Id, int component2Id, int id, string cardinalityStr)
 {
 	ERD_Component* component1 = findComponentById(component1Id);
@@ -171,70 +191,64 @@ void ER_Model::addConnection(int component1Id, int component2Id, int id, string 
 		}
 	}
 	components.push_back(component);
+	sortComponents();
 }
 
-string ER_Model::getTable()
-{
-	return EMPTY_TEXT;
-}
-
+// 回傳目前的ID
 int ER_Model::getCurrentId()
 {
 	return currentId;
 }
 
+// 用index找到對應的ID
 int ER_Model::getIdByIndex(int index)
 {
 	return components.at(index)->getId();
 }
 
-int ER_Model::getConnectionNode1ById(int id)
+// 取得連線的兩個node 以nodeNumber來分node0與node1
+int ER_Model::getConnectionNodeById(int id, int nodeNumber)
 {
 	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
 	{
 		if (((ERD_Component *)*it)->getId() == id)
 		{
-			return ((ERD_Component *)*it)->getConnections().at(0)->getId();
+			return ((ERD_Component *)*it)->getConnections().at(nodeNumber)->getId();
 		}
 	}
-	return -1; // 例外
-}
-int ER_Model::getConnectionNode2ById(int id)
-{
-	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
-	{
-		if (((ERD_Component *)*it)->getId() == id)
-		{
-			return ((ERD_Component *)*it)->getConnections().at(1)->getId();
-		}
-	}
-	return -1; // 例外
+	return -1; // exception
 }
 
+// 取得名稱藉由ID
 string ER_Model::getNameById(int id)
 {
-	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
+	ERD_Component* target = findComponentById(id);
+	if (target != NULL)
 	{
-		if (((ERD_Component *)*it)->getId() == id)
-		{
-			return ((ERD_Component *)*it)->getText();
-		}
+		return target->getText();
 	}
-	return EMPTY_TEXT; // 例外
+	else
+	{
+		return EMPTY_TEXT; // exception
+	}
+	
 }
 
+// 取得型態藉由ID
 ERD_Component::ComponentType ER_Model::getTypeById(int id)
 {
-	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
+	ERD_Component* target = findComponentById(id);
+	if (target != NULL)
 	{
-		if (((ERD_Component *)*it)->getId() == id)
-		{
-			return ((ERD_Component *)*it)->getType();
-		}
+		return target->getType();
 	}
-	return ERD_Component::SIZE_OF_ComponentType; // 例外
+	else
+	{
+		return ERD_Component::SIZE_OF_ComponentType; // exception
+	}
 }
 
+// 取得ERD_Component藉由ID
 ERD_Component* ER_Model::findComponentById(int id)
 {
 	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
@@ -247,17 +261,15 @@ ERD_Component* ER_Model::findComponentById(int id)
 	return NULL;
 }
 
+// 兩個node是否已經連線
 bool ER_Model::isAlreadyConnect(ERD_Component* node1, ERD_Component* node2)
 {
 	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
 	{
 		if (((ERD_Component *)*it)->getType() == ERD_Component::Connection)
 		{
-			if (((ERD_Component *)*it)->getConnections().at(0)->getId() == node1->getId() && ((ERD_Component *)*it)->getConnections().at(1)->getId() == node2->getId())
-			{
-				return true;
-			}
-			else if (((ERD_Component *)*it)->getConnections().at(1)->getId() == node1->getId() && ((ERD_Component *)*it)->getConnections().at(0)->getId() == node2->getId())
+			ERD_Connection* connection = (ERD_Connection*)*it;
+			if (connection->isConnectToId(node1->getId()) && connection->isConnectToId(node2->getId()))
 			{
 				return true;
 			}
@@ -266,42 +278,38 @@ bool ER_Model::isAlreadyConnect(ERD_Component* node1, ERD_Component* node2)
 	return false;
 }
 
+// 設定特定的ID為PrimaryKey(Attribute)
 void ER_Model::setIsPrimaryKey(int id, bool flag)
 {
-	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
-	{
-		if (((ERD_Component *)*it)->getId() == id)
-		{
-			ERD_Attribute* att = (ERD_Attribute*)*it;
-			att->setPrimaryKey(flag);
-		}
-	}
+	ERD_Attribute* att = (ERD_Attribute*)findComponentById(id);
+	att->setPrimaryKey(flag);
 }
 
+// 取得特定的ID(Attribute)是否為PrimaryKey
 bool ER_Model::getIsPrimaryKey(int id)
 {
-	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
+	ERD_Attribute* att = (ERD_Attribute*)findComponentById(id);
+	if (att != NULL)
 	{
-		if (((ERD_Component *)*it)->getId() == id)
-		{
-			ERD_Attribute* att = (ERD_Attribute*)*it;
-			return att->getIsPrimaryKey();
-		}
+		return att->getIsPrimaryKey();
 	}
-	return false;
+	else
+	{
+		return false; // exception
+	}
 }
 
-
-void ER_Model::setIdVector(int sourceId, int targetId, ERD_Component::ComponentType type, vector<int> &idVector)
+// sourceId為connection找連線為targetId的點將與targetId相連的ID且形態等於type的點記錄起來
+void ER_Model::setRelatedIdVector(int sourceId, int targetId, ERD_Component::ComponentType type, vector<int> &idVector)
 {
 	int id = -1;
-	if (getConnectionNode1ById(sourceId) == targetId)
+	if (getConnectionNodeById(sourceId, 0) == targetId)
 	{
-		id = getConnectionNode2ById(sourceId);
+		id = getConnectionNodeById(sourceId, 1);
 	}
-	else if (getConnectionNode2ById(sourceId) == targetId)
+	else if (getConnectionNodeById(sourceId, 1) == targetId)
 	{
-		id = getConnectionNode1ById(sourceId);
+		id = getConnectionNodeById(sourceId, 0);
 	}
 	if (id >= 0 && findComponentById(id)->getType() == type)
 	{
@@ -309,6 +317,7 @@ void ER_Model::setIdVector(int sourceId, int targetId, ERD_Component::ComponentT
 	}
 }
 
+// 找Node集合(不包含connection)
 vector<int> ER_Model::findNodes()
 {
 	vector<int> nodesId;
@@ -323,6 +332,7 @@ vector<int> ER_Model::findNodes()
 	return nodesId;
 }
 
+// 找component集合(全部)
 vector<int> ER_Model::findComponents()
 {
 	vector<int> entitiesId;
@@ -333,6 +343,7 @@ vector<int> ER_Model::findComponents()
 	return entitiesId;
 }
 
+// 找特定型態的component集合
 vector<int> ER_Model::findComponentsByType(ERD_Component::ComponentType type)
 {
 	vector<int> entitiesId;
@@ -346,52 +357,51 @@ vector<int> ER_Model::findComponentsByType(ERD_Component::ComponentType type)
 	return entitiesId;
 }
 
-vector<int> ER_Model::findTypeIdByComponentId(ERD_Component::ComponentType type, int targetId)
+// 找targetId與特定type相連的NodeID(不包含connection)
+vector<int> ER_Model::findIdWithTypeByTargetId(ERD_Component::ComponentType type, int targetId)
 {
-	vector<int> idVector;
-	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
+	vector<int> idVector, connectionIds;
+	connectionIds = findComponentsByType(ERD_Component::Connection);
+	for (vector<int>::iterator it = connectionIds.begin(); it < connectionIds.end(); it++)
 	{
-		if (((ERD_Component *)*it)->getType() == ERD_Component::Connection)
+		setRelatedIdVector(*it, targetId, type, idVector);
+	}
+	return idVector;
+}
+
+// 找targetId與特定type相連的NodeID且Cardinality性質為one的(不包含connection)
+vector<int> ER_Model::findIdWithTypeByTargetIdWithCardinality(ERD_Component::ComponentType type, int targetId)
+{
+	vector<int> idVector, connectionIds;
+	connectionIds = findComponentsByType(ERD_Component::Connection);
+	for (vector<int>::iterator it = connectionIds.begin(); it < connectionIds.end(); it++)
+	{
+		ERD_Connection* connection = (ERD_Connection*)findComponentById(*it);
+		if (connection->getCardinality() == ERD_Connection::one)
 		{
-			setIdVector(((ERD_Component *)*it)->getId(), targetId, type, idVector);
+			setRelatedIdVector(*it, targetId, type, idVector);
 		}
 	}
 	return idVector;
 }
 
-vector<int> ER_Model::findTypeIdByComponentIdWithCardinality(ERD_Component::ComponentType type, int targetId)
-{
-	vector<int> idVector;
-	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
-	{
-		if (((ERD_Component *)*it)->getType() == ERD_Component::Connection)
-		{
-			ERD_Connection* connection = (ERD_Connection*)*it;
-			if (connection->getCardinality() == ERD_Connection::one)
-			{
-				setIdVector(((ERD_Component *)*it)->getId(), targetId, type, idVector);
-			}
-		}
-	}
-	return idVector;
-}
-
+// 找特定entity的primaryKey
 vector<int> ER_Model::findPrimaryKeyByEntityId(int entityId)
 {
 	vector<int> primaryKeys;
-	vector<int> attributesId = findTypeIdByComponentId(ERD_Component::Attribute, entityId);
+	vector<int> attributesId = findIdWithTypeByTargetId(ERD_Component::Attribute, entityId);
 	for (vector<int>::iterator it = attributesId.begin(); it < attributesId.end(); it++)
 	{
-		ERD_Attribute* attribute = (ERD_Attribute*)components[*it];
+		ERD_Attribute* attribute = (ERD_Attribute*)findComponentById(*it);
 		if (attribute->getIsPrimaryKey())
 		{
 			primaryKeys.push_back(*it);
 		}
 	}
-
 	return primaryKeys;
 }
 
+// 給定entityId找他的foreignKeys
 vector<vector<int>> ER_Model::findForeignKeyByEntityId(int entityId)
 {
 	vector<vector<int>> foreignKeysIdVector;
@@ -400,10 +410,9 @@ vector<vector<int>> ER_Model::findForeignKeyByEntityId(int entityId)
 	{
 		ERD_Entity* entity = (ERD_Entity*) findComponentById(entityId);
 		ERD_Entity* targetEntity = (ERD_Entity*) findComponentById(*it);
-		if (!entity->isContainForeignEntityId(*it))
+		if (!targetEntity->isContainForeignEntityId(entityId))
 		{
 			entity->addForeignEntityId(*it);
-			targetEntity->addForeignEntityId(entityId);
 			vector<int> foreignKeysId;
 			foreignKeysId = findPrimaryKeyByEntityId(*it);
 			foreignKeysIdVector.push_back(foreignKeysId);
@@ -412,14 +421,15 @@ vector<vector<int>> ER_Model::findForeignKeyByEntityId(int entityId)
 	return foreignKeysIdVector;
 }
 
+// 給定entity找1對1關係的entity
 vector<int> ER_Model::findOneByOneRelationEntityId(int targetId)
 {
 	vector<int> idVector;
 	vector<int> relationIdVector;
-	relationIdVector = findTypeIdByComponentIdWithCardinality(ERD_Component::Relationship, targetId);
+	relationIdVector = findIdWithTypeByTargetIdWithCardinality(ERD_Component::Relationship, targetId);
 	for (vector<int>::iterator it = relationIdVector.begin(); it < relationIdVector.end(); it++) 
 	{
-		vector<int> entityIdVector = findTypeIdByComponentIdWithCardinality(ERD_Component::Entity, *it);
+		vector<int> entityIdVector = findIdWithTypeByTargetIdWithCardinality(ERD_Component::Entity, *it);
 		for (vector<int>::iterator entityIt = entityIdVector.begin(); entityIt < entityIdVector.end(); entityIt++)
 		{
 			if (*entityIt != targetId)
@@ -431,6 +441,7 @@ vector<int> ER_Model::findOneByOneRelationEntityId(int targetId)
 	return idVector;
 }
 
+// 讀檔
 string ER_Model::loadComponents(string path)
 {
 	string result;
@@ -520,6 +531,7 @@ string ER_Model::loadComponents(string path)
 	return result;
 }
 
+// 存檔
 string ER_Model::storeComponents(string path)
 {
 	string result;
@@ -545,8 +557,8 @@ string ER_Model::storeComponents(string path)
 		{
 			string line, tmp;
 			int node1, node2;
-			node1 = getConnectionNode1ById(*it);
-			node2 = getConnectionNode2ById(*it);
+			node1 = getConnectionNodeById(*it, 0);
+			node2 = getConnectionNodeById(*it, 1);
 			line = Tool_Function::intToString((int)*it);
 			line += " ";
 			line += Tool_Function::intToString(node1);
@@ -585,12 +597,13 @@ string ER_Model::storeComponents(string path)
 	return result;
 }
 
-bool ER_Model::isConnectCommandValid(string command)
+// 判斷idStr是不是已存在的componentId
+bool ER_Model::isExistComponentId(string idStr)
 {
 	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
 	{
 		int id = ((ERD_Component *)*it)->getId();
-		if (Tool_Function::intToString(id) == command)
+		if (Tool_Function::intToString(id) == idStr)
 		{
 			return true;
 		}
@@ -598,6 +611,7 @@ bool ER_Model::isConnectCommandValid(string command)
 	return false;
 }
 
+// 判斷entityId是不是Entity
 string ER_Model::checkEntitySelectedValid(string entityId)
 {
 	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
@@ -618,6 +632,7 @@ string ER_Model::checkEntitySelectedValid(string entityId)
 	return ID_NOT_EXIST;
 }
 
+// 刪除component
 bool ER_Model::deleteComponent(int id)
 {
 	ERD_Component* delData = findComponentById(id);
@@ -648,7 +663,9 @@ vector<int> ER_Model::findRelatedConnectionById(int targetId)
 	return resultVector;
 }
 
+// 新增component
 void ER_Model::addComponent(ERD_Component* component)
 {
 	components.push_back(component);
+	sortComponents();
 }
