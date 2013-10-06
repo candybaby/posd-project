@@ -7,6 +7,15 @@ ERD_Component::ERD_Component(void)
 	text = "";
 }
 
+ERD_Component::ERD_Component(ERD_Component* rhs)
+{
+	// virtual method
+	this->id = rhs->getId();
+	this->type = rhs->getType();
+	this->text = rhs->getText();
+	this->connections = rhs->getConnections();
+}
+
 ERD_Component::~ERD_Component(void)
 {
 }
@@ -43,4 +52,9 @@ bool ERD_Component::canConnectTo(ERD_Component* component)
 vector<ERD_Component*> ERD_Component::getConnections()
 {
 	return connections;
+}
+
+ERD_Component* ERD_Component::clone()
+{
+	return new ERD_Component(*this);
 }

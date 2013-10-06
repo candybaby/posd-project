@@ -173,6 +173,17 @@ void ER_Model::addConnection(int component1Id, int component2Id, int id)
 	sortComponents();
 }
 
+// 新增連線 特定ID位置的新增包含cardinality屬性
+void ER_Model::addConnection(int component1Id, int component2Id, int id, ERD_Connection::ConnectionCardinality cardinality)
+{
+	ERD_Component* component1 = findComponentById(component1Id);
+	ERD_Component* component2 = findComponentById(component2Id);
+	ERD_Component* component;
+	component = factory.createConnectionComponent(component1, component2, id, cardinality);
+	components.push_back(component);
+	sortComponents();
+}
+
 // 新增連線 特定ID位置的新增包含cardinality屬性 主要用於讀檔時的新增
 void ER_Model::addConnection(int component1Id, int component2Id, int id, string cardinalityStr)
 {

@@ -42,6 +42,7 @@ public:
 	string addConnection(int, int, ERD_Connection::ConnectionCardinality);
 	void addConnection(int, int, int);
 	void addConnection(int, int, int, string);
+	void addConnection(int, int, int, ERD_Connection::ConnectionCardinality);
 	int getCurrentId();
 	int getIdByIndex(int);
 	int getConnectionNodeById(int, int);

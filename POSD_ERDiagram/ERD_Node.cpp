@@ -13,3 +13,9 @@ bool ERD_Node::canConnectTo(ERD_Component* entity)
 	// virtual method
 	return false;
 }
+
+ERD_Component* ERD_Node::clone()
+{
+	// virtual method
+	return NULL;
+}

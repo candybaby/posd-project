@@ -5,6 +5,15 @@ ERD_Entity::ERD_Entity(void)
 	this->type = Entity;
 }
 
+ERD_Entity::ERD_Entity(ERD_Entity* rhs)
+{
+	this->id = rhs->getId();
+	this->type = rhs->getType();
+	this->text = rhs->getText();
+	this->connections = rhs->getConnections();
+	this->foreignEntityIdVector = rhs->getForeignEntityIdVector();
+}
+
 ERD_Entity::ERD_Entity(string name, int id)
 {
 	this->type = Entity;
@@ -43,4 +52,14 @@ bool ERD_Entity::isContainForeignEntityId(int id)
 void ERD_Entity::addForeignEntityId(int id)
 {
 	foreignEntityIdVector.push_back(id);
+}
+
+vector<int> ERD_Entity::getForeignEntityIdVector()
+{
+	return foreignEntityIdVector;
+}
+
+ERD_Component* ERD_Entity::clone()
+{
+	return new ERD_Entity(*this);
 }

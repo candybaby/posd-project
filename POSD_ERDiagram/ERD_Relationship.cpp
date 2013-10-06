@@ -5,6 +5,14 @@ ERD_Relationship::ERD_Relationship(void)
 	this->type = Relationship;
 }
 
+ERD_Relationship::ERD_Relationship(ERD_Relationship* rhs)
+{
+	this->id = rhs->getId();
+	this->type = rhs->getType();
+	this->text = rhs->getText();
+	this->connections = rhs->getConnections();
+}
+
 ERD_Relationship::ERD_Relationship(string name, int id)
 {
 	this->type = Relationship;
@@ -26,4 +34,9 @@ bool ERD_Relationship::canConnectTo(ERD_Component* entity)
 	{
 		return false;
 	}
+}
+
+ERD_Component* ERD_Relationship::clone()
+{
+	return new ERD_Relationship(*this);
 }

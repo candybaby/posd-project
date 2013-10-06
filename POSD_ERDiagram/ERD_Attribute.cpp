@@ -7,6 +7,16 @@ ERD_Attribute::ERD_Attribute(void)
 	this->isConnected = false;
 }
 
+ERD_Attribute::ERD_Attribute(ERD_Attribute* rhs)
+{
+	this->id = rhs->getId();
+	this->type = rhs->getType();
+	this->text = rhs->getText();
+	this->connections = rhs->getConnections();
+	this->isPrimaryKey = rhs->getIsPrimaryKey();
+	this->isConnected = rhs->getIsConnected();
+}
+
 ERD_Attribute::ERD_Attribute(string name, int id)
 {
 	this->type = Attribute;
@@ -42,7 +52,17 @@ void ERD_Attribute::setPrimaryKey(bool flag)
 	this->isPrimaryKey = flag;
 }
 
+bool ERD_Attribute::getIsConnected()
+{
+	return isConnected;
+}
+
 void ERD_Attribute::setConnected(bool flag)
 {
 	this->isConnected = flag;
+}
+
+ERD_Component* ERD_Attribute::clone()
+{
+	return new ERD_Attribute(*this);
 }

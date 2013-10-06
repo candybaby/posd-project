@@ -8,5 +8,6 @@ public:
 	ERD_Node(void);
 	~ERD_Node(void);
 	virtual bool canConnectTo(ERD_Component*);
+	virtual ERD_Component* clone();
 };
 #endif

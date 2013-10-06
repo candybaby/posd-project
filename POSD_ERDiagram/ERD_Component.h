@@ -19,6 +19,7 @@ public:
 	};
 	static const char* componentTypeNames[SIZE_OF_ComponentType];
 	ERD_Component(void);
+	ERD_Component(ERD_Component* rhs);
 	virtual ~ERD_Component(void);
 	int getId();
 	ComponentType getType();
@@ -26,6 +27,7 @@ public:
 	virtual void connectTo(ERD_Component*);
 	virtual bool canConnectTo(ERD_Component*);
 	vector<ERD_Component*> getConnections();
+	virtual ERD_Component* clone();
 
 protected:
 	vector<ERD_Component*> connections;

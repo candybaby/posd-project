@@ -38,8 +38,15 @@ ERD_Component* ER_ComponentFactory::createConnectionComponent(ERD_Component* com
 
 ERD_Component* ER_ComponentFactory::createConnectionComponent(ERD_Component* component1, ERD_Component* component2, int id, ERD_Connection::ConnectionCardinality cardinality)
 {
-	ERD_Component* connection = new ERD_Connection(id, cardinality);
-	connection->connectTo(component1);
-	connection->connectTo(component2);
-	return connection;
+	if (cardinality == ERD_Connection::SIZE_OF_Cardinality)
+	{
+		createConnectionComponent(component1, component2, id);
+	}
+	else
+	{
+		ERD_Component* connection = new ERD_Connection(id, cardinality);
+		connection->connectTo(component1);
+		connection->connectTo(component2);
+		return connection;
+	}
 }
