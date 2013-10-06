@@ -1,13 +1,4 @@
 #include "ER_Model.h"
-#define MESSAGE_NODE_1 "The node \'"
-#define MESSAGE_NODE_2 "\' has been connected to the node \'"
-#define MESSAGE_NODE_3 "\'."
-#define MESSAGE_NODE_4 "\' cannot be connected to itself."
-#define MESSAGE_NODE_5 "\' has already been connected to component \'"
-#define MESSAGE_NODE_6 "\' cannot be connected by the node \'"
-#define MESSAGE_NODE_7 "\n"
-#define MESSAGE_NODE_8 "Its cardinality of the relationship is \'"
-#define ASK_CARDINALITY "ask cardinality"
 #define EMPTY_TEXT ""
 #define FIND_ENTITY "Find Right Entity"
 #define NOT_ENTITY "Not an Entity"
@@ -88,89 +79,56 @@ ERD_Component* ER_Model::setAttributeTypeConnected(ERD_Component* component)
 	return attribute;
 }
 
-// 新增連線 參數為兩個Node要連接的ID
-string ER_Model::addConnection(int component1Id, int component2Id)
+// 新增連線 參數為兩個Node要連接的ID 結果 -1:已經相連 -2:Cardinality -3:兩點相同 -4:不能連
+int ER_Model::checkAddConnection(int component1Id, int component2Id)
 {
-	string message;
+	int result = -1;
 	ERD_Component* component1 = findComponentById(component1Id);
 	ERD_Component* component2 = findComponentById(component2Id);
-	string component1IdStr = Tool_Function::intToString(component1Id);
-	string component2IdStr = Tool_Function::intToString(component2Id);
 	if (isAlreadyConnect(component1, component2)) //已經相連了
 	{
-		message += MESSAGE_NODE_1;
-		message	+= component1IdStr;
-		message	+= MESSAGE_NODE_5;
-		message	+= component2IdStr;
-		message	+= MESSAGE_NODE_3;
-		return message;
+		result = -1;
 	}
+
 	if (component1->canConnectTo(component2) && component2->canConnectTo(component1)) //可以連
 	{
 		if ((component1->getType() == ERD_Component::Entity && component2->getType() == ERD_Component::Relationship) || (component1->getType() == ERD_Component::Relationship && component2->getType() == ERD_Component::Entity))
 		{
-			message += ASK_CARDINALITY;
-			return message;
+			result = -2;
 		}
-		message += MESSAGE_NODE_1;
-		message	+= component1IdStr;
-		message	+= MESSAGE_NODE_2;
-		message	+= component2IdStr;
-		message	+= MESSAGE_NODE_3;
-		if (component1->getType() == ERD_Component::Attribute)
+		else
 		{
-			component1 = setAttributeTypeConnected(component1);
+			if (component1->getType() == ERD_Component::Attribute)
+			{
+				component1 = setAttributeTypeConnected(component1);
+			}
+			if (component2->getType() == ERD_Component::Attribute)
+			{
+				component2 = setAttributeTypeConnected(component2);
+			}
+			result = currentId;
+			currentId++;
 		}
-		if (component2->getType() == ERD_Component::Attribute)
-		{
-			component2 = setAttributeTypeConnected(component2);
-		}
-		ERD_Component* component = factory.createConnectionComponent(component1, component2, currentId);
-		components.push_back(component);
-		currentId++;
-		sortComponents();
-		return message;
+		
 	}
 	else if (component1Id == component2Id)
 	{
-		message += MESSAGE_NODE_1;
-		message	+= component1IdStr;
-		message	+= MESSAGE_NODE_4;
+		result = -3;
 	}
 	else
 	{
-		message += MESSAGE_NODE_1;
-		message	+= component2IdStr;
-		message	+= MESSAGE_NODE_6;
-		message	+= component1IdStr;
-		message	+= MESSAGE_NODE_3;
+		result = -4;
 	}
 
-	return message;
+	return result;
 }
 
-// 新增連線 此連線有Cardinality屬性
-string ER_Model::addConnection(int component1Id, int component2Id, ERD_Connection::ConnectionCardinality cardinality)
+int ER_Model::checkAddConnection(int component1Id, int component2Id, ERD_Connection::ConnectionCardinality cardinality)
 {
-	string message;
-	ERD_Component* component1 = findComponentById(component1Id);
-	ERD_Component* component2 = findComponentById(component2Id);
-	string component1IdStr = Tool_Function::intToString(component1Id);
-	string component2IdStr = Tool_Function::intToString(component2Id);
-	message += MESSAGE_NODE_1;
-	message	+= component1IdStr;
-	message	+= MESSAGE_NODE_2;
-	message	+= component2IdStr;
-	message	+= MESSAGE_NODE_3;
-	message	+= MESSAGE_NODE_7;
-	message	+= MESSAGE_NODE_8;
-	message += ERD_Connection::connectionCardinalityNames[cardinality];
-	message	+= MESSAGE_NODE_3;
-	ERD_Component* component = factory.createConnectionComponent(component1, component2, currentId, cardinality);
-	components.push_back(component);
+	int result;
+	result = currentId;
 	currentId++;
-	sortComponents();
-	return message;
+	return result;
 }
 
 // 新增連線 特定ID位置的新增 主要用於讀檔時的新增

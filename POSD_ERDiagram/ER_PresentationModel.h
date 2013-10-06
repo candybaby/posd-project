@@ -33,7 +33,7 @@ public:
 	int getConnectionNodeById(int, int);
 	string getNameById(int);
 	ERD_Component::ComponentType getTypeById(int);
-	string addConnection(int ,int);
+	string checkAddConnection(int ,int);
 	string addConnection(int ,int, ERD_Connection::ConnectionCardinality);
 	bool isExistComponentId(string);
 	string checkEntitySelectedValid(string);

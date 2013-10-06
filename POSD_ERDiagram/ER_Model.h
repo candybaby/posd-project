@@ -39,7 +39,8 @@ public:
 	void addNode(string, string);
 	void addNode(ERD_Component::ComponentType, string, int);
 	ERD_Component* setAttributeTypeConnected(ERD_Component*);
-	string addConnection(int, int);
+	int checkAddConnection(int, int);
+	int checkAddConnection(int, int, ERD_Connection::ConnectionCardinality);
 	string addConnection(int, int, ERD_Connection::ConnectionCardinality);
 	void addConnection(int, int, int);
 	void addConnection(int, int, int, string);

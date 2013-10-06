@@ -60,17 +60,11 @@ void ER_TextUI::processCommand()
 	cin >> menuCommand;
 	if (menuCommand == menuCommandNames[Option_1])  // Load ER diagram file
 	{
-		cout << "Please input a file path: ";
-		string filePath;
-		cin >> filePath;
-		cout << presentationModel.loadComponents(filePath);
+		loadFile();
 	}
 	else if (menuCommand == menuCommandNames[Option_2])  // Save ER diagram file
 	{
-		cout << "Please input the file name: ";
-		string filePath;
-		cin >> filePath;
-		cout << presentationModel.storeComponents(filePath);
+		saveFile();
 	}
 	else if (menuCommand == menuCommandNames[Option_3])  // Add a node
 	{
@@ -90,13 +84,11 @@ void ER_TextUI::processCommand()
 	}
 	else if (menuCommand == menuCommandNames[Option_7])  // Display the table
 	{
-		cout << presentationModel.getTable();
+		cout << presentationModel.getTable() << endl;
 	}
 	else if (menuCommand == menuCommandNames[Option_8])  // Delete a component
 	{
-		string deleteIdStr;
-		cin >> deleteIdStr;
-		cout << presentationModel.deleteComponent(stoi(deleteIdStr)) << endl;
+		deleteComponent();
 
 	}
 	else if (menuCommand == menuCommandNames[Option_9])  // Undo
@@ -117,6 +109,22 @@ void ER_TextUI::processCommand()
 		cout << ERROR_TEXT << RE_ENTER << endl;
 	}
 	displayMenu();
+}
+
+void ER_TextUI::loadFile()
+{
+	cout << "Please input a file path: ";
+	string filePath;
+	cin >> filePath;
+	cout << presentationModel.loadComponents(filePath) << endl;
+}
+
+void ER_TextUI::saveFile()
+{
+	cout << "Please input the file name: ";
+	string filePath;
+	cin >> filePath;
+	cout << presentationModel.storeComponents(filePath) << endl;
 }
 
 void ER_TextUI::addNode()
@@ -151,7 +159,7 @@ void ER_TextUI::connectTwoNodes()
 	string message, cardinality;
 	firstNodeId = stoi(connectFirstNode);
 	secondNodeId = stoi(connectSecondNode);
-	message = presentationModel.addConnection(firstNodeId, secondNodeId);
+	message = presentationModel.checkAddConnection(firstNodeId, secondNodeId);
 	if (message.find(ASK_CARDINALITY) != std::string::npos)
 	{
 		while (!(message.find(CONNECT_MESSAGE) != std::string::npos))
@@ -214,6 +222,19 @@ void ER_TextUI::setPrimaryKey()
 		}
 	}
 	printEntityPrimaryKey(entityIntId);
+}
+
+void ER_TextUI::deleteComponent()
+{
+	cout << "Please enter the component ID" << endl;
+	string deleteIdStr;
+	cin >> deleteIdStr;
+	while (!presentationModel.isExistComponentId(deleteIdStr))
+	{
+		cout << "The component ID you entered does not exist. " << RE_ENTER << endl;
+		cin >> deleteIdStr;
+	}
+	cout << presentationModel.deleteComponent(stoi(deleteIdStr)) << endl;
 }
 
 int ER_TextUI::option1Question(string addNodeCommand, int type)

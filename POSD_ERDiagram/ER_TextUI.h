@@ -32,10 +32,13 @@ public:
 	~ER_TextUI(void);
 	void displayMenu();
 	void processCommand();
+	void loadFile();
+	void saveFile();
 	void addNode();
 	void connectTwoNodes();
 	void displayCurrentDiagram();
 	void setPrimaryKey();
+	void deleteComponent();
 	int option1Question(string addNodeCommand, int type );
 	void printAddNodeResult(int, string, string);
 	void option2Question(string &);

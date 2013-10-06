@@ -35,6 +35,16 @@
 #define FOREIGN_KEY "FK("
 #define RIGHT_BRACKET ")"
 
+#define MESSAGE_NODE_1 "The node \'"
+#define MESSAGE_NODE_2 "\' has been connected to the node \'"
+#define MESSAGE_NODE_3 "\'."
+#define MESSAGE_NODE_4 "\' cannot be connected to itself."
+#define MESSAGE_NODE_5 "\' has already been connected to component \'"
+#define MESSAGE_NODE_6 "\' cannot be connected by the node \'"
+#define MESSAGE_NODE_7 "\n"
+#define MESSAGE_NODE_8 "Its cardinality of the relationship is \'"
+#define ASK_CARDINALITY "ask cardinality"
+
 ER_PresentationModel::ER_PresentationModel(void)
 {
 }
@@ -101,15 +111,68 @@ ERD_Component::ComponentType ER_PresentationModel::getTypeById(int id)
 }
 
 // 新增連線
-string ER_PresentationModel::addConnection(int firstNodeId,int secondNodeId)
+string ER_PresentationModel::checkAddConnection(int firstNodeId,int secondNodeId)
 {
-	return model.addConnection(firstNodeId, secondNodeId);
+	string message, component1IdStr, component2IdStr;
+	component1IdStr = Tool_Function::intToString(firstNodeId);
+	component2IdStr = Tool_Function::intToString(secondNodeId);
+	int result = model.checkAddConnection(firstNodeId, secondNodeId);
+	if (result == -4)
+	{
+		message += MESSAGE_NODE_1;
+		message	+= component2IdStr;
+		message	+= MESSAGE_NODE_6;
+		message	+= component1IdStr;
+		message	+= MESSAGE_NODE_3;
+	}
+	else if (result == -3)
+	{
+		message += MESSAGE_NODE_1;
+		message	+= component1IdStr;
+		message	+= MESSAGE_NODE_4;
+	}
+	else if (result == -2)
+	{
+		message += ASK_CARDINALITY;
+	}
+	else if (result == -1)
+	{
+		message += MESSAGE_NODE_1;
+		message	+= component1IdStr;
+		message	+= MESSAGE_NODE_5;
+		message	+= component2IdStr;
+		message	+= MESSAGE_NODE_3;
+	}
+	else
+	{
+		message += MESSAGE_NODE_1;
+		message	+= component1IdStr;
+		message	+= MESSAGE_NODE_2;
+		message	+= component2IdStr;
+		message	+= MESSAGE_NODE_3;
+		cmdManager.execute(new ER_ConnectCommand(&model, firstNodeId, secondNodeId, result));
+	}
+	return message;
 }
 
 // 新增連線
 string ER_PresentationModel::addConnection(int firstNodeId,int secondNodeId, ERD_Connection::ConnectionCardinality cardinality)
 {
-	return model.addConnection(firstNodeId, secondNodeId, cardinality);
+	string message, component1IdStr, component2IdStr;
+	component1IdStr = Tool_Function::intToString(firstNodeId);
+	component2IdStr = Tool_Function::intToString(secondNodeId);
+	int connectionId = model.checkAddConnection(firstNodeId, secondNodeId, cardinality);
+	message += MESSAGE_NODE_1;
+	message	+= component1IdStr;
+	message	+= MESSAGE_NODE_2;
+	message	+= component2IdStr;
+	message	+= MESSAGE_NODE_3;
+	message	+= MESSAGE_NODE_7;
+	message	+= MESSAGE_NODE_8;
+	message += ERD_Connection::connectionCardinalityNames[cardinality];
+	message	+= MESSAGE_NODE_3;
+	cmdManager.execute(new ER_ConnectCommand(&model, firstNodeId, secondNodeId, connectionId, cardinality));
+	return message;
 }
 
 // 判斷idStr是不是已存在的componentId
@@ -571,6 +634,7 @@ string ER_PresentationModel::redo()
 	if (redoResult)
 	{
 		message += "Redo Succeed!";
+		message += ENDL;
 		message += getComponentsTable();
 		message += ENDL;
 		message += getConnectionsTable();
@@ -592,6 +656,7 @@ string ER_PresentationModel::undo()
 	if (undoResult)
 	{
 		message += "Undo Succeed!";
+		message += ENDL;
 		message += getComponentsTable();
 		message += ENDL;
 		message += getConnectionsTable();

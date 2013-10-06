@@ -6,8 +6,8 @@ class ER_ConnectCommand : public ER_Command
 {
 public:
 	ER_ConnectCommand(void);
-	ER_ConnectCommand(ER_Model*, int, int);
-	ER_ConnectCommand(ER_Model*, int, int, ERD_Connection::ConnectionCardinality);
+	ER_ConnectCommand(ER_Model*, int, int, int);
+	ER_ConnectCommand(ER_Model*, int, int, int, ERD_Connection::ConnectionCardinality);
 	~ER_ConnectCommand(void);
 	string execute();
 	string unexecute();
