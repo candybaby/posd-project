@@ -121,8 +121,8 @@ void ER_TextUI::processCommand()
 
 void ER_TextUI::addNode()
 {
-	string addNodeCommand, addNodeName;
-	int type = -1, id = 0;
+	string addNodeCommand, addNodeName, idStr;
+	int type = -1;
 	cout << ADD_NODE_TEXT << endl;
 	type = option1Question(addNodeCommand, type);
 
@@ -133,9 +133,8 @@ void ER_TextUI::addNode()
 	}
 	cout << ADD_NODE_NAME_TEXT << endl;
 	cin >> addNodeName;
-	presentationModel.addNode((ERD_Component::ComponentType)type, addNodeName);
-	id = presentationModel.getCurrentId() - 1;
-	printAddNodeResult(type, id, addNodeName);
+	idStr = presentationModel.addNode((ERD_Component::ComponentType)type, addNodeName);
+	printAddNodeResult(type, idStr, addNodeName);
 	cout << presentationModel.getNodesTable();
 }
 
@@ -225,7 +224,7 @@ int ER_TextUI::option1Question(string addNodeCommand, int type)
 	return type;
 }
 
-void ER_TextUI::printAddNodeResult(int type, int id, string addNodeName)
+void ER_TextUI::printAddNodeResult(int type, string id, string addNodeName)
 {
 	cout << A_NODE << ER_PresentationModel::entityOptionTypeNames[type + SHIFT_THREE] << NODE_ADDED << id << NODE_ADDED_NAME << addNodeName << NODE_ADDED_END << endl;
 }

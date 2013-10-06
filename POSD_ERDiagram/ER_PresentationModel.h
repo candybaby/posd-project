@@ -27,7 +27,7 @@ public:
 	ER_PresentationModel(ER_Model*);
 	~ER_PresentationModel(void);
 	int addNodeOptionMapping(string);
-	void addNode(ERD_Component::ComponentType, string);
+	string addNode(ERD_Component::ComponentType, string);
 	int getCurrentId();
 	int getIdByIndex(int);
 	int getConnectionNodeById(int, int);

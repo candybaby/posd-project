@@ -15,7 +15,6 @@ ER_DeleteCommand::ER_DeleteCommand(ER_Model* m,int id)
 ER_DeleteCommand::~ER_DeleteCommand(void)
 {
 	clearTempData();
-
 	delete target;
 }
 

@@ -37,7 +37,7 @@ public:
 	void displayCurrentDiagram();
 	void setPrimaryKey();
 	int option1Question(string addNodeCommand, int type );
-	void printAddNodeResult(int type, int id, string addNodeName);
+	void printAddNodeResult(int, string, string);
 	void option2Question(string &);
 	void printEntityPrimaryKey(int);
 

@@ -65,9 +65,9 @@ int ER_PresentationModel::addNodeOptionMapping(string command)
 }
 
 // 新增節點
-void ER_PresentationModel::addNode(ERD_Component::ComponentType componentType, string nodeName)
+string ER_PresentationModel::addNode(ERD_Component::ComponentType componentType, string nodeName)
 {
-	model.addNode(componentType, nodeName);
+	return cmdManager.execute(new ER_AddCommand(&model, componentType, nodeName));
 }
 
 // 取得現在的ID

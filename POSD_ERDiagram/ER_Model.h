@@ -35,8 +35,9 @@ public:
 	void clearCurrentComponents();
 	void sortComponents();
 	vector<ERD_Component*> getComponents();
-	void addNode(ERD_Component::ComponentType, string);
+	int addNode(ERD_Component::ComponentType, string);
 	void addNode(string, string);
+	void addNode(ERD_Component::ComponentType, string, int);
 	ERD_Component* setAttributeTypeConnected(ERD_Component*);
 	string addConnection(int, int);
 	string addConnection(int, int, ERD_Connection::ConnectionCardinality);

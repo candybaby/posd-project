@@ -50,12 +50,14 @@ vector<ERD_Component*> ER_Model::getComponents()
 }
 
 // 新增節點(不包含connection)
-void ER_Model::addNode(ERD_Component::ComponentType type, string nodeName)
+int ER_Model::addNode(ERD_Component::ComponentType type, string nodeName)
 {
+	int id = currentId;
 	ERD_Component* component = factory.createNodeComponent(type, nodeName, currentId);
 	components.push_back(component);
 	currentId++;
 	sortComponents();
+	return id;
 }
 
 // 新增節點(不包含connection) Type為字串
@@ -68,6 +70,14 @@ void ER_Model::addNode(string type, string nodeName)
 			addNode((ERD_Component::ComponentType)i, nodeName);
 		}
 	}
+}
+
+// 新增節點 特定ID位置的新增
+void ER_Model::addNode(ERD_Component::ComponentType type, string nodeName, int id)
+{
+	ERD_Component* component = factory.createNodeComponent(type, nodeName, id);
+	components.push_back(component);
+	sortComponents();
 }
 
 // 設定Attribute為以連線狀態
