@@ -13,7 +13,6 @@ public:
 		SIZE_OF_Cardinality 
 	};
 	static const char* connectionCardinalityNames[SIZE_OF_Cardinality];
-
 	ERD_Connection(void);
 	ERD_Connection(ERD_Connection* rhs);
 	ERD_Connection(int);

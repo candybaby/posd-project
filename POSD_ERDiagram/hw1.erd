@@ -1,0 +1,48 @@
+E, Employee
+A, salary
+A, birthday
+A, sex
+A, name
+A, employee_ID
+R, Manage
+E, Department
+A, D_name
+A, D_ID
+A, loccation
+R, Control
+E, Project
+A, P_name
+A, P_ID
+C
+C
+C
+C
+C
+C, 1
+C, 1
+C
+C
+C
+C, 1
+C, 1
+C
+C
+
+15 0,1
+16 0,2
+17 0,3
+18 0,4
+19 0,5
+20 0,6
+21 6,7
+22 7,8
+23 7,9
+24 7,10
+25 7,11
+26 11,12
+27 12,13
+28 12,14
+
+0 5,4
+7 9
+12 14

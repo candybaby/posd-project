@@ -2,6 +2,7 @@
 #ifndef _ERD_ATTRIBUTE_ 
 #define _ERD_ATTRIBUTE_
 #include "ERD_Node.h"
+
 class ERD_Attribute : public ERD_Node
 {
 public:

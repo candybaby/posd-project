@@ -14,6 +14,7 @@ public:
 	void clearTempData();
 	string execute();
 	string unexecute();
+
 private:
 	ER_Model* model;
 	int targetId;

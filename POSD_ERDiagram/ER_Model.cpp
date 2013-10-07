@@ -3,6 +3,18 @@
 #define FIND_ENTITY "Find Right Entity"
 #define NOT_ENTITY "Not an Entity"
 #define ID_NOT_EXIST "Id Not Exist"
+#define MESSAGE_SUCCESS "Success"
+#define MESSAGE_FAIL "Fail"
+#define CAMMA_TEXT ","
+#define CAMMA ", "
+#define SPACE " "
+#define CHAR_ENDL '\n'
+#define CHAR_SPACE ' '
+#define CHAR_CAMMA ','
+#define ALREADY_CONNECTED -1
+#define ASK_CARDINALITY -2
+#define SAME_NODE -3
+#define CANNOT_CONNECT -4
 
 using namespace std;
 
@@ -16,6 +28,7 @@ ER_Model::~ER_Model(void)
 	clearCurrentComponents();
 }
 
+// 清除components
 void ER_Model::clearCurrentComponents()
 {
 	while (components.size() > 0)
@@ -29,8 +42,8 @@ void ER_Model::clearCurrentComponents()
 // 依據id將components重新sort一遍 (未測試)
 void ER_Model::sortComponents()
 {
-	ComponentSorter cs;
-	std::sort(components.begin(), components.end(), cs);
+	ComponentSorter componentSorter;
+	std::sort(components.begin(), components.end(), componentSorter);
 }
 
 const char* ER_Model::componentTypeMapNames[SIZE_OF_ComponentTypeMap] = {"A", "E", "R", "C"};
@@ -82,19 +95,20 @@ ERD_Component* ER_Model::setAttributeTypeConnected(ERD_Component* component)
 // 新增連線 參數為兩個Node要連接的ID 結果 -1:已經相連 -2:Cardinality -3:兩點相同 -4:不能連
 int ER_Model::checkAddConnection(int component1Id, int component2Id)
 {
-	int result = -1;
+	int result = ALREADY_CONNECTED;
 	ERD_Component* component1 = findComponentById(component1Id);
 	ERD_Component* component2 = findComponentById(component2Id);
 	if (isAlreadyConnect(component1, component2)) //已經相連了
 	{
-		result = -1;
+		result = ALREADY_CONNECTED;
+		return result;
 	}
-
 	if (component1->canConnectTo(component2) && component2->canConnectTo(component1)) //可以連
 	{
-		if ((component1->getType() == ERD_Component::Entity && component2->getType() == ERD_Component::Relationship) || (component1->getType() == ERD_Component::Relationship && component2->getType() == ERD_Component::Entity))
+		if ((component1->getType() == ERD_Component::Entity && component2->getType() == ERD_Component::Relationship) ||
+			(component1->getType() == ERD_Component::Relationship && component2->getType() == ERD_Component::Entity))
 		{
-			result = -2;
+			result = ASK_CARDINALITY;
 		}
 		else
 		{
@@ -109,21 +123,20 @@ int ER_Model::checkAddConnection(int component1Id, int component2Id)
 			result = currentId;
 			currentId++;
 		}
-		
 	}
 	else if (component1Id == component2Id)
 	{
-		result = -3;
+		result = SAME_NODE;
 	}
 	else
 	{
-		result = -4;
+		result = CANNOT_CONNECT;
 	}
-
 	return result;
 }
 
-int ER_Model::checkAddConnection(int component1Id, int component2Id, ERD_Connection::ConnectionCardinality cardinality)
+
+int ER_Model::getAddConnectionId()
 {
 	int result;
 	result = currentId;
@@ -210,7 +223,6 @@ string ER_Model::getNameById(int id)
 	{
 		return EMPTY_TEXT; // exception
 	}
-	
 }
 
 // 取得型態藉由ID
@@ -306,7 +318,6 @@ vector<int> ER_Model::findNodes()
 		{
 			nodesId.push_back(((ERD_Component *)*it)->getId());
 		}
-		
 	}
 	return nodesId;
 }
@@ -435,10 +446,10 @@ string ER_Model::loadComponents(string path)
 		int state = 0;
 		map<int, string> connectionMap;
 		content = file.readFile();
-		lines = Tool_Function::split(content, '\n');
+		lines = Tool_Function::split(content, CHAR_ENDL);
 		for (vector<string>::iterator it = lines.begin(); it < lines.end(); it++)
 		{
-			if (*it == "")
+			if (*it == EMPTY_TEXT)
 			{
 				state++;
 			} 
@@ -446,7 +457,7 @@ string ER_Model::loadComponents(string path)
 			{
 				if (state == 0)
 				{
-					vector<string> lineParts = Tool_Function::split(*it, ' ');
+					vector<string> lineParts = Tool_Function::split(*it, CHAR_SPACE);
 					if (lineParts.size() > 1)
 					{
 						string typeStr = lineParts[0].substr(0, 1);
@@ -463,22 +474,22 @@ string ER_Model::loadComponents(string path)
 					}
 					else
 					{
-						connectionMap.insert(pair<int, string> (currentId, ""));
+						connectionMap.insert(pair<int, string> (currentId, EMPTY_TEXT));
 						currentId++;
 					}
 				}
 				else if (state == 1)
 				{
-					vector<string> lineParts = Tool_Function::split(*it, ' ');
+					vector<string> lineParts = Tool_Function::split(*it, CHAR_SPACE);
 					string connectionIdStr = lineParts[0];
 					string nodesIdStr = lineParts[1];
-					vector<string> nodes = Tool_Function::split(nodesIdStr, ',');
+					vector<string> nodes = Tool_Function::split(nodesIdStr, CHAR_CAMMA);
 					int node1, node2, connectionId;
 					node1 = std::stoi(nodes[0]);
 					node2 = std::stoi(nodes[1]);
 					connectionId = std::stoi(connectionIdStr);
 					string cardinalityStr = connectionMap.at(connectionId);
-					if (cardinalityStr != "")
+					if (cardinalityStr != EMPTY_TEXT)
 					{
 						addConnection(node1, node2, connectionId, cardinalityStr);
 					}
@@ -489,9 +500,9 @@ string ER_Model::loadComponents(string path)
 				}
 				else
 				{
-					vector<string> lineParts = Tool_Function::split(*it, ' ');
+					vector<string> lineParts = Tool_Function::split(*it, CHAR_SPACE);
 					string primaryKeyIdStr = lineParts[1];
-					vector<string> primaryKeysId = Tool_Function::split(primaryKeyIdStr, ',');
+					vector<string> primaryKeysId = Tool_Function::split(primaryKeyIdStr, CHAR_CAMMA);
 					for (vector<string>::iterator it = primaryKeysId.begin(); it < primaryKeysId.end(); it++)
 					{
 						int primaryKeyId = std::stoi(*it);
@@ -501,11 +512,11 @@ string ER_Model::loadComponents(string path)
 			}
 		}
 		file.closeFile();
-		result = "Success";
+		result = MESSAGE_SUCCESS;
 	}
 	else
 	{
-		result = "Fail";
+		result = MESSAGE_FAIL;
 	}
 	return result;
 }
@@ -524,13 +535,12 @@ string ER_Model::storeComponents(string path)
 			tmp = ((ERD_Component *)*it)->getText();
 			if (tmp.size() > 0)
 			{
-				line += ", ";
+				line += CAMMA;
 				line += tmp;
 			}
 			file.writeLine(line);
 		}
-		file.writeLine("");  // 間隔 以上:存components
-
+		file.writeLine(EMPTY_TEXT);  // 間隔 以上:存components
 		vector<int> connections = findComponentsByType(ERD_Component::Connection);
 		for (vector<int>::iterator it = connections.begin(); it < connections.end(); it++)
 		{
@@ -538,15 +548,14 @@ string ER_Model::storeComponents(string path)
 			int node1, node2;
 			node1 = getConnectionNodeById(*it, 0);
 			node2 = getConnectionNodeById(*it, 1);
-			line = Tool_Function::intToString((int)*it);
-			line += " ";
-			line += Tool_Function::intToString(node1);
-			line += ",";
-			line += Tool_Function::intToString(node2);
+			line = Tool_Function::convertIntToString((int)*it);
+			line += SPACE;
+			line += Tool_Function::convertIntToString(node1);
+			line += CAMMA_TEXT;
+			line += Tool_Function::convertIntToString(node2);
 			file.writeLine(line);
 		}
-		file.writeLine("");  // 間隔 以上:存connection
-
+		file.writeLine(EMPTY_TEXT);  // 間隔 以上:存connection
 		vector<int> entities = findComponentsByType(ERD_Component::Entity);
 		for (vector<int>::iterator it = entities.begin(); it < entities.end(); it++)
 		{
@@ -554,24 +563,23 @@ string ER_Model::storeComponents(string path)
 			vector<int> primaryKeys = findPrimaryKeyByEntityId(*it);
 			if (primaryKeys.size() > 0)
 			{
-				line = Tool_Function::intToString((int)*it);
-				line += " ";
+				line = Tool_Function::convertIntToString((int)*it);
+				line += SPACE;
 				for (vector<int>::iterator pit = primaryKeys.begin(); pit < primaryKeys.end(); pit++)
 				{
-					line +=  Tool_Function::intToString((int)*pit);
-					line += ",";
+					line +=  Tool_Function::convertIntToString((int)*pit);
+					line += CAMMA_TEXT;
 				}
 				line = line.substr(0,line.size() - 1);
 				file.writeLine(line);
 			}
 		}
-
 		file.closeFile();
-		result = "Success";
+		result = MESSAGE_SUCCESS;
 	}
 	else
 	{
-		result = "Fail";
+		result = MESSAGE_FAIL;
 	}
 	return result;
 }
@@ -582,7 +590,7 @@ bool ER_Model::isExistComponentId(string idStr)
 	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
 	{
 		int id = ((ERD_Component *)*it)->getId();
-		if (Tool_Function::intToString(id) == idStr)
+		if (Tool_Function::convertIntToString(id) == idStr)
 		{
 			return true;
 		}
@@ -596,7 +604,7 @@ string ER_Model::checkEntitySelectedValid(string entityId)
 	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
 	{
 		int currentId = ((ERD_Component *)*it)->getId();
-		if (Tool_Function::intToString(currentId) == entityId)
+		if (Tool_Function::convertIntToString(currentId) == entityId)
 		{
 			if (((ERD_Component *)*it)->getType() == ERD_Component::Entity)
 			{
@@ -647,4 +655,16 @@ void ER_Model::addComponent(ERD_Component* component)
 {
 	components.push_back(component);
 	sortComponents();
+}
+
+bool ER_Model::enoughNodesToConnect()
+{
+	if (findNodes().size() > 1)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

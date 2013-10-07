@@ -1,13 +1,13 @@
 #include "ER_AddCommand.h"
-
+#define EMPTY_TEXT ""
 
 ER_AddCommand::ER_AddCommand(void)
 {
 }
 
-ER_AddCommand::ER_AddCommand(ER_Model* m, ERD_Component::ComponentType type, string name)
+ER_AddCommand::ER_AddCommand(ER_Model* model, ERD_Component::ComponentType type, string name)
 {
-	this->model = m;
+	this->model = model;
 	this->targetType = type;
 	this->targetName = name;
 	this->targetId = -1;
@@ -28,11 +28,11 @@ string ER_AddCommand::execute()
 	{
 		model->addNode(targetType, targetName, targetId);
 	}
-	return Tool_Function::intToString(targetId);
+	return Tool_Function::convertIntToString(targetId);
 }
 
 string ER_AddCommand::unexecute()
 {
 	model->deleteComponent(targetId);
-	return "";
+	return EMPTY_TEXT;
 }

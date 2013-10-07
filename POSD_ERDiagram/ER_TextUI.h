@@ -6,7 +6,6 @@
 #include "ER_PresentationModel.h"
 #include "Tool_Function.h"
 
-
 class ER_TextUI
 {
 public:
@@ -26,7 +25,6 @@ public:
 		SIZE_OF_MenuCommand 
 	};
 	static const char* menuCommandNames[SIZE_OF_MenuCommand];
-
 	ER_TextUI(void);
 	ER_TextUI(ER_PresentationModel*);
 	~ER_TextUI(void);
@@ -35,9 +33,12 @@ public:
 	void loadFile();
 	void saveFile();
 	void addNode();
+	void tryConnectNodes();
 	void connectTwoNodes();
+	void addConnection(int, int);
 	void displayCurrentDiagram();
 	void setPrimaryKey();
+	void checkPrimaryKeySetting(int);
 	void deleteComponent();
 	int option1Question(string addNodeCommand, int type );
 	void printAddNodeResult(int, string, string);
@@ -47,5 +48,4 @@ public:
 private:
 	ER_PresentationModel presentationModel;
 };
-
 #endif

@@ -1,13 +1,13 @@
 #include "ER_DeleteCommand.h"
-
+#define EMPTY_TEXT ""
 
 ER_DeleteCommand::ER_DeleteCommand(void)
 {
 }
 
-ER_DeleteCommand::ER_DeleteCommand(ER_Model* m,int id)
+ER_DeleteCommand::ER_DeleteCommand(ER_Model* model,int id)
 {
-	this->model = m;
+	this->model = model;
 	this->targetId = id;
 }
 
@@ -52,11 +52,11 @@ string ER_DeleteCommand::execute()
 	result = deleteComponentById(targetId);
 	if (result)
 	{
-		return Tool_Function::intToString(targetId);
+		return Tool_Function::convertIntToString(targetId);
 	}
 	else
 	{
-		return "";
+		return EMPTY_TEXT;
 	}
 }
 
@@ -80,5 +80,5 @@ string ER_DeleteCommand::unexecute()
 
 	clearTempData();
 	
-	return "";
+	return EMPTY_TEXT;
 }

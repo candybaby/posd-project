@@ -2,6 +2,7 @@
 #ifndef _ERD_ENTITY_ 
 #define _ERD_ENTITY_
 #include "ERD_Node.h"
+
 class ERD_Entity : public ERD_Node
 {
 public:

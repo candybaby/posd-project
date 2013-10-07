@@ -11,6 +11,7 @@ public:
 	~ER_AddCommand(void);
 	string execute();
 	string unexecute();
+
 private:
 	ER_Model* model;
 	ERD_Component::ComponentType targetType;

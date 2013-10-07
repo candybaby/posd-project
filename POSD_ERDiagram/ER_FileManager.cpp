@@ -1,10 +1,8 @@
 #include "ER_FileManager.h"
 
-
 ER_FileManager::ER_FileManager(void)
 {
 }
-
 
 ER_FileManager::~ER_FileManager(void)
 {
@@ -66,5 +64,4 @@ void ER_FileManager::closeFile()
 	{
 		fin.close();
 	}
-	
 }

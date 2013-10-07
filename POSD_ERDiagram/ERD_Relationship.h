@@ -2,6 +2,7 @@
 #ifndef _ERD_RELATIONSHIP_ 
 #define _ERD_RELATIONSHIP_
 #include "ERD_Node.h"
+
 class ERD_Relationship : public ERD_Node
 {
 public:

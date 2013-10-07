@@ -2,6 +2,7 @@
 #ifndef _ER_CONNECT_COMMAND_ 
 #define _ER_CONNECT_COMMAND_
 #include "ER_Command.h"
+
 class ER_ConnectCommand : public ER_Command
 {
 public:

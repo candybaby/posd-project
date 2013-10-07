@@ -1,9 +1,9 @@
 #pragma once
 #ifndef _ERD_COMPONENT_ 
 #define _ERD_COMPONENT_
-
 #include <string>
 #include <vector>
+
 using namespace std;
 
 class ERD_Component

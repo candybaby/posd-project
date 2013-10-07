@@ -1,27 +1,27 @@
 #include "Tool_Function.h"
 
-string Tool_Function::intToString(int &i) 
+string Tool_Function::convertIntToString(int &targetInt) 
 {
-	string s;
-	stringstream ss(s);
-	ss << i;
-	return ss.str();
+	string tempString;
+	stringstream stringStream(tempString);
+	stringStream << targetInt;
+	return stringStream.str();
 }
 
-vector<string> Tool_Function::split(const std::string &s, char delim, std::vector<std::string> &elems) 
+vector<string> Tool_Function::split(const std::string &sourceString, char delim, std::vector<std::string> &resultVector) 
 {
-	stringstream ss(s);
+	stringstream stringStream(sourceString);
 	string item;
-	while (getline(ss, item, delim)) 
+	while (getline(stringStream, item, delim)) 
 	{
-		elems.push_back(item);
+		resultVector.push_back(item);
 	}
-	return elems;
+	return resultVector;
 }
 
-vector<string> Tool_Function::split(const string &s, char delim)
+vector<string> Tool_Function::split(const string &sourceString, char delim)
 {
-	vector<string> elems;
-	split(s, delim, elems);
-	return elems;
+	vector<string> resultVector;
+	split(sourceString, delim, resultVector);
+	return resultVector;
 }

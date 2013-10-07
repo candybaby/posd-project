@@ -20,9 +20,7 @@ public:
 		EntityOption_Relation,
 		SIZE_OF_EntityOptionType 
 	};
-
 	static const char* entityOptionTypeNames[SIZE_OF_EntityOptionType];
-
 	ER_PresentationModel(void);
 	ER_PresentationModel(ER_Model*);
 	~ER_PresentationModel(void);
@@ -49,6 +47,8 @@ public:
 	bool isExistTable();
 	string getForeignKeyResult(int);
 	string getAttributesForTable(int);
+	string makePrimaryKeyString(int, string);
+	string makeResultString(int, string, string);
 	vector<int> findOneByOneEntity();
 	string getTable();
 	string loadComponents(string);
@@ -61,11 +61,10 @@ public:
 	string redo();
 	string undo();
 	string deleteComponent(int);
-
+	bool enoughNodesToConnect();
 
 private:
 	ER_Model model;
 	ER_CommandManager cmdManager;
 };
-
 #endif

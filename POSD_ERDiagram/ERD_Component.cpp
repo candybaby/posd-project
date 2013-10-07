@@ -4,7 +4,6 @@ ERD_Component::ERD_Component(void)
 {
 	id = 0;
 	type = Attribute;
-	text = "";
 }
 
 ERD_Component::ERD_Component(ERD_Component* rhs)

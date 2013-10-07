@@ -10,8 +10,8 @@
 #include "Tool_Function.h"
 #include "ER_FileManager.h"
 
-
 using namespace std;
+
 class ER_Model
 {
 public:
@@ -26,7 +26,7 @@ public:
 	struct ComponentSorter
 	{
 		bool ComponentSorter::operator ()(ERD_Component* lhs, ERD_Component* rhs) {
-			return lhs->getId() > rhs->getId();
+			return lhs->getId() < rhs->getId();
 		}
 	};
 	static const char* componentTypeMapNames[SIZE_OF_ComponentTypeMap];
@@ -40,7 +40,7 @@ public:
 	void addNode(ERD_Component::ComponentType, string, int);
 	ERD_Component* setAttributeTypeConnected(ERD_Component*);
 	int checkAddConnection(int, int);
-	int checkAddConnection(int, int, ERD_Connection::ConnectionCardinality);
+	int getAddConnectionId();
 	string addConnection(int, int, ERD_Connection::ConnectionCardinality);
 	void addConnection(int, int, int);
 	void addConnection(int, int, int, string);
@@ -70,11 +70,11 @@ public:
 	bool deleteComponent(int);
 	vector<int> findRelatedConnectionById(int);
 	void addComponent(ERD_Component*);
+	bool enoughNodesToConnect();
 
 private:
 	vector<ERD_Component *> components;
 	int currentId;
 	ER_ComponentFactory factory;
 };
-
 #endif

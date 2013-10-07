@@ -6,6 +6,7 @@
 #define _ER_FILEMANAGER_
 
 using namespace std;
+
 class ER_FileManager
 {
 public:
@@ -25,5 +26,4 @@ private:
 	ofstream fout;
 	ifstream fin;
 };
-
 #endif

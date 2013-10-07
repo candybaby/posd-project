@@ -2,6 +2,7 @@
 #ifndef _ERD_NODE_ 
 #define _ERD_NODE_
 #include "ERD_Component.h"
+
 class ERD_Node : public ERD_Component
 {
 public:

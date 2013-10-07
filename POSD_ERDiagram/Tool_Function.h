@@ -4,13 +4,15 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+
 using namespace std;
+
 class Tool_Function
 {
 public:
-	static string intToString(int &);
-	static vector<string> split(const string &s, char delim, vector<string> &elems);
-	static vector<string> split(const string &s, char delim);
+	static string convertIntToString(int &);
+	static vector<string> split(const string &, char, vector<string> &);
+	static vector<string> split(const string &, char);
 };
 
 #endif

@@ -34,7 +34,6 @@
 #define PRIMARY_KEY "PK("
 #define FOREIGN_KEY "FK("
 #define RIGHT_BRACKET ")"
-
 #define MESSAGE_NODE_1 "The node \'"
 #define MESSAGE_NODE_2 "\' has been connected to the node \'"
 #define MESSAGE_NODE_3 "\'."
@@ -44,6 +43,21 @@
 #define MESSAGE_NODE_7 "\n"
 #define MESSAGE_NODE_8 "Its cardinality of the relationship is \'"
 #define ASK_CARDINALITY "ask cardinality"
+#define MESSAGE_SUCCESS "Success"
+#define MESSAGE_FAIL "Fail"
+#define FILE_NOT_FOUND "File not found!!\n"
+#define FAIL_TO_SAVE "Fail to Save!!\n"
+#define REDO_SUCCEED "Redo Succeed!"
+#define CANNOT_REDO "Cannot redo."
+#define UNDO_SUCCEED "Undo Succeed!"
+#define CANNOT_UNDO "Cannot undo."
+#define COMPONENT_TEXT "The component \""
+#define DELETED_TEXT "\" has been deleted."
+#define FAIL_DELETED_TEXT "fail to delete!"
+#define ALREADY_CONNECTED -1
+#define ASK_CARDINALITY_STATE -2
+#define SAME_NODE -3
+#define CANNOT_CONNECT -4
 
 ER_PresentationModel::ER_PresentationModel(void)
 {
@@ -114,10 +128,10 @@ ERD_Component::ComponentType ER_PresentationModel::getTypeById(int id)
 string ER_PresentationModel::checkAddConnection(int firstNodeId,int secondNodeId)
 {
 	string message, component1IdStr, component2IdStr;
-	component1IdStr = Tool_Function::intToString(firstNodeId);
-	component2IdStr = Tool_Function::intToString(secondNodeId);
+	component1IdStr = Tool_Function::convertIntToString(firstNodeId);
+	component2IdStr = Tool_Function::convertIntToString(secondNodeId);
 	int result = model.checkAddConnection(firstNodeId, secondNodeId);
-	if (result == -4)
+	if (result == CANNOT_CONNECT)
 	{
 		message += MESSAGE_NODE_1;
 		message	+= component2IdStr;
@@ -125,17 +139,17 @@ string ER_PresentationModel::checkAddConnection(int firstNodeId,int secondNodeId
 		message	+= component1IdStr;
 		message	+= MESSAGE_NODE_3;
 	}
-	else if (result == -3)
+	else if (result == SAME_NODE)
 	{
 		message += MESSAGE_NODE_1;
 		message	+= component1IdStr;
 		message	+= MESSAGE_NODE_4;
 	}
-	else if (result == -2)
+	else if (result == ASK_CARDINALITY_STATE)
 	{
 		message += ASK_CARDINALITY;
 	}
-	else if (result == -1)
+	else if (result == ALREADY_CONNECTED)
 	{
 		message += MESSAGE_NODE_1;
 		message	+= component1IdStr;
@@ -159,9 +173,9 @@ string ER_PresentationModel::checkAddConnection(int firstNodeId,int secondNodeId
 string ER_PresentationModel::addConnection(int firstNodeId,int secondNodeId, ERD_Connection::ConnectionCardinality cardinality)
 {
 	string message, component1IdStr, component2IdStr;
-	component1IdStr = Tool_Function::intToString(firstNodeId);
-	component2IdStr = Tool_Function::intToString(secondNodeId);
-	int connectionId = model.checkAddConnection(firstNodeId, secondNodeId, cardinality);
+	component1IdStr = Tool_Function::convertIntToString(firstNodeId);
+	component2IdStr = Tool_Function::convertIntToString(secondNodeId);
+	int connectionId = model.getAddConnectionId();
 	message += MESSAGE_NODE_1;
 	message	+= component1IdStr;
 	message	+= MESSAGE_NODE_2;
@@ -203,7 +217,7 @@ string ER_PresentationModel::checkAttributesSelectedValid(string queryMessage,in
 			message += THE_NODE;
 			message += *it;
 			message += NOT_BELONG_ENTITY;
-			message += Tool_Function::intToString(id);
+			message += Tool_Function::convertIntToString(id);
 			message += APOSTROPHE_TEXT;
 			message += FULL_STOP_TEXT;
 		}
@@ -258,12 +272,11 @@ string ER_PresentationModel::getPrimaryKeyString(int id)
 	{
 		return result;
 	}
-
 	for (vector<int>::iterator it = attributesVector.begin(); it < attributesVector.end(); it++) 
 	{
 		if (getIsPrimaryKey(*it))
 		{
-			result += Tool_Function::intToString(*it);
+			result += Tool_Function::convertIntToString(*it);
 			result += CAMMA;
 		}
 	}
@@ -345,7 +358,6 @@ string ER_PresentationModel::getAttributesForTable(int id)
 	{
 		return result;
 	}
-
 	int primaryKeyCounter = 0;
 	int resultCounter = 0;
 	for (vector<int>::iterator it = attributesId.begin(); it < attributesId.end(); it++)
@@ -367,7 +379,15 @@ string ER_PresentationModel::getAttributesForTable(int id)
 	{
 		result = result.substr(0,result.size() - CAMMA_SIZE); 
 	}
+	primaryKeyString = makePrimaryKeyString(primaryKeyCounter, primaryKeyString);
+	result = makeResultString(resultCounter, result, primaryKeyString);
+	result += getForeignKeyResult(id);
+	return result;
+}
 
+// 製作primaryKey字串
+string ER_PresentationModel::makePrimaryKeyString(int primaryKeyCounter, string primaryKeyString)
+{
 	if (primaryKeyCounter > 0)
 	{
 		primaryKeyString = primaryKeyString.substr(0,primaryKeyString.size() - CAMMA_SIZE);
@@ -377,7 +397,12 @@ string ER_PresentationModel::getAttributesForTable(int id)
 	{
 		primaryKeyString = EMPTY_TEXT;
 	}
+	return primaryKeyString;
+}
 
+// 製作result字串
+string ER_PresentationModel::makeResultString( int resultCounter, string result, string primaryKeyString )
+{
 	if (resultCounter == 0)
 	{
 		result = primaryKeyString;
@@ -386,9 +411,6 @@ string ER_PresentationModel::getAttributesForTable(int id)
 	{
 		result = primaryKeyString + CAMMA + result;
 	}
-	
-	result += getForeignKeyResult(id);
-	
 	return result;
 }
 
@@ -445,7 +467,7 @@ string ER_PresentationModel::getTable()
 string ER_PresentationModel::loadComponents(string path)
 {
 	string message = model.loadComponents(path);
-	if (message.find("Success") != std::string::npos)
+	if (message.find(MESSAGE_SUCCESS) != std::string::npos)
 	{
 		string result;
 		result += getComponentsTable();
@@ -455,7 +477,7 @@ string ER_PresentationModel::loadComponents(string path)
 	}
 	else
 	{
-		return "File not found!!\n";
+		return FILE_NOT_FOUND;
 	}
 }
 
@@ -463,13 +485,13 @@ string ER_PresentationModel::loadComponents(string path)
 string ER_PresentationModel::storeComponents(string path)
 {
 	string message = model.storeComponents(path);
-	if (message.find("Success") != std::string::npos)
+	if (message.find(MESSAGE_SUCCESS) != std::string::npos)
 	{
-		return "\n";
+		return ENDL;
 	}
 	else
 	{
-		return "Fail to Save!!\n";
+		return FAIL_TO_SAVE;
 	}
 }
 
@@ -491,11 +513,11 @@ string ER_PresentationModel::getConnectionsTable()
 	{
 		int id = *it, node1Id = getConnectionNodeById(id, 0), node2Id = getConnectionNodeById(id, 1);
 		result += SPACE_TEXT_2;
-		result += Tool_Function::intToString(id);
+		result += Tool_Function::convertIntToString(id);
 		result += SEPARATOR_3;
-		result += Tool_Function::intToString(node1Id);
+		result += Tool_Function::convertIntToString(node1Id);
 		result += SEPARATOR_3;
-		result += Tool_Function::intToString(node2Id);
+		result += Tool_Function::convertIntToString(node2Id);
 		result += ENDL;
 	}
 	result += SEPARATOR_1;
@@ -523,7 +545,7 @@ string ER_PresentationModel::getNodesTable()
 		result += SPACE_TEXT_1;
 		result += ERD_Component::componentTypeNames[getTypeById(id)];
 		result += SEPARATOR_5;
-		result += Tool_Function::intToString(id);
+		result += Tool_Function::convertIntToString(id);
 		result += SEPARATOR_5;
 		result += getNameById(id);
 		result += ENDL;
@@ -553,7 +575,7 @@ string ER_PresentationModel::getComponentsTable()
 		result += SPACE_TEXT_1;
 		result += ERD_Component::componentTypeNames[getTypeById(id)];
 		result += SEPARATOR_5;
-		result += Tool_Function::intToString(id);
+		result += Tool_Function::convertIntToString(id);
 		result += SEPARATOR_5;
 		result += getNameById(id);
 		result += ENDL;
@@ -583,7 +605,7 @@ string ER_PresentationModel::getEntitiesTable()
 		result += SPACE_TEXT_1;
 		result += ERD_Component::componentTypeNames[getTypeById(id)];
 		result += SEPARATOR_5;
-		result += Tool_Function::intToString(id);
+		result += Tool_Function::convertIntToString(id);
 		result += SEPARATOR_5;
 		result += getNameById(id);
 		result += ENDL;
@@ -598,7 +620,7 @@ string ER_PresentationModel::getAttributesTableById(int id)
 {
 	string result;
 	result += ATTRIBUTE_TEXT;
-	result += Tool_Function::intToString(id);
+	result += Tool_Function::convertIntToString(id);
 	result += APOSTROPHE_TEXT;
 	result += ENDL;
 	result += SEPARATOR_1;
@@ -615,7 +637,7 @@ string ER_PresentationModel::getAttributesTableById(int id)
 		result += SPACE_TEXT_1;
 		result += ERD_Component::componentTypeNames[getTypeById(id)];
 		result += SEPARATOR_5;
-		result += Tool_Function::intToString(id);
+		result += Tool_Function::convertIntToString(id);
 		result += SEPARATOR_5;
 		result += getNameById(id);
 		result += ENDL;
@@ -633,7 +655,7 @@ string ER_PresentationModel::redo()
 	redoResult = cmdManager.redo();
 	if (redoResult)
 	{
-		message += "Redo Succeed!";
+		message += REDO_SUCCEED;
 		message += ENDL;
 		message += getComponentsTable();
 		message += ENDL;
@@ -641,7 +663,7 @@ string ER_PresentationModel::redo()
 	}
 	else
 	{
-		message += "Cannot redo.";
+		message += CANNOT_REDO;
 		message += ENDL;
 	}
 	return message;
@@ -655,7 +677,7 @@ string ER_PresentationModel::undo()
 	undoResult = cmdManager.undo();
 	if (undoResult)
 	{
-		message += "Undo Succeed!";
+		message += UNDO_SUCCEED;
 		message += ENDL;
 		message += getComponentsTable();
 		message += ENDL;
@@ -663,7 +685,7 @@ string ER_PresentationModel::undo()
 	}
 	else
 	{
-		message += "Cannot undo.";
+		message += CANNOT_UNDO;
 		message += ENDL;
 	}
 	return message;
@@ -673,12 +695,12 @@ string ER_PresentationModel::undo()
 string ER_PresentationModel::deleteComponent(int id)
 {
 	string cmdResult = cmdManager.execute(new ER_DeleteCommand(&model, id));
-	if (cmdResult != "")
+	if (cmdResult != EMPTY_TEXT)
 	{
 		string message;
-		message += "The component \"";
+		message += COMPONENT_TEXT;
 		message += cmdResult;
-		message += "\" has been deleted.";
+		message += DELETED_TEXT;
 		message += ENDL;
 		message += getComponentsTable();
 		message += ENDL;
@@ -687,6 +709,12 @@ string ER_PresentationModel::deleteComponent(int id)
 	}
 	else
 	{
-		return "fail to delete!";
+		return FAIL_DELETED_TEXT;
 	}
+}
+
+// 判斷是否有足夠的Node可以連接
+bool ER_PresentationModel::enoughNodesToConnect()
+{
+	return model.enoughNodesToConnect();
 }
