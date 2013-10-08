@@ -356,9 +356,17 @@ bool ER_PresentationModel::isExistTable()
 	}
 	for (vector<int>::iterator it = entitiesId.begin(); it < entitiesId.end(); it++)
 	{
-		if (model.findOneByOneRelationEntityId(*it).size() != 0)
+		vector<int> oneByOneRelationEntityId = model.findOneByOneRelationEntityId(*it);
+		if (oneByOneRelationEntityId.size() != 0) // 有1對1的Entity
 		{
-			return true;
+			for (vector<int>::iterator entityIt = oneByOneRelationEntityId.begin(); entityIt < oneByOneRelationEntityId.end(); entityIt++)
+			{
+				if (model.findPrimaryKeyByEntityId(*entityIt).size() == 0 || model.findPrimaryKeyByEntityId(*it).size() == 0) // 判斷有沒有primaryKey
+				{
+					return false;
+				}
+				return true;
+			}
 		}
 	}
 	return false;
