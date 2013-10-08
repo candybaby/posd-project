@@ -32,6 +32,11 @@ public:
 	string getNameById(int);
 	ERD_Component::ComponentType getTypeById(int);
 	string checkAddConnection(int ,int);
+	string getCannotConnectMessage(string, string);
+	string getSameNodeMessage(string);
+	string getAskCardinaryStateMessage();
+	string getAlreadyConnectedMessage(string, string);
+	string getNodeConnectedMessage(string, string);
 	string addConnection(int ,int, ERD_Connection::ConnectionCardinality);
 	bool isExistComponentId(string);
 	string checkEntitySelectedValid(string);
@@ -51,7 +56,7 @@ public:
 	string makeResultString(int, string, string);
 	vector<int> findOneByOneEntity();
 	string getTable();
-	string loadComponents(string);
+	string readComponentsFile(string);
 	string storeComponents(string);
 	string getConnectionsTable();
 	string getNodesTable();

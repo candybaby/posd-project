@@ -5,13 +5,14 @@ ERD_Entity::ERD_Entity(void)
 	this->type = Entity;
 }
 
-ERD_Entity::ERD_Entity(ERD_Entity* rhs)
+// clone建構子
+ERD_Entity::ERD_Entity(ERD_Entity* entityClone)
 {
-	this->id = rhs->getId();
-	this->type = rhs->getType();
-	this->text = rhs->getText();
-	this->connections = rhs->getConnections();
-	this->foreignEntityIdVector = rhs->getForeignEntityIdVector();
+	this->id = entityClone->getId();
+	this->type = entityClone->getType();
+	this->text = entityClone->getText();
+	this->connections = entityClone->getConnections();
+	this->foreignEntityIdVector = entityClone->getForeignEntityIdVector();
 }
 
 ERD_Entity::ERD_Entity(string name, int id)
@@ -25,6 +26,7 @@ ERD_Entity::~ERD_Entity(void)
 {
 }
 
+// 判斷是否可以連接
 bool ERD_Entity::canConnectTo(ERD_Component* entity)
 {
 	if (entity->getType() == Entity)
@@ -37,6 +39,7 @@ bool ERD_Entity::canConnectTo(ERD_Component* entity)
 	}
 }
 
+// 取得是否有包含與該entity有foreignKey關係的EntityID
 bool ERD_Entity::isContainForeignEntityId(int id)
 {
 	for (vector<int>::iterator it = foreignEntityIdVector.begin(); it < foreignEntityIdVector.end(); it++)
@@ -49,16 +52,19 @@ bool ERD_Entity::isContainForeignEntityId(int id)
 	return false;
 }
 
+// 新增有foreignKey關係的EntityID
 void ERD_Entity::addForeignEntityId(int id)
 {
 	foreignEntityIdVector.push_back(id);
 }
 
+// 取得foreignKey關係的EntityID Vector
 vector<int> ERD_Entity::getForeignEntityIdVector()
 {
 	return foreignEntityIdVector;
 }
 
+// 克隆
 ERD_Component* ERD_Entity::clone()
 {
 	return new ERD_Entity(*this);

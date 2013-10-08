@@ -27,12 +27,14 @@ ER_ConnectCommand::~ER_ConnectCommand(void)
 {
 }
 
+// °õ¦æ
 string ER_ConnectCommand::execute()
 {
 	model->addConnection(firstNodeId, secondNodeId, targetId, targetCardinality);
 	return EMPTY_TEXT;
 }
 
+// ¤Ï¾Þ§@
 string ER_ConnectCommand::unexecute()
 {
 	model->deleteComponent(targetId);

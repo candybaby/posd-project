@@ -5,12 +5,13 @@ ERD_Relationship::ERD_Relationship(void)
 	this->type = Relationship;
 }
 
-ERD_Relationship::ERD_Relationship(ERD_Relationship* rhs)
+// clone建構子
+ERD_Relationship::ERD_Relationship(ERD_Relationship* relationshipClone)
 {
-	this->id = rhs->getId();
-	this->type = rhs->getType();
-	this->text = rhs->getText();
-	this->connections = rhs->getConnections();
+	this->id = relationshipClone->getId();
+	this->type = relationshipClone->getType();
+	this->text = relationshipClone->getText();
+	this->connections = relationshipClone->getConnections();
 }
 
 ERD_Relationship::ERD_Relationship(string name, int id)
@@ -24,6 +25,7 @@ ERD_Relationship::~ERD_Relationship(void)
 {
 }
 
+// 判斷是否可以連接
 bool ERD_Relationship::canConnectTo(ERD_Component* entity)
 {
 	if (entity->getType() == Entity)
@@ -36,6 +38,7 @@ bool ERD_Relationship::canConnectTo(ERD_Component* entity)
 	}
 }
 
+// 克隆
 ERD_Component* ERD_Relationship::clone()
 {
 	return new ERD_Relationship(*this);

@@ -18,16 +18,19 @@ ER_DeleteCommand::~ER_DeleteCommand(void)
 	delete target;
 }
 
+// 找指定id的component
 ERD_Component* ER_DeleteCommand::findComponentById(int id)
 {
 	return model->findComponentById(id);
 }
 
+// 刪除指定id的物件
 bool ER_DeleteCommand::deleteComponentById(int id)
 {
 	return model->deleteComponent(id);
 }
 
+// 清除暫存資料
 void ER_DeleteCommand::clearTempData()
 {
 	while (relatedComponents.size() > 0)
@@ -38,6 +41,7 @@ void ER_DeleteCommand::clearTempData()
 	}
 }
 
+// 執行
 string ER_DeleteCommand::execute()
 {
 	bool result;
@@ -60,6 +64,7 @@ string ER_DeleteCommand::execute()
 	}
 }
 
+// 反操作
 string ER_DeleteCommand::unexecute()
 {
 	if (target->getType() != ERD_Component::Connection)

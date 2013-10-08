@@ -7,7 +7,7 @@ class ERD_Entity : public ERD_Node
 {
 public:
 	ERD_Entity(void);
-	ERD_Entity(ERD_Entity* rhs);
+	ERD_Entity(ERD_Entity*);
 	ERD_Entity(string, int);
 	~ERD_Entity(void);
 	virtual bool canConnectTo(ERD_Component*);

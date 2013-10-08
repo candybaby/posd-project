@@ -19,7 +19,7 @@ public:
 	};
 	static const char* componentTypeNames[SIZE_OF_ComponentType];
 	ERD_Component(void);
-	ERD_Component(ERD_Component* rhs);
+	ERD_Component(ERD_Component*);
 	virtual ~ERD_Component(void);
 	int getId();
 	ComponentType getType();

@@ -117,14 +117,16 @@ void ER_TextUI::processCommand()
 	displayMenu();
 }
 
+// 讀檔
 void ER_TextUI::loadFile()
 {
 	cout << INPUT_FILE_PATH;
 	string filePath;
 	cin >> filePath;
-	cout << presentationModel.loadComponents(filePath) << endl;
+	cout << presentationModel.readComponentsFile(filePath) << endl;
 }
 
+// 存檔
 void ER_TextUI::saveFile()
 {
 	cout << INPUT_FILE_NAME;
@@ -133,17 +135,18 @@ void ER_TextUI::saveFile()
 	cout << presentationModel.storeComponents(filePath) << endl;
 }
 
+// 新增Node
 void ER_TextUI::addNode()
 {
 	string addNodeCommand, addNodeName, idStr;
 	int type = -1;
 	cout << ADD_NODE_TEXT << endl;
-	type = option1Question(addNodeCommand, type);
+	type = addNodeChooseTypeQuestion(addNodeCommand, type);
 
 	while (type == -1)
 	{
 		cout << ERROR_TEXT << RE_ENTER << endl;
-		type = option1Question(addNodeCommand, type);
+		type = addNodeChooseTypeQuestion(addNodeCommand, type);
 	}
 	cout << ADD_NODE_NAME_TEXT << endl;
 	cin.ignore();
@@ -153,6 +156,7 @@ void ER_TextUI::addNode()
 	cout << presentationModel.getNodesTable();
 }
 
+// 嘗試連線
 void ER_TextUI::tryConnectNodes()
 {
 	if (presentationModel.enoughNodesToConnect())
@@ -165,14 +169,15 @@ void ER_TextUI::tryConnectNodes()
 	}
 }
 
+// 連接兩個Nodes
 void ER_TextUI::connectTwoNodes()
 {
 	string connectFirstNode, connectSecondNode;
 	cout << ENTER_FIRST_NODE << endl;
-	option2Question(connectFirstNode);
+	checkNodeExist(connectFirstNode);
 
 	cout << ENTER_SECOND_NODE << endl;
-	option2Question(connectSecondNode);
+	checkNodeExist(connectSecondNode);
 
 	int firstNodeId, secondNodeId;
 	firstNodeId = stoi(connectFirstNode);
@@ -181,6 +186,7 @@ void ER_TextUI::connectTwoNodes()
 	addConnection(firstNodeId, secondNodeId);
 }
 
+// 增加連線
 void ER_TextUI::addConnection(int firstNodeId, int secondNodeId)
 {
 	string message, cardinality;
@@ -209,6 +215,7 @@ void ER_TextUI::addConnection(int firstNodeId, int secondNodeId)
 	}
 }
 
+// 展示現在的Diagram
 void ER_TextUI::displayCurrentDiagram()
 {
 	cout << presentationModel.getComponentsTable();
@@ -216,6 +223,7 @@ void ER_TextUI::displayCurrentDiagram()
 	cout << presentationModel.getConnectionsTable();
 }
 
+// 設定PrimaryKey
 void ER_TextUI::setPrimaryKey()
 {
 	string entityId, messageOfEntity;
@@ -241,6 +249,7 @@ void ER_TextUI::setPrimaryKey()
 	printEntityPrimaryKey(entityIntId);
 }
 
+// 檢查PrimaryKey的設定
 void ER_TextUI::checkPrimaryKeySetting(int entityIntId)
 {
 	string messageOfAttributes, attributesQuery;
@@ -255,6 +264,7 @@ void ER_TextUI::checkPrimaryKeySetting(int entityIntId)
 	}
 }
 
+//  刪除元件
 void ER_TextUI::deleteComponent()
 {
 	cout << ENTER_COMPONENT_ID << endl;
@@ -268,7 +278,8 @@ void ER_TextUI::deleteComponent()
 	cout << presentationModel.deleteComponent(stoi(deleteIdStr)) << endl;
 }
 
-int ER_TextUI::option1Question(string addNodeCommand, int type)
+// 新增Node的問題
+int ER_TextUI::addNodeChooseTypeQuestion(string addNodeCommand, int type)
 {
 	cout << ADD_NODE_CHOOSE_TEXT << endl;
 	cin >> addNodeCommand;
@@ -276,12 +287,13 @@ int ER_TextUI::option1Question(string addNodeCommand, int type)
 	return type;
 }
 
+// 印出AddNode結果
 void ER_TextUI::printAddNodeResult(int type, string id, string addNodeName)
 {
 	cout << A_NODE << ER_PresentationModel::entityOptionTypeNames[type + SHIFT_THREE] << NODE_ADDED << id << NODE_ADDED_NAME << addNodeName << NODE_ADDED_END << endl;
 }
 
-void ER_TextUI::option2Question(string &connectNode)
+void ER_TextUI::checkNodeExist(string &connectNode)
 {
 	cin >> connectNode;
 	while (!presentationModel.isExistComponentId(connectNode))
@@ -291,6 +303,7 @@ void ER_TextUI::option2Question(string &connectNode)
 	}
 }
 
+// 印出指定Entity的PrimaryKey
 void ER_TextUI::printEntityPrimaryKey(int id)
 {
 	cout << THE_ENTITY << id << HAS_PRIMARY_KEY << presentationModel.getPrimaryKeyString(id) << END_TEXT_KEY << endl;

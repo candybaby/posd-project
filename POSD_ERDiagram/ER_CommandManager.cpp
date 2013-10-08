@@ -20,6 +20,7 @@ ER_CommandManager::~ER_CommandManager(void)
 	}
 }
 
+// °õ¦æ
 string ER_CommandManager::execute(ER_Command* cmd) 
 {
 	string result;
@@ -36,6 +37,7 @@ string ER_CommandManager::execute(ER_Command* cmd)
 	return result;
 }
 
+// redo
 bool ER_CommandManager::redo() 
 {
 	if (redoCmds.size() == 0)
@@ -52,6 +54,7 @@ bool ER_CommandManager::redo()
 	}
 }
 
+// undo
 bool ER_CommandManager::undo() 
 {
 	if (undoCmds.size() == 0)

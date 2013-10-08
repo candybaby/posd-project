@@ -1,7 +1,6 @@
 #pragma once
 #ifndef _ER_COMMANDMANAGER_ 
 #define _ER_COMMANDMANAGER_
-
 #include "ER_Command.h"
 #include <stack>
 

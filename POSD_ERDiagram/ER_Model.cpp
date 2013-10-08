@@ -48,6 +48,7 @@ void ER_Model::sortComponents()
 
 const char* ER_Model::componentTypeMapNames[SIZE_OF_ComponentTypeMap] = {"A", "E", "R", "C"};
 
+// 取得Components
 vector<ERD_Component*> ER_Model::getComponents()
 {
 	return components;
@@ -431,86 +432,130 @@ vector<int> ER_Model::findOneByOneRelationEntityId(int targetId)
 	return idVector;
 }
 
-// 讀檔
-string ER_Model::loadComponents(string path)
+// 嚐試讀檔
+string ER_Model::readComponentsFile(string path)
+{
+	ER_FileManager file;
+	if (file.openFile(path, ER_FileManager::Read))
+	{
+		loadFileContent(file);
+		return MESSAGE_SUCCESS;
+	}
+	else
+	{
+		return MESSAGE_FAIL;
+	}
+}
+
+// 讀取檔案內容
+void ER_Model::loadFileContent(ER_FileManager &file)
+{
+	currentId = 0; // init
+	clearCurrentComponents();
+	vector<string> lines;
+	int state = 0;
+	map<int, string> connectionMap;
+	string content = file.readFile();
+	lines = Tool_Function::split(content, CHAR_ENDL);
+	for (vector<string>::iterator it = lines.begin(); it < lines.end(); it++)
+	{
+		if (*it == EMPTY_TEXT)
+		{
+			state++;
+		} 
+		else
+		{
+			if (state == 0)
+			{
+				loadComponents(it, connectionMap);
+			}
+			else if (state == 1)
+			{
+				loadConnections(it, connectionMap);
+			}
+			else
+			{
+				loadPrinaryKey(it);
+			}
+		}
+	}
+	file.closeFile();
+}
+
+// 讀檔第1部分Components
+void ER_Model::loadComponents(vector<string>::iterator lineIt, map<int, string> &connectionMap)
+{
+	vector<string> lineParts = Tool_Function::split(*lineIt, CHAR_SPACE);
+	if (lineParts.size() > 1)
+	{
+		string typeStr = lineParts[0].substr(0, 1);
+		string text = lineParts[1];
+		if (typeStr != componentTypeMapNames[Connection])
+		{
+			addNode(typeStr, text);
+		}
+		else
+		{
+			connectionMap.insert(pair<int, string> (currentId, text));
+			currentId++;
+		}
+	}
+	else
+	{
+		connectionMap.insert(pair<int, string> (currentId, EMPTY_TEXT));
+		currentId++;
+	}
+}
+
+// 讀檔第2部分Connections
+void ER_Model::loadConnections(vector<string>::iterator lineIt, map<int, string> &connectionMap)
+{
+	vector<string> lineParts = Tool_Function::split(*lineIt, CHAR_SPACE);
+	string connectionIdStr = lineParts[0];
+	string nodesIdStr = lineParts[1];
+	vector<string> nodes = Tool_Function::split(nodesIdStr, CHAR_CAMMA);
+	int node1, node2, connectionId;
+	node1 = std::stoi(nodes[0]);
+	node2 = std::stoi(nodes[1]);
+	connectionId = std::stoi(connectionIdStr);
+	string cardinalityStr = connectionMap.at(connectionId);
+	if (cardinalityStr != EMPTY_TEXT)
+	{
+		addConnection(node1, node2, connectionId, cardinalityStr);
+	}
+	else
+	{
+		addConnection(node1, node2, connectionId);
+	}
+}
+
+// 讀檔第3部分PrimaryKey
+void ER_Model::loadPrinaryKey(vector<string>::iterator lineIt)
+{
+	vector<string> lineParts = Tool_Function::split(*lineIt, CHAR_SPACE);
+	string primaryKeyIdStr = lineParts[1];
+	vector<string> primaryKeysId = Tool_Function::split(primaryKeyIdStr, CHAR_CAMMA);
+	for (vector<string>::iterator it = primaryKeysId.begin(); it < primaryKeysId.end(); it++)
+	{
+		int primaryKeyId = std::stoi(*it);
+		setIsPrimaryKey(primaryKeyId, true);
+	}
+}
+
+// 存檔
+string ER_Model::storeComponents(string path)
 {
 	string result;
 	ER_FileManager file;
-
-	if (file.openFile(path, ER_FileManager::Read))
+	if (file.openFile(path, ER_FileManager::Write))
 	{
-		currentId = 0; // init
-		clearCurrentComponents();
-		string content;
-		vector<string> lines;
-		int state = 0;
-		map<int, string> connectionMap;
-		content = file.readFile();
-		lines = Tool_Function::split(content, CHAR_ENDL);
-		for (vector<string>::iterator it = lines.begin(); it < lines.end(); it++)
-		{
-			if (*it == EMPTY_TEXT)
-			{
-				state++;
-			} 
-			else
-			{
-				if (state == 0)
-				{
-					vector<string> lineParts = Tool_Function::split(*it, CHAR_SPACE);
-					if (lineParts.size() > 1)
-					{
-						string typeStr = lineParts[0].substr(0, 1);
-						string text = lineParts[1];
-						if (typeStr != componentTypeMapNames[Connection])
-						{
-							addNode(typeStr, text);
-						}
-						else
-						{
-							connectionMap.insert(pair<int, string> (currentId, text));
-							currentId++;
-						}
-					}
-					else
-					{
-						connectionMap.insert(pair<int, string> (currentId, EMPTY_TEXT));
-						currentId++;
-					}
-				}
-				else if (state == 1)
-				{
-					vector<string> lineParts = Tool_Function::split(*it, CHAR_SPACE);
-					string connectionIdStr = lineParts[0];
-					string nodesIdStr = lineParts[1];
-					vector<string> nodes = Tool_Function::split(nodesIdStr, CHAR_CAMMA);
-					int node1, node2, connectionId;
-					node1 = std::stoi(nodes[0]);
-					node2 = std::stoi(nodes[1]);
-					connectionId = std::stoi(connectionIdStr);
-					string cardinalityStr = connectionMap.at(connectionId);
-					if (cardinalityStr != EMPTY_TEXT)
-					{
-						addConnection(node1, node2, connectionId, cardinalityStr);
-					}
-					else
-					{
-						addConnection(node1, node2, connectionId);
-					}
-				}
-				else
-				{
-					vector<string> lineParts = Tool_Function::split(*it, CHAR_SPACE);
-					string primaryKeyIdStr = lineParts[1];
-					vector<string> primaryKeysId = Tool_Function::split(primaryKeyIdStr, CHAR_CAMMA);
-					for (vector<string>::iterator it = primaryKeysId.begin(); it < primaryKeysId.end(); it++)
-					{
-						int primaryKeyId = std::stoi(*it);
-						setIsPrimaryKey(primaryKeyId, true);
-					}
-				}
-			}
-		}
+		storeFileAboutComponents(file);
+		file.writeLine(EMPTY_TEXT);
+
+		storeFileAboutConnections(file);
+		file.writeLine(EMPTY_TEXT);
+
+		storeFileAboutPrimaryKey(file);
 		file.closeFile();
 		result = MESSAGE_SUCCESS;
 	}
@@ -521,67 +566,63 @@ string ER_Model::loadComponents(string path)
 	return result;
 }
 
-// 存檔
-string ER_Model::storeComponents(string path)
+// 存檔第1部分 Components
+void ER_Model::storeFileAboutComponents(ER_FileManager &file)
 {
-	string result;
-	ER_FileManager file;
-	if (file.openFile(path, ER_FileManager::Write))
+	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
 	{
-		for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
+		string line, tmp;
+		line = componentTypeMapNames[((ERD_Component *)*it)->getType()];
+		tmp = ((ERD_Component *)*it)->getText();
+		if (tmp.size() > 0)
 		{
-			string line, tmp;
-			line = componentTypeMapNames[((ERD_Component *)*it)->getType()];
-			tmp = ((ERD_Component *)*it)->getText();
-			if (tmp.size() > 0)
-			{
-				line += CAMMA;
-				line += tmp;
-			}
-			file.writeLine(line);
+			line += CAMMA;
+			line += tmp;
 		}
-		file.writeLine(EMPTY_TEXT);  // 間隔 以上:存components
-		vector<int> connections = findComponentsByType(ERD_Component::Connection);
-		for (vector<int>::iterator it = connections.begin(); it < connections.end(); it++)
+		file.writeLine(line);
+	}
+}
+
+// 存檔第2部分 Connections
+void ER_Model::storeFileAboutConnections(ER_FileManager &file)
+{
+	vector<int> connections = findComponentsByType(ERD_Component::Connection);
+	for (vector<int>::iterator it = connections.begin(); it < connections.end(); it++)
+	{
+		string line, tmp;
+		int node1, node2;
+		node1 = getConnectionNodeById(*it, 0);
+		node2 = getConnectionNodeById(*it, 1);
+		line = Tool_Function::convertIntToString((int)*it);
+		line += SPACE;
+		line += Tool_Function::convertIntToString(node1);
+		line += CAMMA_TEXT;
+		line += Tool_Function::convertIntToString(node2);
+		file.writeLine(line);
+	}
+}
+
+// 存檔第3部分 PrimaryKey
+void ER_Model::storeFileAboutPrimaryKey(ER_FileManager &file)
+{
+	vector<int> entities = findComponentsByType(ERD_Component::Entity);
+	for (vector<int>::iterator it = entities.begin(); it < entities.end(); it++)
+	{
+		string line;
+		vector<int> primaryKeys = findPrimaryKeyByEntityId(*it);
+		if (primaryKeys.size() > 0)
 		{
-			string line, tmp;
-			int node1, node2;
-			node1 = getConnectionNodeById(*it, 0);
-			node2 = getConnectionNodeById(*it, 1);
 			line = Tool_Function::convertIntToString((int)*it);
 			line += SPACE;
-			line += Tool_Function::convertIntToString(node1);
-			line += CAMMA_TEXT;
-			line += Tool_Function::convertIntToString(node2);
+			for (vector<int>::iterator pit = primaryKeys.begin(); pit < primaryKeys.end(); pit++)
+			{
+				line +=  Tool_Function::convertIntToString((int)*pit);
+				line += CAMMA_TEXT;
+			}
+			line = line.substr(0,line.size() - 1);
 			file.writeLine(line);
 		}
-		file.writeLine(EMPTY_TEXT);  // 間隔 以上:存connection
-		vector<int> entities = findComponentsByType(ERD_Component::Entity);
-		for (vector<int>::iterator it = entities.begin(); it < entities.end(); it++)
-		{
-			string line;
-			vector<int> primaryKeys = findPrimaryKeyByEntityId(*it);
-			if (primaryKeys.size() > 0)
-			{
-				line = Tool_Function::convertIntToString((int)*it);
-				line += SPACE;
-				for (vector<int>::iterator pit = primaryKeys.begin(); pit < primaryKeys.end(); pit++)
-				{
-					line +=  Tool_Function::convertIntToString((int)*pit);
-					line += CAMMA_TEXT;
-				}
-				line = line.substr(0,line.size() - 1);
-				file.writeLine(line);
-			}
-		}
-		file.closeFile();
-		result = MESSAGE_SUCCESS;
 	}
-	else
-	{
-		result = MESSAGE_FAIL;
-	}
-	return result;
 }
 
 // 判斷idStr是不是已存在的componentId
@@ -657,6 +698,7 @@ void ER_Model::addComponent(ERD_Component* component)
 	sortComponents();
 }
 
+// 是否有足夠的node可以連接
 bool ER_Model::enoughNodesToConnect()
 {
 	if (findNodes().size() > 1)

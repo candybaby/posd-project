@@ -1,5 +1,6 @@
 #include "Tool_Function.h"
 
+// Âà´«IntToString
 string Tool_Function::convertIntToString(int &targetInt) 
 {
 	string tempString;
@@ -8,6 +9,7 @@ string Tool_Function::convertIntToString(int &targetInt)
 	return stringStream.str();
 }
 
+// split
 vector<string> Tool_Function::split(const std::string &sourceString, char delim, std::vector<std::string> &resultVector) 
 {
 	stringstream stringStream(sourceString);

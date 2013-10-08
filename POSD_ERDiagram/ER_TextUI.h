@@ -40,9 +40,9 @@ public:
 	void setPrimaryKey();
 	void checkPrimaryKeySetting(int);
 	void deleteComponent();
-	int option1Question(string addNodeCommand, int type );
+	int addNodeChooseTypeQuestion(string addNodeCommand, int type);
 	void printAddNodeResult(int, string, string);
-	void option2Question(string &);
+	void checkNodeExist(string &);
 	void printEntityPrimaryKey(int);
 
 private:

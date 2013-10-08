@@ -8,6 +8,7 @@ ER_ComponentFactory::~ER_ComponentFactory(void)
 {
 }
 
+// 製作Node
 ERD_Component* ER_ComponentFactory::createNodeComponent(ERD_Component::ComponentType type, string nodeName, int id)
 {
 	if (type == ERD_Component::Attribute)
@@ -28,6 +29,7 @@ ERD_Component* ER_ComponentFactory::createNodeComponent(ERD_Component::Component
 	}
 }
 
+// 製作Connection
 ERD_Component* ER_ComponentFactory::createConnectionComponent(ERD_Component* component1, ERD_Component* component2, int id)
 {
 	ERD_Component* connection = new ERD_Connection(id);
@@ -36,6 +38,7 @@ ERD_Component* ER_ComponentFactory::createConnectionComponent(ERD_Component* com
 	return connection;
 }
 
+// 製作Connection
 ERD_Component* ER_ComponentFactory::createConnectionComponent(ERD_Component* component1, ERD_Component* component2, int id, ERD_Connection::ConnectionCardinality cardinality)
 {
 	if (cardinality == ERD_Connection::SIZE_OF_Cardinality)

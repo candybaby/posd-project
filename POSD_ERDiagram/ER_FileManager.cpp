@@ -8,6 +8,7 @@ ER_FileManager::~ER_FileManager(void)
 {
 }
 
+// 開啟檔案
 bool ER_FileManager::openFile(string path, FileType type)
 {
 	if (type == Write)
@@ -39,6 +40,7 @@ bool ER_FileManager::openFile(string path, FileType type)
 	return false;
 }
 
+// 讀檔案(行)
 string ER_FileManager::readFile()
 {
 	string result, line;
@@ -49,11 +51,13 @@ string ER_FileManager::readFile()
 	return result;
 }
 
+// 寫檔案
 void ER_FileManager::writeLine(string content)
 {
 	fout << content.c_str() << endl;
 }
 
+// 關閉檔案
 void ER_FileManager::closeFile()
 {
 	if (fout)

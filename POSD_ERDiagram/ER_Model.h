@@ -25,8 +25,9 @@ public:
 	};
 	struct ComponentSorter
 	{
-		bool ComponentSorter::operator ()(ERD_Component* lhs, ERD_Component* rhs) {
-			return lhs->getId() < rhs->getId();
+		bool ComponentSorter::operator ()(ERD_Component* leftComponent, ERD_Component* rightComponent)
+		{
+			return leftComponent->getId() < rightComponent->getId();
 		}
 	};
 	static const char* componentTypeMapNames[SIZE_OF_ComponentTypeMap];
@@ -63,8 +64,15 @@ public:
 	vector<int> findPrimaryKeyByEntityId(int);
 	vector<vector<int>> findForeignKeyByEntityId(int);
 	vector<int> findOneByOneRelationEntityId(int);
-	string loadComponents(string);
+	string readComponentsFile(string);
+	void loadFileContent(ER_FileManager &);
+	void loadComponents(vector<string>::iterator, map<int, string> &);
+	void loadConnections(vector<string>::iterator, map<int, string> &);
+	void loadPrinaryKey(vector<string>::iterator);
 	string storeComponents(string);
+	void storeFileAboutComponents(ER_FileManager &);
+	void storeFileAboutConnections(ER_FileManager &);
+	void storeFileAboutPrimaryKey(ER_FileManager &);
 	bool isExistComponentId(string);
 	string checkEntitySelectedValid(string);
 	bool deleteComponent(int);

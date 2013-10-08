@@ -133,39 +133,77 @@ string ER_PresentationModel::checkAddConnection(int firstNodeId,int secondNodeId
 	int result = model.checkAddConnection(firstNodeId, secondNodeId);
 	if (result == CANNOT_CONNECT)
 	{
-		message += MESSAGE_NODE_1;
-		message	+= component2IdStr;
-		message	+= MESSAGE_NODE_6;
-		message	+= component1IdStr;
-		message	+= MESSAGE_NODE_3;
+		message = getCannotConnectMessage(component2IdStr, component1IdStr);
 	}
 	else if (result == SAME_NODE)
 	{
-		message += MESSAGE_NODE_1;
-		message	+= component1IdStr;
-		message	+= MESSAGE_NODE_4;
+		message = getSameNodeMessage(component1IdStr);
 	}
 	else if (result == ASK_CARDINALITY_STATE)
 	{
-		message += ASK_CARDINALITY;
+		message = getAskCardinaryStateMessage();
 	}
 	else if (result == ALREADY_CONNECTED)
 	{
-		message += MESSAGE_NODE_1;
-		message	+= component1IdStr;
-		message	+= MESSAGE_NODE_5;
-		message	+= component2IdStr;
-		message	+= MESSAGE_NODE_3;
+		message = getAlreadyConnectedMessage(component1IdStr, component2IdStr);
 	}
 	else
 	{
-		message += MESSAGE_NODE_1;
-		message	+= component1IdStr;
-		message	+= MESSAGE_NODE_2;
-		message	+= component2IdStr;
-		message	+= MESSAGE_NODE_3;
 		cmdManager.execute(new ER_ConnectCommand(&model, firstNodeId, secondNodeId, result));
+		message = getNodeConnectedMessage(component1IdStr, component2IdStr);
 	}
+	return message;
+}
+
+// 回傳不能連線的訊息
+string ER_PresentationModel::getCannotConnectMessage(string component2IdStr, string component1IdStr )
+{
+	string message;
+	message += MESSAGE_NODE_1;
+	message	+= component2IdStr;
+	message	+= MESSAGE_NODE_6;
+	message	+= component1IdStr;
+	message	+= MESSAGE_NODE_3;	
+	return message;
+}
+
+// 回傳一樣Node連線錯誤的訊息
+string ER_PresentationModel::getSameNodeMessage(string component1IdStr)
+{
+	string message;
+	message += MESSAGE_NODE_1;
+	message	+= component1IdStr;
+	message	+= MESSAGE_NODE_4;
+	return message;
+}
+
+// 回傳需要Cardinary資訊的訊息
+string ER_PresentationModel::getAskCardinaryStateMessage()
+{
+	return ASK_CARDINALITY;
+}
+
+// 回傳已經連線的訊息
+string ER_PresentationModel::getAlreadyConnectedMessage(string component1IdStr, string component2IdStr)
+{
+	string message;
+	message += MESSAGE_NODE_1;
+	message	+= component1IdStr;
+	message	+= MESSAGE_NODE_5;
+	message	+= component2IdStr;
+	message	+= MESSAGE_NODE_3;
+	return message;
+}
+
+// 回傳成功連線的訊息
+string ER_PresentationModel::getNodeConnectedMessage(string component1IdStr, string component2IdStr)
+{
+	string message;
+	message += MESSAGE_NODE_1;
+	message	+= component1IdStr;
+	message	+= MESSAGE_NODE_2;
+	message	+= component2IdStr;
+	message	+= MESSAGE_NODE_3;
 	return message;
 }
 
@@ -464,9 +502,9 @@ string ER_PresentationModel::getTable()
 }
 
 // 讀檔
-string ER_PresentationModel::loadComponents(string path)
+string ER_PresentationModel::readComponentsFile(string path)
 {
-	string message = model.loadComponents(path);
+	string message = model.readComponentsFile(path);
 	if (message.find(MESSAGE_SUCCESS) != std::string::npos)
 	{
 		string result;

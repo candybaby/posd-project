@@ -18,6 +18,7 @@ ER_AddCommand::~ER_AddCommand(void)
 {
 }
 
+// °õ¦æ
 string ER_AddCommand::execute()
 {
 	if (targetId == -1)
@@ -31,6 +32,7 @@ string ER_AddCommand::execute()
 	return Tool_Function::convertIntToString(targetId);
 }
 
+// ¤Ï¾Þ§@
 string ER_AddCommand::unexecute()
 {
 	model->deleteComponent(targetId);
