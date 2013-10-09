@@ -46,7 +46,7 @@
 #define MESSAGE_SUCCESS "Success"
 #define MESSAGE_FAIL "Fail"
 #define FILE_NOT_FOUND "File not found!!\n"
-#define FAIL_TO_SAVE "Fail to Save!!\n"
+#define FAIL_TO_SAVE "Fail to Save!!"
 #define REDO_SUCCEED "Redo Succeed!"
 #define CANNOT_REDO "Cannot redo."
 #define UNDO_SUCCEED "Undo Succeed!"
@@ -533,7 +533,7 @@ string ER_PresentationModel::storeComponents(string path)
 	string message = model.storeComponents(path);
 	if (message.find(MESSAGE_SUCCESS) != std::string::npos)
 	{
-		return ENDL;
+		return EMPTY_TEXT;
 	}
 	else
 	{
@@ -764,3 +764,9 @@ bool ER_PresentationModel::enoughNodesToConnect()
 {
 	return model.enoughNodesToConnect();
 }
+
+bool ER_PresentationModel::getHasModify()
+{
+	return model.getHasModify();
+}
+

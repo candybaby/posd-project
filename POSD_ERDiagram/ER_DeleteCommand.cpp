@@ -54,6 +54,7 @@ string ER_DeleteCommand::execute()
 	}
 	target = findComponentById(targetId)->clone();
 	result = deleteComponentById(targetId);
+	model->setHasModify(true);
 	if (result)
 	{
 		return Tool_Function::convertIntToString(targetId);
@@ -84,6 +85,6 @@ string ER_DeleteCommand::unexecute()
 	}
 
 	clearTempData();
-	
+	model->setHasModify(true);
 	return EMPTY_TEXT;
 }

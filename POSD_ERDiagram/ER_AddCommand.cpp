@@ -29,6 +29,7 @@ string ER_AddCommand::execute()
 	{
 		model->addNode(targetType, targetName, targetId);
 	}
+	model->setHasModify(true);
 	return Tool_Function::convertIntToString(targetId);
 }
 
@@ -36,5 +37,6 @@ string ER_AddCommand::execute()
 string ER_AddCommand::unexecute()
 {
 	model->deleteComponent(targetId);
+	model->setHasModify(true);
 	return EMPTY_TEXT;
 }

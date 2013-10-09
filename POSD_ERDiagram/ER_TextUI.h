@@ -44,6 +44,7 @@ public:
 	void printAddNodeResult(int, string, string);
 	void checkNodeExist(string &);
 	void printEntityPrimaryKey(int);
+	void exitApplication();
 
 private:
 	ER_PresentationModel presentationModel;

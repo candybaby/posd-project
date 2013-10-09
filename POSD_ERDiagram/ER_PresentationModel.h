@@ -67,6 +67,7 @@ public:
 	string undo();
 	string deleteComponent(int);
 	bool enoughNodesToConnect();
+	bool getHasModify();
 
 private:
 	ER_Model model;

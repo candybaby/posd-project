@@ -79,10 +79,13 @@ public:
 	vector<int> findRelatedConnectionById(int);
 	void addComponent(ERD_Component*);
 	bool enoughNodesToConnect();
+	void setHasModify(bool);
+	bool getHasModify();
 
 private:
 	vector<ERD_Component *> components;
 	int currentId;
 	ER_ComponentFactory factory;
+	bool hasModify;
 };
 #endif

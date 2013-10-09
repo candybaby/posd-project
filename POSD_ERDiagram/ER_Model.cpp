@@ -21,6 +21,7 @@ using namespace std;
 ER_Model::ER_Model(void)
 {
 	currentId = 0;
+	hasModify = false;
 }
 
 ER_Model::~ER_Model(void)
@@ -558,6 +559,7 @@ string ER_Model::storeComponents(string path)
 		storeFileAboutPrimaryKey(file);
 		file.closeFile();
 		result = MESSAGE_SUCCESS;
+		hasModify = false;
 	}
 	else
 	{
@@ -709,4 +711,16 @@ bool ER_Model::enoughNodesToConnect()
 	{
 		return false;
 	}
+}
+
+// 設定有沒有Modify
+void ER_Model::setHasModify(bool flag)
+{
+	hasModify = flag;
+}
+
+// 取得有沒有Modify
+bool ER_Model::getHasModify()
+{
+	return hasModify;
 }

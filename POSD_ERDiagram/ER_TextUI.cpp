@@ -37,6 +37,9 @@
 #define NOT_ENOUGH_NODES "Not Enough Nodes To Connect!\n"
 #define ENTER_COMPONENT_ID "Please enter the component ID"
 #define COMPONENT_NOT_EXIST "The component ID you entered does not exist. "
+#define ASK_SAVE_FILE "Save ER diagram file? (Y/N)"
+#define ANSWER_YES "Y"
+#define ANSWER_NO "N"
 
 using namespace std;
 
@@ -107,8 +110,8 @@ void ER_TextUI::processCommand()
 	}
 	else if (menuCommand == menuCommandNames[Option_11])  // Exit
 	{
-		cout << BYE_TEXT << endl;
-		return ;
+		exitApplication();
+		return;
 	}
 	else
 	{
@@ -307,4 +310,23 @@ void ER_TextUI::checkNodeExist(string &connectNode)
 void ER_TextUI::printEntityPrimaryKey(int id)
 {
 	cout << THE_ENTITY << id << HAS_PRIMARY_KEY << presentationModel.getPrimaryKeyString(id) << END_TEXT_KEY << endl;
+}
+
+// Â÷¶}µ{¦¡
+void ER_TextUI::exitApplication()
+{
+	if (presentationModel.getHasModify())
+	{
+		string answer;
+		while (!(answer == ANSWER_YES || answer == ANSWER_NO))
+		{
+			cout << ASK_SAVE_FILE << endl;
+			cin >> answer;
+			if (answer == ANSWER_YES)
+			{
+				saveFile();
+			}
+		}
+	}
+	cout << BYE_TEXT << endl;
 }

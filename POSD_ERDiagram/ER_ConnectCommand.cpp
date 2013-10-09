@@ -31,6 +31,7 @@ ER_ConnectCommand::~ER_ConnectCommand(void)
 string ER_ConnectCommand::execute()
 {
 	model->addConnection(firstNodeId, secondNodeId, targetId, targetCardinality);
+	model->setHasModify(true);
 	return EMPTY_TEXT;
 }
 
@@ -38,5 +39,6 @@ string ER_ConnectCommand::execute()
 string ER_ConnectCommand::unexecute()
 {
 	model->deleteComponent(targetId);
+	model->setHasModify(true);
 	return EMPTY_TEXT;
 }
