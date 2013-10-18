@@ -202,23 +202,194 @@ TEST_F(ER_ModelTest, findComponents) {
 	EXPECT_EQ(0, model->getComponents().size());
 }
 
-/* 測試
-TEST_F(ER_ModelTest, functionName) {
+// 測試 找特定型態的component集合
+TEST_F(ER_ModelTest, findComponentsByType) {
 	// 測試
-	// 參數:
-	// 回傳:
-	// 附註:
+	// 參數:ComponentType(type)
+	// 回傳:vector<int>(componentsId)
+	// 附註:回傳目前model中所有的為指定type的Components
 	EXPECT_EQ(0, model->getComponents().size());
-}*/
+}
 
-/* 測試
-TEST_F(ER_ModelTest, functionName) {
+// 測試 找targetId與特定type相連的NodeID(不包含connection)
+TEST_F(ER_ModelTest, findIdWithTypeByTargetId) {
 	// 測試
-	// 參數:
-	// 回傳:
+	// 參數:ComponentType(type), int(targetId)
+	// 回傳:vector<int>(componentsId)
+	// 附註:回傳與指定Component相連的Component其type為指定的type
+	EXPECT_EQ(0, model->getComponents().size());
+}
+
+// 測試 找targetId與特定type相連的NodeID且Cardinality性質為one的(不包含connection)
+TEST_F(ER_ModelTest, findIdWithTypeByTargetIdWithCardinality) {
+	// 測試
+	// 參數:ComponentType(type), int(targetId)
+	// 回傳:vector<int>(NodesId)
+	// 附註:回傳與指定Component相連的Component其type為指定的type連線屬性Cardinality為one
+	EXPECT_EQ(0, model->getComponents().size());
+}
+
+// 測試 找特定entity的primaryKey
+TEST_F(ER_ModelTest, findPrimaryKeyByEntityId) {
+	// 測試
+	// 參數:int(entityId)
+	// 回傳:vector<int>(attributeId)
+	// 附註:無
+	EXPECT_EQ(0, model->getComponents().size());
+}
+
+// 測試 給定entityId找他的foreignKeys
+TEST_F(ER_ModelTest, findForeignKeyByEntityId) {
+	// 測試
+	// 參數:int(entityId)
+	// 回傳:vector<vector<int>>(foreignKeysIdVector)
+	// 附註:回傳foreignkeyIdVector
+	EXPECT_EQ(0, model->getComponents().size());
+}
+
+// 測試 給定entity找1對1關係的entity
+TEST_F(ER_ModelTest, findOneByOneRelationEntityId) {
+	// 測試
+	// 參數:int(targetId)
+	// 回傳:vector<int>(entitiesId)
+	// 附註:找1對1關係的entity
+	EXPECT_EQ(0, model->getComponents().size());
+}
+
+// 測試 嚐試讀檔
+TEST_F(ER_ModelTest, readComponentsFile) {
+	// 測試
+	// 參數:string(path)
+	// 回傳:string(message)
 	// 附註:
 	EXPECT_EQ(0, model->getComponents().size());
-}*/
+}
+
+// 測試 讀取檔案內容
+TEST_F(ER_ModelTest, loadFileContent) {
+	// 測試
+	// 參數:ER_FileManager &(file)
+	// 回傳:無
+	// 附註:讀檔
+	EXPECT_EQ(0, model->getComponents().size());
+}
+
+// 測試 讀檔第1部分Components
+TEST_F(ER_ModelTest, loadComponents) {
+	// 測試
+	// 參數:vector<string>::iterator(linIt), map<int, string> &(connectionMap)
+	// 回傳:無
+	// 附註:建置model內容
+	EXPECT_EQ(0, model->getComponents().size());
+}
+
+// 測試 讀檔第2部分Connections
+TEST_F(ER_ModelTest, loadConnections) {
+	// 測試
+	// 參數:vector<string>::iterator(linIt), map<int, string> &(connectionMap)
+	// 回傳:無
+	// 附註:建置model內容
+	EXPECT_EQ(0, model->getComponents().size());
+}
+
+// 測試 讀檔第3部分PrimaryKey
+TEST_F(ER_ModelTest, loadPrinaryKey) {
+	// 測試
+	// 參數:vector<string>::iterator(linIt)
+	// 回傳:無
+	// 附註:建置model內容
+	EXPECT_EQ(0, model->getComponents().size());
+}
+
+// 測試 存檔
+TEST_F(ER_ModelTest, storeComponents) {
+	// 測試
+	// 參數:string(path)
+	// 回傳:string(message)
+	// 附註:
+	EXPECT_EQ(0, model->getComponents().size());
+}
+
+// 測試 存檔第1部分 Components
+TEST_F(ER_ModelTest, storeFileAboutComponents) {
+	// 測試
+	// 參數:ER_FileManager &(file)
+	// 回傳:無
+	// 附註:第1部分 Components
+	EXPECT_EQ(0, model->getComponents().size());
+}
+
+// 測試 存檔第2部分 Connections
+TEST_F(ER_ModelTest, storeFileAboutConnections) {
+	// 測試
+	// 參數:ER_FileManager &(file)
+	// 回傳:無
+	// 附註:第2部分 Connections
+	EXPECT_EQ(0, model->getComponents().size());
+}
+
+// 測試 存檔第3部分 PrimaryKey
+TEST_F(ER_ModelTest, storeFileAboutPrimaryKey) {
+	// 測試
+	// 參數:ER_FileManager &(file)
+	// 回傳:無
+	// 附註:第3部分 PrimaryKey
+	EXPECT_EQ(0, model->getComponents().size());
+}
+
+// 測試 判斷idStr是不是已存在的componentId
+TEST_F(ER_ModelTest, isExistComponentId) {
+	// 測試
+	// 參數:string(idStr)
+	// 回傳:bool(result)
+	// 附註:無
+	EXPECT_EQ(0, model->getComponents().size());
+}
+
+// 測試 判斷entityId是不是Entity
+TEST_F(ER_ModelTest, checkEntitySelectedValid) {
+	// 測試
+	// 參數:string(entityId)
+	// 回傳:string(message)
+	// 附註:無
+	EXPECT_EQ(0, model->getComponents().size());
+}
+
+// 測試 刪除component
+TEST_F(ER_ModelTest, deleteComponent) {
+	// 測試
+	// 參數:int(id)
+	// 回傳:bool(result)
+	// 附註:
+	EXPECT_EQ(0, model->getComponents().size());
+}
+
+// 測試 找出與給定ID(targetId)有關的所有Connection的ID
+TEST_F(ER_ModelTest, findRelatedConnectionById) {
+	// 測試
+	// 參數:int(targetId)
+	// 回傳:vector<int>(connectionId)
+	// 附註:
+	EXPECT_EQ(0, model->getComponents().size());
+}
+
+// 測試 新增component
+TEST_F(ER_ModelTest, addComponent) {
+	// 測試
+	// 參數:ERD_Component*(component)
+	// 回傳:無
+	// 附註:
+	EXPECT_EQ(0, model->getComponents().size());
+}
+
+// 測試 是否有足夠的node可以連接
+TEST_F(ER_ModelTest, enoughNodesToConnect) {
+	// 測試
+	// 參數:無
+	// 回傳:bool(result)
+	// 附註:
+	EXPECT_EQ(0, model->getComponents().size());
+}
 
 /* 測試
 TEST_F(ER_ModelTest, functionName) {
