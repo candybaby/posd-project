@@ -40,7 +40,7 @@ void ER_Model::clearCurrentComponents()
 	}
 }
 
-// 依據id將components重新sort一遍 (未測試)
+// 依據id將components重新sort一遍
 void ER_Model::sortComponents()
 {
 	ComponentSorter componentSorter;
@@ -86,7 +86,7 @@ void ER_Model::addNode(ERD_Component::ComponentType type, string nodeName, int i
 	sortComponents();
 }
 
-// 設定Attribute為以連線狀態
+// 設定Attribute為已連線狀態
 ERD_Component* ER_Model::setAttributeTypeConnected(ERD_Component* component)
 {
 	ERD_Attribute* attribute = (ERD_Attribute*) component;
@@ -94,7 +94,7 @@ ERD_Component* ER_Model::setAttributeTypeConnected(ERD_Component* component)
 	return attribute;
 }
 
-// 新增連線 參數為兩個Node要連接的ID 結果 -1:已經相連 -2:Cardinality -3:兩點相同 -4:不能連
+// 檢查連線情況 參數為兩個Node要連接的ID 結果 -1:已經相連 -2:Cardinality -3:兩點相同 -4:不能連
 int ER_Model::checkAddConnection(int component1Id, int component2Id)
 {
 	int result = ALREADY_CONNECTED;
@@ -137,7 +137,7 @@ int ER_Model::checkAddConnection(int component1Id, int component2Id)
 	return result;
 }
 
-
+// 取得現在model的排序id並調整為下一個排序
 int ER_Model::getAddConnectionId()
 {
 	int result;

@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{55AEBAED-13A3-47D5-A71F-DDA7CC811016}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>POSD_ERDiagram_UnitTesting</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>C:\gtest\include;$(SolutionDir)\POSD_ERDiagram</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>C:\gtest\lib\gtestd.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\Lab1226-Candy\Documents\posd-project\POSD_ERDiagram\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+      <IgnoreAllDefaultLibraries>
+      </IgnoreAllDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\POSD_ERDiagram\ERD_Attribute.cpp" />
+    <ClCompile Include="..\POSD_ERDiagram\ERD_Component.cpp" />
+    <ClCompile Include="..\POSD_ERDiagram\ERD_Connection.cpp" />
+    <ClCompile Include="..\POSD_ERDiagram\ERD_Entity.cpp" />
+    <ClCompile Include="..\POSD_ERDiagram\ERD_Node.cpp" />
+    <ClCompile Include="..\POSD_ERDiagram\ERD_Relationship.cpp" />
+    <ClCompile Include="..\POSD_ERDiagram\ER_AddCommand.cpp" />
+    <ClCompile Include="..\POSD_ERDiagram\ER_Command.cpp" />
+    <ClCompile Include="..\POSD_ERDiagram\ER_CommandManager.cpp" />
+    <ClCompile Include="..\POSD_ERDiagram\ER_ComponentFactory.cpp" />
+    <ClCompile Include="..\POSD_ERDiagram\ER_ConnectCommand.cpp" />
+    <ClCompile Include="..\POSD_ERDiagram\ER_DeleteCommand.cpp" />
+    <ClCompile Include="..\POSD_ERDiagram\ER_FileManager.cpp" />
+    <ClCompile Include="..\POSD_ERDiagram\ER_Model.cpp" />
+    <ClCompile Include="..\POSD_ERDiagram\ER_PresentationModel.cpp" />
+    <ClCompile Include="..\POSD_ERDiagram\ER_TextUI.cpp" />
+    <ClCompile Include="..\POSD_ERDiagram\Tool_Function.cpp" />
+    <ClCompile Include="ER_ModelTest.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\POSD_ERDiagram\POSD_ERDiagram.vcxproj">
+      <Project>{5b4d7847-a6f2-48de-85cf-650b8328263f}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\POSD_ERDiagram\ERD_Attribute.h" />
+    <ClInclude Include="..\POSD_ERDiagram\ERD_Component.h" />
+    <ClInclude Include="..\POSD_ERDiagram\ERD_Connection.h" />
+    <ClInclude Include="..\POSD_ERDiagram\ERD_Entity.h" />
+    <ClInclude Include="..\POSD_ERDiagram\ERD_Node.h" />
+    <ClInclude Include="..\POSD_ERDiagram\ERD_Relationship.h" />
+    <ClInclude Include="..\POSD_ERDiagram\ER_AddCommand.h" />
+    <ClInclude Include="..\POSD_ERDiagram\ER_Command.h" />
+    <ClInclude Include="..\POSD_ERDiagram\ER_CommandManager.h" />
+    <ClInclude Include="..\POSD_ERDiagram\ER_ComponentFactory.h" />
+    <ClInclude Include="..\POSD_ERDiagram\ER_ConnectCommand.h" />
+    <ClInclude Include="..\POSD_ERDiagram\ER_DeleteCommand.h" />
+    <ClInclude Include="..\POSD_ERDiagram\ER_FileManager.h" />
+    <ClInclude Include="..\POSD_ERDiagram\ER_Model.h" />
+    <ClInclude Include="..\POSD_ERDiagram\ER_PresentationModel.h" />
+    <ClInclude Include="..\POSD_ERDiagram\ER_TextUI.h" />
+    <ClInclude Include="..\POSD_ERDiagram\Tool_Function.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

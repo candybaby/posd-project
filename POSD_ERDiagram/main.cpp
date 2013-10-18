@@ -3,7 +3,7 @@
 #include "ER_PresentationModel.h"
 #include "ER_Model.h"
 
-using namespace std ;
+using namespace std;
 int main(int argc, char *argv[])
 {
 	ER_Model* model = new ER_Model;
