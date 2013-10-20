@@ -106,6 +106,7 @@
     <ClCompile Include="..\POSD_ERDiagram\ER_TextUI.cpp" />
     <ClCompile Include="..\POSD_ERDiagram\Tool_Function.cpp" />
     <ClCompile Include="ER_AddCommandTest.cpp" />
+    <ClCompile Include="ER_CommandManagerTest.cpp" />
     <ClCompile Include="ER_ModelTest.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>

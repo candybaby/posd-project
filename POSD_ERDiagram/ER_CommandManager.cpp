@@ -70,3 +70,15 @@ bool ER_CommandManager::undo()
 		return true;
 	}
 }
+
+// getter
+int ER_CommandManager::getUndoStackCount()
+{
+	return undoCmds.size();
+}
+
+// getter
+int ER_CommandManager::getRedoStackCount()
+{
+	return redoCmds.size();
+}

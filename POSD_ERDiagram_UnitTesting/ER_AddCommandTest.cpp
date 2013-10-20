@@ -23,7 +23,8 @@ protected:
 };
 
 // 代刚 磅︽
-TEST_F(ER_AddCommandTest, execute) {
+TEST_F(ER_AddCommandTest, execute)
+{
 	// 代刚
 	// 把计:礚
 	// 肚:string(id)
@@ -44,7 +45,8 @@ TEST_F(ER_AddCommandTest, execute) {
 }
 
 // 代刚 は巨
-TEST_F(ER_AddCommandTest, unexecute) {
+TEST_F(ER_AddCommandTest, unexecute)
+{
 	// 代刚
 	// 把计:礚
 	// 肚:""

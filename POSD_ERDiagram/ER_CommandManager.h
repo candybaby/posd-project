@@ -14,6 +14,8 @@ public:
 	string execute(ER_Command*);
 	bool redo();
 	bool undo();
+	int getUndoStackCount();
+	int getRedoStackCount();
 
 private:
 	stack<ER_Command*> undoCmds;
