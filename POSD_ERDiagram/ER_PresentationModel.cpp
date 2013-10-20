@@ -213,7 +213,7 @@ string ER_PresentationModel::addConnection(int firstNodeId,int secondNodeId, ERD
 	string message, component1IdStr, component2IdStr;
 	component1IdStr = Tool_Function::convertIntToString(firstNodeId);
 	component2IdStr = Tool_Function::convertIntToString(secondNodeId);
-	int connectionId = model.getAddConnectionId();
+	int connectionId = model.getCurrentId();
 	message += MESSAGE_NODE_1;
 	message	+= component1IdStr;
 	message	+= MESSAGE_NODE_2;

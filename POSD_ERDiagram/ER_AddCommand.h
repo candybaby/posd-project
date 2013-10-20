@@ -6,7 +6,6 @@
 class ER_AddCommand : public ER_Command
 {
 public:
-	ER_AddCommand(void);
 	ER_AddCommand(ER_Model*, ERD_Component::ComponentType, string);
 	~ER_AddCommand(void);
 	string execute();

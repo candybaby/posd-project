@@ -1,0 +1,26 @@
+E, Engineer
+A, EmpID
+A, Name
+A, Department
+R, Has
+E, PC
+A, PC_ID
+A, Purchase_Date
+C, 1
+C, 1
+C
+C
+C
+C
+C
+
+8 0,4
+9 4,5
+10 0,1
+11 0,2
+12 0,3
+13 5,6
+14 5,7
+
+0 1,2
+5 6

@@ -1,10 +1,6 @@
 #include "ER_AddCommand.h"
 #define EMPTY_TEXT ""
 
-ER_AddCommand::ER_AddCommand(void)
-{
-}
-
 ER_AddCommand::ER_AddCommand(ER_Model* model, ERD_Component::ComponentType type, string name)
 {
 	this->model = model;
@@ -28,6 +24,7 @@ string ER_AddCommand::execute()
 	else
 	{
 		model->addNode(targetType, targetName, targetId);
+		model->sortComponents();
 	}
 	model->setHasModify(true);
 	return Tool_Function::convertIntToString(targetId);

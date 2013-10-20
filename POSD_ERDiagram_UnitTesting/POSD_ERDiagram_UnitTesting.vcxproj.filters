@@ -24,109 +24,59 @@
     <ClCompile Include="ER_ModelTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\POSD_ERDiagram\Tool_Function.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\POSD_ERDiagram\ER_AddCommand.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="..\POSD_ERDiagram\ER_Command.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="..\POSD_ERDiagram\ER_CommandManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="..\POSD_ERDiagram\ER_ComponentFactory.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="..\POSD_ERDiagram\ER_ConnectCommand.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="..\POSD_ERDiagram\ER_DeleteCommand.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="..\POSD_ERDiagram\ER_FileManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="..\POSD_ERDiagram\ER_Model.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="..\POSD_ERDiagram\ER_PresentationModel.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="..\POSD_ERDiagram\ER_TextUI.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="..\POSD_ERDiagram\ERD_Attribute.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="..\POSD_ERDiagram\ERD_Component.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="..\POSD_ERDiagram\ERD_Connection.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="..\POSD_ERDiagram\ERD_Entity.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="..\POSD_ERDiagram\ERD_Node.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="..\POSD_ERDiagram\ERD_Relationship.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ER_AddCommandTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\POSD_ERDiagram\Tool_Function.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\POSD_ERDiagram\ER_AddCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\POSD_ERDiagram\ER_Command.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\POSD_ERDiagram\ER_CommandManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\POSD_ERDiagram\ER_ComponentFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\POSD_ERDiagram\ER_ConnectCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\POSD_ERDiagram\ER_DeleteCommand.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\POSD_ERDiagram\ER_FileManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\POSD_ERDiagram\ER_Model.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\POSD_ERDiagram\ER_PresentationModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\POSD_ERDiagram\ER_TextUI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\POSD_ERDiagram\ERD_Attribute.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\POSD_ERDiagram\ERD_Component.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\POSD_ERDiagram\ERD_Connection.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\POSD_ERDiagram\ERD_Entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\POSD_ERDiagram\ERD_Node.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\POSD_ERDiagram\ERD_Relationship.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\POSD_ERDiagram\Tool_Function.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

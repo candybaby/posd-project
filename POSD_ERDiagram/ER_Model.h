@@ -39,9 +39,9 @@ public:
 	int addNode(ERD_Component::ComponentType, string);
 	void addNode(string, string);
 	void addNode(ERD_Component::ComponentType, string, int);
-	ERD_Component* setAttributeTypeConnected(ERD_Component*);
+	void setAttributeConnected(int, bool);
 	int checkAddConnection(int, int);
-	int getAddConnectionId();
+	void plusCurrentId();
 	string addConnection(int, int, ERD_Connection::ConnectionCardinality);
 	void addConnection(int, int, int);
 	void addConnection(int, int, int, string);
@@ -52,7 +52,7 @@ public:
 	string getNameById(int);
 	ERD_Component::ComponentType getTypeById(int);
 	ERD_Component* findComponentById(int);
-	bool isAlreadyConnect(ERD_Component*, ERD_Component*);
+	bool isAlreadyConnect(int, int);
 	void setIsPrimaryKey(int, bool);
 	bool getIsPrimaryKey(int);
 	void setRelatedIdVector(int, int, ERD_Component::ComponentType, vector<int> &);

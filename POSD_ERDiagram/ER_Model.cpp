@@ -60,10 +60,17 @@ int ER_Model::addNode(ERD_Component::ComponentType type, string nodeName)
 {
 	int id = currentId;
 	ERD_Component* component = factory.createNodeComponent(type, nodeName, currentId);
-	components.push_back(component);
-	currentId++;
-	sortComponents();
-	return id;
+	if (component == NULL)
+	{
+		return -1;
+	}
+	else
+	{
+		components.push_back(component);
+		currentId++;
+		sortComponents();
+		return id;
+	}
 }
 
 // 新增節點(不包含connection) Type為字串
@@ -82,16 +89,21 @@ void ER_Model::addNode(string type, string nodeName)
 void ER_Model::addNode(ERD_Component::ComponentType type, string nodeName, int id)
 {
 	ERD_Component* component = factory.createNodeComponent(type, nodeName, id);
-	components.push_back(component);
-	sortComponents();
+	if (component != NULL)
+	{
+		components.push_back(component);
+	}
 }
 
-// 設定Attribute為已連線狀態
-ERD_Component* ER_Model::setAttributeTypeConnected(ERD_Component* component)
+// 設定Attribute連線狀態
+void ER_Model::setAttributeConnected(int componentId, bool flag)
 {
-	ERD_Attribute* attribute = (ERD_Attribute*) component;
-	attribute->setConnected(true);
-	return attribute;
+	ERD_Component* component = findComponentById(componentId);
+	if (component->getType() == ERD_Component::Attribute)
+	{
+		ERD_Attribute* attribute = (ERD_Attribute*)component;
+		attribute->setConnected(flag);
+	}
 }
 
 // 檢查連線情況 參數為兩個Node要連接的ID 結果 -1:已經相連 -2:Cardinality -3:兩點相同 -4:不能連
@@ -100,7 +112,7 @@ int ER_Model::checkAddConnection(int component1Id, int component2Id)
 	int result = ALREADY_CONNECTED;
 	ERD_Component* component1 = findComponentById(component1Id);
 	ERD_Component* component2 = findComponentById(component2Id);
-	if (isAlreadyConnect(component1, component2)) //已經相連了
+	if (isAlreadyConnect(component1Id, component2Id)) //已經相連了
 	{
 		result = ALREADY_CONNECTED;
 		return result;
@@ -114,16 +126,7 @@ int ER_Model::checkAddConnection(int component1Id, int component2Id)
 		}
 		else
 		{
-			if (component1->getType() == ERD_Component::Attribute)
-			{
-				component1 = setAttributeTypeConnected(component1);
-			}
-			if (component2->getType() == ERD_Component::Attribute)
-			{
-				component2 = setAttributeTypeConnected(component2);
-			}
 			result = currentId;
-			currentId++;
 		}
 	}
 	else if (component1Id == component2Id)
@@ -137,13 +140,10 @@ int ER_Model::checkAddConnection(int component1Id, int component2Id)
 	return result;
 }
 
-// 取得現在model的排序id並調整為下一個排序
-int ER_Model::getAddConnectionId()
+// id並調整為下一個排序
+void ER_Model::plusCurrentId()
 {
-	int result;
-	result = currentId;
 	currentId++;
-	return result;
 }
 
 // 新增連線 特定ID位置的新增 主要用於讀檔時的新增
@@ -152,6 +152,8 @@ void ER_Model::addConnection(int component1Id, int component2Id, int id)
 	ERD_Component* component1 = findComponentById(component1Id);
 	ERD_Component* component2 = findComponentById(component2Id);
 	ERD_Component* component = factory.createConnectionComponent(component1, component2, id);
+	setAttributeConnected(component1Id, true);
+	setAttributeConnected(component2Id, true);
 	components.push_back(component);
 	sortComponents();
 }
@@ -161,8 +163,9 @@ void ER_Model::addConnection(int component1Id, int component2Id, int id, ERD_Con
 {
 	ERD_Component* component1 = findComponentById(component1Id);
 	ERD_Component* component2 = findComponentById(component2Id);
-	ERD_Component* component;
-	component = factory.createConnectionComponent(component1, component2, id, cardinality);
+	ERD_Component* component = factory.createConnectionComponent(component1, component2, id, cardinality);
+	setAttributeConnected(component1Id, true);
+	setAttributeConnected(component2Id, true);
 	components.push_back(component);
 	sortComponents();
 }
@@ -184,6 +187,8 @@ void ER_Model::addConnection(int component1Id, int component2Id, int id, string 
 			component = factory.createConnectionComponent(component1, component2, id);
 		}
 	}
+	setAttributeConnected(component1Id, true);
+	setAttributeConnected(component2Id, true);
 	components.push_back(component);
 	sortComponents();
 }
@@ -205,7 +210,7 @@ int ER_Model::getConnectionNodeById(int id, int nodeNumber)
 {
 	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
 	{
-		if (((ERD_Component *)*it)->getId() == id)
+		if (((ERD_Component *)*it)->getId() == id && ((ERD_Component *)*it)->getType() == ERD_Component::Connection)
 		{
 			return ((ERD_Component *)*it)->getConnections().at(nodeNumber)->getId();
 		}
@@ -255,14 +260,18 @@ ERD_Component* ER_Model::findComponentById(int id)
 }
 
 // 兩個node是否已經連線
-bool ER_Model::isAlreadyConnect(ERD_Component* node1, ERD_Component* node2)
+bool ER_Model::isAlreadyConnect(int node1Id, int node2Id)
 {
+	if (node1Id == node2Id)
+	{
+		return false;
+	}
 	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
 	{
 		if (((ERD_Component *)*it)->getType() == ERD_Component::Connection)
 		{
 			ERD_Connection* connection = (ERD_Connection*)*it;
-			if (connection->isConnectToId(node1->getId()) && connection->isConnectToId(node2->getId()))
+			if (connection->isConnectToId(node1Id) && connection->isConnectToId(node2Id))
 			{
 				return true;
 			}
