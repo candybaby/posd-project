@@ -17,6 +17,29 @@ protected:
 		delete model;
 	}
 
+	void makeTestData()
+	{
+		presentationModel->addNode(ERD_Component::Entity, "Engineer");  //id=0
+		presentationModel->addNode(ERD_Component::Attribute, "EmpID");  //id=1
+		presentationModel->addNode(ERD_Component::Attribute, "Name");   //id=2
+		presentationModel->addNode(ERD_Component::Attribute, "Department");   //id=3
+		presentationModel->addNode(ERD_Component::Relationship, "Has");   //id=4
+		presentationModel->addNode(ERD_Component::Entity, "PC");  //id=5
+		presentationModel->addNode(ERD_Component::Attribute, "PC_ID");   //id=6
+		presentationModel->addNode(ERD_Component::Attribute, "Purchase_Date");   //id=7
+		presentationModel->addConnection(0, 4, ERD_Connection::one);
+		presentationModel->addConnection(4, 5, ERD_Connection::one);
+		presentationModel->addConnection(0, 1, ERD_Connection::SIZE_OF_Cardinality);
+		presentationModel->addConnection(0, 2, ERD_Connection::SIZE_OF_Cardinality);
+		presentationModel->addConnection(0, 3, ERD_Connection::SIZE_OF_Cardinality);
+		presentationModel->addConnection(5, 6, ERD_Connection::SIZE_OF_Cardinality);
+		presentationModel->addConnection(5, 7, ERD_Connection::SIZE_OF_Cardinality);
+		presentationModel->setIsPrimaryKey(1, true);
+		presentationModel->setIsPrimaryKey(2, true);
+		presentationModel->setIsPrimaryKey(6, true);
+
+	}
+
 	ER_Model* model;
 	ER_PresentationModel* presentationModel;
 };
@@ -28,70 +51,176 @@ TEST_F(ER_PresentationModelTest, addNodeOptionMapping)
 	// 參數:string(command)
 	// 回傳:int(result)
 	// 附註:無
+	int result;
+	result = presentationModel->addNodeOptionMapping("A");
+	EXPECT_EQ(0, result);
+
+	result = presentationModel->addNodeOptionMapping("E");
+	EXPECT_EQ(1, result);
+
+	result = presentationModel->addNodeOptionMapping("R");
+	EXPECT_EQ(2, result);
+
+	result = presentationModel->addNodeOptionMapping("");  //例外狀況
+	EXPECT_EQ(-1, result);
 }
 
-/* 測試 新增節點
+// 測試 新增節點
 TEST_F(ER_PresentationModelTest, addNode)
 {
 	// 測試
 	// 參數:ComponentType(componentType), string(nodeName)
 	// 回傳:string
 	// 附註:無
-}*/
+	string result;
+	result = presentationModel->addNode(ERD_Component::Entity, "Engineer");
+	EXPECT_EQ("0", result);
+	result = presentationModel->addNode(ERD_Component::Entity, "PC");
+	EXPECT_EQ("1", result);
+	EXPECT_EQ(2, presentationModel->getCurrentId());
+}
 
-/* 測試 取得現在的ID
+// 測試 取得現在的ID
 TEST_F(ER_PresentationModelTest, getCurrentId)
 {
 	// 測試
 	// 參數:無
 	// 回傳:int
 	// 附註:無
-}*/
+	int result;
+	result = presentationModel->getCurrentId();
+	EXPECT_EQ(0, result);
+	presentationModel->addNode(ERD_Component::Entity, "Engineer");
 
-/* 測試 取得ID藉由index
+	result = presentationModel->getCurrentId();
+	EXPECT_EQ(1, result);
+
+	presentationModel->addNode(ERD_Component::Entity, "PC");
+	result = presentationModel->getCurrentId();
+	EXPECT_EQ(2, result);
+}
+
+// 測試 取得ID藉由index
 TEST_F(ER_PresentationModelTest, getIdByIndex)
 {
 	// 測試
 	// 參數:int(index)
 	// 回傳:int(id)
 	// 附註:無
-}*/
+	makeTestData();
+	int result;
+	result = presentationModel->getIdByIndex(0);
+	EXPECT_EQ(0, result);
 
-/* 測試 取得connection(by ID)連接兩端的ID以nodeNumber來區分0 1
+	result = presentationModel->getIdByIndex(14);
+	EXPECT_EQ(14, result);
+
+	result = presentationModel->getIdByIndex(15);
+	EXPECT_EQ(-1, result);
+
+	result = presentationModel->getIdByIndex(-1);
+	EXPECT_EQ(-1, result);
+}
+
+// 測試 取得connection(by ID)連接兩端的ID以nodeNumber來區分0 1
 TEST_F(ER_PresentationModelTest, getConnectionNodeById)
 {
 	// 測試
 	// 參數:int(id), int(nodeNumber)
 	// 回傳:int(id)
 	// 附註:無
-}*/
+	makeTestData();
+	int result;
+	result = presentationModel->getConnectionNodeById(8, 0);
+	EXPECT_EQ(0, result);
+	result = presentationModel->getConnectionNodeById(8, 1);
+	EXPECT_EQ(4, result);
 
-/* 測試 取得text的值藉由id
+	result = presentationModel->getConnectionNodeById(14, 0);
+	EXPECT_EQ(5, result);
+	result = presentationModel->getConnectionNodeById(14, 1);
+	EXPECT_EQ(7, result);
+
+	result = presentationModel->getConnectionNodeById(15, 0); // 沒有該ID
+	EXPECT_EQ(-1, result);
+	result = presentationModel->getConnectionNodeById(7, 1);  // 該ID不屬於Connection
+	EXPECT_EQ(-1, result);
+}
+
+// 測試 取得text的值藉由id
 TEST_F(ER_PresentationModelTest, getNameById)
 {
 	// 測試
 	// 參數:int(id)
 	// 回傳:string(name)
 	// 附註:無
-}*/
+	makeTestData();
+	string result;
+	result = presentationModel->getNameById(0);
+	EXPECT_EQ("Engineer", result);
 
-/* 測試 取得Type藉由id
+	result = presentationModel->getNameById(1);
+	EXPECT_EQ("EmpID", result);
+
+	result = presentationModel->getNameById(4);
+	EXPECT_EQ("Has", result);
+
+	result = presentationModel->getNameById(8);
+	EXPECT_EQ("1", result);
+
+	result = presentationModel->getNameById(10);
+	EXPECT_EQ("", result);
+
+	result = presentationModel->getNameById(-1);
+	EXPECT_EQ("", result);
+
+	result = presentationModel->getNameById(15);
+	EXPECT_EQ("", result);
+}
+
+// 測試 取得Type藉由id
 TEST_F(ER_PresentationModelTest, getTypeById)
 {
 	// 測試
 	// 參數:int(id)
 	// 回傳:ComponentType
 	// 附註:無
-}*/
+	makeTestData();
+	ERD_Component::ComponentType result;
+	result = presentationModel->getTypeById(0);
+	EXPECT_EQ(ERD_Component::Entity, result);
 
-/* 測試 連線訊息
+	result = presentationModel->getTypeById(1);
+	EXPECT_EQ(ERD_Component::Attribute, result);
+
+	result = presentationModel->getTypeById(4);
+	EXPECT_EQ(ERD_Component::Relationship, result);
+
+	result = presentationModel->getTypeById(8);
+	EXPECT_EQ(ERD_Component::Connection, result);
+
+	result = presentationModel->getTypeById(10);
+	EXPECT_EQ(ERD_Component::Connection, result);
+
+	result = presentationModel->getTypeById(-1);
+	EXPECT_EQ(ERD_Component::SIZE_OF_ComponentType, result);
+
+	result = presentationModel->getTypeById(15);
+	EXPECT_EQ(ERD_Component::SIZE_OF_ComponentType, result);
+}
+
+// 測試 連線訊息
 TEST_F(ER_PresentationModelTest, getAddConnectionMessage)
 {
 	// 測試
 	// 參數:int,int
 	// 回傳:string(message)
 	// 附註:無
-}*/
+	makeTestData();
+	string result;
+	result = presentationModel->getAddConnectionMessage(0, 1);
+	EXPECT_EQ("", result);
+}
 
 /* 測試 回傳不能連線的訊息
 TEST_F(ER_PresentationModelTest, getCannotConnectMessage)

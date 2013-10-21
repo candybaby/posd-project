@@ -202,7 +202,14 @@ int ER_Model::getCurrentId()
 // 用index找到對應的ID
 int ER_Model::getIdByIndex(int index)
 {
-	return components.at(index)->getId();
+	if (index >= components.size() || index < 0)
+	{
+		return -1;
+	}
+	else
+	{
+		return components.at(index)->getId();
+	}
 }
 
 // 取得連線的兩個node 以nodeNumber來分node0與node1
