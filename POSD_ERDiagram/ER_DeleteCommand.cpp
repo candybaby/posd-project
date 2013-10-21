@@ -1,21 +1,21 @@
 #include "ER_DeleteCommand.h"
 #define EMPTY_TEXT ""
 
-ER_DeleteCommand::ER_DeleteCommand(void)
-{
-}
-
 ER_DeleteCommand::ER_DeleteCommand(ER_Model* model,int id)
 {
 	this->model = model;
 	this->targetId = id;
+	this->target = NULL;
 }
 
 
 ER_DeleteCommand::~ER_DeleteCommand(void)
 {
 	clearTempData();
-	delete target;
+	if (target != NULL)
+	{
+		delete target;
+	}
 }
 
 // §ä«ü©widªºcomponent
@@ -47,21 +47,23 @@ string ER_DeleteCommand::execute()
 	bool result;
 	vector<int> relatedConnectionId;
 	relatedConnectionId = model->findRelatedConnectionById(targetId);
+
 	for (vector<int>::iterator it = relatedConnectionId.begin(); it < relatedConnectionId.end(); it++)
 	{
 		relatedComponents.push_back(findComponentById(*it)->clone());
 		deleteComponentById(*it);
 	}
-	target = findComponentById(targetId)->clone();
-	result = deleteComponentById(targetId);
-	model->setHasModify(true);
-	if (result)
+	target = findComponentById(targetId);
+	if (target == NULL)
 	{
-		return Tool_Function::convertIntToString(targetId);
+		return EMPTY_TEXT;
 	}
 	else
 	{
-		return EMPTY_TEXT;
+		target = target->clone();
+		result = deleteComponentById(targetId);
+		model->setHasModify(true);
+		return Tool_Function::convertIntToString(targetId);
 	}
 }
 

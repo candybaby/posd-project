@@ -1,14 +1,18 @@
 #pragma once
+#ifndef _ER_FILEMANAGER_ 
+#define _ER_FILEMANAGER_
 #include <iostream> 
 #include <fstream> 
 #include <string>
-#ifndef _ER_FILEMANAGER_ 
-#define _ER_FILEMANAGER_
+#include "gtest/gtest_prod.h"
 
 using namespace std;
 
 class ER_FileManager
 {
+friend class ER_FileManagerTest;
+FRIEND_TEST(ER_FileManagerTest, closeFile);
+
 public:
 	enum FileType
 	{
@@ -21,6 +25,7 @@ public:
 	void writeLine(string);
 	string readFile();
 	void closeFile();
+	bool isTestCantWrite;
 
 private:
 	ofstream fout;

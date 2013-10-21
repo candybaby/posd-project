@@ -193,7 +193,7 @@ void ER_TextUI::connectTwoNodes()
 void ER_TextUI::addConnection(int firstNodeId, int secondNodeId)
 {
 	string message, cardinality;
-	message = presentationModel.checkAddConnection(firstNodeId, secondNodeId);
+	message = presentationModel.getAddConnectionMessage(firstNodeId, secondNodeId);
 	if (message.find(ASK_CARDINALITY) != std::string::npos)
 	{
 		while (!(message.find(CONNECT_MESSAGE) != std::string::npos))

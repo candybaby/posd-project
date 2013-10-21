@@ -31,7 +31,7 @@ public:
 	int getConnectionNodeById(int, int);
 	string getNameById(int);
 	ERD_Component::ComponentType getTypeById(int);
-	string checkAddConnection(int ,int);
+	string getAddConnectionMessage(int ,int);
 	string getCannotConnectMessage(string, string);
 	string getSameNodeMessage(string);
 	string getAskCardinaryStateMessage();

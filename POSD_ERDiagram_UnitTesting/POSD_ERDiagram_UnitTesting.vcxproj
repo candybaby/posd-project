@@ -67,6 +67,10 @@
       <Profile>true</Profile>
       <OptimizeReferences>false</OptimizeReferences>
     </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -105,11 +109,18 @@
     <ClCompile Include="..\POSD_ERDiagram\ER_PresentationModel.cpp" />
     <ClCompile Include="..\POSD_ERDiagram\ER_TextUI.cpp" />
     <ClCompile Include="..\POSD_ERDiagram\Tool_Function.cpp" />
+    <ClCompile Include="ERD_AttributeTest.cpp" />
+    <ClCompile Include="ERD_ConnectionTest.cpp" />
+    <ClCompile Include="ERD_EntityTest.cpp" />
+    <ClCompile Include="ERD_RelationshipTest.cpp" />
     <ClCompile Include="ER_AddCommandTest.cpp" />
     <ClCompile Include="ER_CommandManagerTest.cpp" />
     <ClCompile Include="ER_ComponentFactoryTest.cpp" />
     <ClCompile Include="ER_ConnectCommandTest.cpp" />
+    <ClCompile Include="ER_DeleteCommandTest.cpp" />
+    <ClCompile Include="ER_FileManagerTest.cpp" />
     <ClCompile Include="ER_ModelTest.cpp" />
+    <ClCompile Include="ER_PresentationModelTest.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>

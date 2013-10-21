@@ -1,10 +1,6 @@
 #include "ER_ConnectCommand.h"
 #define EMPTY_TEXT ""
 
-ER_ConnectCommand::ER_ConnectCommand(void)
-{
-}
-
 ER_ConnectCommand::ER_ConnectCommand(ER_Model* model,int nodeId, int otherNodeId, int id)
 {
 	this->model = model;

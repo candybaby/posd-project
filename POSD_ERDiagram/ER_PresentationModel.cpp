@@ -124,8 +124,8 @@ ERD_Component::ComponentType ER_PresentationModel::getTypeById(int id)
 	return model.getTypeById(id);
 }
 
-// 新增連線
-string ER_PresentationModel::checkAddConnection(int firstNodeId,int secondNodeId)
+// 連線訊息
+string ER_PresentationModel::getAddConnectionMessage(int firstNodeId,int secondNodeId)
 {
 	string message, componentIdString, otherComponentIdString;
 	componentIdString = Tool_Function::convertIntToString(firstNodeId);
@@ -447,7 +447,7 @@ string ER_PresentationModel::makePrimaryKeyString(int primaryKeyCounter, string 
 }
 
 // 製作result字串
-string ER_PresentationModel::makeResultString( int resultCounter, string result, string primaryKeyString )
+string ER_PresentationModel::makeResultString(int resultCounter, string result, string primaryKeyString )
 {
 	if (resultCounter == 0)
 	{
@@ -765,6 +765,7 @@ bool ER_PresentationModel::enoughNodesToConnect()
 	return model.enoughNodesToConnect();
 }
 
+//判斷是否有改變
 bool ER_PresentationModel::getHasModify()
 {
 	return model.getHasModify();

@@ -2,6 +2,7 @@
 
 ER_FileManager::ER_FileManager(void)
 {
+	isTestCantWrite = false;
 }
 
 ER_FileManager::~ER_FileManager(void)
@@ -14,7 +15,7 @@ bool ER_FileManager::openFile(string path, FileType type)
 	if (type == Write)
 	{
 		fout.open(path);
-		if (!fout.is_open())
+		if (!fout.is_open() || isTestCantWrite)
 		{
 			return false; // 無法寫入檔案
 		}
@@ -23,8 +24,7 @@ bool ER_FileManager::openFile(string path, FileType type)
 			return true;
 		}
 	}
-	
-	if (type == Read)
+	else // type == Read
 	{
 		fin.open(path);
 		if (!fin.is_open())
@@ -36,8 +36,6 @@ bool ER_FileManager::openFile(string path, FileType type)
 			return true;
 		}
 	}
-	
-	return false;
 }
 
 // 讀檔案(行)
