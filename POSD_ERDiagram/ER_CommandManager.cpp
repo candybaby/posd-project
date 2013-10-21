@@ -6,32 +6,32 @@ ER_CommandManager::ER_CommandManager(void)
 
 ER_CommandManager::~ER_CommandManager(void)
 {
-	while (!undoCmds.empty()) 
+	while (!undoCommands.empty()) 
 	{
-		ER_Command* command = undoCmds.top();
-		undoCmds.pop();
+		ER_Command* command = undoCommands.top();
+		undoCommands.pop();
 		delete command;
 	}
-	while (!redoCmds.empty()) 
+	while (!redoCommands.empty()) 
 	{
-		ER_Command* command = redoCmds.top();
-		redoCmds.pop();
+		ER_Command* command = redoCommands.top();
+		redoCommands.pop();
 		delete command;
 	}
 }
 
 // °õ¦æ
-string ER_CommandManager::execute(ER_Command* cmd) 
+string ER_CommandManager::execute(ER_Command* command) 
 {
 	string result;
-	result = cmd->execute();
-	undoCmds.push(cmd);
+	result = command->execute();
+	undoCommands.push(command);
 
 	// cleanup and release redoable commands
-	while (!redoCmds.empty()) 
+	while (!redoCommands.empty()) 
 	{
-		ER_Command* command = redoCmds.top();
-		redoCmds.pop();
+		ER_Command* command = redoCommands.top();
+		redoCommands.pop();
 		delete command;
 	}
 	return result;
@@ -40,16 +40,16 @@ string ER_CommandManager::execute(ER_Command* cmd)
 // redo
 bool ER_CommandManager::redo() 
 {
-	if (redoCmds.size() == 0)
+	if (redoCommands.size() == 0)
 	{
 		return false; // or throw exception
 	}
 	else
 	{
-		ER_Command* command = redoCmds.top();
-		redoCmds.pop();
+		ER_Command* command = redoCommands.top();
+		redoCommands.pop();
 		command->execute(); // redo the command
-		undoCmds.push(command);
+		undoCommands.push(command);
 		return true;
 	}
 }
@@ -57,16 +57,16 @@ bool ER_CommandManager::redo()
 // undo
 bool ER_CommandManager::undo() 
 {
-	if (undoCmds.size() == 0)
+	if (undoCommands.size() == 0)
 	{
 		return false;
 	}
 	else
 	{
-		ER_Command* command = undoCmds.top();
-		undoCmds.pop();
+		ER_Command* command = undoCommands.top();
+		undoCommands.pop();
 		command->unexecute(); // undo the command
-		redoCmds.push(command);
+		redoCommands.push(command);
 		return true;
 	}
 }
@@ -74,11 +74,11 @@ bool ER_CommandManager::undo()
 // getter
 int ER_CommandManager::getUndoStackCount()
 {
-	return undoCmds.size();
+	return undoCommands.size();
 }
 
 // getter
 int ER_CommandManager::getRedoStackCount()
 {
-	return redoCmds.size();
+	return redoCommands.size();
 }

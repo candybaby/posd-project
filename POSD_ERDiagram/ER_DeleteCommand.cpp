@@ -75,13 +75,13 @@ string ER_DeleteCommand::unexecute()
 	else
 	{
 		ERD_Connection* connection = (ERD_Connection*)target;
-		model->addConnection(connection->getNode1Id(), connection->getNode2Id(), connection->getId(), connection->getCardinality());
+		model->addConnection(connection->getNodeId(), connection->getOtherNodeId(), connection->getId(), connection->getCardinality());
 	}
 
 	for (vector<ERD_Component*>::iterator it = relatedComponents.begin(); it < relatedComponents.end(); it++)
 	{
 		ERD_Connection* connection = (ERD_Connection*)*it;
-		model->addConnection(connection->getNode1Id(), connection->getNode2Id(), connection->getId(), connection->getCardinality());
+		model->addConnection(connection->getNodeId(), connection->getOtherNodeId(), connection->getId(), connection->getCardinality());
 	}
 
 	clearTempData();

@@ -1,8 +1,6 @@
 #include "ER_CommandManager.h"
 #include "gtest/gtest.h"
 #include "ER_AddCommand.h"
-#include "ER_ConnectCommand.h"
-#include "ER_DeleteCommand.h"
 
 using namespace std;
 class ER_CommandManagerTest : public ::testing::Test

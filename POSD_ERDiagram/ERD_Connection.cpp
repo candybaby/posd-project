@@ -13,8 +13,8 @@ ERD_Connection::ERD_Connection(ERD_Connection* connectionClone)
 	this->text = connectionClone->getText();
 	this->connections = connectionClone->getConnections();
 	this->cardinality = connectionClone->getCardinality();
-	this->node1Id = connectionClone->getNode1Id();
-	this->node2Id = connectionClone->getNode2Id();
+	this->nodeId = connectionClone->getNodeId();
+	this->otherNodeId = connectionClone->getOtherNodeId();
 }
 
 ERD_Connection::ERD_Connection(int id)
@@ -52,11 +52,11 @@ void ERD_Connection::connectTo(ERD_Component* component)
 	connections.push_back(component);
 	if (connections.size() == 1)
 	{
-		node1Id = component->getId();
+		nodeId = component->getId();
 	}
 	else
 	{
-		node2Id = component->getId();
+		otherNodeId = component->getId();
 	}
 }
 
@@ -81,15 +81,15 @@ bool ERD_Connection::isConnectToId(int id)
 }
 
 // 取得第一個相連的node
-int ERD_Connection::getNode1Id()
+int ERD_Connection::getNodeId()
 {
-	return node1Id;
+	return nodeId;
 }
 
 // 取得第二個相連的node
-int ERD_Connection::getNode2Id()
+int ERD_Connection::getOtherNodeId()
 {
-	return node2Id;
+	return otherNodeId;
 }
 
 // 克隆

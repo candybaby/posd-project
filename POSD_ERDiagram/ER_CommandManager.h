@@ -18,7 +18,7 @@ public:
 	int getRedoStackCount();
 
 private:
-	stack<ER_Command*> undoCmds;
-	stack<ER_Command*> redoCmds;
+	stack<ER_Command*> undoCommands;
+	stack<ER_Command*> redoCommands;
 };
 #endif

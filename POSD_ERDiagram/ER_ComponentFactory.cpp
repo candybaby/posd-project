@@ -30,26 +30,26 @@ ERD_Component* ER_ComponentFactory::createNodeComponent(ERD_Component::Component
 }
 
 // 製作Connection
-ERD_Component* ER_ComponentFactory::createConnectionComponent(ERD_Component* component1, ERD_Component* component2, int id)
+ERD_Component* ER_ComponentFactory::createConnectionComponent(ERD_Component* component, ERD_Component* otherComponent, int id)
 {
 	ERD_Component* connection = new ERD_Connection(id);
-	connection->connectTo(component1);
-	connection->connectTo(component2);
+	connection->connectTo(component);
+	connection->connectTo(otherComponent);
 	return connection;
 }
 
 // 製作Connection
-ERD_Component* ER_ComponentFactory::createConnectionComponent(ERD_Component* component1, ERD_Component* component2, int id, ERD_Connection::ConnectionCardinality cardinality)
+ERD_Component* ER_ComponentFactory::createConnectionComponent(ERD_Component* component, ERD_Component* otherComponent, int id, ERD_Connection::ConnectionCardinality cardinality)
 {
 	if (cardinality == ERD_Connection::SIZE_OF_Cardinality)
 	{
-		return createConnectionComponent(component1, component2, id);
+		return createConnectionComponent(component, otherComponent, id);
 	}
 	else
 	{
 		ERD_Component* connection = new ERD_Connection(id, cardinality);
-		connection->connectTo(component1);
-		connection->connectTo(component2);
+		connection->connectTo(component);
+		connection->connectTo(otherComponent);
 		return connection;
 	}
 }

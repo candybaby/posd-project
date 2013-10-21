@@ -127,17 +127,17 @@ ERD_Component::ComponentType ER_PresentationModel::getTypeById(int id)
 // 新增連線
 string ER_PresentationModel::checkAddConnection(int firstNodeId,int secondNodeId)
 {
-	string message, component1IdStr, component2IdStr;
-	component1IdStr = Tool_Function::convertIntToString(firstNodeId);
-	component2IdStr = Tool_Function::convertIntToString(secondNodeId);
+	string message, componentIdString, otherComponentIdString;
+	componentIdString = Tool_Function::convertIntToString(firstNodeId);
+	otherComponentIdString = Tool_Function::convertIntToString(secondNodeId);
 	int result = model.checkAddConnection(firstNodeId, secondNodeId);
 	if (result == CANNOT_CONNECT)
 	{
-		message = getCannotConnectMessage(component2IdStr, component1IdStr);
+		message = getCannotConnectMessage(otherComponentIdString, componentIdString);
 	}
 	else if (result == SAME_NODE)
 	{
-		message = getSameNodeMessage(component1IdStr);
+		message = getSameNodeMessage(componentIdString);
 	}
 	else if (result == ASK_CARDINALITY_STATE)
 	{
@@ -145,34 +145,34 @@ string ER_PresentationModel::checkAddConnection(int firstNodeId,int secondNodeId
 	}
 	else if (result == ALREADY_CONNECTED)
 	{
-		message = getAlreadyConnectedMessage(component1IdStr, component2IdStr);
+		message = getAlreadyConnectedMessage(componentIdString, otherComponentIdString);
 	}
 	else
 	{
 		cmdManager.execute(new ER_ConnectCommand(&model, firstNodeId, secondNodeId, result));
-		message = getNodeConnectedMessage(component1IdStr, component2IdStr);
+		message = getNodeConnectedMessage(componentIdString, otherComponentIdString);
 	}
 	return message;
 }
 
 // 回傳不能連線的訊息
-string ER_PresentationModel::getCannotConnectMessage(string component2IdStr, string component1IdStr )
+string ER_PresentationModel::getCannotConnectMessage(string componentIdString, string otherComponentIdString )
 {
 	string message;
 	message += MESSAGE_NODE_1;
-	message	+= component2IdStr;
+	message	+= componentIdString;
 	message	+= MESSAGE_NODE_6;
-	message	+= component1IdStr;
+	message	+= otherComponentIdString;
 	message	+= MESSAGE_NODE_3;	
 	return message;
 }
 
 // 回傳一樣Node連線錯誤的訊息
-string ER_PresentationModel::getSameNodeMessage(string component1IdStr)
+string ER_PresentationModel::getSameNodeMessage(string componentIdString)
 {
 	string message;
 	message += MESSAGE_NODE_1;
-	message	+= component1IdStr;
+	message	+= componentIdString;
 	message	+= MESSAGE_NODE_4;
 	return message;
 }
@@ -184,25 +184,25 @@ string ER_PresentationModel::getAskCardinaryStateMessage()
 }
 
 // 回傳已經連線的訊息
-string ER_PresentationModel::getAlreadyConnectedMessage(string component1IdStr, string component2IdStr)
+string ER_PresentationModel::getAlreadyConnectedMessage(string componentIdString, string otherComponentIdString)
 {
 	string message;
 	message += MESSAGE_NODE_1;
-	message	+= component1IdStr;
+	message	+= componentIdString;
 	message	+= MESSAGE_NODE_5;
-	message	+= component2IdStr;
+	message	+= otherComponentIdString;
 	message	+= MESSAGE_NODE_3;
 	return message;
 }
 
 // 回傳成功連線的訊息
-string ER_PresentationModel::getNodeConnectedMessage(string component1IdStr, string component2IdStr)
+string ER_PresentationModel::getNodeConnectedMessage(string componentIdString, string otherComponentIdString)
 {
 	string message;
 	message += MESSAGE_NODE_1;
-	message	+= component1IdStr;
+	message	+= componentIdString;
 	message	+= MESSAGE_NODE_2;
-	message	+= component2IdStr;
+	message	+= otherComponentIdString;
 	message	+= MESSAGE_NODE_3;
 	return message;
 }
@@ -210,14 +210,14 @@ string ER_PresentationModel::getNodeConnectedMessage(string component1IdStr, str
 // 新增連線
 string ER_PresentationModel::addConnection(int firstNodeId,int secondNodeId, ERD_Connection::ConnectionCardinality cardinality)
 {
-	string message, component1IdStr, component2IdStr;
-	component1IdStr = Tool_Function::convertIntToString(firstNodeId);
-	component2IdStr = Tool_Function::convertIntToString(secondNodeId);
+	string message, componentIdString, otherComponentIdString;
+	componentIdString = Tool_Function::convertIntToString(firstNodeId);
+	otherComponentIdString = Tool_Function::convertIntToString(secondNodeId);
 	int connectionId = model.getCurrentId();
 	message += MESSAGE_NODE_1;
-	message	+= component1IdStr;
+	message	+= componentIdString;
 	message	+= MESSAGE_NODE_2;
-	message	+= component2IdStr;
+	message	+= otherComponentIdString;
 	message	+= MESSAGE_NODE_3;
 	message	+= MESSAGE_NODE_7;
 	message	+= MESSAGE_NODE_8;
@@ -228,9 +228,9 @@ string ER_PresentationModel::addConnection(int firstNodeId,int secondNodeId, ERD
 }
 
 // 判斷idStr是不是已存在的componentId
-bool ER_PresentationModel::isExistComponentId(string idStr)
+bool ER_PresentationModel::isExistComponentId(string idString)
 {
-	return model.isExistComponentId(idStr);
+	return model.isExistComponentId(idString);
 }
 
 // 判斷entityId是不是Entity
@@ -557,13 +557,13 @@ string ER_PresentationModel::getConnectionsTable()
 	sort(connectionsId.begin(), connectionsId.end());
 	for (vector<int>::iterator it = connectionsId.begin(); it < connectionsId.end(); it++) 
 	{
-		int id = *it, node1Id = getConnectionNodeById(id, 0), node2Id = getConnectionNodeById(id, 1);
+		int id = *it, nodeId = getConnectionNodeById(id, 0), otherNodeId = getConnectionNodeById(id, 1);
 		result += SPACE_TEXT_2;
 		result += Tool_Function::convertIntToString(id);
 		result += SEPARATOR_3;
-		result += Tool_Function::convertIntToString(node1Id);
+		result += Tool_Function::convertIntToString(nodeId);
 		result += SEPARATOR_3;
-		result += Tool_Function::convertIntToString(node2Id);
+		result += Tool_Function::convertIntToString(otherNodeId);
 		result += ENDL;
 	}
 	result += SEPARATOR_1;

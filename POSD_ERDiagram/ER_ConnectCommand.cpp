@@ -5,20 +5,20 @@ ER_ConnectCommand::ER_ConnectCommand(void)
 {
 }
 
-ER_ConnectCommand::ER_ConnectCommand(ER_Model* model,int node1Id, int node2Id, int id)
+ER_ConnectCommand::ER_ConnectCommand(ER_Model* model,int nodeId, int otherNodeId, int id)
 {
 	this->model = model;
-	this->firstNodeId = node1Id;
-	this->secondNodeId = node2Id;
+	this->firstNodeId = nodeId;
+	this->secondNodeId = otherNodeId;
 	this->targetId = id;
 	this->targetCardinality = ERD_Connection::SIZE_OF_Cardinality;
 }
 
-ER_ConnectCommand::ER_ConnectCommand(ER_Model* model,int node1Id, int node2Id, int id, ERD_Connection::ConnectionCardinality cardinality)
+ER_ConnectCommand::ER_ConnectCommand(ER_Model* model,int nodeId, int otherNodeId, int id, ERD_Connection::ConnectionCardinality cardinality)
 {
 	this->model = model;
-	this->firstNodeId = node1Id;
-	this->secondNodeId = node2Id;
+	this->firstNodeId = nodeId;
+	this->secondNodeId = otherNodeId;
 	this->targetId = id;
 	this->targetCardinality = cardinality;
 }

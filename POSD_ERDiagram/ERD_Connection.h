@@ -22,13 +22,13 @@ public:
 	ConnectionCardinality getCardinality();
 	void setCardinality(ConnectionCardinality);
 	bool isConnectToId(int);
-	int getNode1Id();
-	int getNode2Id();
+	int getNodeId();
+	int getOtherNodeId();
 	ERD_Component* clone();
 
 private:
 	ConnectionCardinality cardinality;
-	int node1Id;
-	int node2Id;
+	int nodeId;
+	int otherNodeId;
 };
 #endif

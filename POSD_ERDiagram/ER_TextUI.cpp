@@ -141,7 +141,7 @@ void ER_TextUI::saveFile()
 // 新增Node
 void ER_TextUI::addNode()
 {
-	string addNodeCommand, addNodeName, idStr;
+	string addNodeCommand, addNodeName, idString;
 	int type = -1;
 	cout << ADD_NODE_TEXT << endl;
 	type = addNodeChooseTypeQuestion(addNodeCommand, type);
@@ -154,8 +154,8 @@ void ER_TextUI::addNode()
 	cout << ADD_NODE_NAME_TEXT << endl;
 	cin.ignore();
 	getline(cin, addNodeName);
-	idStr = presentationModel.addNode((ERD_Component::ComponentType)type, addNodeName);
-	printAddNodeResult(type, idStr, addNodeName);
+	idString = presentationModel.addNode((ERD_Component::ComponentType)type, addNodeName);
+	printAddNodeResult(type, idString, addNodeName);
 	cout << presentationModel.getNodesTable();
 }
 
@@ -271,14 +271,14 @@ void ER_TextUI::checkPrimaryKeySetting(int entityIntId)
 void ER_TextUI::deleteComponent()
 {
 	cout << ENTER_COMPONENT_ID << endl;
-	string deleteIdStr;
-	cin >> deleteIdStr;
-	while (!presentationModel.isExistComponentId(deleteIdStr))
+	string deleteIdString;
+	cin >> deleteIdString;
+	while (!presentationModel.isExistComponentId(deleteIdString))
 	{
 		cout << COMPONENT_NOT_EXIST << RE_ENTER << endl;
-		cin >> deleteIdStr;
+		cin >> deleteIdString;
 	}
-	cout << presentationModel.deleteComponent(stoi(deleteIdStr)) << endl;
+	cout << presentationModel.deleteComponent(stoi(deleteIdString)) << endl;
 }
 
 // 新增Node的問題

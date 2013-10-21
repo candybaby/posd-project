@@ -107,20 +107,20 @@ void ER_Model::setAttributeConnected(int componentId, bool flag)
 }
 
 // 檢查連線情況 參數為兩個Node要連接的ID 結果 -1:已經相連 -2:Cardinality -3:兩點相同 -4:不能連
-int ER_Model::checkAddConnection(int component1Id, int component2Id)
+int ER_Model::checkAddConnection(int componentId, int otherComponentId)
 {
 	int result = ALREADY_CONNECTED;
-	ERD_Component* component1 = findComponentById(component1Id);
-	ERD_Component* component2 = findComponentById(component2Id);
-	if (isAlreadyConnect(component1Id, component2Id)) //已經相連了
+	ERD_Component* component = findComponentById(componentId);
+	ERD_Component* otherComponent = findComponentById(otherComponentId);
+	if (isAlreadyConnect(componentId, otherComponentId)) //已經相連了
 	{
 		result = ALREADY_CONNECTED;
 		return result;
 	}
-	if (component1->canConnectTo(component2) && component2->canConnectTo(component1)) //可以連
+	if (component->canConnectTo(otherComponent) && otherComponent->canConnectTo(component)) //可以連
 	{
-		if ((component1->getType() == ERD_Component::Entity && component2->getType() == ERD_Component::Relationship) ||
-			(component1->getType() == ERD_Component::Relationship && component2->getType() == ERD_Component::Entity))
+		if ((component->getType() == ERD_Component::Entity && otherComponent->getType() == ERD_Component::Relationship) ||
+			(component->getType() == ERD_Component::Relationship && otherComponent->getType() == ERD_Component::Entity))
 		{
 			result = ASK_CARDINALITY;
 		}
@@ -129,7 +129,7 @@ int ER_Model::checkAddConnection(int component1Id, int component2Id)
 			result = currentId;
 		}
 	}
-	else if (component1Id == component2Id)
+	else if (componentId == otherComponentId)
 	{
 		result = SAME_NODE;
 	}
@@ -147,48 +147,48 @@ void ER_Model::plusCurrentId()
 }
 
 // 新增連線 特定ID位置的新增 主要用於讀檔時的新增
-void ER_Model::addConnection(int component1Id, int component2Id, int id)
+void ER_Model::addConnection(int componentId, int otherComponentId, int id)
 {
-	ERD_Component* component1 = findComponentById(component1Id);
-	ERD_Component* component2 = findComponentById(component2Id);
-	ERD_Component* component = factory.createConnectionComponent(component1, component2, id);
-	setAttributeConnected(component1Id, true);
-	setAttributeConnected(component2Id, true);
+	ERD_Component* targetComponent = findComponentById(componentId);
+	ERD_Component* otherTargetComponent = findComponentById(otherComponentId);
+	ERD_Component* component = factory.createConnectionComponent(targetComponent, otherTargetComponent, id);
+	setAttributeConnected(componentId, true);
+	setAttributeConnected(otherComponentId, true);
 	components.push_back(component);
 	sortComponents();
 }
 
 // 新增連線 特定ID位置的新增包含cardinality屬性
-void ER_Model::addConnection(int component1Id, int component2Id, int id, ERD_Connection::ConnectionCardinality cardinality)
+void ER_Model::addConnection(int componentId, int otherComponentId, int id, ERD_Connection::ConnectionCardinality cardinality)
 {
-	ERD_Component* component1 = findComponentById(component1Id);
-	ERD_Component* component2 = findComponentById(component2Id);
-	ERD_Component* component = factory.createConnectionComponent(component1, component2, id, cardinality);
-	setAttributeConnected(component1Id, true);
-	setAttributeConnected(component2Id, true);
+	ERD_Component* targetComponent = findComponentById(componentId);
+	ERD_Component* otherTargetComponent = findComponentById(otherComponentId);
+	ERD_Component* component = factory.createConnectionComponent(targetComponent, otherTargetComponent, id, cardinality);
+	setAttributeConnected(componentId, true);
+	setAttributeConnected(otherComponentId, true);
 	components.push_back(component);
 	sortComponents();
 }
 
 // 新增連線 特定ID位置的新增包含cardinality屬性 主要用於讀檔時的新增
-void ER_Model::addConnection(int component1Id, int component2Id, int id, string cardinalityStr)
+void ER_Model::addConnection(int componentId, int otherComponentId, int id, string cardinalityStr)
 {
-	ERD_Component* component1 = findComponentById(component1Id);
-	ERD_Component* component2 = findComponentById(component2Id);
+	ERD_Component* targetComponent = findComponentById(componentId);
+	ERD_Component* otherTargetComponent = findComponentById(otherComponentId);
 	ERD_Component* component;
 	for (int i = 0; i < ERD_Connection::SIZE_OF_Cardinality; i++)
 	{
 		if (ERD_Connection::connectionCardinalityNames[i] == cardinalityStr)
 		{
-			component = factory.createConnectionComponent(component1, component2, id, (ERD_Connection::ConnectionCardinality)i);
+			component = factory.createConnectionComponent(targetComponent, otherTargetComponent, id, (ERD_Connection::ConnectionCardinality)i);
 		}
 		else if (cardinalityStr == EMPTY_TEXT)
 		{
-			component = factory.createConnectionComponent(component1, component2, id);
+			component = factory.createConnectionComponent(targetComponent, otherTargetComponent, id);
 		}
 	}
-	setAttributeConnected(component1Id, true);
-	setAttributeConnected(component2Id, true);
+	setAttributeConnected(componentId, true);
+	setAttributeConnected(otherComponentId, true);
 	components.push_back(component);
 	sortComponents();
 }
@@ -260,9 +260,9 @@ ERD_Component* ER_Model::findComponentById(int id)
 }
 
 // 兩個node是否已經連線
-bool ER_Model::isAlreadyConnect(int node1Id, int node2Id)
+bool ER_Model::isAlreadyConnect(int nodeId, int otherNodeId)
 {
-	if (node1Id == node2Id)
+	if (nodeId == otherNodeId)
 	{
 		return false;
 	}
@@ -271,7 +271,7 @@ bool ER_Model::isAlreadyConnect(int node1Id, int node2Id)
 		if (((ERD_Component *)*it)->getType() == ERD_Component::Connection)
 		{
 			ERD_Connection* connection = (ERD_Connection*)*it;
-			if (connection->isConnectToId(node1Id) && connection->isConnectToId(node2Id))
+			if (connection->isConnectToId(nodeId) && connection->isConnectToId(otherNodeId))
 			{
 				return true;
 			}
@@ -498,11 +498,11 @@ void ER_Model::loadComponents(vector<string>::iterator lineIt, map<int, string> 
 	vector<string> lineParts = Tool_Function::split(*lineIt, CHAR_SPACE);
 	if (lineParts.size() > 1)
 	{
-		string typeStr = lineParts[0].substr(0, 1);
+		string typeString = lineParts[0].substr(0, 1);
 		string text = lineParts[1];
-		if (typeStr != componentTypeMapNames[Connection])
+		if (typeString != componentTypeMapNames[Connection])
 		{
-			addNode(typeStr, text);
+			addNode(typeString, text);
 		}
 		else
 		{
@@ -521,21 +521,21 @@ void ER_Model::loadComponents(vector<string>::iterator lineIt, map<int, string> 
 void ER_Model::loadConnections(vector<string>::iterator lineIt, map<int, string> &connectionMap)
 {
 	vector<string> lineParts = Tool_Function::split(*lineIt, CHAR_SPACE);
-	string connectionIdStr = lineParts[0];
-	string nodesIdStr = lineParts[1];
-	vector<string> nodes = Tool_Function::split(nodesIdStr, CHAR_CAMMA);
-	int node1, node2, connectionId;
-	node1 = std::stoi(nodes[0]);
-	node2 = std::stoi(nodes[1]);
-	connectionId = std::stoi(connectionIdStr);
-	string cardinalityStr = connectionMap.at(connectionId);
-	if (cardinalityStr != EMPTY_TEXT)
+	string connectionIdString = lineParts[0];
+	string nodesIdString = lineParts[1];
+	vector<string> nodes = Tool_Function::split(nodesIdString, CHAR_CAMMA);
+	int node, otherNode, connectionId;
+	node = std::stoi(nodes[0]);
+	otherNode = std::stoi(nodes[1]);
+	connectionId = std::stoi(connectionIdString);
+	string cardinalityString = connectionMap.at(connectionId);
+	if (cardinalityString != EMPTY_TEXT)
 	{
-		addConnection(node1, node2, connectionId, cardinalityStr);
+		addConnection(node, otherNode, connectionId, cardinalityString);
 	}
 	else
 	{
-		addConnection(node1, node2, connectionId);
+		addConnection(node, otherNode, connectionId);
 	}
 }
 
@@ -543,8 +543,8 @@ void ER_Model::loadConnections(vector<string>::iterator lineIt, map<int, string>
 void ER_Model::loadPrinaryKey(vector<string>::iterator lineIt)
 {
 	vector<string> lineParts = Tool_Function::split(*lineIt, CHAR_SPACE);
-	string primaryKeyIdStr = lineParts[1];
-	vector<string> primaryKeysId = Tool_Function::split(primaryKeyIdStr, CHAR_CAMMA);
+	string primaryKeyIdString = lineParts[1];
+	vector<string> primaryKeysId = Tool_Function::split(primaryKeyIdString, CHAR_CAMMA);
 	for (vector<string>::iterator it = primaryKeysId.begin(); it < primaryKeysId.end(); it++)
 	{
 		int primaryKeyId = std::stoi(*it);
@@ -601,14 +601,14 @@ void ER_Model::storeFileAboutConnections(ER_FileManager &file)
 	for (vector<int>::iterator it = connections.begin(); it < connections.end(); it++)
 	{
 		string line, tmp;
-		int node1, node2;
-		node1 = getConnectionNodeById(*it, 0);
-		node2 = getConnectionNodeById(*it, 1);
+		int node, otherNode;
+		node = getConnectionNodeById(*it, 0);
+		otherNode = getConnectionNodeById(*it, 1);
 		line = Tool_Function::convertIntToString((int)*it);
 		line += SPACE;
-		line += Tool_Function::convertIntToString(node1);
+		line += Tool_Function::convertIntToString(node);
 		line += CAMMA_TEXT;
-		line += Tool_Function::convertIntToString(node2);
+		line += Tool_Function::convertIntToString(otherNode);
 		file.writeLine(line);
 	}
 }
@@ -637,12 +637,12 @@ void ER_Model::storeFileAboutPrimaryKey(ER_FileManager &file)
 }
 
 // 判斷idStr是不是已存在的componentId
-bool ER_Model::isExistComponentId(string idStr)
+bool ER_Model::isExistComponentId(string idString)
 {
 	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
 	{
 		int id = ((ERD_Component *)*it)->getId();
-		if (Tool_Function::convertIntToString(id) == idStr)
+		if (Tool_Function::convertIntToString(id) == idString)
 		{
 			return true;
 		}
