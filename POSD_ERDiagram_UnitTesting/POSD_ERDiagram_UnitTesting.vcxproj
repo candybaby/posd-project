@@ -68,8 +68,7 @@
       <OptimizeReferences>false</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(TargetPath)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -119,9 +118,11 @@
     <ClCompile Include="ER_ConnectCommandTest.cpp" />
     <ClCompile Include="ER_DeleteCommandTest.cpp" />
     <ClCompile Include="ER_FileManagerTest.cpp" />
+    <ClCompile Include="ER_IntegrationTest.cpp" />
     <ClCompile Include="ER_ModelTest.cpp" />
     <ClCompile Include="ER_PresentationModelTest.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Tool_FunctionTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\POSD_ERDiagram\POSD_ERDiagram.vcxproj">

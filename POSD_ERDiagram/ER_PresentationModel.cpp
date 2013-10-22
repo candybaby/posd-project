@@ -354,22 +354,26 @@ bool ER_PresentationModel::isExistTable()
 	{
 		return false;
 	}
-	for (vector<int>::iterator it = entitiesId.begin(); it < entitiesId.end(); it++)
+	else
 	{
-		vector<int> oneByOneRelationEntityId = model.findOneByOneRelationEntityId(*it);
-		if (oneByOneRelationEntityId.size() != 0) // 有1對1的Entity
+		for (vector<int>::iterator it = entitiesId.begin(); it < entitiesId.end(); it++)
 		{
-			for (vector<int>::iterator entityIt = oneByOneRelationEntityId.begin(); entityIt < oneByOneRelationEntityId.end(); entityIt++)
+			vector<int> oneByOneRelationEntityId = model.findOneByOneRelationEntityId(*it);
+			if (oneByOneRelationEntityId.size() != 0) // 有1對1的Entity
 			{
-				if (model.findPrimaryKeyByEntityId(*entityIt).size() == 0 || model.findPrimaryKeyByEntityId(*it).size() == 0) // 判斷有沒有primaryKey
+				for (vector<int>::iterator entityIt = oneByOneRelationEntityId.begin(); entityIt < oneByOneRelationEntityId.end(); entityIt++)
 				{
-					return false;
+					if (model.findPrimaryKeyByEntityId(*entityIt).size() == 0 || model.findPrimaryKeyByEntityId(*it).size() == 0) // 判斷有沒有primaryKey
+					{
+						return false;
+					}
+					return true;
 				}
-				return true;
 			}
 		}
+		return false;
 	}
-	return false;
+	
 }
 
 // 取得特定ID的ForeignKey
@@ -377,11 +381,12 @@ string ER_PresentationModel::getForeignKeyResult(int id)
 {
 	string foreignKeystring;
 	vector<vector<int>> foreignKeysVector = model.findForeignKeyByEntityId(id);
+	vector<string> foreignKeyStringVector;
 	if (foreignKeysVector.size() != 0) // 有foreignkey的話
 	{
-		foreignKeystring = FOREIGN_KEY;
 		for (vector<vector<int>>::size_type u = 0; u < foreignKeysVector.size(); u++) 
 		{ 
+			foreignKeystring = FOREIGN_KEY;
 			for (vector<int>::size_type v = 0; v < foreignKeysVector[u].size(); v++) 
 			{
 				foreignKeystring += getNameById(foreignKeysVector[u][v]);
@@ -390,7 +395,13 @@ string ER_PresentationModel::getForeignKeyResult(int id)
 			foreignKeystring = foreignKeystring.substr(0,foreignKeystring.size() - CAMMA_SIZE);
 			foreignKeystring += RIGHT_BRACKET;
 			foreignKeystring = CAMMA + foreignKeystring;
+			foreignKeyStringVector.push_back(foreignKeystring);
 		}
+	}
+	foreignKeystring = "";
+	for (vector<string>::iterator it = foreignKeyStringVector.begin(); it < foreignKeyStringVector.end(); it++)
+	{
+		foreignKeystring += *it;
 	}
 	return foreignKeystring;
 }
@@ -447,7 +458,7 @@ string ER_PresentationModel::makePrimaryKeyString(int primaryKeyCounter, string 
 }
 
 // 製作result字串
-string ER_PresentationModel::makeResultString(int resultCounter, string result, string primaryKeyString )
+string ER_PresentationModel::makeResultString(int resultCounter, string result, string primaryKeyString)
 {
 	if (resultCounter == 0)
 	{
