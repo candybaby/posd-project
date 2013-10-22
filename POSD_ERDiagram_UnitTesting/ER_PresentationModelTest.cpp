@@ -216,83 +216,152 @@ TEST_F(ER_PresentationModelTest, getAddConnectionMessage)
 	// 參數:int,int
 	// 回傳:string(message)
 	// 附註:無
-	makeTestData();
+	presentationModel->addNode(ERD_Component::Entity, "Engineer");  //id=0
+	presentationModel->addNode(ERD_Component::Attribute, "EmpID");  //id=1
+	presentationModel->addNode(ERD_Component::Attribute, "Name");   //id=2
+	presentationModel->addNode(ERD_Component::Attribute, "Department");   //id=3
+	presentationModel->addNode(ERD_Component::Relationship, "Has");   //id=4
+	presentationModel->addNode(ERD_Component::Entity, "PC");  //id=5
+	presentationModel->addNode(ERD_Component::Attribute, "PC_ID");   //id=6
+	presentationModel->addNode(ERD_Component::Attribute, "Purchase_Date");   //id=7
+	presentationModel->addConnection(0, 4, ERD_Connection::one);
 	string result;
-	result = presentationModel->getAddConnectionMessage(0, 1);
-	EXPECT_EQ("", result);
+	result = presentationModel->getAddConnectionMessage(0, 4);  //已連線
+	EXPECT_EQ("The node '0' has already been connected to component '4'.", result);
+
+	result = presentationModel->getAddConnectionMessage(0, 0);  //同一個Node
+	EXPECT_EQ("The node '0' cannot be connected to itself.", result);
+
+	result = presentationModel->getAddConnectionMessage(4, 5);  //ASK_CARDINALITY_STATE
+	EXPECT_EQ("ask cardinality", result);
+
+	result = presentationModel->getAddConnectionMessage(6, 7);  //不能連線
+	EXPECT_EQ("The node '7' cannot be connected by the node '6'.", result);
+
+	EXPECT_EQ(9, presentationModel->getCurrentId());
+
+	result = presentationModel->getAddConnectionMessage(5, 6);  //可以連線 並連線
+	EXPECT_EQ("The node '5' has been connected to the node '6'.", result);
+	EXPECT_EQ(10, presentationModel->getCurrentId());
 }
 
-/* 測試 回傳不能連線的訊息
+// 測試 回傳不能連線的訊息
 TEST_F(ER_PresentationModelTest, getCannotConnectMessage)
 {
 	// 測試
 	// 參數:string, string
 	// 回傳:string(message)
 	// 附註:無
-}*/
+	string result;
+	result = presentationModel->getCannotConnectMessage("0", "1");
+	EXPECT_EQ("The node '0' cannot be connected by the node '1'.", result);
+}
 
-/* 測試 回傳一樣Node連線錯誤的訊息
+// 測試 回傳一樣Node連線錯誤的訊息
 TEST_F(ER_PresentationModelTest, getSameNodeMessage)
 {
 	// 測試
 	// 參數:string
 	// 回傳:string(message)
 	// 附註:無
-}*/
+	string result;
+	result = presentationModel->getSameNodeMessage("0");
+	EXPECT_EQ("The node '0' cannot be connected to itself.", result);
+}
 
-/* 測試 回傳需要Cardinary資訊的訊息
+// 測試 回傳需要Cardinary資訊的訊息
 TEST_F(ER_PresentationModelTest, getAskCardinaryStateMessage)
 {
 	// 測試
 	// 參數:無
 	// 回傳:string(message)
 	// 附註:無
-}*/
+	string result;
+	result = presentationModel->getAskCardinaryStateMessage();
+	EXPECT_EQ("ask cardinality", result);
+}
 
-/* 測試 回傳已經連線的訊息
+// 測試 回傳已經連線的訊息
 TEST_F(ER_PresentationModelTest, getAlreadyConnectedMessage)
 {
 	// 測試
 	// 參數:string, string
 	// 回傳:string(message)
 	// 附註:無
-}*/
+	string result;
+	result = presentationModel->getAlreadyConnectedMessage("0", "1");
+	EXPECT_EQ("The node '0' has already been connected to component '1'.", result);
+}
 
-/* 測試 回傳成功連線的訊息
+// 測試 回傳成功連線的訊息
 TEST_F(ER_PresentationModelTest, getNodeConnectedMessage)
 {
 	// 測試
 	// 參數:string, string
 	// 回傳:string(message)
 	// 附註:無
-}*/
+	string result;
+	result = presentationModel->getNodeConnectedMessage("0", "1");
+	EXPECT_EQ("The node '0' has been connected to the node '1'.", result);
+}
 
-/* 測試 新增連線
+// 測試 新增連線
 TEST_F(ER_PresentationModelTest, addConnection)
 {
 	// 測試
 	// 參數:int, int, ConnectionCardinality
 	// 回傳:string(message)
 	// 附註:無
-}*/
+	presentationModel->addNode(ERD_Component::Entity, "Engineer");  //id=0
+	presentationModel->addNode(ERD_Component::Attribute, "EmpID");  //id=1
+	presentationModel->addNode(ERD_Component::Attribute, "Name");   //id=2
+	presentationModel->addNode(ERD_Component::Attribute, "Department");   //id=3
+	presentationModel->addNode(ERD_Component::Relationship, "Has");   //id=4
+	presentationModel->addNode(ERD_Component::Entity, "PC");  //id=5
+	presentationModel->addNode(ERD_Component::Attribute, "PC_ID");   //id=6
+	presentationModel->addNode(ERD_Component::Attribute, "Purchase_Date");   //id=7
+	string result;
+	result = presentationModel->addConnection(0, 4, ERD_Connection::one);
+	EXPECT_EQ("The node '0' has been connected to the node '4'.\nIts cardinality of the relationship is '1'.", result);
+}
 
-/* 測試 判斷idStr是不是已存在的componentId
+// 測試 判斷idStr是不是已存在的componentId
 TEST_F(ER_PresentationModelTest, isExistComponentId)
 {
 	// 測試
 	// 參數:string
 	// 回傳:bool
 	// 附註:無
-}*/
+	makeTestData();
+	bool result;
+	result = presentationModel->isExistComponentId("0");
+	EXPECT_EQ(true, result);
 
-/* 測試 判斷entityId是不是Entity
+	result = presentationModel->isExistComponentId("14");
+	EXPECT_EQ(true, result);
+
+	result = presentationModel->isExistComponentId("15");
+	EXPECT_EQ(false, result);
+}
+
+// 測試 判斷entityId是不是Entity
 TEST_F(ER_PresentationModelTest, checkEntitySelectedValid)
 {
 	// 測試
 	// 參數:string
 	// 回傳:string
 	// 附註:無
-}*/
+	makeTestData();
+	string result;
+	result = presentationModel->checkEntitySelectedValid("0");
+	EXPECT_EQ("Find Right Entity", result);
+
+	result = presentationModel->checkEntitySelectedValid("1");
+	EXPECT_EQ("Not an Entity", result);
+
+	result = presentationModel->checkEntitySelectedValid("15");
+	EXPECT_EQ("Id Not Exist", result);
+}
 
 /* 測試 處理設定primaryKey的字串
 TEST_F(ER_PresentationModelTest, checkAttributesSelectedValid)
