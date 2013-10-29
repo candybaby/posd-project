@@ -3,9 +3,6 @@
 #include "ER_GUI.h"
 #include <QFileDialog>
 
-
-
-
 ER_GUI::ER_GUI(ER_PresentationModel* presentationModel)
 {
 	this->presentationModel = presentationModel;
@@ -58,11 +55,11 @@ void ER_GUI::createToolbars()
 
 void ER_GUI::browse()
 {
-	QString directory = QFileDialog::getOpenFileName(this,
-		tr("Find File"), QDir::currentPath(), tr("ERD File (*.erd)"));
-	string message;
-	message = presentationModel->readComponentsFile(directory.toStdString());
-	QMessageBox msgBox;
-	msgBox.setText(QString(QString::fromLocal8Bit(message.c_str())));
-	msgBox.exec();
+	QString directory = QFileDialog::getOpenFileName(this, tr("Find File"), "C://", tr("ERD File (*.erd)"));
+	if (directory != "")
+	{
+		string message;
+		message = presentationModel->readComponentsFile(directory.toStdString());
+		ER_MessageBoxManager::showMessageBox(message);
+	}
 }

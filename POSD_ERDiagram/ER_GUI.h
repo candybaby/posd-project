@@ -4,7 +4,7 @@
 #include <QtGui/QMainWindow>
 #include <QFileDialog>
 #include <QMenu>
-#include <QMessageBox>
+#include "ER_MessageBoxManager.h"
 #include "ER_DiagramScene.h"
 #include "ER_PresentationModel.h"
 

@@ -103,6 +103,9 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ER_DiagramScene.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="ER_MessageBoxManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ER_ComponentFactory.h">
@@ -154,6 +157,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ER_TextUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ER_MessageBoxManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
