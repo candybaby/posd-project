@@ -2,6 +2,9 @@
 #include <QLabel>
 #include "ER_GUI.h"
 #include <QFileDialog>
+#include "ER_ItemEntity.h"
+#include "ER_ItemAttribute.h"
+#include "ER_ItemRelationship.h"
 
 ER_GUI::ER_GUI(ER_PresentationModel* presentationModel)
 {
@@ -20,6 +23,22 @@ ER_GUI::ER_GUI(ER_PresentationModel* presentationModel)
 	widget->setLayout(layout);
 
 	setCentralWidget(widget);
+
+	QGraphicsItem *item = new ER_ItemEntity("T123123sdas");
+	item->setPos(2000,1500);
+	scene->addItem(item);
+
+	item = new ER_ItemEntity("231asdasd");
+	item->setPos(2200,1500);
+	scene->addItem(item);
+
+	item = new ER_ItemAttribute("231dfsdfsdfffffff", true);
+	item->setPos(2100,1500);
+	scene->addItem(item);
+
+	item = new ER_ItemRelationship("231dfsdfsdfffffff");
+	item->setPos(1900,1500);
+	scene->addItem(item);
 }
 
 

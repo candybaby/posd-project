@@ -85,6 +85,7 @@
     <ClCompile Include="ERD_Component.cpp" />
     <ClCompile Include="ERD_Connection.cpp" />
     <ClCompile Include="ERD_Entity.cpp" />
+    <ClCompile Include="ER_ItemComponent.cpp" />
     <ClCompile Include="ERD_Node.cpp" />
     <ClCompile Include="ERD_Relationship.cpp" />
     <ClCompile Include="ER_AddCommand.cpp" />
@@ -96,6 +97,9 @@
     <ClCompile Include="ER_DiagramScene.cpp" />
     <ClCompile Include="ER_FileManager.cpp" />
     <ClCompile Include="ER_GUI.cpp" />
+    <ClCompile Include="ER_ItemAttribute.cpp" />
+    <ClCompile Include="ER_ItemEntity.cpp" />
+    <ClCompile Include="ER_ItemRelationship.cpp" />
     <ClCompile Include="ER_MessageBoxManager.cpp" />
     <ClCompile Include="ER_Model.cpp" />
     <ClCompile Include="ER_PresentationModel.cpp" />
@@ -120,6 +124,7 @@
     <ClInclude Include="ERD_Component.h" />
     <ClInclude Include="ERD_Connection.h" />
     <ClInclude Include="ERD_Entity.h" />
+    <ClInclude Include="ER_ItemComponent.h" />
     <ClInclude Include="ERD_Node.h" />
     <ClInclude Include="ERD_Relationship.h" />
     <ClInclude Include="ER_AddCommand.h" />
@@ -149,6 +154,9 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui"</Command>
     </CustomBuild>
+    <ClInclude Include="ER_ItemAttribute.h" />
+    <ClInclude Include="ER_ItemEntity.h" />
+    <ClInclude Include="ER_ItemRelationship.h" />
     <ClInclude Include="ER_MessageBoxManager.h" />
     <ClInclude Include="ER_Model.h" />
     <ClInclude Include="ER_PresentationModel.h" />

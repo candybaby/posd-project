@@ -1,0 +1,19 @@
+#pragma once
+#ifndef _ITEM_ATTRIBUTE_ 
+#define _ITEM_ATTRIBUTE_
+#include <QGraphicsItem>
+#include <QPainter>
+#include "ER_ItemComponent.h"
+
+class ER_ItemAttribute : public ER_ItemComponent
+{
+public:
+	ER_ItemAttribute(QString, bool);
+	~ER_ItemAttribute(void);
+	virtual void paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*);
+protected:
+	bool isPrimaryKey;
+};
+
+#endif
+
