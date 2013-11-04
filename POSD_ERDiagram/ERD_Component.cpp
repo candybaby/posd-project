@@ -20,6 +20,11 @@ ERD_Component::~ERD_Component(void)
 {
 }
 
+void ERD_Component::setId(int value)
+{
+	this->id = value;
+}
+
 // ¨ú±oid
 int ERD_Component::getId()
 {

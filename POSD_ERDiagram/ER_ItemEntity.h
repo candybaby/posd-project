@@ -10,7 +10,8 @@ class ER_ItemEntity : public ER_ItemComponent
 public:
 	ER_ItemEntity(QString);
 	~ER_ItemEntity(void);
-	virtual void paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*);
+protected:
+	void doPaint(QPainter*);
 };
 
 #endif

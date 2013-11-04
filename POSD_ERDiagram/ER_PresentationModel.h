@@ -69,6 +69,9 @@ public:
 	bool enoughNodesToConnect();
 	bool getHasModify();
 
+	string getGuiNodes();
+	string getGuiConnections();
+
 private:
 	ER_Model model;
 	ER_CommandManager cmdManager;

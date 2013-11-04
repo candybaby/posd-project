@@ -21,6 +21,7 @@ public:
 	ERD_Component(void);
 	ERD_Component(ERD_Component*);
 	virtual ~ERD_Component(void);
+	void setId(int);
 	int getId();
 	ComponentType getType();
 	string getText();

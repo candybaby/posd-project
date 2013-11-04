@@ -13,27 +13,17 @@ ER_ItemEntity::ER_ItemEntity(QString name)
 	pointVector.push_back(QPointF(defaultLength + dynamicLength, defaultLength));
 
 	componentPainterPath.addPolygon(QPolygonF(pointVector));
-	//setFlag(QGraphicsItem::ItemIsMovable, true);
-	setFlag(QGraphicsItem::ItemIsSelectable, true);
+
+	componentPen.setColor(Qt::black);
+	componentPen.setWidth(3);
 }
 
 ER_ItemEntity::~ER_ItemEntity(void)
 {
 }
 
-void ER_ItemEntity::paint( QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void ER_ItemEntity::doPaint(QPainter *painter)
 {
-	// 畫外圍
-	QPen pen( Qt::black );
-	pen.setWidth(3);
-	painter->setPen(pen);
+	painter->setPen(componentPen);
 	painter->drawRect(boundingRect().adjusted(3, 2, -2, -3));
-	
-	// 畫文字
-	QFont font=painter->font() ;
-	font.setPointSize(10);
-	painter->setFont(font);
-	painter->drawText(boundingRect(), Qt::AlignCenter, componentName);
-
-	paintBorder(painter);
 }

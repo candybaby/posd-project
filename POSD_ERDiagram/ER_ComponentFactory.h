@@ -15,4 +15,5 @@ public:
 	ERD_Component* createConnectionComponent(ERD_Component*, ERD_Component*, int);
 	ERD_Component* createConnectionComponent(ERD_Component*, ERD_Component*, int, ERD_Connection::ConnectionCardinality);
 };
+
 #endif

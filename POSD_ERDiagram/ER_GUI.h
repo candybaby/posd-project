@@ -21,6 +21,7 @@ class ER_GUI:public QMainWindow
 public:
 	ER_GUI(ER_PresentationModel*);
 	~ER_GUI(void);
+	void addItemsFromFile();
 
 private slots:
 	void browse();
@@ -42,7 +43,6 @@ private:
 	QAction* openAction;
 
 	ER_PresentationModel *presentationModel;
-	
 
 };
 #endif

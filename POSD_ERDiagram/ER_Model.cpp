@@ -587,6 +587,7 @@ string ER_Model::storeComponents(string path)
 // 存檔第1部分 Components
 void ER_Model::storeFileAboutComponents(ER_FileManager &file)
 {
+	//int modifyId = 0;
 	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
 	{
 		string line, tmp;
@@ -598,6 +599,8 @@ void ER_Model::storeFileAboutComponents(ER_FileManager &file)
 			line += tmp;
 		}
 		file.writeLine(line);
+		//((ERD_Component *)*it)->setId(modifyId);
+		//modifyId++;
 	}
 }
 
@@ -739,4 +742,52 @@ void ER_Model::setHasModify(bool flag)
 bool ER_Model::getHasModify()
 {
 	return hasModify;
+}
+
+string ER_Model::getGuiNodes()
+{
+	string result;
+	vector<int> nodesVector = findNodes();
+	for (vector<int>::iterator it = nodesVector.begin(); it < nodesVector.end(); it++)
+	{
+		ERD_Component* component = findComponentById(*it);
+		int id = component->getId();
+		string name = component->getText();
+		string type = componentTypeMapNames[component->getType()];
+		if (type == componentTypeMapNames[ERD_Component::Attribute])
+		{
+			result += Tool_Function::convertIntToString(id) + CAMMA_TEXT + name + CAMMA_TEXT + type;
+			ERD_Attribute* attribute = (ERD_Attribute*)component;
+			string primaryString = "0";
+			if (attribute->getIsPrimaryKey())
+			{
+				primaryString = "1";
+			}
+			result += CAMMA_TEXT + primaryString + CHAR_ENDL;
+		}
+		else
+		{
+			result += Tool_Function::convertIntToString(id) + CAMMA_TEXT + name + CAMMA_TEXT + type + CHAR_ENDL;
+		}
+	}
+	return result;
+}
+
+string ER_Model::getGuiConnections()
+{
+	string result;
+	vector<int> connectionsVector = findComponentsByType(ERD_Component::Connection);
+	for (vector<int>::iterator it = connectionsVector.begin(); it < connectionsVector.end(); it++)
+	{
+		ERD_Component* component = findComponentById(*it);
+		int id = component->getId();
+		string name = component->getText();
+		string type = componentTypeMapNames[component->getType()];
+		int node = component->getConnections().at(0)->getId();
+		int otherNode = component->getConnections().at(1)->getId();
+		result += Tool_Function::convertIntToString(id) + CAMMA_TEXT + name + CAMMA_TEXT + type;
+		result += CAMMA_TEXT + Tool_Function::convertIntToString(node) + CAMMA_TEXT;
+		result += Tool_Function::convertIntToString(otherNode) + CHAR_ENDL;
+	}
+	return result;
 }

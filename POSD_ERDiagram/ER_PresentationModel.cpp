@@ -782,3 +782,13 @@ bool ER_PresentationModel::getHasModify()
 	return model.getHasModify();
 }
 
+string ER_PresentationModel::getGuiNodes()
+{
+	return model.getGuiNodes();
+}
+
+string ER_PresentationModel::getGuiConnections()
+{
+	return model.getGuiConnections();
+}
+

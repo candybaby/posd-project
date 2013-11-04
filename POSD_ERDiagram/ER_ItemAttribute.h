@@ -8,10 +8,13 @@
 class ER_ItemAttribute : public ER_ItemComponent
 {
 public:
+	ER_ItemAttribute(QString);
 	ER_ItemAttribute(QString, bool);
 	~ER_ItemAttribute(void);
-	virtual void paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*);
+	void initAttribute();
 protected:
+	void doPaint(QPainter*);
+	void paintText(QPainter*);
 	bool isPrimaryKey;
 };
 

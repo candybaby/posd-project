@@ -82,6 +82,9 @@ public:
 	void setHasModify(bool);
 	bool getHasModify();
 
+	string getGuiNodes();
+	string getGuiConnections();
+
 private:
 	vector<ERD_Component *> components;
 	int currentId;

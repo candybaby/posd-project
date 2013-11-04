@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 	else
 	{
 		ER_TextUI* textUI = new ER_TextUI(presentationModel);
-
+		
 		textUI->displayMenu();
 
 		delete textUI;

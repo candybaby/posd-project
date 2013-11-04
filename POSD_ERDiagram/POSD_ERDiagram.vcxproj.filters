@@ -124,10 +124,16 @@
     <ClCompile Include="ER_ItemAttribute.cpp">
       <Filter>Source Files\UI</Filter>
     </ClCompile>
-    <ClCompile Include="ER_ItemRelationship.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ER_ItemComponent.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ER_ItemRelationship.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ER_ItemConnection.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ER_ItemFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -192,10 +198,16 @@
     <ClInclude Include="ER_ItemAttribute.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
-    <ClInclude Include="ER_ItemRelationship.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ER_ItemComponent.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ER_ItemRelationship.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ER_ItemConnection.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ER_ItemFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

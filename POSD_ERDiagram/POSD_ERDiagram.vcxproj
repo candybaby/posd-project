@@ -52,7 +52,7 @@
       <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -98,7 +98,9 @@
     <ClCompile Include="ER_FileManager.cpp" />
     <ClCompile Include="ER_GUI.cpp" />
     <ClCompile Include="ER_ItemAttribute.cpp" />
+    <ClCompile Include="ER_ItemConnection.cpp" />
     <ClCompile Include="ER_ItemEntity.cpp" />
+    <ClCompile Include="ER_ItemFactory.cpp" />
     <ClCompile Include="ER_ItemRelationship.cpp" />
     <ClCompile Include="ER_MessageBoxManager.cpp" />
     <ClCompile Include="ER_Model.cpp" />
@@ -155,7 +157,9 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui"</Command>
     </CustomBuild>
     <ClInclude Include="ER_ItemAttribute.h" />
+    <ClInclude Include="ER_ItemConnection.h" />
     <ClInclude Include="ER_ItemEntity.h" />
+    <ClInclude Include="ER_ItemFactory.h" />
     <ClInclude Include="ER_ItemRelationship.h" />
     <ClInclude Include="ER_MessageBoxManager.h" />
     <ClInclude Include="ER_Model.h" />

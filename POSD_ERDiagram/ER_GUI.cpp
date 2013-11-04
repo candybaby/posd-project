@@ -5,6 +5,7 @@
 #include "ER_ItemEntity.h"
 #include "ER_ItemAttribute.h"
 #include "ER_ItemRelationship.h"
+#include "ER_ItemConnection.h"
 
 ER_GUI::ER_GUI(ER_PresentationModel* presentationModel)
 {
@@ -24,21 +25,29 @@ ER_GUI::ER_GUI(ER_PresentationModel* presentationModel)
 
 	setCentralWidget(widget);
 
-	QGraphicsItem *item = new ER_ItemEntity("T123123sdas");
-	item->setPos(2000,1500);
-	scene->addItem(item);
+	//QGraphicsItem *item = new ER_ItemEntity("T123123sdas");
+	//item->setPos(2400,1600);
+	//scene->addItem(item);
 
-	item = new ER_ItemEntity("231asdasd");
-	item->setPos(2200,1500);
-	scene->addItem(item);
+	//ER_ItemComponent *item1 = new ER_ItemEntity("231asdasd");
+	//item1->setPos(1800,1400);
+	//scene->addItem(item1);
 
-	item = new ER_ItemAttribute("231dfsdfsdfffffff", true);
-	item->setPos(2100,1500);
-	scene->addItem(item);
+	//ER_ItemComponent *item2 = new ER_ItemAttribute("231dfsdffffff", true);
+	//item2->setPos(2000,1600);
+	//scene->addItem(item2);
 
-	item = new ER_ItemRelationship("231dfsdfsdfffffff");
-	item->setPos(1900,1500);
-	scene->addItem(item);
+	//ER_ItemComponent *item3 = new ER_ItemRelationship("dfsdfsdfffffff");
+	//item3->setPos(1700,1300);
+	//scene->addItem(item3);
+
+	//item = new ER_ItemConnection("1", item1, item3);
+	////((ER_ItemConnection*)item)->setConnection(item1, item3);
+	//scene->addItem(item);
+
+	//item = new ER_ItemConnection("1");
+	////((ER_ItemConnection*)item)->setConnection(item1, item2);
+	//scene->addItem(item);
 }
 
 
@@ -77,8 +86,23 @@ void ER_GUI::browse()
 	QString directory = QFileDialog::getOpenFileName(this, tr("Find File"), "C://", tr("ERD File (*.erd)"));
 	if (directory != "")
 	{
-		string message;
-		message = presentationModel->readComponentsFile(directory.toStdString());
-		ER_MessageBoxManager::showMessageBox(message);
+		presentationModel->readComponentsFile(directory.toStdString());
+		//string message;
+		//message = presentationModel->readComponentsFile(directory.toStdString());
+		//ER_MessageBoxManager::showMessageBox(message);
 	}
+	addItemsFromFile();
+}
+
+void ER_GUI::addItemsFromFile()
+{
+	string nodesMessage = presentationModel->getGuiNodes();
+	//ER_MessageBoxManager::showMessageBox(nodesMessage);
+	scene->addItemNodes(QString(QString::fromLocal8Bit(nodesMessage.c_str())));
+
+	string connectionsMessage = presentationModel->getGuiConnections();
+	//ER_MessageBoxManager::showMessageBox(connectionsMessage);
+	scene->addItemConnections(QString(QString::fromLocal8Bit(connectionsMessage.c_str())));
+	//scene->addItems(QString(QString::fromLocal8Bit(nodesMessage.c_str())));
+	scene->updateItemPosition();
 }
