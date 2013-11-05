@@ -875,7 +875,8 @@ TEST_F(ER_ModelTest, enoughNodesToConnect)
 }
 
 /* 代刚
-TEST_F(ER_ModelTest, functionName) {
+TEST_F(ER_ModelTest, functionName)
+{
 	// 代刚
 	// 把计:
 	// 肚:
