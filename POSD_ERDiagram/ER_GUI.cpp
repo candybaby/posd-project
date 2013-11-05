@@ -14,7 +14,7 @@ ER_GUI::ER_GUI(ER_PresentationModel* presentationModel)
 	createMenus();
 	createToolbars();
 	scene = new ER_DiagramScene(this);
-	scene->setSceneRect(QRectF(0, 0, 1600, 1200));
+	scene->setSceneRect(QRectF(0, 0, 4000, 3000));
 
 	QHBoxLayout *layout = new QHBoxLayout;
 	view = new QGraphicsView(scene);

@@ -1,10 +1,14 @@
 #include "ER_DiagramScene.h"
 #include "Tool_Function.h"
+#define POSITION_MAX_WIDTH 4000
+#define POSITION_MAX_HEIGTH 3000
+#define POSITION_BLOCK_WIDTH 200
+#define POSITION_BLOCK_HEIGTH 300
 
 ER_DiagramScene::ER_DiagramScene(QObject *parent)
 	: QGraphicsScene(parent)
 {
-	positionManager = new ER_PositionManager(1600, 1200, 200, 300);
+	positionManager = new ER_PositionManager(POSITION_MAX_WIDTH, POSITION_MAX_HEIGTH, POSITION_BLOCK_WIDTH, POSITION_BLOCK_HEIGTH);
 }
 
 ER_DiagramScene::~ER_DiagramScene(void)
