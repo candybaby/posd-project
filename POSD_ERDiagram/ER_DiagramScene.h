@@ -26,6 +26,7 @@ public:
 	ER_ItemComponent* getItemComponentById(qreal);
 	void updateItemPosition();
 	ER_PositionManager* positionManager;
+
 private:
 	QVector<QGraphicsItem *> componentItems;
 	ER_ItemFactory* itemFactory;

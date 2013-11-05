@@ -15,15 +15,16 @@ public:
 	void setLine(const QLineF &);
 	void calculateLinePoint();
 	void updatePosition();
+
 protected:
 	void doPaint(QPainter*);
 	void paintText(QPainter*);
 	void paintBorder(QPainter*);
+
 private:
 	ER_ItemComponent* startComponent;
 	ER_ItemComponent* endComponent;
 	QLineF line;
 	QPoint textPosPoint;
 };
-
 #endif

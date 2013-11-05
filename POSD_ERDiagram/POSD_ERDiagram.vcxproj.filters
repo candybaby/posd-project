@@ -134,10 +134,10 @@
       <Filter>Source Files\UI</Filter>
     </ClCompile>
     <ClCompile Include="ER_ItemFactory.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\UI</Filter>
     </ClCompile>
     <ClCompile Include="ER_PositionManager.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -211,10 +211,10 @@
       <Filter>Header Files\UI</Filter>
     </ClInclude>
     <ClInclude Include="ER_ItemFactory.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\UI</Filter>
     </ClInclude>
     <ClInclude Include="ER_PositionManager.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

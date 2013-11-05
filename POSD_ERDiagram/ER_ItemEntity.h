@@ -10,8 +10,8 @@ class ER_ItemEntity : public ER_ItemComponent
 public:
 	ER_ItemEntity(QString);
 	~ER_ItemEntity(void);
+
 protected:
 	void doPaint(QPainter*);
 };
-
 #endif

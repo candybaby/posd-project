@@ -1,10 +1,15 @@
 #include "ER_ItemConnection.h"
 #include <QtCore/qmath.h>
+#define INIT_LENGTH 20
+#define EXTRA_LENGTH 6
+#define TWO 2
+#define PEN_WIDTH 3
+#define TEN 10
 
 ER_ItemConnection::ER_ItemConnection(QString cardinalityString)
 	: ER_ItemComponent(cardinalityString)
 {
-	QLineF _Line = QLineF(QPointF(0, 0), QPointF(20, 0));
+	QLineF _Line = QLineF(QPointF(0, 0), QPointF(INIT_LENGTH, 0));
 	setLine(_Line);
 	setInitShape();
 	setFlag(QGraphicsItem::ItemIsMovable, false); 
@@ -28,15 +33,16 @@ void ER_ItemConnection::setConnection(ER_ItemComponent* startItem, ER_ItemCompon
 	updatePosition();
 }
 
+// 設定線段 邊框
 void ER_ItemConnection::setInitShape()
 {
-	qreal extra = 6, cosValue, sinValue;
+	qreal extra = EXTRA_LENGTH, cosValue, sinValue;
 	qreal startX = line.p1().x();
 	qreal startY = line.p1().y();
 	qreal endX = line.p2().x();
 	qreal endY = line.p2().y();
-	cosValue = (endY-startY)/qSqrt((endY-startY)*(endY-startY)+(endX-startX)*(endX-startX));
-	sinValue = (endX-startX)/qSqrt((endY-startY)*(endY-startY)+(endX-startX)*(endX-startX));
+	cosValue = (endY - startY) / qSqrt((endY - startY) * (endY - startY) + (endX - startX) * (endX - startX));
+	sinValue = (endX - startX) / qSqrt((endY - startY) * (endY - startY) + (endX - startX) * (endX - startX));
 	qreal xValue = extra * cosValue;
 	qreal yValue = extra * sinValue;
 
@@ -49,10 +55,10 @@ void ER_ItemConnection::setInitShape()
 
 	componentPainterPath.~QPainterPath();
 	componentPainterPath.addPolygon(QPolygonF(pointVector));
-	textPosPoint = QPoint((startX + endX) / 2 + abs(xValue), (startY + endY) / 2 - abs(yValue));
+	textPosPoint = QPoint((startX + endX) / TWO + abs(xValue), (startY + endY) / TWO - abs(yValue));
 
 	componentPen.setColor(Qt::black);
-	componentPen.setWidth(3);
+	componentPen.setWidth(PEN_WIDTH);
 }
 
 void ER_ItemConnection::setLine(const QLineF &qLine)
@@ -60,19 +66,17 @@ void ER_ItemConnection::setLine(const QLineF &qLine)
 	this->line = qLine;
 }
 
+// 設定線段起點鐘點
 void ER_ItemConnection::calculateLinePoint()
 {
-	qreal startX = startComponent->pos().x();
-	qreal startY = startComponent->pos().y();
-	qreal endX = endComponent->pos().x();
-	qreal endY = endComponent->pos().y();
-	qreal sinValue;
-	sinValue = (endX-startX)/qSqrt((endY-startY)*(endY-startY)+(endX-startX)*(endX-startX));
+	int startIndex = startComponent->getConnectionIndex(endComponent->pos());
+	int endIndex = endComponent->getConnectionIndex(startComponent->pos());
 	QLineF qLine;
-	qLine = QLineF(startComponent->getConnectionPointVector().at(0), endComponent->pos());
+	qLine = QLineF(startComponent->getConnectionPointVector().at(startIndex), endComponent->getConnectionPointVector().at(endIndex));
 	setLine(qLine);
 }
 
+// 更新position
 void ER_ItemConnection::updatePosition()
 {
 	if (!(startComponent->pos().isNull() || endComponent->pos().isNull()))
@@ -82,27 +86,30 @@ void ER_ItemConnection::updatePosition()
 	}
 }
 
+// 畫(template method)
 void ER_ItemConnection::doPaint(QPainter *painter)
 {
 	painter->setPen(componentPen);
 	painter->drawLine(line);
 }
 
+// 畫文字(template method)
 void ER_ItemConnection::paintText(QPainter* painter)
 {
 	// 畫文字
 	QFont font = painter->font() ;
-	font.setPointSize(10);
+	font.setPointSize(TEN);
 	painter->setFont(font);
 	painter->drawText(textPosPoint, componentName);
 }
 
+// 畫邊框(template method)
 void ER_ItemConnection::paintBorder(QPainter* painter)
 {
 	if (isSelected())
 	{
 		QPen pen(Qt::red);
-		pen.setWidth(3); 
+		pen.setWidth(PEN_WIDTH); 
 		painter->setPen(pen);
 		painter->drawLine(line);
 		painter->setPen(componentPen);

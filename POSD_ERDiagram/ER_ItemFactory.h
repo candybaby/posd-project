@@ -14,5 +14,4 @@ public:
 	ER_ItemComponent* createItemNodes(QStringList);
 	ER_ItemComponent* createItemConnections(QStringList);
 };
-
 #endif

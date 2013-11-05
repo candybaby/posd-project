@@ -10,5 +10,4 @@ public:
 	static void showMessageBox(string);
 	static void showMessageBox(string, string);
 };
-
 #endif

@@ -15,6 +15,8 @@
 #define ASK_CARDINALITY -2
 #define SAME_NODE -3
 #define CANNOT_CONNECT -4
+#define ZERO_STRING "0";
+#define ONE_STRING "1";
 
 using namespace std;
 
@@ -744,6 +746,7 @@ bool ER_Model::getHasModify()
 	return hasModify;
 }
 
+// 回傳GUI要用到的Node資訊
 string ER_Model::getGuiNodes()
 {
 	string result;
@@ -758,10 +761,10 @@ string ER_Model::getGuiNodes()
 		{
 			result += Tool_Function::convertIntToString(id) + CAMMA_TEXT + name + CAMMA_TEXT + type;
 			ERD_Attribute* attribute = (ERD_Attribute*)component;
-			string primaryString = "0";
+			string primaryString = ZERO_STRING;
 			if (attribute->getIsPrimaryKey())
 			{
-				primaryString = "1";
+				primaryString = ONE_STRING;
 			}
 			result += CAMMA_TEXT + primaryString + CHAR_ENDL;
 		}
@@ -773,6 +776,7 @@ string ER_Model::getGuiNodes()
 	return result;
 }
 
+// 回傳GUI要用到的Connection資訊
 string ER_Model::getGuiConnections()
 {
 	string result;

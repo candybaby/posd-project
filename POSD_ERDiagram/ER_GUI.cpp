@@ -24,30 +24,6 @@ ER_GUI::ER_GUI(ER_PresentationModel* presentationModel)
 	widget->setLayout(layout);
 
 	setCentralWidget(widget);
-
-	//QGraphicsItem *item = new ER_ItemEntity("T123123sdas");
-	//item->setPos(2400,1600);
-	//scene->addItem(item);
-
-	//ER_ItemComponent *item1 = new ER_ItemEntity("231asdasd");
-	//item1->setPos(1800,1400);
-	//scene->addItem(item1);
-
-	//ER_ItemComponent *item2 = new ER_ItemAttribute("231dfsdffffff", true);
-	//item2->setPos(2000,1600);
-	//scene->addItem(item2);
-
-	//ER_ItemComponent *item3 = new ER_ItemRelationship("dfsdfsdfffffff");
-	//item3->setPos(1700,1300);
-	//scene->addItem(item3);
-
-	//item = new ER_ItemConnection("1", item1, item3);
-	////((ER_ItemConnection*)item)->setConnection(item1, item3);
-	//scene->addItem(item);
-
-	//item = new ER_ItemConnection("1");
-	////((ER_ItemConnection*)item)->setConnection(item1, item2);
-	//scene->addItem(item);
 }
 
 
@@ -55,6 +31,7 @@ ER_GUI::~ER_GUI(void)
 {
 }
 
+// 創建Actions
 void ER_GUI::createActions()
 {
 	openAction = new QAction(QIcon("images/folder.png"), tr("O&pen..."), this);
@@ -66,6 +43,7 @@ void ER_GUI::createActions()
 	connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
 }
 
+// 創建Menus
 void ER_GUI::createMenus()
 {
 	fileMenu = menuBar()->addMenu(tr("&File"));
@@ -74,6 +52,7 @@ void ER_GUI::createMenus()
 	fileMenu->addAction(exitAction);
 }
 
+// 創建Toolbars
 void ER_GUI::createToolbars()
 {
 	fileToolBar = addToolBar(tr("File"));
@@ -81,28 +60,25 @@ void ER_GUI::createToolbars()
 	fileToolBar->addAction(exitAction);
 }
 
+// 瀏覽檔案總管
 void ER_GUI::browse()
 {
 	QString directory = QFileDialog::getOpenFileName(this, tr("Find File"), "C://", tr("ERD File (*.erd)"));
 	if (directory != "")
 	{
 		presentationModel->readComponentsFile(directory.toStdString());
-		//string message;
-		//message = presentationModel->readComponentsFile(directory.toStdString());
-		//ER_MessageBoxManager::showMessageBox(message);
 	}
-	addItemsFromFile();
+	addItemsFromModel();
 }
 
-void ER_GUI::addItemsFromFile()
+// 加入item 內容從檔案取得
+void ER_GUI::addItemsFromModel()
 {
 	string nodesMessage = presentationModel->getGuiNodes();
-	//ER_MessageBoxManager::showMessageBox(nodesMessage);
 	scene->addItemNodes(QString(QString::fromLocal8Bit(nodesMessage.c_str())));
 
 	string connectionsMessage = presentationModel->getGuiConnections();
-	//ER_MessageBoxManager::showMessageBox(connectionsMessage);
 	scene->addItemConnections(QString(QString::fromLocal8Bit(connectionsMessage.c_str())));
-	//scene->addItems(QString(QString::fromLocal8Bit(nodesMessage.c_str())));
+
 	scene->updateItemPosition();
 }

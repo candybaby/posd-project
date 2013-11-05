@@ -1,5 +1,6 @@
 #include "ER_MessageBoxManager.h"
 
+// 顯示MessageBox
 void ER_MessageBoxManager::showMessageBox(string sourceString)
 {
 	QMessageBox msgBox;
@@ -8,6 +9,7 @@ void ER_MessageBoxManager::showMessageBox(string sourceString)
 	msgBox.exec();
 }
 
+// 顯示MessageBox
 void ER_MessageBoxManager::showMessageBox(string sourceString, string titleString)
 {
 	QMessageBox msgBox;

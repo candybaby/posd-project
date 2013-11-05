@@ -52,7 +52,8 @@ protected:
 
 
 // 代刚睲埃ヘ玡modelずcomponents
-TEST_F(ER_ModelTest, clearCurrentComponents) {
+TEST_F(ER_ModelTest, clearCurrentComponents) 
+{
 	// ⊿Τcomponent睲埃
 	EXPECT_EQ(0, model->getComponents().size());  // 絋粄components
 	model->clearCurrentComponents();              // 睲埃(代刚ㄧΑ)
@@ -66,7 +67,8 @@ TEST_F(ER_ModelTest, clearCurrentComponents) {
 }
 
 // 代刚ㄌ沮id逼逼components
-TEST_F(ER_ModelTest, sortComponents) {
+TEST_F(ER_ModelTest, sortComponents) 
+{
 	// ミid⊿Τ抖戈逼代Α
 	model->addNode(ERD_Component::Entity, "ID2", 2);
 	model->addNode(ERD_Component::Attribute, "ID1", 1);
@@ -81,7 +83,8 @@ TEST_F(ER_ModelTest, sortComponents) {
 }
 
 // 代刚穝糤竊翴(ぃconnection)
-TEST_F(ER_ModelTest, addNode) {
+TEST_F(ER_ModelTest, addNode) 
+{
 	// 代刚
 	// 把计:ComponentType(type), string(name)
 	// 肚:int (id)
@@ -146,7 +149,8 @@ TEST_F(ER_ModelTest, addNode) {
 }
 
 // 代刚 砞﹚Attribute硈絬篈
-TEST_F(ER_ModelTest, setAttributeConnected) {
+TEST_F(ER_ModelTest, setAttributeConnected)
+{
 	// 代刚
 	// 把计:ERD_Component*(component)
 	// 肚:ERD_Component*
@@ -164,7 +168,8 @@ TEST_F(ER_ModelTest, setAttributeConnected) {
 }
 
 // 代刚 浪琩硈絬薄猵 把计ㄢNode璶硈钡ID 挡狦 -1:竒硈 -2:Cardinality -3:ㄢ翴 -4:ぃ硈
-TEST_F(ER_ModelTest, checkAddConnection) {
+TEST_F(ER_ModelTest, checkAddConnection)
+{
 	// 代刚
 	// 把计:int(component1Id), int(component2Id)
 	// 肚:int(-1:竒硈 -2:Cardinality -3:ㄢ翴 -4:ぃ硈 >=0:硈絬id)
@@ -199,7 +204,8 @@ TEST_F(ER_ModelTest, checkAddConnection) {
 }
 
 // 代刚 id秸俱逼
-TEST_F(ER_ModelTest, plusCurrentId) {
+TEST_F(ER_ModelTest, plusCurrentId)
+{
 	// 代刚
 	// 把计:礚
 	// 肚:int(id)
@@ -212,7 +218,8 @@ TEST_F(ER_ModelTest, plusCurrentId) {
 }
 
 // 代刚 穝糤硈絬
-TEST_F(ER_ModelTest, addConnection) {
+TEST_F(ER_ModelTest, addConnection) 
+{
 	// 代刚
 	// 把计:int(component1Id), int(component2Id), int(id)
 	// 肚:礚
@@ -255,7 +262,8 @@ TEST_F(ER_ModelTest, addConnection) {
 }
 
 // 代刚 ノindexт癸莱ID
-TEST_F(ER_ModelTest, getIdByIndex) {
+TEST_F(ER_ModelTest, getIdByIndex) 
+{
 	// 代刚
 	// 把计:int(index)
 	// 肚:int(id)
@@ -269,7 +277,8 @@ TEST_F(ER_ModelTest, getIdByIndex) {
 }
 
 // 代刚 眔硈絬ㄢnode nodeNumberㄓだnode0籔node1
-TEST_F(ER_ModelTest, getConnectionNodeById) {
+TEST_F(ER_ModelTest, getConnectionNodeById)
+{
 	// 代刚
 	// 把计:int(id), int(nodeNumber)
 	// 肚:int(id)
@@ -289,7 +298,8 @@ TEST_F(ER_ModelTest, getConnectionNodeById) {
 }
 
 // 代刚 眔嘿虑パID
-TEST_F(ER_ModelTest, getNameById) {
+TEST_F(ER_ModelTest, getNameById)
+{
 	// 代刚
 	// 把计:int(id)
 	// 肚:string(name)
@@ -307,7 +317,8 @@ TEST_F(ER_ModelTest, getNameById) {
 }
 
 // 代刚 眔篈虑パID
-TEST_F(ER_ModelTest, getTypeById) {
+TEST_F(ER_ModelTest, getTypeById)
+{
 	// 代刚
 	// 把计:int(id)
 	// 肚:ComponentType(type)
@@ -333,7 +344,8 @@ TEST_F(ER_ModelTest, getTypeById) {
 }
 
 // 代刚 眔ERD_Component虑パID
-TEST_F(ER_ModelTest, findComponentById) {
+TEST_F(ER_ModelTest, findComponentById) 
+{
 	// 代刚
 	// 把计:int(id)
 	// 肚:ERD_Component*(component)
@@ -351,7 +363,8 @@ TEST_F(ER_ModelTest, findComponentById) {
 }
 
 // 代刚 ㄢnode琌竒硈絬
-TEST_F(ER_ModelTest, isAlreadyConnect) {
+TEST_F(ER_ModelTest, isAlreadyConnect) 
+{
 	// 代刚
 	// 把计:ERD_Component*(node1), ERD_Component*(node2)
 	// 肚:bool
@@ -371,7 +384,8 @@ TEST_F(ER_ModelTest, isAlreadyConnect) {
 }
 
 // 代刚 砞﹚疭﹚IDPrimaryKey(Attribute)
-TEST_F(ER_ModelTest, setIsPrimaryKey) {
+TEST_F(ER_ModelTest, setIsPrimaryKey)
+{
 	// 代刚
 	// 把计:int(id), bool(flag)
 	// 肚:礚
@@ -384,7 +398,8 @@ TEST_F(ER_ModelTest, setIsPrimaryKey) {
 }
 
 // 代刚 眔疭﹚ID(Attribute)琌PrimaryKey
-TEST_F(ER_ModelTest, getIsPrimaryKey) {
+TEST_F(ER_ModelTest, getIsPrimaryKey) 
+{
 	// 代刚
 	// 把计:int(id)
 	// 肚:bool
@@ -400,7 +415,8 @@ TEST_F(ER_ModelTest, getIsPrimaryKey) {
 }
 
 // 代刚 sourceIdconnectionт硈絬targetId翴盢籔targetId硈ID篈单type翴癘魁癬ㄓ
-TEST_F(ER_ModelTest, setRelatedIdVector) {
+TEST_F(ER_ModelTest, setRelatedIdVector) 
+{
 	// 代刚
 	// 把计:int(sourceId), int(targetId), ComponentType(type), vector<int>&(idVector)
 	// 肚:礚
@@ -428,7 +444,8 @@ TEST_F(ER_ModelTest, setRelatedIdVector) {
 }
 
 // 代刚 тNode栋(ぃconnection)
-TEST_F(ER_ModelTest, findNodes) {
+TEST_F(ER_ModelTest, findNodes) 
+{
 	// 代刚
 	// 把计:礚
 	// 肚:vector<int>(nodesId)
@@ -446,7 +463,8 @@ TEST_F(ER_ModelTest, findNodes) {
 }
 
 // 代刚 тcomponent栋(场)
-TEST_F(ER_ModelTest, findComponents) {
+TEST_F(ER_ModelTest, findComponents) 
+{
 	// 代刚
 	// 把计:礚
 	// 肚:vector<int>(componentsId)
@@ -465,7 +483,8 @@ TEST_F(ER_ModelTest, findComponents) {
 }
 
 // 代刚 т疭﹚篈component栋
-TEST_F(ER_ModelTest, findComponentsByType) {
+TEST_F(ER_ModelTest, findComponentsByType) 
+{
 	// 代刚
 	// 把计:ComponentType(type)
 	// 肚:vector<int>(componentsId)
@@ -494,7 +513,8 @@ TEST_F(ER_ModelTest, findComponentsByType) {
 }
 
 // 代刚 тtargetId籔疭﹚type硈NodeID(ぃconnection)
-TEST_F(ER_ModelTest, findIdWithTypeByTargetId) {
+TEST_F(ER_ModelTest, findIdWithTypeByTargetId)
+{
 	// 代刚
 	// 把计:ComponentType(type), int(targetId)
 	// 肚:vector<int>(componentsId)
@@ -508,7 +528,8 @@ TEST_F(ER_ModelTest, findIdWithTypeByTargetId) {
 }
 
 // 代刚 тtargetId籔疭﹚type硈NodeIDCardinality┦借one(ぃconnection)
-TEST_F(ER_ModelTest, findIdWithTypeByTargetIdWithCardinality) {
+TEST_F(ER_ModelTest, findIdWithTypeByTargetIdWithCardinality)
+{
 	// 代刚
 	// 把计:ComponentType(type), int(targetId)
 	// 肚:vector<int>(NodesId)
@@ -527,7 +548,8 @@ TEST_F(ER_ModelTest, findIdWithTypeByTargetIdWithCardinality) {
 }
 
 // 代刚 т疭﹚entityprimaryKey
-TEST_F(ER_ModelTest, findPrimaryKeyByEntityId) {
+TEST_F(ER_ModelTest, findPrimaryKeyByEntityId) 
+{
 	// 代刚
 	// 把计:int(entityId)
 	// 肚:vector<int>(attributeId)
@@ -547,7 +569,8 @@ TEST_F(ER_ModelTest, findPrimaryKeyByEntityId) {
 }
 
 // 代刚 倒﹚entityIdтforeignKeys
-TEST_F(ER_ModelTest, findForeignKeyByEntityId) {
+TEST_F(ER_ModelTest, findForeignKeyByEntityId) 
+{
 	// 代刚
 	// 把计:int(entityId)
 	// 肚:vector<vector<int>>(foreignKeysIdVector)
@@ -568,7 +591,8 @@ TEST_F(ER_ModelTest, findForeignKeyByEntityId) {
 }
 
 // 代刚 倒﹚entityт1癸1闽玒entity
-TEST_F(ER_ModelTest, findOneByOneRelationEntityId) {
+TEST_F(ER_ModelTest, findOneByOneRelationEntityId)
+{
 	// 代刚
 	// 把计:int(targetId)
 	// 肚:vector<int>(entitiesId)
@@ -586,7 +610,8 @@ TEST_F(ER_ModelTest, findOneByOneRelationEntityId) {
 }
 
 // 代刚 纜刚弄郎
-TEST_F(ER_ModelTest, readComponentsFile) {
+TEST_F(ER_ModelTest, readComponentsFile)
+{
 	// 代刚
 	// 把计:string(path)
 	// 肚:string(message)
@@ -599,7 +624,8 @@ TEST_F(ER_ModelTest, readComponentsFile) {
 }
 
 // 代刚 弄郎ず甧
-TEST_F(ER_ModelTest, loadFileContent) {
+TEST_F(ER_ModelTest, loadFileContent)
+{
 	// 代刚
 	// 把计:ER_FileManager &(file)
 	// 肚:礚
@@ -611,7 +637,8 @@ TEST_F(ER_ModelTest, loadFileContent) {
 }
 
 // 代刚 弄郎材1场だComponents
-TEST_F(ER_ModelTest, loadComponents) {
+TEST_F(ER_ModelTest, loadComponents) 
+{
 	// 代刚
 	// 把计:vector<string>::iterator(linIt), map<int, string> &(connectionMap)
 	// 肚:礚
@@ -640,7 +667,8 @@ TEST_F(ER_ModelTest, loadComponents) {
 }
 
 // 代刚 弄郎材2场だConnections
-TEST_F(ER_ModelTest, loadConnections) {
+TEST_F(ER_ModelTest, loadConnections) 
+{
 	// 代刚
 	// 把计:vector<string>::iterator(linIt), map<int, string> &(connectionMap)
 	// 肚:礚
@@ -679,7 +707,8 @@ TEST_F(ER_ModelTest, loadConnections) {
 }
 
 // 代刚 弄郎材3场だPrimaryKey
-TEST_F(ER_ModelTest, loadPrinaryKey) {
+TEST_F(ER_ModelTest, loadPrinaryKey) 
+{
 	// 代刚
 	// 把计:vector<string>::iterator(linIt)
 	// 肚:礚
@@ -727,7 +756,8 @@ TEST_F(ER_ModelTest, loadPrinaryKey) {
 }
 
 // 代刚 郎
-TEST_F(ER_ModelTest, storeComponents) {
+TEST_F(ER_ModelTest, storeComponents) 
+{
 	// 代刚
 	// 把计:string(path)
 	// 肚:string(message)
@@ -739,7 +769,8 @@ TEST_F(ER_ModelTest, storeComponents) {
 }
 
 // 代刚 耞idStr琌ぃ琌componentId
-TEST_F(ER_ModelTest, isExistComponentId) {
+TEST_F(ER_ModelTest, isExistComponentId)
+{
 	// 代刚
 	// 把计:string(idStr)
 	// 肚:bool(result)
@@ -757,7 +788,8 @@ TEST_F(ER_ModelTest, isExistComponentId) {
 }
 
 // 代刚 耞entityId琌ぃ琌Entity
-TEST_F(ER_ModelTest, checkEntitySelectedValid) {
+TEST_F(ER_ModelTest, checkEntitySelectedValid) 
+{
 	// 代刚
 	// 把计:string(entityId)
 	// 肚:string(message)
@@ -775,7 +807,8 @@ TEST_F(ER_ModelTest, checkEntitySelectedValid) {
 }
 
 // 代刚 埃component
-TEST_F(ER_ModelTest, deleteComponent) {
+TEST_F(ER_ModelTest, deleteComponent) 
+{
 	// 代刚
 	// 把计:int(id)
 	// 肚:bool(result)
@@ -793,7 +826,8 @@ TEST_F(ER_ModelTest, deleteComponent) {
 }
 
 // 代刚 т籔倒﹚ID(targetId)Τ闽┮ΤConnectionID
-TEST_F(ER_ModelTest, findRelatedConnectionById) {
+TEST_F(ER_ModelTest, findRelatedConnectionById) 
+{
 	// 代刚
 	// 把计:int(targetId)
 	// 肚:vector<int>(connectionId)
@@ -816,7 +850,8 @@ TEST_F(ER_ModelTest, findRelatedConnectionById) {
 }
 
 // 代刚 穝糤component
-TEST_F(ER_ModelTest, addComponent) {
+TEST_F(ER_ModelTest, addComponent) 
+{
 	// 代刚
 	// 把计:ERD_Component*(component)
 	// 肚:礚
@@ -827,7 +862,8 @@ TEST_F(ER_ModelTest, addComponent) {
 }
 
 // 代刚 琌Τì镑node硈钡
-TEST_F(ER_ModelTest, enoughNodesToConnect) {
+TEST_F(ER_ModelTest, enoughNodesToConnect) 
+{
 	// 代刚
 	// 把计:礚
 	// 肚:bool(result)

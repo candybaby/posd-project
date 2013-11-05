@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
 	ER_PresentationModel* presentationModel = new ER_PresentationModel(model);
 
-	if (true)
+	if (argc == 1 || strcmp(argv[1], "guimode") == 0)
 	{
 		QApplication app(argc, argv);
 		ER_GUI* graphicalUI = new ER_GUI(presentationModel);
@@ -26,10 +26,10 @@ int main(int argc, char *argv[])
 		graphicalUI->show();
 		return app.exec();
 	}
-	else
+	else if (argc > 1 && strcmp(argv[1], "textmode") == 0)
 	{
 		ER_TextUI* textUI = new ER_TextUI(presentationModel);
-		
+
 		textUI->displayMenu();
 
 		delete textUI;

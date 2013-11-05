@@ -782,11 +782,13 @@ bool ER_PresentationModel::getHasModify()
 	return model.getHasModify();
 }
 
+// 回傳GUI要用到的Node資訊
 string ER_PresentationModel::getGuiNodes()
 {
 	return model.getGuiNodes();
 }
 
+// 回傳GUI要用到的Connection資訊
 string ER_PresentationModel::getGuiConnections()
 {
 	return model.getGuiConnections();

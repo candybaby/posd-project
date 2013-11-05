@@ -81,7 +81,6 @@ public:
 	bool enoughNodesToConnect();
 	void setHasModify(bool);
 	bool getHasModify();
-
 	string getGuiNodes();
 	string getGuiConnections();
 

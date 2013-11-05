@@ -10,11 +10,11 @@ class ER_ItemRelationship : public ER_ItemComponent
 public:
 	ER_ItemRelationship(QString);
 	~ER_ItemRelationship(void);
+
 protected:
 	void doPaint(QPainter*);
 	QVector<QPointF> pointVector;
 	qreal defaultLength;
 	qreal dynamicLength;
 };
-
 #endif

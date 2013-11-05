@@ -11,7 +11,6 @@ ER_PositionManager::ER_PositionManager(qreal width, qreal height, qreal blockWid
 	this->itemCounter = 0;
 }
 
-
 ER_PositionManager::~ER_PositionManager(void)
 {
 }

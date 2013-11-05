@@ -1,18 +1,17 @@
 #include "ER_DiagramScene.h"
 #include "Tool_Function.h"
 
-
 ER_DiagramScene::ER_DiagramScene(QObject *parent)
 	: QGraphicsScene(parent)
 {
 	positionManager = new ER_PositionManager(1600, 1200, 200, 300);
 }
 
-
 ER_DiagramScene::~ER_DiagramScene(void)
 {
 }
 
+// Override addItem
 void ER_DiagramScene::addItem(QGraphicsItem *item)
 {
 	QGraphicsScene::addItem(item);
@@ -20,11 +19,13 @@ void ER_DiagramScene::addItem(QGraphicsItem *item)
 	((ER_ItemComponent *)item)->setDiagramScene(this);
 }
 
+// 取得ComponentItems
 QVector<QGraphicsItem *> ER_DiagramScene::getComponentItems()
 {
 	return componentItems;
 }
 
+// 取得特定id的item
 ER_ItemComponent* ER_DiagramScene::getItemComponentById(qreal targetId)
 {
 	ER_ItemComponent* targetResult;
@@ -39,9 +40,9 @@ ER_ItemComponent* ER_DiagramScene::getItemComponentById(qreal targetId)
 	return targetResult;
 }
 
+// 根據message 將Item new出 並加到scene上
 void ER_DiagramScene::addItemNodes(QString message)
 {
-	//ER_MessageBoxManager::showMessageBox(message.toStdString());
 	QStringList componentsList = message.split('\n');
 
 	for (int i = 0; i < componentsList.size() - 1; i++)
@@ -52,9 +53,9 @@ void ER_DiagramScene::addItemNodes(QString message)
 	}
 }
 
+// 根據message 將Connection new出 並加到scene上
 void ER_DiagramScene::addItemConnections(QString message)
 {
-	//ER_MessageBoxManager::showMessageBox(message.toStdString());
 	QStringList componentsList = message.split('\n');
 
 	for (int i = 0; i < componentsList.size() - 1; i++)
@@ -69,6 +70,7 @@ void ER_DiagramScene::addItemConnections(QString message)
 	}
 }
 
+// 更新Item的位置
 void ER_DiagramScene::updateItemPosition()
 {
 	for (QVector<QGraphicsItem *>::iterator it = componentItems.begin(); it < componentItems.end(); it++)

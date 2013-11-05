@@ -17,11 +17,10 @@ QT_END_NAMESPACE
 class ER_GUI:public QMainWindow
 {
 	Q_OBJECT
-
 public:
 	ER_GUI(ER_PresentationModel*);
 	~ER_GUI(void);
-	void addItemsFromFile();
+	void addItemsFromModel();
 
 private slots:
 	void browse();
@@ -43,6 +42,5 @@ private:
 	QAction* openAction;
 
 	ER_PresentationModel *presentationModel;
-
 };
 #endif

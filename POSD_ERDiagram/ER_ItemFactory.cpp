@@ -1,4 +1,10 @@
 #include "ER_ItemFactory.h"
+#define TWO 2
+#define THREE 3
+#define TYPE_ENTITY "E"
+#define TYPE_ATTRIBUTE "A"
+#define TYPE_RELATIONSHIP "R"
+#define ONE_STRING "1"
 
 
 ER_ItemFactory::ER_ItemFactory(void)
@@ -10,49 +16,34 @@ ER_ItemFactory::~ER_ItemFactory(void)
 {
 }
 
+// 製作node
 ER_ItemComponent* ER_ItemFactory::createItemNodes(QStringList componentString)
 {
-	//componentList.at(0);//ID
-	//componentList.at(1);//Name
-	//componentList.at(2);//Type
 	ER_ItemComponent *item;
-	if (componentString.at(2) == "E")
+	if (componentString.at(TWO) == TYPE_ENTITY)
 	{
 		item = new ER_ItemEntity(componentString.at(1));
 		item->setId(componentString.at(0).toInt());
 	}
-	else if (componentString.at(2) == "A")
+	else if (componentString.at(TWO) == TYPE_ATTRIBUTE)
 	{
-		bool primaryFlag = (componentString.at(3) == "1" ? true : false);
+		bool primaryFlag = (componentString.at(THREE) == ONE_STRING ? true : false);
 		item = new ER_ItemAttribute(componentString.at(1), primaryFlag);
 		item->setId(componentString.at(0).toInt());
 	}
-	else if (componentString.at(2) == "R")
+	else if (componentString.at(TWO) == TYPE_RELATIONSHIP)
 	{
 		item = new ER_ItemRelationship(componentString.at(1));
 		item->setId(componentString.at(0).toInt());
 	}
-	//else if (componentString.at(2) == "C")
-	//{
-	//	item = new ER_ItemConnection(componentString.at(1));
-	//	item->setId(componentString.at(0).toInt());
-	//	//ER_ItemComponent *item = new ER_ItemConnection(componentList.at(1));
-	//	//item->setId(componentList.at(0).toInt());
-	//	//addItem(item);
-	//}
 	return item;
 }
 
+// 製作connection
 ER_ItemComponent* ER_ItemFactory::createItemConnections(QStringList componentString)
 {
-	//componentList.at(0);//ID
-	//componentList.at(1);//Name
-	//componentList.at(2);//Type
 	ER_ItemComponent *item;
 	item = new ER_ItemConnection(componentString.at(1));
 	item->setId(componentString.at(0).toInt());
-	//	//ER_ItemComponent *item = new ER_ItemConnection(componentList.at(1));
-	//	//item->setId(componentList.at(0).toInt());
-	//	//addItem(item);
 	return item;
 }

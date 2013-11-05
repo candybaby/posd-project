@@ -68,7 +68,6 @@ public:
 	string deleteComponent(int);
 	bool enoughNodesToConnect();
 	bool getHasModify();
-
 	string getGuiNodes();
 	string getGuiConnections();
 

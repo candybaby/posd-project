@@ -1,6 +1,12 @@
 #include "ER_ItemComponent.h"
 #include "ER_DiagramScene.h"
-#include <QDebug>
+#define NUMBER_TEN 10
+#define BORDER_SIZE 2
+#define SIN_45_ANGLE 0.7
+#define POSITION_0 0
+#define POSITION_1 1
+#define POSITION_2 2
+#define POSITION_3 3
 
 ER_ItemComponent::ER_ItemComponent(QString name)
 {
@@ -23,6 +29,7 @@ QPainterPath ER_ItemComponent::shape() const
 	return componentPainterPath;
 }
 
+// 畫(template method)
 void ER_ItemComponent::paint( QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 	doPaint(painter);
@@ -30,26 +37,29 @@ void ER_ItemComponent::paint( QPainter *painter, const QStyleOptionGraphicsItem 
 	paintBorder(painter);
 }
 
+// 畫文字(template method)
 void ER_ItemComponent::paintText(QPainter *painter)
 {
 	// 畫文字
 	QFont font = painter->font() ;
-	font.setPointSize(10);
+	font.setPointSize(NUMBER_TEN);
 	painter->setFont(font);
 	painter->drawText(boundingRect(), Qt::AlignCenter, componentName);
 }
 
+// 畫(template method)
 void ER_ItemComponent::doPaint(QPainter *painter)
 {
 	// virtual
 }
 
+// 畫邊框(template method)
 void ER_ItemComponent::paintBorder(QPainter *painter)
 {
 	if (this->isSelected())
 	{
 		QPen pen(Qt::red);
-		pen.setWidth(2);
+		pen.setWidth(BORDER_SIZE);
 		painter->setPen(pen);
 		painter->drawPath(componentPainterPath);
 		painter->setPen(componentPen);
@@ -78,6 +88,7 @@ QVector<QPointF> ER_ItemComponent::getConnectionPointVector()
 	return lineConnectionPoint;
 }
 
+// 更新position
 void ER_ItemComponent::updatePosition()
 {
 	if (pos().isNull())
@@ -96,8 +107,6 @@ void ER_ItemComponent::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
 	preSelected = isSelected();
 	QGraphicsItem::mousePressEvent(event);
-	//qDebug() << "Press(Pre) : " << preSelected;
-	//qDebug() << "Press(Current) : " << isSelected();
 }
 
 void ER_ItemComponent::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
@@ -113,5 +122,28 @@ void ER_ItemComponent::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
 	QGraphicsItem::mouseMoveEvent(event);
 	((ER_DiagramScene*)diagramScene)->updateItemPosition();
-	qDebug() << "Move!";
+}
+
+int ER_ItemComponent::getConnectionIndex(const QPointF &point)
+{
+	bool isRightSide;
+	qreal sinValue;
+	qreal startX = pos().x();
+	qreal startY = pos().y();
+	qreal endX = point.x();
+	qreal endY = point.y();
+	isRightSide = (startX <= endX);
+	sinValue = -(endY - startY) / qSqrt((endY - startY) * (endY - startY)+(endX - startX) * (endX - startX));
+	if (sinValue <= 1 && sinValue > SIN_45_ANGLE)
+	{
+		return POSITION_2;
+	}
+	else if (sinValue <= SIN_45_ANGLE && sinValue > -SIN_45_ANGLE)
+	{
+		return isRightSide ? POSITION_1 : POSITION_3;
+	}
+	else
+	{
+		return POSITION_0;
+	}
 }

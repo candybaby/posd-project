@@ -21,6 +21,8 @@ public:
 	void mousePressEvent(QGraphicsSceneMouseEvent *);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent *);
+	int getConnectionIndex(const QPointF &);
+
 protected:
 	virtual void doPaint(QPainter*);
 	virtual void paintText(QPainter*);
@@ -34,6 +36,4 @@ protected:
 	QVector<QPointF> originalConnectionPoint; // 初始4個點位置
 	QVector<QPointF> lineConnectionPoint;
 };
-
-
 #endif

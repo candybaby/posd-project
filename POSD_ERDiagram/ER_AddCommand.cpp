@@ -9,7 +9,6 @@ ER_AddCommand::ER_AddCommand(ER_Model* model, ERD_Component::ComponentType type,
 	this->targetId = -1;
 }
 
-
 ER_AddCommand::~ER_AddCommand(void)
 {
 }

@@ -12,11 +12,11 @@ public:
 	ER_ItemAttribute(QString, bool);
 	~ER_ItemAttribute(void);
 	void initAttribute();
+
 protected:
 	void doPaint(QPainter*);
 	void paintText(QPainter*);
 	bool isPrimaryKey;
 };
-
 #endif
 
