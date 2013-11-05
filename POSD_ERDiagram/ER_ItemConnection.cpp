@@ -7,12 +7,14 @@ ER_ItemConnection::ER_ItemConnection(QString cardinalityString)
 	QLineF _Line = QLineF(QPointF(0, 0), QPointF(20, 0));
 	setLine(_Line);
 	setInitShape();
+	setFlag(QGraphicsItem::ItemIsMovable, false); 
 }
 
 ER_ItemConnection::ER_ItemConnection(QString cardinalityString, ER_ItemComponent* startItem, ER_ItemComponent* endItem)
 	: ER_ItemComponent(cardinalityString)
 {
 	setConnection(startItem, endItem);
+	setFlag(QGraphicsItem::ItemIsMovable, false);
 }
 
 ER_ItemConnection::~ER_ItemConnection(void)
@@ -58,13 +60,24 @@ void ER_ItemConnection::setLine(const QLineF &qLine)
 	this->line = qLine;
 }
 
+void ER_ItemConnection::calculateLinePoint()
+{
+	qreal startX = startComponent->pos().x();
+	qreal startY = startComponent->pos().y();
+	qreal endX = endComponent->pos().x();
+	qreal endY = endComponent->pos().y();
+	qreal sinValue;
+	sinValue = (endX-startX)/qSqrt((endY-startY)*(endY-startY)+(endX-startX)*(endX-startX));
+	QLineF qLine;
+	qLine = QLineF(startComponent->getConnectionPointVector().at(0), endComponent->pos());
+	setLine(qLine);
+}
+
 void ER_ItemConnection::updatePosition()
 {
-	QLineF qLine;
 	if (!(startComponent->pos().isNull() || endComponent->pos().isNull()))
 	{
-		qLine = QLineF(startComponent->pos(), endComponent->pos());
-		setLine(qLine);
+		calculateLinePoint();
 		setInitShape();
 	}
 }

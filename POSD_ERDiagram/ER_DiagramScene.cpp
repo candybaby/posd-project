@@ -5,6 +5,7 @@
 ER_DiagramScene::ER_DiagramScene(QObject *parent)
 	: QGraphicsScene(parent)
 {
+	positionManager = new ER_PositionManager(1600, 1200, 200, 300);
 }
 
 
@@ -75,4 +76,5 @@ void ER_DiagramScene::updateItemPosition()
 		ER_ItemComponent* itemComponent = ((ER_ItemComponent *)*it);
 		itemComponent->updatePosition();
 	}
+	update(0, 0, width(), height());//更新畫面
 }

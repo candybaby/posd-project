@@ -13,6 +13,7 @@ public:
 	void setConnection(ER_ItemComponent*, ER_ItemComponent*);
 	void setInitShape();
 	void setLine(const QLineF &);
+	void calculateLinePoint();
 	void updatePosition();
 protected:
 	void doPaint(QPainter*);

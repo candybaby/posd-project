@@ -15,6 +15,11 @@ ER_ItemRelationship::ER_ItemRelationship(QString name)
 	componentPainterPath.addPolygon(QPolygonF(pointVector));
 	componentPen.setColor(Qt::black);
 	componentPen.setWidth(3);
+
+	originalConnectionPoint.push_back(QPointF(0, defaultLength));
+	originalConnectionPoint.push_back(QPointF(defaultLength + dynamicLength, 0));
+	originalConnectionPoint.push_back(QPointF(0, -defaultLength));
+	originalConnectionPoint.push_back(QPointF(-(defaultLength + dynamicLength), 0));
 }
 
 

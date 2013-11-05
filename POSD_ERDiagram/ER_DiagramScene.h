@@ -11,6 +11,7 @@
 #include "ER_ItemRelationship.h"
 #include "ER_ItemConnection.h"
 #include "ER_ItemFactory.h"
+#include "ER_PositionManager.h"
 
 class ER_DiagramScene : public QGraphicsScene
 {
@@ -24,6 +25,7 @@ public:
 	void addItemConnections(QString);
 	ER_ItemComponent* getItemComponentById(qreal);
 	void updateItemPosition();
+	ER_PositionManager* positionManager;
 private:
 	QVector<QGraphicsItem *> componentItems;
 	ER_ItemFactory* itemFactory;

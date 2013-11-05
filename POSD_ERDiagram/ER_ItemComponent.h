@@ -15,8 +15,12 @@ public:
 	virtual void paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*);
 	qreal getId();
 	void setId(qreal);
+	QVector<QPointF> getConnectionPointVector();
 	virtual void updatePosition();
 	void setDiagramScene(QGraphicsScene*);
+	void mousePressEvent(QGraphicsSceneMouseEvent *);
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent *);
+	void mouseMoveEvent(QGraphicsSceneMouseEvent *);
 protected:
 	virtual void doPaint(QPainter*);
 	virtual void paintText(QPainter*);
@@ -26,6 +30,9 @@ protected:
 	QString componentName;
 	qreal id;
 	QPen componentPen;
+	bool preSelected;
+	QVector<QPointF> originalConnectionPoint; // 初始4個點位置
+	QVector<QPointF> lineConnectionPoint;
 };
 
 

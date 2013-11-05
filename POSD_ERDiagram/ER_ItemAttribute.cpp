@@ -26,6 +26,10 @@ void ER_ItemAttribute::initAttribute()
 	componentPainterPath.addEllipse(QRectF(-(ellipseWidth / 2), -(ellipseHeight / 2), ellipseWidth, ellipseHeight));
 	componentPen.setColor(Qt::black);
 	componentPen.setWidth(2);
+	originalConnectionPoint.push_back(QPointF(0, ellipseHeight / 2));
+	originalConnectionPoint.push_back(QPointF(ellipseWidth / 2, 0));
+	originalConnectionPoint.push_back(QPointF(0, -(ellipseHeight / 2)));
+	originalConnectionPoint.push_back(QPointF(-(ellipseWidth / 2), 0));
 }
 
 void ER_ItemAttribute::doPaint(QPainter *painter)

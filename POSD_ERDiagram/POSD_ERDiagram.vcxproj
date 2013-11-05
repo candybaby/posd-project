@@ -104,6 +104,7 @@
     <ClCompile Include="ER_ItemRelationship.cpp" />
     <ClCompile Include="ER_MessageBoxManager.cpp" />
     <ClCompile Include="ER_Model.cpp" />
+    <ClCompile Include="ER_PositionManager.cpp" />
     <ClCompile Include="ER_PresentationModel.cpp" />
     <ClCompile Include="ER_TextUI.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_ER_DiagramScene.cpp">
@@ -163,6 +164,7 @@
     <ClInclude Include="ER_ItemRelationship.h" />
     <ClInclude Include="ER_MessageBoxManager.h" />
     <ClInclude Include="ER_Model.h" />
+    <ClInclude Include="ER_PositionManager.h" />
     <ClInclude Include="ER_PresentationModel.h" />
     <ClInclude Include="ER_TextUI.h" />
     <ClInclude Include="Tool_Function.h" />
