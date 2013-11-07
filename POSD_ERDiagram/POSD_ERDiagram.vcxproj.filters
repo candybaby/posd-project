@@ -232,5 +232,20 @@
     <None Include="Images\folder.png">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Images\attribute.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Images\entity.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Images\linepointer.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Images\pointer.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Images\relationship.png">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

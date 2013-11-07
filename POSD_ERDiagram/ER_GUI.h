@@ -36,10 +36,17 @@ private:
 	//bar
 	QMenu* fileMenu;
 	QToolBar* fileToolBar;
+	QToolBar* stateToolBar;
 
 	//QAction
 	QAction* exitAction;
 	QAction* openAction;
+	QAction* pointerAction;
+	QAction* connectAction;
+	QAction* createAttributeAction;
+	QAction* createEntityAction;
+	QAction* createRealtionshipAction;
+
 
 	ER_PresentationModel *presentationModel;
 };

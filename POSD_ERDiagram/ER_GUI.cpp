@@ -41,6 +41,16 @@ void ER_GUI::createActions()
 	exitAction = new QAction(QIcon("images/exit.png"), tr("E&xit"), this);
 	exitAction->setShortcut(tr("Ctrl+X"));
 	connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
+
+	pointerAction = new QAction(QIcon("images/pointer.png"), tr("P&ointer"), this);
+
+	connectAction = new QAction(QIcon("images/linepointer.png"), tr("C&onnect"), this);
+
+	createAttributeAction = new QAction(QIcon("images/attribute.png"), tr(""), this);
+
+	createEntityAction = new QAction(QIcon("images/entity.png"), tr(""), this);
+
+	createRealtionshipAction = new QAction(QIcon("images/relationship.png"), tr(""), this);
 }
 
 // 創建Menus
@@ -58,6 +68,13 @@ void ER_GUI::createToolbars()
 	fileToolBar = addToolBar(tr("File"));
 	fileToolBar->addAction(openAction);
 	fileToolBar->addAction(exitAction);
+
+	stateToolBar = addToolBar(tr("State"));
+	stateToolBar->addAction(pointerAction);
+	stateToolBar->addAction(connectAction);
+	stateToolBar->addAction(createAttributeAction);
+	stateToolBar->addAction(createEntityAction);
+	stateToolBar->addAction(createRealtionshipAction);
 }
 
 // 瀏覽檔案總管
