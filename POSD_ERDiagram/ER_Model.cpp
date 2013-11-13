@@ -24,6 +24,7 @@ ER_Model::ER_Model(void)
 {
 	currentId = 0;
 	hasModify = false;
+	isStoreFileFail = false;
 }
 
 ER_Model::~ER_Model(void)
@@ -566,7 +567,7 @@ string ER_Model::storeComponents(string path)
 {
 	string result;
 	ER_FileManager file;
-	if (file.openFile(path, ER_FileManager::Write))
+	if (file.openFile(path, ER_FileManager::Write)&&!isStoreFileFail)
 	{
 		storeFileAboutComponents(file);
 		file.writeLine(EMPTY_TEXT);

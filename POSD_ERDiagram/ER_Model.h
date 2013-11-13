@@ -83,6 +83,7 @@ public:
 	bool getHasModify();
 	string getGuiNodes();
 	string getGuiConnections();
+	bool isStoreFileFail;
 
 private:
 	vector<ERD_Component *> components;

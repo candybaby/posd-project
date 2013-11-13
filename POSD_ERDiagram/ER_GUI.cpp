@@ -13,7 +13,7 @@ ER_GUI::ER_GUI(ER_PresentationModel* presentationModel)
 	createActions();
 	createMenus();
 	createToolbars();
-	scene = new ER_DiagramScene(this);
+	scene = new ER_DiagramScene(presentationModel, this);
 	scene->setSceneRect(QRectF(0, 0, 4000, 3000));
 
 	QHBoxLayout *layout = new QHBoxLayout;
@@ -41,16 +41,6 @@ void ER_GUI::createActions()
 	exitAction = new QAction(QIcon("images/exit.png"), tr("E&xit"), this);
 	exitAction->setShortcut(tr("Ctrl+X"));
 	connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
-
-	pointerAction = new QAction(QIcon("images/pointer.png"), tr("P&ointer"), this);
-
-	connectAction = new QAction(QIcon("images/linepointer.png"), tr("C&onnect"), this);
-
-	createAttributeAction = new QAction(QIcon("images/attribute.png"), tr(""), this);
-
-	createEntityAction = new QAction(QIcon("images/entity.png"), tr(""), this);
-
-	createRealtionshipAction = new QAction(QIcon("images/relationship.png"), tr(""), this);
 }
 
 // 創建Menus
@@ -69,12 +59,41 @@ void ER_GUI::createToolbars()
 	fileToolBar->addAction(openAction);
 	fileToolBar->addAction(exitAction);
 
+	QToolButton* pointerButton = new QToolButton;
+	pointerButton->setCheckable(true);
+	pointerButton->setChecked(true);
+	pointerButton->setIcon(QIcon("images/pointer.png"));
+
+	QToolButton* connecterButton = new QToolButton;
+	connecterButton->setCheckable(true);
+	connecterButton->setIcon(QIcon("images/linepointer.png"));
+
+	QToolButton* attributeButton = new QToolButton;
+	attributeButton->setCheckable(true);
+	attributeButton->setIcon(QIcon("images/attribute.png"));
+
+	QToolButton* entityButton = new QToolButton;
+	entityButton->setCheckable(true);
+	entityButton->setIcon(QIcon("images/entity.png"));
+
+	QToolButton* relationshipButton = new QToolButton;
+	relationshipButton->setCheckable(true);
+	relationshipButton->setIcon(QIcon("images/relationship.png"));
+
+	pointerTypeGroup = new QButtonGroup(this);
+	pointerTypeGroup->addButton(pointerButton, ER_DiagramScene::Pointer);
+	pointerTypeGroup->addButton(connecterButton, ER_DiagramScene::Connecter);
+	pointerTypeGroup->addButton(attributeButton, ER_DiagramScene::InsertAttribute);
+	pointerTypeGroup->addButton(entityButton, ER_DiagramScene::InsertEntity);
+	pointerTypeGroup->addButton(relationshipButton, ER_DiagramScene::InsertRelationship);
+	connect(pointerTypeGroup, SIGNAL(buttonClicked(int)), this, SLOT(pointerGroupClicked(int)));
+
 	stateToolBar = addToolBar(tr("State"));
-	stateToolBar->addAction(pointerAction);
-	stateToolBar->addAction(connectAction);
-	stateToolBar->addAction(createAttributeAction);
-	stateToolBar->addAction(createEntityAction);
-	stateToolBar->addAction(createRealtionshipAction);
+	stateToolBar->addWidget(pointerButton);
+	stateToolBar->addWidget(connecterButton);
+	stateToolBar->addWidget(attributeButton);
+	stateToolBar->addWidget(entityButton);
+	stateToolBar->addWidget(relationshipButton);
 }
 
 // 瀏覽檔案總管
@@ -85,17 +104,11 @@ void ER_GUI::browse()
 	{
 		presentationModel->readComponentsFile(directory.toStdString());
 	}
-	addItemsFromModel();
+	scene->addItemsFromModel();
 }
 
-// 加入item 內容從檔案取得
-void ER_GUI::addItemsFromModel()
+// 處理點選pointerGroup事件
+void ER_GUI::pointerGroupClicked(int index)
 {
-	string nodesMessage = presentationModel->getGuiNodes();
-	scene->addItemNodes(QString(QString::fromLocal8Bit(nodesMessage.c_str())));
-
-	string connectionsMessage = presentationModel->getGuiConnections();
-	scene->addItemConnections(QString(QString::fromLocal8Bit(connectionsMessage.c_str())));
-
-	scene->updateItemPosition();
+	scene->setMode(ER_DiagramScene::Mode(pointerTypeGroup->checkedId()));
 }

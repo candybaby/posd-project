@@ -85,6 +85,13 @@
     <ClCompile Include="ERD_Component.cpp" />
     <ClCompile Include="ERD_Connection.cpp" />
     <ClCompile Include="ERD_Entity.cpp" />
+    <ClCompile Include="ER_GUIAddAttributeState.cpp" />
+    <ClCompile Include="ER_GUIAddEntityState.cpp" />
+    <ClCompile Include="ER_GUIAddNodeState.cpp" />
+    <ClCompile Include="ER_GUIAddRelatiuonsipState.cpp" />
+    <ClCompile Include="ER_GUIConnecterState.cpp" />
+    <ClCompile Include="ER_GUIPointerState.cpp" />
+    <ClCompile Include="ER_GUIState.cpp" />
     <ClCompile Include="ER_ItemComponent.cpp" />
     <ClCompile Include="ERD_Node.cpp" />
     <ClCompile Include="ERD_Relationship.cpp" />
@@ -127,6 +134,13 @@
     <ClInclude Include="ERD_Component.h" />
     <ClInclude Include="ERD_Connection.h" />
     <ClInclude Include="ERD_Entity.h" />
+    <ClInclude Include="ER_GUIAddAttributeState.h" />
+    <ClInclude Include="ER_GUIAddEntityState.h" />
+    <ClInclude Include="ER_GUIAddNodeState.h" />
+    <ClInclude Include="ER_GUIAddRelatiuonshipState.h" />
+    <ClInclude Include="ER_GUIConnecterState.h" />
+    <ClInclude Include="ER_GUIPointerState.h" />
+    <ClInclude Include="ER_GUIState.h" />
     <ClInclude Include="ER_ItemComponent.h" />
     <ClInclude Include="ERD_Node.h" />
     <ClInclude Include="ERD_Relationship.h" />

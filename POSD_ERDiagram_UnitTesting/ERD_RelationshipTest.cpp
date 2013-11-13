@@ -26,6 +26,17 @@ protected:
 	ERD_Component* attributeTest;
 };
 
+// 代刚 篶
+TEST_F(ERD_RelationshipTest, ERD_Relationship)
+{
+	// 代刚
+	// 把计:礚
+	// 肚:礚
+	// 爹:礚
+	relationship = new ERD_Relationship();
+	EXPECT_EQ(ERD_Component::Relationship, relationship->getType());
+}
+
 // 代刚 耞琌硈
 TEST_F(ERD_RelationshipTest, canConnectTo)
 {

@@ -1,14 +1,23 @@
 #include "ER_DiagramScene.h"
 #include "Tool_Function.h"
+#include "ER_GUIPointerState.h"
+#include "ER_GUIConnecterState.h"
+#include "ER_GUIAddEntityState.h"
+#include "ER_GUIAddRelatiuonshipState.h"
+#include "ER_GUIAddAttributeState.h"
+#include <QDebug>
 #define POSITION_MAX_WIDTH 4000
 #define POSITION_MAX_HEIGTH 3000
 #define POSITION_BLOCK_WIDTH 200
 #define POSITION_BLOCK_HEIGTH 300
 
-ER_DiagramScene::ER_DiagramScene(QObject *parent)
+ER_DiagramScene::ER_DiagramScene(ER_PresentationModel* presentationModel, QObject *parent)
 	: QGraphicsScene(parent)
 {
+	this->presentationModel = presentationModel;
 	positionManager = new ER_PositionManager(POSITION_MAX_WIDTH, POSITION_MAX_HEIGTH, POSITION_BLOCK_WIDTH, POSITION_BLOCK_HEIGTH);
+	this->state = new ER_GUIPointerState(this);
+	//this->state = new ER_GUIState(this);
 }
 
 ER_DiagramScene::~ER_DiagramScene(void)
@@ -83,4 +92,53 @@ void ER_DiagramScene::updateItemPosition()
 		itemComponent->updatePosition();
 	}
 	update(0, 0, width(), height());//更新畫面
+}
+
+// 加入item 內容從檔案取得
+void ER_DiagramScene::addItemsFromModel()
+{
+	string nodesMessage = presentationModel->getGuiNodes();
+	addItemNodes(QString(QString::fromLocal8Bit(nodesMessage.c_str())));
+
+	string connectionsMessage = presentationModel->getGuiConnections();
+	addItemConnections(QString(QString::fromLocal8Bit(connectionsMessage.c_str())));
+
+	updateItemPosition();
+}
+
+void ER_DiagramScene::setMode(Mode mode)
+{
+	switch(mode)
+	{
+	case Pointer:
+		changeState(new ER_GUIPointerState(this));
+		break;
+	case Connecter:
+		changeState(new ER_GUIConnecterState(this));
+		break;
+	case InsertAttribute:
+		changeState(new ER_GUIAddAttributeState(this));
+		break;
+	case InsertEntity:
+		changeState(new ER_GUIAddEntityState(this));
+		break;
+	case InsertRelationship:
+		changeState(new ER_GUIAddRelatiuonshipState(this));
+		break;
+	}
+	//qDebug() << "Mode:" << mode;
+}
+
+void ER_DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent* pressEvent)
+{
+	state->mousePressEvent(pressEvent);
+	//changeState(new ER_GUIState());
+	//QGraphicsScene::mousePressEvent(pressEvent);
+	//qDebug() << "Press:" << pressEvent->scenePos();
+}
+
+void ER_DiagramScene::changeState(ER_GUIState* nextState)
+{
+	delete state;
+	state = nextState;
 }

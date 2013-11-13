@@ -766,6 +766,12 @@ TEST_F(ER_ModelTest, storeComponents)
 	string result;
 	result = model->storeComponents("unittest//test_store_file.erd");
 	EXPECT_EQ("Success", result);
+	TearDown();
+
+	SetUp();
+	model->isStoreFileFail = true;
+	result = model->storeComponents("unittest//test_store_file.erd");
+	EXPECT_EQ("Fail", result);
 }
 
 // 測試 判斷idStr是不是已存在的componentId

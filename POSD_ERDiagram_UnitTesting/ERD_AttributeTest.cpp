@@ -19,6 +19,19 @@ protected:
 	ERD_Attribute* attribute;
 };
 
+// 代刚 篶
+TEST_F(ERD_AttributeTest, ERD_Attribute)
+{
+	// 代刚
+	// 把计:礚
+	// 肚:礚
+	// 爹:礚
+	attribute = new ERD_Attribute();
+	EXPECT_EQ(ERD_Component::Attribute, attribute->getType());
+	EXPECT_EQ(false, attribute->getIsPrimaryKey());
+	EXPECT_EQ(false, attribute->getIsConnected());
+}
+
 // 代刚 耞琌硈
 TEST_F(ERD_AttributeTest, canConnectTo)
 {

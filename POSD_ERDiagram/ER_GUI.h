@@ -20,10 +20,10 @@ class ER_GUI:public QMainWindow
 public:
 	ER_GUI(ER_PresentationModel*);
 	~ER_GUI(void);
-	void addItemsFromModel();
 
 private slots:
 	void browse();
+	void pointerGroupClicked(int);
 
 private:
 	void createActions();
@@ -38,14 +38,12 @@ private:
 	QToolBar* fileToolBar;
 	QToolBar* stateToolBar;
 
+	//QButtonGroup
+	QButtonGroup *pointerTypeGroup;
+
 	//QAction
 	QAction* exitAction;
 	QAction* openAction;
-	QAction* pointerAction;
-	QAction* connectAction;
-	QAction* createAttributeAction;
-	QAction* createEntityAction;
-	QAction* createRealtionshipAction;
 
 
 	ER_PresentationModel *presentationModel;
