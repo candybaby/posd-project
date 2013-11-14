@@ -9,6 +9,8 @@ class ER_GUIState
 public:
 	ER_GUIState(ER_DiagramScene*);
 	virtual void mousePressEvent(QGraphicsSceneMouseEvent*);
+	virtual void mouseMoveEvent(QGraphicsSceneMouseEvent*);
+	virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent*);
 protected:
 	ER_DiagramScene* scene;
 };

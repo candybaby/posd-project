@@ -7,5 +7,9 @@ ER_GUIAddAttributeState::ER_GUIAddAttributeState(ER_DiagramScene* scene)
 
 void ER_GUIAddAttributeState::mousePressEvent(QGraphicsSceneMouseEvent* pressEvent)
 {
-	qDebug() << "AddAttributeState";
+	ER_GUIAddNodeState::mousePressEvent(pressEvent);
+	if (!nodeName.isEmpty())
+	{
+		scene->addItemAttribute(nodeName, pressEvent->scenePos());
+	}
 }

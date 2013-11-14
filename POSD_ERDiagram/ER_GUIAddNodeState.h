@@ -7,5 +7,8 @@ class ER_GUIAddNodeState : public ER_GUIState
 {
 public:
 	ER_GUIAddNodeState(ER_DiagramScene*);
+	void mousePressEvent(QGraphicsSceneMouseEvent*);
+protected:
+	QString nodeName;
 };
 #endif

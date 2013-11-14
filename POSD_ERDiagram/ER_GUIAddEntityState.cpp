@@ -7,5 +7,9 @@ ER_GUIAddEntityState::ER_GUIAddEntityState(ER_DiagramScene* scene)
 
 void ER_GUIAddEntityState::mousePressEvent(QGraphicsSceneMouseEvent* pressEvent)
 {
-	qDebug() << "AddEntityState";
+	ER_GUIAddNodeState::mousePressEvent(pressEvent);
+	if (!nodeName.isEmpty())
+	{
+		scene->addItemEntity(nodeName, pressEvent->scenePos());
+	}
 }

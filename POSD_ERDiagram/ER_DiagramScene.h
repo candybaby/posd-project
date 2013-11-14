@@ -13,11 +13,9 @@
 #include "ER_ItemConnection.h"
 #include "ER_ItemFactory.h"
 #include "ER_PositionManager.h"
-//#include "ER_GUIState.h"
-//#include "ER_GUIPointerState.h"
 
+class ER_GUI;
 class ER_GUIState;
-//class ER_GUIPointerState;
 class ER_DiagramScene : public QGraphicsScene
 {
 	Q_OBJECT
@@ -35,14 +33,22 @@ public:
 	void addItemsFromModel();
 	void setMode(Mode);
 	void changeState(ER_GUIState*);
+	void addItemAttribute(QString, QPointF);
+	void addItemEntity(QString, QPointF);
+	void addItemRelationship(QString, QPointF);
+	void addItemConnection(qreal, qreal);
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent*);
+	void mouseMoveEvent(QGraphicsSceneMouseEvent*);
+	void mouseReleaseEvent(QGraphicsSceneMouseEvent*);
 
 private:
+	void clearItems();
 	QVector<QGraphicsItem *> componentItems;
 	ER_ItemFactory* itemFactory;
 	ER_PresentationModel* presentationModel;
 	ER_GUIState* state;
+	ER_GUI* gui;
 };
 #endif

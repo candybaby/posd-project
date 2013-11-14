@@ -157,14 +157,14 @@
     <ClCompile Include="ER_GUIConnecterState.cpp">
       <Filter>Source Files\State</Filter>
     </ClCompile>
+    <ClCompile Include="ER_GUIAddAttributeState.cpp">
+      <Filter>Source Files\State</Filter>
+    </ClCompile>
     <ClCompile Include="ER_GUIAddEntityState.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\State</Filter>
     </ClCompile>
     <ClCompile Include="ER_GUIAddRelatiuonsipState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ER_GUIAddAttributeState.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -255,14 +255,14 @@
     <ClInclude Include="ER_GUIConnecterState.h">
       <Filter>Header Files\State</Filter>
     </ClInclude>
+    <ClInclude Include="ER_GUIAddAttributeState.h">
+      <Filter>Header Files\State</Filter>
+    </ClInclude>
     <ClInclude Include="ER_GUIAddEntityState.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\State</Filter>
     </ClInclude>
     <ClInclude Include="ER_GUIAddRelatiuonshipState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ER_GUIAddAttributeState.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

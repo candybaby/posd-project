@@ -41,6 +41,15 @@ void ER_GUI::createActions()
 	exitAction = new QAction(QIcon("images/exit.png"), tr("E&xit"), this);
 	exitAction->setShortcut(tr("Ctrl+X"));
 	connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
+
+	addAttributeAction = new QAction(tr("A&ddAttribute"), this);
+	connect(addAttributeAction, SIGNAL(triggered()), this, SLOT(changeToAddAttributeMode()));
+
+	addEntityAction = new QAction(tr("A&ddEntity"), this);
+	connect(addEntityAction, SIGNAL(triggered()), this, SLOT(changeToAddEntityMode()));
+
+	addRelationshipAction = new QAction(tr("A&ddRelationship"), this);
+	connect(addRelationshipAction, SIGNAL(triggered()), this, SLOT(changeToAddRelationShipMode()));
 }
 
 // 創建Menus
@@ -50,6 +59,11 @@ void ER_GUI::createMenus()
 	fileMenu->addAction(openAction);
 	fileMenu->addSeparator();
 	fileMenu->addAction(exitAction);
+
+	addItemMenu = menuBar()->addMenu(tr("&Add"));
+	addItemMenu->addAction(addAttributeAction);
+	addItemMenu->addAction(addEntityAction);
+	addItemMenu->addAction(addRelationshipAction);
 }
 
 // 創建Toolbars
@@ -80,13 +94,13 @@ void ER_GUI::createToolbars()
 	relationshipButton->setCheckable(true);
 	relationshipButton->setIcon(QIcon("images/relationship.png"));
 
-	pointerTypeGroup = new QButtonGroup(this);
-	pointerTypeGroup->addButton(pointerButton, ER_DiagramScene::Pointer);
-	pointerTypeGroup->addButton(connecterButton, ER_DiagramScene::Connecter);
-	pointerTypeGroup->addButton(attributeButton, ER_DiagramScene::InsertAttribute);
-	pointerTypeGroup->addButton(entityButton, ER_DiagramScene::InsertEntity);
-	pointerTypeGroup->addButton(relationshipButton, ER_DiagramScene::InsertRelationship);
-	connect(pointerTypeGroup, SIGNAL(buttonClicked(int)), this, SLOT(pointerGroupClicked(int)));
+	stateTypeButtonGroup = new QButtonGroup(this);
+	stateTypeButtonGroup->addButton(pointerButton, ER_DiagramScene::Pointer);
+	stateTypeButtonGroup->addButton(connecterButton, ER_DiagramScene::Connecter);
+	stateTypeButtonGroup->addButton(attributeButton, ER_DiagramScene::InsertAttribute);
+	stateTypeButtonGroup->addButton(entityButton, ER_DiagramScene::InsertEntity);
+	stateTypeButtonGroup->addButton(relationshipButton, ER_DiagramScene::InsertRelationship);
+	connect(stateTypeButtonGroup, SIGNAL(buttonClicked(int)), this, SLOT(pointerGroupClicked(int)));
 
 	stateToolBar = addToolBar(tr("State"));
 	stateToolBar->addWidget(pointerButton);
@@ -110,5 +124,25 @@ void ER_GUI::browse()
 // 處理點選pointerGroup事件
 void ER_GUI::pointerGroupClicked(int index)
 {
-	scene->setMode(ER_DiagramScene::Mode(pointerTypeGroup->checkedId()));
+	scene->setMode(ER_DiagramScene::Mode(stateTypeButtonGroup->checkedId()));
+}
+
+void ER_GUI::changeToPointerMode()
+{
+	stateTypeButtonGroup->button((int)ER_DiagramScene::Pointer)->click();
+}
+
+void ER_GUI::changeToAddAttributeMode()
+{
+	stateTypeButtonGroup->button((int)ER_DiagramScene::InsertAttribute)->click();
+}
+
+void ER_GUI::changeToAddEntityMode()
+{
+	stateTypeButtonGroup->button((int)ER_DiagramScene::InsertEntity)->click();
+}
+
+void ER_GUI::changeToAddRelationShipMode()
+{
+	stateTypeButtonGroup->button((int)ER_DiagramScene::InsertRelationship)->click();
 }

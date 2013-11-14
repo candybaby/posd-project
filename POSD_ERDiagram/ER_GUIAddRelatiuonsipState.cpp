@@ -7,5 +7,9 @@ ER_GUIAddRelatiuonshipState::ER_GUIAddRelatiuonshipState(ER_DiagramScene* scene)
 
 void ER_GUIAddRelatiuonshipState::mousePressEvent(QGraphicsSceneMouseEvent* pressEvent)
 {
-	qDebug() << "AddRelationshipState";
+	ER_GUIAddNodeState::mousePressEvent(pressEvent);
+	if (!nodeName.isEmpty())
+	{
+		scene->addItemRelationship(nodeName, pressEvent->scenePos());
+	}
 }

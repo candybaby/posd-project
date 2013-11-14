@@ -47,3 +47,35 @@ ER_ItemComponent* ER_ItemFactory::createItemConnections(QStringList componentStr
 	item->setId(componentString.at(0).toInt());
 	return item;
 }
+
+// 製作attribute
+ER_ItemComponent* ER_ItemFactory::createItemAttribute(QString entityName)
+{
+	ER_ItemComponent *item;
+	item = new ER_ItemAttribute(entityName);
+	return item;
+}
+
+// 製作entity
+ER_ItemComponent* ER_ItemFactory::createItemEntity(QString entityName)
+{
+	ER_ItemComponent *item;
+	item = new ER_ItemEntity(entityName);
+	return item;
+}
+
+// 製作relationship
+ER_ItemComponent* ER_ItemFactory::createItemRelationship(QString entityName)
+{
+	ER_ItemComponent *item;
+	item = new ER_ItemRelationship(entityName);
+	return item;
+}
+
+// 製作connection
+ER_ItemComponent* ER_ItemFactory::createItemConnection(QString cardinary)
+{
+	ER_ItemComponent *item;
+	item = new ER_ItemConnection(cardinary);
+	return item;
+}

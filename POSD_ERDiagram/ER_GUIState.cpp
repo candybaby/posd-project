@@ -8,6 +8,15 @@ ER_GUIState::ER_GUIState(ER_DiagramScene* scene)
 
 void ER_GUIState::mousePressEvent(QGraphicsSceneMouseEvent* pressEvent)
 {
-	qDebug() << "BaseState";
+	// virtual
 }
 
+void ER_GUIState::mouseMoveEvent(QGraphicsSceneMouseEvent* pressEvent)
+{
+	// virtual
+}
+
+void ER_GUIState::mouseReleaseEvent(QGraphicsSceneMouseEvent* pressEvent)
+{
+	// virtual
+}

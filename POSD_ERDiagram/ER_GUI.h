@@ -20,10 +20,14 @@ class ER_GUI:public QMainWindow
 public:
 	ER_GUI(ER_PresentationModel*);
 	~ER_GUI(void);
+	void changeToPointerMode();
 
 private slots:
 	void browse();
 	void pointerGroupClicked(int);
+	void changeToAddAttributeMode();
+	void changeToAddEntityMode();
+	void changeToAddRelationShipMode();
 
 private:
 	void createActions();
@@ -37,14 +41,17 @@ private:
 	QMenu* fileMenu;
 	QToolBar* fileToolBar;
 	QToolBar* stateToolBar;
+	QMenu* addItemMenu;
 
 	//QButtonGroup
-	QButtonGroup *pointerTypeGroup;
+	QButtonGroup *stateTypeButtonGroup;
 
 	//QAction
 	QAction* exitAction;
 	QAction* openAction;
-
+	QAction* addAttributeAction;
+	QAction* addEntityAction;
+	QAction* addRelationshipAction;
 
 	ER_PresentationModel *presentationModel;
 };

@@ -1,11 +1,13 @@
 #include "ER_DiagramScene.h"
 #include "Tool_Function.h"
+#include "ER_GUI.h"
 #include "ER_GUIPointerState.h"
 #include "ER_GUIConnecterState.h"
 #include "ER_GUIAddEntityState.h"
 #include "ER_GUIAddRelatiuonshipState.h"
 #include "ER_GUIAddAttributeState.h"
 #include <QDebug>
+#include <QInputDialog>
 #define POSITION_MAX_WIDTH 4000
 #define POSITION_MAX_HEIGTH 3000
 #define POSITION_BLOCK_WIDTH 200
@@ -17,6 +19,7 @@ ER_DiagramScene::ER_DiagramScene(ER_PresentationModel* presentationModel, QObjec
 	this->presentationModel = presentationModel;
 	positionManager = new ER_PositionManager(POSITION_MAX_WIDTH, POSITION_MAX_HEIGTH, POSITION_BLOCK_WIDTH, POSITION_BLOCK_HEIGTH);
 	this->state = new ER_GUIPointerState(this);
+	gui = (ER_GUI*)parent;
 	//this->state = new ER_GUIState(this);
 }
 
@@ -97,6 +100,7 @@ void ER_DiagramScene::updateItemPosition()
 // item ず甧眖郎眔
 void ER_DiagramScene::addItemsFromModel()
 {
+	clearItems();
 	string nodesMessage = presentationModel->getGuiNodes();
 	addItemNodes(QString(QString::fromLocal8Bit(nodesMessage.c_str())));
 
@@ -126,19 +130,107 @@ void ER_DiagramScene::setMode(Mode mode)
 		changeState(new ER_GUIAddRelatiuonshipState(this));
 		break;
 	}
-	//qDebug() << "Mode:" << mode;
 }
 
 void ER_DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent* pressEvent)
 {
 	state->mousePressEvent(pressEvent);
-	//changeState(new ER_GUIState());
-	//QGraphicsScene::mousePressEvent(pressEvent);
-	//qDebug() << "Press:" << pressEvent->scenePos();
 }
 
+void ER_DiagramScene::mouseMoveEvent(QGraphicsSceneMouseEvent* pressEvent)
+{
+	state->mouseMoveEvent(pressEvent);
+}
+
+void ER_DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* pressEvent)
+{
+	state->mouseReleaseEvent(pressEvent);
+}
+
+// 传篈
 void ER_DiagramScene::changeState(ER_GUIState* nextState)
 {
 	delete state;
 	state = nextState;
+}
+
+// 穝糤Attribute
+void ER_DiagramScene::addItemAttribute(QString entityName, QPointF position)
+{
+	ER_ItemComponent* item = itemFactory->createItemAttribute(entityName);
+	string id = presentationModel->addNode(ERD_Component::Attribute, entityName.toStdString());
+	item->setId(std::stoi(id));
+	item->setPos(position);
+	addItem(item);
+	gui->changeToPointerMode(); // 笆ち传state
+}
+
+// 穝糤Entity
+void ER_DiagramScene::addItemEntity(QString entityName, QPointF position)
+{
+	ER_ItemComponent* item = itemFactory->createItemEntity(entityName);
+	string id = presentationModel->addNode(ERD_Component::Entity, entityName.toStdString());
+	item->setId(std::stoi(id));
+	item->setPos(position);
+	addItem(item);
+	gui->changeToPointerMode(); // 笆ち传state
+}
+
+// 穝糤Relatuionship
+void ER_DiagramScene::addItemRelationship(QString entityName, QPointF position)
+{
+	ER_ItemComponent* item = itemFactory->createItemRelationship(entityName);
+	string id = presentationModel->addNode(ERD_Component::Relationship, entityName.toStdString());
+	item->setId(std::stoi(id));
+	item->setPos(position);
+	addItem(item);
+	gui->changeToPointerMode(); // 笆ち传state
+}
+
+void ER_DiagramScene::addItemConnection(qreal targetId, qreal sourceId)
+{
+	qreal tempId = presentationModel->getCurrentId(); // 硈絬id
+	string message = presentationModel->getAddConnectionMessage(targetId, sourceId);
+	QString cardinality = "";
+	if (message.find("ask cardinality") != std::string::npos)
+	{
+		QStringList candidateChoose;
+		candidateChoose << "1" << "N";
+		bool ok;
+		while (!(message.find("has been connected to the node") != std::string::npos))
+		{
+			cardinality = QInputDialog::getItem(0, "Cardinality", "Choose:", candidateChoose, 0, false, &ok);
+			if (ok && !cardinality.isEmpty())
+			{
+				if (cardinality == candidateChoose.at(0))
+				{
+					message = presentationModel->addConnection(targetId, sourceId, ERD_Connection::one);
+				}
+				else if (cardinality == candidateChoose.at(1))
+				{
+					message = presentationModel->addConnection(targetId, sourceId, ERD_Connection::n);
+				}
+			}
+		}
+	}
+	qDebug() << QString(QString::fromLocal8Bit(message.c_str()));
+	if (message.find("has been connected to the node") != std::string::npos)
+	{
+		ER_ItemComponent* item = itemFactory->createItemConnection(cardinality);
+		ER_ItemConnection* connection = (ER_ItemConnection*)item;
+		connection->setConnection(getItemComponentById(targetId), getItemComponentById(sourceId));
+		connection->setId(tempId);
+		addItem(item);
+	}
+}
+
+void ER_DiagramScene::clearItems()
+{
+	items().clear();
+	while (componentItems.size() > 0)
+	{
+		QGraphicsItem* delData = componentItems.back();
+		componentItems.pop_back();
+		delete delData;
+	}
 }
