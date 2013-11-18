@@ -6,6 +6,11 @@ ER_GUIPointerState::ER_GUIPointerState(ER_DiagramScene* scene)
 	item = NULL;
 }
 
+ER_GUIPointerState::~ER_GUIPointerState()
+{
+	scene->cancelItemsSelected();
+}
+
 void ER_GUIPointerState::mousePressEvent(QGraphicsSceneMouseEvent* pressEvent)
 {
 	if (pressEvent->button() == Qt::LeftButton)

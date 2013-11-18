@@ -38,6 +38,7 @@ public:
 	void addItemEntity(QString, QPointF);
 	void addItemRelationship(QString, QPointF);
 	void addItemConnection(qreal, qreal);
+	void cancelItemsSelected();
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent*);

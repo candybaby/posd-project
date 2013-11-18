@@ -8,6 +8,7 @@ class ER_GUIPointerState : public ER_GUIState
 {
 public:
 	ER_GUIPointerState(ER_DiagramScene*);
+	~ER_GUIPointerState();
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent*);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent*);

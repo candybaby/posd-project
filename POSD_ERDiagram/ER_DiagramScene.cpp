@@ -106,6 +106,7 @@ void ER_DiagramScene::updateItemPosition()
 // 加入item 內容從檔案取得
 void ER_DiagramScene::addItemsFromModel()
 {
+	gui->changeToPointerMode(); // 自動切換state
 	clearItems();
 	string nodesMessage = presentationModel->getGuiNodes();
 	addItemNodes(QString(QString::fromLocal8Bit(nodesMessage.c_str())));
@@ -236,6 +237,15 @@ void ER_DiagramScene::addItemConnection(qreal targetId, qreal sourceId)
 		connection->setConnection(getItemComponentById(targetId), getItemComponentById(sourceId));
 		connection->setId(tempId);
 		addItem(item);
+	}
+}
+
+// 取消所有items選取
+void ER_DiagramScene::cancelItemsSelected()
+{
+	for (QVector<QGraphicsItem *>::iterator it = componentItems.begin(); it < componentItems.end(); it++)
+	{
+		((ER_ItemComponent *)*it)->setSelected(false);
 	}
 }
 
