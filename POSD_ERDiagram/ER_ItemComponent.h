@@ -33,6 +33,7 @@ protected:
 	qreal id;
 	QPen componentPen;
 	bool preSelected;
+	bool isMoveEventTrigger;
 	QVector<QPointF> originalConnectionPoint; // 初始4個點位置
 	QVector<QPointF> lineConnectionPoint;
 };

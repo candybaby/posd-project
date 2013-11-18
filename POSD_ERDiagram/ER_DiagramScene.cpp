@@ -20,7 +20,6 @@ ER_DiagramScene::ER_DiagramScene(ER_PresentationModel* presentationModel, QObjec
 	positionManager = new ER_PositionManager(POSITION_MAX_WIDTH, POSITION_MAX_HEIGTH, POSITION_BLOCK_WIDTH, POSITION_BLOCK_HEIGTH);
 	this->state = new ER_GUIPointerState(this);
 	gui = (ER_GUI*)parent;
-	//this->state = new ER_GUIState(this);
 }
 
 ER_DiagramScene::~ER_DiagramScene(void)
@@ -28,11 +27,18 @@ ER_DiagramScene::~ER_DiagramScene(void)
 }
 
 // Override addItem
-void ER_DiagramScene::addItem(QGraphicsItem *item)
+void ER_DiagramScene::addItem(QGraphicsItem* item)
 {
 	QGraphicsScene::addItem(item);
 	componentItems.push_back(item);
 	((ER_ItemComponent *)item)->setDiagramScene(this);
+}
+
+// Override removeItem
+void ER_DiagramScene::removeItem(QGraphicsItem* item)
+{
+	componentItems.erase(componentItems.begin() + componentItems.indexOf(item));
+	QGraphicsScene::removeItem(item);
 }
 
 // 取得ComponentItems
@@ -110,41 +116,49 @@ void ER_DiagramScene::addItemsFromModel()
 	updateItemPosition();
 }
 
+// 設定mode
 void ER_DiagramScene::setMode(Mode mode)
 {
+	QGraphicsItem* preViewItem;
 	switch(mode)
 	{
-	case Pointer:
-		changeState(new ER_GUIPointerState(this));
-		break;
-	case Connecter:
-		changeState(new ER_GUIConnecterState(this));
-		break;
-	case InsertAttribute:
-		changeState(new ER_GUIAddAttributeState(this));
-		break;
-	case InsertEntity:
-		changeState(new ER_GUIAddEntityState(this));
-		break;
-	case InsertRelationship:
-		changeState(new ER_GUIAddRelatiuonshipState(this));
-		break;
+		case Pointer:
+			changeState(new ER_GUIPointerState(this));
+			break;
+		case Connecter:
+			changeState(new ER_GUIConnecterState(this));
+			break;
+		case InsertAttribute:
+			preViewItem = new ER_ItemAttribute("");
+			changeState(new ER_GUIAddAttributeState(this, preViewItem));
+			break;
+		case InsertEntity:
+			preViewItem = new ER_ItemEntity("");
+			changeState(new ER_GUIAddEntityState(this, preViewItem));
+			break;
+		case InsertRelationship:
+			preViewItem = new ER_ItemRelationship("");
+			changeState(new ER_GUIAddRelatiuonshipState(this, preViewItem));
+			break;
 	}
 }
 
+// 滑鼠按鈕下壓事件
 void ER_DiagramScene::mousePressEvent(QGraphicsSceneMouseEvent* pressEvent)
 {
 	state->mousePressEvent(pressEvent);
 }
 
-void ER_DiagramScene::mouseMoveEvent(QGraphicsSceneMouseEvent* pressEvent)
+// 滑鼠移動事件
+void ER_DiagramScene::mouseMoveEvent(QGraphicsSceneMouseEvent* moveEvent)
 {
-	state->mouseMoveEvent(pressEvent);
+	state->mouseMoveEvent(moveEvent);
 }
 
-void ER_DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* pressEvent)
+// 滑鼠按鈕放開事件
+void ER_DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* releaseEvent)
 {
-	state->mouseReleaseEvent(pressEvent);
+	state->mouseReleaseEvent(releaseEvent);
 }
 
 // 更換狀態
@@ -187,6 +201,7 @@ void ER_DiagramScene::addItemRelationship(QString entityName, QPointF position)
 	gui->changeToPointerMode(); // 自動切換state
 }
 
+// 新增item連線
 void ER_DiagramScene::addItemConnection(qreal targetId, qreal sourceId)
 {
 	qreal tempId = presentationModel->getCurrentId(); // 連線的id
@@ -213,7 +228,7 @@ void ER_DiagramScene::addItemConnection(qreal targetId, qreal sourceId)
 			}
 		}
 	}
-	qDebug() << QString(QString::fromLocal8Bit(message.c_str()));
+	//qDebug() << QString(QString::fromLocal8Bit(message.c_str()));
 	if (message.find("has been connected to the node") != std::string::npos)
 	{
 		ER_ItemComponent* item = itemFactory->createItemConnection(cardinality);
@@ -224,6 +239,7 @@ void ER_DiagramScene::addItemConnection(qreal targetId, qreal sourceId)
 	}
 }
 
+// 清除items
 void ER_DiagramScene::clearItems()
 {
 	items().clear();

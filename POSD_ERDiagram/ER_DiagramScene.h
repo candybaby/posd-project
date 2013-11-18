@@ -23,7 +23,8 @@ public:
 	enum Mode {Pointer, Connecter, InsertAttribute, InsertEntity, InsertRelationship};
 	ER_DiagramScene(ER_PresentationModel*, QObject *parent = 0);
 	~ER_DiagramScene(void);
-	void addItem(QGraphicsItem *item);
+	void addItem(QGraphicsItem*);
+	void removeItem(QGraphicsItem*);
 	QVector<QGraphicsItem *> getComponentItems();
 	void addItemNodes(QString);
 	void addItemConnections(QString);

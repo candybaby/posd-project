@@ -1,7 +1,7 @@
 #include "ER_GUIAddAttributeState.h"
 
-ER_GUIAddAttributeState::ER_GUIAddAttributeState(ER_DiagramScene* scene)
-	: ER_GUIAddNodeState(scene)
+ER_GUIAddAttributeState::ER_GUIAddAttributeState(ER_DiagramScene* scene, QGraphicsItem* preViewItem)
+	: ER_GUIAddNodeState(scene, preViewItem)
 {
 }
 

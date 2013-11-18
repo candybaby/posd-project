@@ -6,7 +6,7 @@
 class ER_GUIAddRelatiuonshipState : public ER_GUIAddNodeState
 {
 public:
-	ER_GUIAddRelatiuonshipState(ER_DiagramScene*);
+	ER_GUIAddRelatiuonshipState(ER_DiagramScene*, QGraphicsItem*);
 	void mousePressEvent(QGraphicsSceneMouseEvent*);
 };
 #endif

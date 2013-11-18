@@ -15,7 +15,8 @@ ER_GUI::ER_GUI(ER_PresentationModel* presentationModel)
 	createToolbars();
 	scene = new ER_DiagramScene(presentationModel, this);
 	scene->setSceneRect(QRectF(0, 0, 4000, 3000));
-
+	
+	
 	QHBoxLayout *layout = new QHBoxLayout;
 	view = new QGraphicsView(scene);
 	layout->addWidget(view);
@@ -24,6 +25,7 @@ ER_GUI::ER_GUI(ER_PresentationModel* presentationModel)
 	widget->setLayout(layout);
 
 	setCentralWidget(widget);
+	view->setMouseTracking(true);
 }
 
 
@@ -42,13 +44,13 @@ void ER_GUI::createActions()
 	exitAction->setShortcut(tr("Ctrl+X"));
 	connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
 
-	addAttributeAction = new QAction(tr("A&ddAttribute"), this);
+	addAttributeAction = new QAction(tr("A&ttribute"), this);
 	connect(addAttributeAction, SIGNAL(triggered()), this, SLOT(changeToAddAttributeMode()));
 
-	addEntityAction = new QAction(tr("A&ddEntity"), this);
+	addEntityAction = new QAction(tr("E&ntity"), this);
 	connect(addEntityAction, SIGNAL(triggered()), this, SLOT(changeToAddEntityMode()));
 
-	addRelationshipAction = new QAction(tr("A&ddRelationship"), this);
+	addRelationshipAction = new QAction(tr("R&elationship"), this);
 	connect(addRelationshipAction, SIGNAL(triggered()), this, SLOT(changeToAddRelationShipMode()));
 }
 

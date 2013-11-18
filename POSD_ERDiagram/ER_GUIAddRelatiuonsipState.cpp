@@ -1,7 +1,7 @@
 #include "ER_GUIAddRelatiuonshipState.h"
 
-ER_GUIAddRelatiuonshipState::ER_GUIAddRelatiuonshipState(ER_DiagramScene* scene)
-	: ER_GUIAddNodeState(scene)
+ER_GUIAddRelatiuonshipState::ER_GUIAddRelatiuonshipState(ER_DiagramScene* scene, QGraphicsItem* preViewItem)
+	: ER_GUIAddNodeState(scene, preViewItem)
 {
 }
 

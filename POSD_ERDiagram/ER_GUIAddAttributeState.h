@@ -6,7 +6,7 @@
 class ER_GUIAddAttributeState : public ER_GUIAddNodeState
 {
 public:
-	ER_GUIAddAttributeState(ER_DiagramScene*);
+	ER_GUIAddAttributeState(ER_DiagramScene*, QGraphicsItem*);
 	void mousePressEvent(QGraphicsSceneMouseEvent*);
 };
 #endif

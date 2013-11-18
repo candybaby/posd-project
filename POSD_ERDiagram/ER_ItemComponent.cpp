@@ -112,15 +112,17 @@ void ER_ItemComponent::mousePressEvent(QGraphicsSceneMouseEvent* event)
 void ER_ItemComponent::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
 	QGraphicsItem::mouseReleaseEvent(event);
-	if (preSelected == isSelected() && QGraphicsItem::ItemIsSelectable)
+	if (preSelected == isSelected() && !isMoveEventTrigger && QGraphicsItem::ItemIsSelectable)
 	{
 		setSelected(!preSelected);
 	}
+	isMoveEventTrigger = false;   //­«¸m
 }
 
 void ER_ItemComponent::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
 	QGraphicsItem::mouseMoveEvent(event);
+	isMoveEventTrigger = true;
 	((ER_DiagramScene*)diagramScene)->updateItemPosition();
 }
 

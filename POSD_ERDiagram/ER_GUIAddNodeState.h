@@ -6,9 +6,12 @@
 class ER_GUIAddNodeState : public ER_GUIState
 {
 public:
-	ER_GUIAddNodeState(ER_DiagramScene*);
+	ER_GUIAddNodeState(ER_DiagramScene*, QGraphicsItem*);
+	~ER_GUIAddNodeState();
 	void mousePressEvent(QGraphicsSceneMouseEvent*);
+	void mouseMoveEvent(QGraphicsSceneMouseEvent*);
 protected:
 	QString nodeName;
+	QGraphicsItem* preViewItem;
 };
 #endif

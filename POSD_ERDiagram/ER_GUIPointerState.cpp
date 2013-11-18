@@ -3,6 +3,7 @@
 ER_GUIPointerState::ER_GUIPointerState(ER_DiagramScene* scene)
 	: ER_GUIState(scene)
 {
+	item = NULL;
 }
 
 void ER_GUIPointerState::mousePressEvent(QGraphicsSceneMouseEvent* pressEvent)
@@ -21,21 +22,21 @@ void ER_GUIPointerState::mousePressEvent(QGraphicsSceneMouseEvent* pressEvent)
 	}
 }
 
-void ER_GUIPointerState::mouseMoveEvent(QGraphicsSceneMouseEvent* pressEvent)
+void ER_GUIPointerState::mouseMoveEvent(QGraphicsSceneMouseEvent* moveEvent)
 {
 	if (item != NULL)
 	{
-		scene->sendEvent(item, pressEvent);
+		scene->sendEvent(item, moveEvent);
 	}
 }
 
-void ER_GUIPointerState::mouseReleaseEvent(QGraphicsSceneMouseEvent* pressEvent)
+void ER_GUIPointerState::mouseReleaseEvent(QGraphicsSceneMouseEvent* releaseEvent)
 {
-	if (pressEvent->button() == Qt::LeftButton)
+	if (releaseEvent->button() == Qt::LeftButton)
 	{
 		if (item != NULL)
 		{
-			scene->sendEvent(item, pressEvent);
+			scene->sendEvent(item, releaseEvent);
 		}
 	}
 }

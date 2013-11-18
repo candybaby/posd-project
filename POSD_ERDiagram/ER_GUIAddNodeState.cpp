@@ -1,9 +1,16 @@
 #include "ER_GUIAddNodeState.h"
 #include <QInputDialog>
 
-ER_GUIAddNodeState::ER_GUIAddNodeState(ER_DiagramScene* scene)
+ER_GUIAddNodeState::ER_GUIAddNodeState(ER_DiagramScene* scene, QGraphicsItem* preViewItem)
 	: ER_GUIState(scene)
 {
+	this->preViewItem = preViewItem;
+	scene->addItem(preViewItem);
+}
+
+ER_GUIAddNodeState::~ER_GUIAddNodeState()
+{
+	scene->removeItem(preViewItem);
 }
 
 void ER_GUIAddNodeState::mousePressEvent(QGraphicsSceneMouseEvent* pressEvent)
@@ -17,4 +24,9 @@ void ER_GUIAddNodeState::mousePressEvent(QGraphicsSceneMouseEvent* pressEvent)
 			nodeName = text;
 		}
 	}
+}
+
+void ER_GUIAddNodeState::mouseMoveEvent(QGraphicsSceneMouseEvent* moveEvent)
+{
+	preViewItem->setPos(moveEvent->scenePos());
 }
