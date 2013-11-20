@@ -12,15 +12,15 @@ class ER_PresentationModel
 public:
 	enum EntityOptionType
 	{
-		EntityOption_A,
-		EntityOption_E,
-		EntityOption_R,
-		EntityOption_Attribute,
-		EntityOption_Entity,
-		EntityOption_Relation,
-		SIZE_OF_EntityOptionType 
+		EntityOptionA,
+		EntityOptionE,
+		EntityOptionR,
+		EntityOptionAttribute,
+		EntityOptionEntity,
+		EntityOptionRelation,
+		SizeOfEntityOptionType 
 	};
-	static const char* entityOptionTypeNames[SIZE_OF_EntityOptionType];
+	static const char* entityOptionTypeNames[SizeOfEntityOptionType];
 	ER_PresentationModel(void);
 	ER_PresentationModel(ER_Model*);
 	~ER_PresentationModel(void);

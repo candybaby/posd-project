@@ -21,7 +21,7 @@ ERD_Connection::ERD_Connection(int id)
 {
 	this->type = Connection;
 	this->id = id;
-	this->cardinality = SIZE_OF_Cardinality;
+	this->cardinality = SizeOfCardinality;
 }
 
 ERD_Connection::ERD_Connection(int id, ConnectionCardinality cardinality)
@@ -33,7 +33,7 @@ ERD_Connection::ERD_Connection(int id, ConnectionCardinality cardinality)
 }
 
 // 型態轉換
-const char* ERD_Connection::connectionCardinalityNames[SIZE_OF_Cardinality] = {"1", "N"};
+const char* ERD_Connection::connectionCardinalityNames[SizeOfCardinality] = {"1", "N"};
 
 // 設定cardinality
 void ERD_Connection::setCardinality(ConnectionCardinality cardinality)

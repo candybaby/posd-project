@@ -21,7 +21,7 @@ public:
 		Entity,
 		Relationship,
 		Connection,
-		SIZE_OF_ComponentTypeMap
+		SizeOfComponentTypeMap
 	};
 	struct ComponentSorter
 	{
@@ -30,7 +30,7 @@ public:
 			return leftComponent->getId() < rightComponent->getId();
 		}
 	};
-	static const char* componentTypeMapNames[SIZE_OF_ComponentTypeMap];
+	static const char* componentTypeMapNames[SizeOfComponentTypeMap];
 	ER_Model(void);
 	~ER_Model(void);
 	void clearCurrentComponents();

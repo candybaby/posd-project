@@ -56,7 +56,7 @@ ER_TextUI::~ER_TextUI(void)
 {
 }
 
-const char* ER_TextUI::menuCommandNames[SIZE_OF_MenuCommand] = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11" };
+const char* ER_TextUI::menuCommandNames[SizeOfMenuCommand] = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11" };
 
 void ER_TextUI::displayMenu()
 {
@@ -68,47 +68,47 @@ void ER_TextUI::processCommand()
 {
 	string menuCommand;
 	cin >> menuCommand;
-	if (menuCommand == menuCommandNames[Option_1])  // Load ER diagram file
+	if (menuCommand == menuCommandNames[OptionLoadFile])  // Load ER diagram file
 	{
 		loadFile();
 	}
-	else if (menuCommand == menuCommandNames[Option_2])  // Save ER diagram file
+	else if (menuCommand == menuCommandNames[OptionSaveFile])  // Save ER diagram file
 	{
 		saveFile();
 	}
-	else if (menuCommand == menuCommandNames[Option_3])  // Add a node
+	else if (menuCommand == menuCommandNames[OptionAddNode])  // Add a node
 	{
 		addNode();
 	}
-	else if (menuCommand == menuCommandNames[Option_4])  // Connect two nodes
+	else if (menuCommand == menuCommandNames[OptionConnectNodes])  // Connect two nodes
 	{
 		tryConnectNodes();
 	}
-	else if (menuCommand == menuCommandNames[Option_5])  // Display the current diagram
+	else if (menuCommand == menuCommandNames[OptionDisplayDiagram])  // Display the current diagram
 	{
 		displayCurrentDiagram();
 	}
-	else if (menuCommand == menuCommandNames[Option_6])  // Set a primary key
+	else if (menuCommand == menuCommandNames[OptionSetPrimaryKey])  // Set a primary key
 	{
 		setPrimaryKey();
 	}
-	else if (menuCommand == menuCommandNames[Option_7])  // Display the table
+	else if (menuCommand == menuCommandNames[OptionDisplayTable])  // Display the table
 	{
 		cout << presentationModel.getTable() << endl;
 	}
-	else if (menuCommand == menuCommandNames[Option_8])  // Delete a component
+	else if (menuCommand == menuCommandNames[OptionDeleteComponent])  // Delete a component
 	{
 		deleteComponent();
 	}
-	else if (menuCommand == menuCommandNames[Option_9])  // Undo
+	else if (menuCommand == menuCommandNames[OptionUndo])  // Undo
 	{
 		cout << presentationModel.undo() << endl;
 	}
-	else if (menuCommand == menuCommandNames[Option_10])  // Redo
+	else if (menuCommand == menuCommandNames[OptionRedo])  // Redo
 	{
 		cout << presentationModel.redo() << endl;
 	}
-	else if (menuCommand == menuCommandNames[Option_11])  // Exit
+	else if (menuCommand == menuCommandNames[OptionExit])  // Exit
 	{
 		exitApplication();
 		return;

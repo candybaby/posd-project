@@ -29,11 +29,11 @@ protected:
 		presentationModel->addNode(ERD_Component::Attribute, "Purchase_Date");   //id=7
 		presentationModel->addConnection(0, 4, ERD_Connection::one);
 		presentationModel->addConnection(4, 5, ERD_Connection::one);
-		presentationModel->addConnection(0, 1, ERD_Connection::SIZE_OF_Cardinality);
-		presentationModel->addConnection(0, 2, ERD_Connection::SIZE_OF_Cardinality);
-		presentationModel->addConnection(0, 3, ERD_Connection::SIZE_OF_Cardinality);
-		presentationModel->addConnection(5, 6, ERD_Connection::SIZE_OF_Cardinality);
-		presentationModel->addConnection(5, 7, ERD_Connection::SIZE_OF_Cardinality);
+		presentationModel->addConnection(0, 1, ERD_Connection::SizeOfCardinality);
+		presentationModel->addConnection(0, 2, ERD_Connection::SizeOfCardinality);
+		presentationModel->addConnection(0, 3, ERD_Connection::SizeOfCardinality);
+		presentationModel->addConnection(5, 6, ERD_Connection::SizeOfCardinality);
+		presentationModel->addConnection(5, 7, ERD_Connection::SizeOfCardinality);
 		presentationModel->setIsPrimaryKey(1, true);
 		presentationModel->setIsPrimaryKey(2, true);
 		presentationModel->setIsPrimaryKey(6, true);
@@ -203,10 +203,10 @@ TEST_F(ER_PresentationModelTest, getTypeById)
 	EXPECT_EQ(ERD_Component::Connection, result);
 
 	result = presentationModel->getTypeById(-1);
-	EXPECT_EQ(ERD_Component::SIZE_OF_ComponentType, result);
+	EXPECT_EQ(ERD_Component::SizeOfComponentType, result);
 
 	result = presentationModel->getTypeById(15);
-	EXPECT_EQ(ERD_Component::SIZE_OF_ComponentType, result);
+	EXPECT_EQ(ERD_Component::SizeOfComponentType, result);
 }
 
 // 測試 連線訊息

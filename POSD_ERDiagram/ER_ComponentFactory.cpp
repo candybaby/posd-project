@@ -41,7 +41,7 @@ ERD_Component* ER_ComponentFactory::createConnectionComponent(ERD_Component* com
 // »s§@Connection
 ERD_Component* ER_ComponentFactory::createConnectionComponent(ERD_Component* component, ERD_Component* otherComponent, int id, ERD_Connection::ConnectionCardinality cardinality)
 {
-	if (cardinality == ERD_Connection::SIZE_OF_Cardinality)
+	if (cardinality == ERD_Connection::SizeOfCardinality)
 	{
 		return createConnectionComponent(component, otherComponent, id);
 	}

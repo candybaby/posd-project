@@ -15,9 +15,9 @@ public:
 		Entity,
 		Relationship,
 		Connection,
-		SIZE_OF_ComponentType
+		SizeOfComponentType
 	};
-	static const char* componentTypeNames[SIZE_OF_ComponentType];
+	static const char* componentTypeNames[SizeOfComponentType];
 	ERD_Component(void);
 	ERD_Component(ERD_Component*);
 	virtual ~ERD_Component(void);

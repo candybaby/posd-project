@@ -7,7 +7,7 @@ ER_ConnectCommand::ER_ConnectCommand(ER_Model* model,int nodeId, int otherNodeId
 	this->firstNodeId = nodeId;
 	this->secondNodeId = otherNodeId;
 	this->targetId = id;
-	this->targetCardinality = ERD_Connection::SIZE_OF_Cardinality;
+	this->targetCardinality = ERD_Connection::SizeOfCardinality;
 }
 
 ER_ConnectCommand::ER_ConnectCommand(ER_Model* model,int nodeId, int otherNodeId, int id, ERD_Connection::ConnectionCardinality cardinality)

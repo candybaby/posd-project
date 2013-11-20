@@ -20,7 +20,14 @@ class ER_DiagramScene : public QGraphicsScene
 {
 	Q_OBJECT
 public:
-	enum Mode {Pointer, Connecter, InsertAttribute, InsertEntity, InsertRelationship};
+	enum Mode 
+	{
+		Pointer, 
+		Connecter, 
+		InsertAttribute, 
+		InsertEntity, 
+		InsertRelationship
+	};
 	ER_DiagramScene(ER_PresentationModel*, QObject *parent = 0);
 	~ER_DiagramScene(void);
 	void addItem(QGraphicsItem*);

@@ -31,6 +31,7 @@ ER_GUI::ER_GUI(ER_PresentationModel* presentationModel)
 
 ER_GUI::~ER_GUI(void)
 {
+
 }
 
 // ³Ð«ØActions

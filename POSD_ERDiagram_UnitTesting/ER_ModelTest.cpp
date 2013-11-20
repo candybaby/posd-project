@@ -36,11 +36,11 @@ protected:
 		model->addNode(ERD_Component::Attribute, "Purchase_Date");   //id=7
 		model->addConnection(0, 4, 8, ERD_Connection::one);
 		model->addConnection(4, 5, 9, ERD_Connection::one);
-		model->addConnection(0, 1, 10, ERD_Connection::SIZE_OF_Cardinality);
-		model->addConnection(0, 2, 11, ERD_Connection::SIZE_OF_Cardinality);
-		model->addConnection(0, 3, 12, ERD_Connection::SIZE_OF_Cardinality);
-		model->addConnection(5, 6, 13, ERD_Connection::SIZE_OF_Cardinality);
-		model->addConnection(5, 7, 14, ERD_Connection::SIZE_OF_Cardinality);
+		model->addConnection(0, 1, 10, ERD_Connection::SizeOfCardinality);
+		model->addConnection(0, 2, 11, ERD_Connection::SizeOfCardinality);
+		model->addConnection(0, 3, 12, ERD_Connection::SizeOfCardinality);
+		model->addConnection(5, 6, 13, ERD_Connection::SizeOfCardinality);
+		model->addConnection(5, 7, 14, ERD_Connection::SizeOfCardinality);
 		model->setIsPrimaryKey(1, true);
 		model->setIsPrimaryKey(2, true);
 		model->setIsPrimaryKey(6, true);
@@ -241,7 +241,7 @@ TEST_F(ER_ModelTest, addConnection)
 	EXPECT_EQ(6, model->getComponents().size());
 	model->addConnection(4, 3, 6, ERD_Connection::n);
 	EXPECT_EQ(7, model->getComponents().size());
-	model->addConnection(0, 1, 7, ERD_Connection::SIZE_OF_Cardinality);
+	model->addConnection(0, 1, 7, ERD_Connection::SizeOfCardinality);
 	EXPECT_EQ(8, model->getComponents().size());
 
 	TearDown();
@@ -340,7 +340,7 @@ TEST_F(ER_ModelTest, getTypeById)
 	EXPECT_EQ(ERD_Component::Connection, result);
 
 	result = model->getTypeById(6); // id不存在
-	EXPECT_EQ(ERD_Component::SIZE_OF_ComponentType, result);
+	EXPECT_EQ(ERD_Component::SizeOfComponentType, result);
 }
 
 // 測試 取得ERD_Component藉由ID
@@ -728,13 +728,13 @@ TEST_F(ER_ModelTest, loadPrinaryKey)
 	model->addNode(ERD_Component::Attribute, "Purchase_Date");   //id=6
 	model->addNode(ERD_Component::Attribute, "Department", 13);   //id=13
 
-	model->addConnection(0, 1, 7, ERD_Connection::SIZE_OF_Cardinality);
-	model->addConnection(0, 3, 8, ERD_Connection::SIZE_OF_Cardinality);
-	model->addConnection(4, 5, 9, ERD_Connection::SIZE_OF_Cardinality);
-	model->addConnection(4, 6, 10, ERD_Connection::SIZE_OF_Cardinality);
+	model->addConnection(0, 1, 7, ERD_Connection::SizeOfCardinality);
+	model->addConnection(0, 3, 8, ERD_Connection::SizeOfCardinality);
+	model->addConnection(4, 5, 9, ERD_Connection::SizeOfCardinality);
+	model->addConnection(4, 6, 10, ERD_Connection::SizeOfCardinality);
 	model->addConnection(0, 2, 11, ERD_Connection::one);
 	model->addConnection(2, 4, 12, ERD_Connection::one);
-	model->addConnection(0, 13, 14, ERD_Connection::SIZE_OF_Cardinality);
+	model->addConnection(0, 13, 14, ERD_Connection::SizeOfCardinality);
 	// 建立資料end
 
 	for (vector<string>::iterator it = lines.begin(); it < lines.end(); it++)

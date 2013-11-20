@@ -10,9 +10,9 @@ public:
 	{
 		one,
 		n,
-		SIZE_OF_Cardinality 
+		SizeOfCardinality 
 	};
-	static const char* connectionCardinalityNames[SIZE_OF_Cardinality];
+	static const char* connectionCardinalityNames[SizeOfCardinality];
 	ERD_Connection(void);
 	ERD_Connection(ERD_Connection*);
 	ERD_Connection(int);

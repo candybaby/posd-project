@@ -72,13 +72,13 @@ ER_PresentationModel::~ER_PresentationModel(void)
 {
 }
 
-const char* ER_PresentationModel::entityOptionTypeNames[SIZE_OF_EntityOptionType] = { "A", "E", "R", "Attribute", "Entity", "Relation"};
+const char* ER_PresentationModel::entityOptionTypeNames[SizeOfEntityOptionType] = { "A", "E", "R", "Attribute", "Entity", "Relation"};
 
 // 新增Node時輸入與Type之間的對應
 int ER_PresentationModel::addNodeOptionMapping(string command)
 {
 	int result = -1;
-	for (int i = 0; i < SIZE_OF_EntityOptionType; i++)
+	for (int i = 0; i < SizeOfEntityOptionType; i++)
 	{
 		if(command == entityOptionTypeNames[i])
 		{

@@ -50,7 +50,7 @@ void ER_Model::sortComponents()
 	std::sort(components.begin(), components.end(), componentSorter);
 }
 
-const char* ER_Model::componentTypeMapNames[SIZE_OF_ComponentTypeMap] = {"A", "E", "R", "C"};
+const char* ER_Model::componentTypeMapNames[SizeOfComponentTypeMap] = {"A", "E", "R", "C"};
 
 // 取得Components
 vector<ERD_Component*> ER_Model::getComponents()
@@ -79,7 +79,7 @@ int ER_Model::addNode(ERD_Component::ComponentType type, string nodeName)
 // 新增節點(不包含connection) Type為字串
 void ER_Model::addNode(string type, string nodeName)
 {
-	for (int i = 0; i < SIZE_OF_ComponentTypeMap; i++)
+	for (int i = 0; i < SizeOfComponentTypeMap; i++)
 	{
 		if (componentTypeMapNames[i] == type)
 		{
@@ -179,7 +179,7 @@ void ER_Model::addConnection(int componentId, int otherComponentId, int id, stri
 	ERD_Component* targetComponent = findComponentById(componentId);
 	ERD_Component* otherTargetComponent = findComponentById(otherComponentId);
 	ERD_Component* component;
-	for (int i = 0; i < ERD_Connection::SIZE_OF_Cardinality; i++)
+	for (int i = 0; i < ERD_Connection::SizeOfCardinality; i++)
 	{
 		if (ERD_Connection::connectionCardinalityNames[i] == cardinalityStr)
 		{
@@ -252,7 +252,7 @@ ERD_Component::ComponentType ER_Model::getTypeById(int id)
 	}
 	else
 	{
-		return ERD_Component::SIZE_OF_ComponentType; // exception
+		return ERD_Component::SizeOfComponentType; // exception
 	}
 }
 
