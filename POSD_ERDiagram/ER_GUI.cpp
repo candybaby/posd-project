@@ -31,7 +31,18 @@ ER_GUI::ER_GUI(ER_PresentationModel* presentationModel)
 
 ER_GUI::~ER_GUI(void)
 {
-
+	delete scene;
+	delete view;
+	delete fileMenu;
+	delete fileToolBar;
+	delete stateToolBar;
+	delete addItemMenu;
+	delete stateTypeButtonGroup;
+	delete exitAction;
+	delete openAction;
+	delete addAttributeAction;
+	delete addEntityAction;
+	delete addRelationshipAction;
 }
 
 // 創建Actions
@@ -53,6 +64,19 @@ void ER_GUI::createActions()
 
 	addRelationshipAction = new QAction(tr("R&elationship"), this);
 	connect(addRelationshipAction, SIGNAL(triggered()), this, SLOT(changeToAddRelationShipMode()));
+
+	undoAction = new QAction(QIcon("images/undo.png"), tr("U&ndo"), this);
+	undoAction->setShortcut(tr("Ctrl+Z"));
+	connect(undoAction, SIGNAL(triggered()), this, SLOT(undo()));
+
+	redoAction = new QAction(QIcon("images/redo.png"), tr("R&edo"), this);
+	redoAction->setShortcut(tr("Ctrl+Y"));
+	connect(redoAction, SIGNAL(triggered()), this, SLOT(redo()));
+
+	deleteItemAction = new QAction(QIcon("images/delete.png"), tr("D&elete"), this);
+	deleteItemAction->setShortcut(QKeySequence::Delete);
+	connect(deleteItemAction, SIGNAL(triggered()), this, SLOT(deleteItem()));
+
 }
 
 // 創建Menus
@@ -74,16 +98,19 @@ void ER_GUI::createToolbars()
 {
 	fileToolBar = addToolBar(tr("File"));
 	fileToolBar->addAction(openAction);
+	fileToolBar->addSeparator();
 	fileToolBar->addAction(exitAction);
+	fileToolBar->addSeparator();
+	fileToolBar->addAction(undoAction);
+	fileToolBar->addSeparator();
+	fileToolBar->addAction(redoAction);
+	fileToolBar->addSeparator();
+	fileToolBar->addAction(deleteItemAction);
 
 	QToolButton* pointerButton = new QToolButton;
 	pointerButton->setCheckable(true);
 	pointerButton->setChecked(true);
 	pointerButton->setIcon(QIcon("images/pointer.png"));
-
-	QToolButton* connecterButton = new QToolButton;
-	connecterButton->setCheckable(true);
-	connecterButton->setIcon(QIcon("images/linepointer.png"));
 
 	QToolButton* attributeButton = new QToolButton;
 	attributeButton->setCheckable(true);
@@ -97,20 +124,37 @@ void ER_GUI::createToolbars()
 	relationshipButton->setCheckable(true);
 	relationshipButton->setIcon(QIcon("images/relationship.png"));
 
+	QToolButton* connecterButton = new QToolButton;
+	connecterButton->setCheckable(true);
+	connecterButton->setIcon(QIcon("images/linepointer.png"));
+
+	QToolButton* primaryKeySettingButton = new QToolButton;
+	primaryKeySettingButton->setCheckable(true);
+	primaryKeySettingButton->setIcon(QIcon("images/key.png"));
+
 	stateTypeButtonGroup = new QButtonGroup(this);
 	stateTypeButtonGroup->addButton(pointerButton, ER_DiagramScene::Pointer);
-	stateTypeButtonGroup->addButton(connecterButton, ER_DiagramScene::Connecter);
 	stateTypeButtonGroup->addButton(attributeButton, ER_DiagramScene::InsertAttribute);
 	stateTypeButtonGroup->addButton(entityButton, ER_DiagramScene::InsertEntity);
 	stateTypeButtonGroup->addButton(relationshipButton, ER_DiagramScene::InsertRelationship);
+	stateTypeButtonGroup->addButton(connecterButton, ER_DiagramScene::Connecter);
+	stateTypeButtonGroup->addButton(primaryKeySettingButton, ER_DiagramScene::SetPrimaryKey);
 	connect(stateTypeButtonGroup, SIGNAL(buttonClicked(int)), this, SLOT(pointerGroupClicked(int)));
 
 	stateToolBar = addToolBar(tr("State"));
 	stateToolBar->addWidget(pointerButton);
-	stateToolBar->addWidget(connecterButton);
 	stateToolBar->addWidget(attributeButton);
 	stateToolBar->addWidget(entityButton);
 	stateToolBar->addWidget(relationshipButton);
+	stateToolBar->addSeparator();
+	stateToolBar->addWidget(connecterButton);
+	stateToolBar->addSeparator();
+	stateToolBar->addWidget(primaryKeySettingButton);
+}
+
+void ER_GUI::setDeleteEnable(bool flag)
+{
+	deleteItemAction->setEnabled(flag);
 }
 
 // 瀏覽檔案總管
@@ -148,4 +192,25 @@ void ER_GUI::changeToAddEntityMode()
 void ER_GUI::changeToAddRelationShipMode()
 {
 	stateTypeButtonGroup->button((int)ER_DiagramScene::InsertRelationship)->click();
+}
+
+// action undo
+void ER_GUI::undo()
+{
+	scene->undo();
+	qDebug() << "undo triggered";
+}
+
+// action redo
+void ER_GUI::redo()
+{
+	scene->redo();
+	qDebug() << "redo triggered";
+}
+
+// action deleteItem
+void ER_GUI::deleteItem()
+{
+	scene->deleteItem();
+	qDebug() << "deleteItem triggered";
 }

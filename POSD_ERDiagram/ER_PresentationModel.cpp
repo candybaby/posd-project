@@ -292,7 +292,7 @@ bool ER_PresentationModel::isAttributeBelongEntity(int attributeId, int entityId
 // 設定id為PrimaryKey
 void ER_PresentationModel::setIsPrimaryKey(int id, bool flag)
 {
-	model.setIsPrimaryKey(id, flag);
+	cmdManager.execute(new ER_SetPrimaryKeyCommand(&model, id, flag));
 }
 
 // 取得id是否為primaryKey
@@ -794,3 +794,34 @@ string ER_PresentationModel::getGuiConnections()
 	return model.getGuiConnections();
 }
 
+// 設定某個component的位置
+void ER_PresentationModel::setComponentPos(int id, int posX, int posY)
+{
+	ERD_Component* component = model.findComponentById(id);
+	component->setPos(posX, posY);
+}
+
+// 取得某個component的x座標
+int ER_PresentationModel::getComponentPosXById(int id)
+{
+	ERD_Component* component = model.findComponentById(id);
+	return component->getPosX();
+}
+
+// 取得某個component的y座標
+int ER_PresentationModel::getComponentPosYById(int id)
+{
+	ERD_Component* component = model.findComponentById(id);
+	return component->getPosY();
+}
+
+// 設定某個component的text
+void ER_PresentationModel::setComponentText(int id, string text)
+{
+	string cmdResult = cmdManager.execute(new ER_EditTextCommand(&model, id, text));
+}
+
+void ER_PresentationModel::testNotify()
+{
+	this->notify();
+}

@@ -1,6 +1,7 @@
 #include "ER_ItemFactory.h"
 #define TWO 2
 #define THREE 3
+#define FIVE 5
 #define TYPE_ENTITY "E"
 #define TYPE_ATTRIBUTE "A"
 #define TYPE_RELATIONSHIP "R"
@@ -27,7 +28,7 @@ ER_ItemComponent* ER_ItemFactory::createItemNodes(QStringList componentString)
 	}
 	else if (componentString.at(TWO) == TYPE_ATTRIBUTE)
 	{
-		bool primaryFlag = (componentString.at(THREE) == ONE_STRING ? true : false);
+		bool primaryFlag = (componentString.at(FIVE) == ONE_STRING ? true : false);
 		item = new ER_ItemAttribute(componentString.at(1), primaryFlag);
 		item->setId(componentString.at(0).toInt());
 	}

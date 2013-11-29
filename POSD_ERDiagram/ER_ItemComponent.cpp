@@ -76,6 +76,11 @@ void ER_ItemComponent::setId(qreal value)
 	id = value;
 }
 
+void ER_ItemComponent::setName(QString name)
+{
+	componentName = name;
+}
+
 QVector<QPointF> ER_ItemComponent::getConnectionPointVector()
 {
 	lineConnectionPoint.clear();
@@ -105,12 +110,14 @@ void ER_ItemComponent::setDiagramScene(QGraphicsScene* diagramScene)
 
 void ER_ItemComponent::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
+	isPress = true;
 	preSelected = isSelected();
 	QGraphicsItem::mousePressEvent(event);
 }
 
 void ER_ItemComponent::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
+	isPress = false;
 	QGraphicsItem::mouseReleaseEvent(event);
 	if (preSelected == isSelected() && !isMoveEventTrigger && QGraphicsItem::ItemIsSelectable)
 	{
@@ -122,8 +129,11 @@ void ER_ItemComponent::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 void ER_ItemComponent::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
 	QGraphicsItem::mouseMoveEvent(event);
-	isMoveEventTrigger = true;
-	((ER_DiagramScene*)diagramScene)->updateItemPosition();
+	if (isPress)
+	{
+		isMoveEventTrigger = true;
+		((ER_DiagramScene*)diagramScene)->updateItemPosition();
+	}
 }
 
 int ER_ItemComponent::getConnectionIndex(const QPointF &point)

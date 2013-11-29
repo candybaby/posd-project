@@ -25,15 +25,21 @@ public:
 	int getId();
 	ComponentType getType();
 	string getText();
+	void setText(string);
 	virtual void connectTo(ERD_Component*);
 	virtual bool canConnectTo(ERD_Component*);
 	vector<ERD_Component*> getConnections();
+	void setPos(int, int);
+	int getPosX();
+	int getPosY();
 	virtual ERD_Component* clone();
-
+	
 protected:
 	vector<ERD_Component*> connections;
 	int id;
 	ComponentType type;
 	string text;
+	int posX;
+	int posY;
 };
 #endif

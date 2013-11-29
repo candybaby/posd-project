@@ -4,6 +4,8 @@ ERD_Component::ERD_Component(void)
 {
 	id = 0;
 	type = Attribute;
+	posX = 0;
+	posY = 0;
 }
 
 // clone建構子
@@ -14,6 +16,8 @@ ERD_Component::ERD_Component(ERD_Component* componentClone)
 	this->type = componentClone->getType();
 	this->text = componentClone->getText();
 	this->connections = componentClone->getConnections();
+	this->posX = componentClone->getPosX();
+	this->posY = componentClone->getPosY();
 }
 
 ERD_Component::~ERD_Component(void)
@@ -46,6 +50,12 @@ string ERD_Component::getText()
 	return text;
 }
 
+// 設定text  (name)
+void ERD_Component::setText(string text)
+{
+	this->text = text;
+}
+
 // 連線
 void ERD_Component::connectTo(ERD_Component* component)
 {
@@ -70,4 +80,23 @@ vector<ERD_Component*> ERD_Component::getConnections()
 ERD_Component* ERD_Component::clone()
 {
 	return new ERD_Component(*this);
+}
+
+// 設定座標
+void ERD_Component::setPos(int x, int y)
+{
+	this->posX = x;
+	this->posY = y;
+}
+
+// 取得座標x part
+int ERD_Component::getPosX()
+{
+	return posX;
+}
+
+// 取得座標y part
+int ERD_Component::getPosY()
+{
+	return posY;
 }

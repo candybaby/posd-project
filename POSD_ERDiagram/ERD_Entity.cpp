@@ -1,17 +1,15 @@
 #include "ERD_Entity.h"
 
 ERD_Entity::ERD_Entity(void)
+	: ERD_Node()
 {
 	this->type = Entity;
 }
 
 // clone«Øºc¤l
 ERD_Entity::ERD_Entity(ERD_Entity* entityClone)
+	: ERD_Node(entityClone)
 {
-	this->id = entityClone->getId();
-	this->type = entityClone->getType();
-	this->text = entityClone->getText();
-	this->connections = entityClone->getConnections();
 	this->foreignEntityIdVector = entityClone->getForeignEntityIdVector();
 }
 

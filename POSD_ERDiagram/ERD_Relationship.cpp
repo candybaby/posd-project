@@ -1,17 +1,15 @@
 #include "ERD_Relationship.h"
 
 ERD_Relationship::ERD_Relationship(void)
+	: ERD_Node()
 {
 	this->type = Relationship;
 }
 
 // clone«Øºc¤l
 ERD_Relationship::ERD_Relationship(ERD_Relationship* relationshipClone)
+	: ERD_Node(relationshipClone)
 {
-	this->id = relationshipClone->getId();
-	this->type = relationshipClone->getType();
-	this->text = relationshipClone->getText();
-	this->connections = relationshipClone->getConnections();
 }
 
 ERD_Relationship::ERD_Relationship(string name, int id)

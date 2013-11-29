@@ -6,27 +6,28 @@
 #include "QGraphicsItem"
 #include "ER_PresentationModel.h"
 #include "ER_ItemComponent.h"
-#include "ER_MessageBoxManager.h"
 #include "ER_ItemEntity.h"
 #include "ER_ItemAttribute.h"
 #include "ER_ItemRelationship.h"
 #include "ER_ItemConnection.h"
 #include "ER_ItemFactory.h"
 #include "ER_PositionManager.h"
+#include "ER_Observer.h"
 
 class ER_GUI;
 class ER_GUIState;
-class ER_DiagramScene : public QGraphicsScene
+class ER_DiagramScene : public QGraphicsScene, public ER_Observer
 {
 	Q_OBJECT
 public:
 	enum Mode 
 	{
-		Pointer, 
-		Connecter, 
+		Pointer,  
 		InsertAttribute, 
 		InsertEntity, 
-		InsertRelationship
+		InsertRelationship,
+		Connecter,
+		SetPrimaryKey
 	};
 	ER_DiagramScene(ER_PresentationModel*, QObject *parent = 0);
 	~ER_DiagramScene(void);
@@ -46,6 +47,12 @@ public:
 	void addItemRelationship(QString, QPointF);
 	void addItemConnection(qreal, qreal);
 	void cancelItemsSelected();
+	void updateItemsName();
+	void updateItems(QString);
+	void undo();
+	void redo();
+	void deleteItem();
+	void observerUpdate();
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent*);

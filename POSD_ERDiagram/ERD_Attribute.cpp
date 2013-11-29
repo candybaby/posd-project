@@ -1,6 +1,7 @@
 #include "ERD_Attribute.h"
 
 ERD_Attribute::ERD_Attribute(void)
+	: ERD_Node()
 {
 	this->type = Attribute;
 	this->isPrimaryKey = false;
@@ -9,11 +10,8 @@ ERD_Attribute::ERD_Attribute(void)
 
 // clone«Øºc¤l
 ERD_Attribute::ERD_Attribute(ERD_Attribute* attributeClone)
+	: ERD_Node(attributeClone)
 {
-	this->id = attributeClone->getId();
-	this->type = attributeClone->getType();
-	this->text = attributeClone->getText();
-	this->connections = attributeClone->getConnections();
 	this->isPrimaryKey = attributeClone->getIsPrimaryKey();
 	this->isConnected = attributeClone->getIsConnected();
 }

@@ -6,6 +6,7 @@
 #include "ER_GUIAddEntityState.h"
 #include "ER_GUIAddRelatiuonshipState.h"
 #include "ER_GUIAddAttributeState.h"
+#include "ER_GUISetPrimaryKeyState.h"
 #include <QDebug>
 #include <QInputDialog>
 #define POSITION_MAX_WIDTH 4000
@@ -20,6 +21,7 @@ ER_DiagramScene::ER_DiagramScene(ER_PresentationModel* presentationModel, QObjec
 	positionManager = new ER_PositionManager(POSITION_MAX_WIDTH, POSITION_MAX_HEIGTH, POSITION_BLOCK_WIDTH, POSITION_BLOCK_HEIGTH);
 	this->state = new ER_GUIPointerState(this);
 	gui = (ER_GUI*)parent;
+	this->presentationModel->registerObserver(this);
 }
 
 ER_DiagramScene::~ER_DiagramScene(void)
@@ -99,7 +101,9 @@ void ER_DiagramScene::updateItemPosition()
 	{
 		ER_ItemComponent* itemComponent = ((ER_ItemComponent *)*it);
 		itemComponent->updatePosition();
+		presentationModel->setComponentPos(itemComponent->getId(), itemComponent->pos().x(), itemComponent->pos().y());
 	}
+	qDebug() << "Scene Update";
 	update(0, 0, width(), height());//更新畫面
 }
 
@@ -117,17 +121,40 @@ void ER_DiagramScene::addItemsFromModel()
 	updateItemPosition();
 }
 
+void ER_DiagramScene::updateItems(QString message)
+{
+	qDebug() << "updateItems : " << message;
+	QStringList componentsList = message.split('\n');
+
+	for (int i = 0; i < componentsList.size() - 1; i++)
+	{
+		QStringList componentList = componentsList.at(i).split(',');
+		ER_ItemComponent* item = getItemComponentById(componentList.at(0).toInt());
+		item->setName(componentList.at(1));
+	}
+}
+
+// 主要更新name
+void ER_DiagramScene::updateItemsName()
+{
+	string nodesMessage = presentationModel->getGuiNodes();
+	updateItems(QString(QString::fromLocal8Bit(nodesMessage.c_str())));
+	string connectionsMessage = presentationModel->getGuiConnections();
+	updateItems(QString(QString::fromLocal8Bit(connectionsMessage.c_str())));
+	
+	update(0, 0, width(), height());//更新畫面
+}
+
 // 設定mode
 void ER_DiagramScene::setMode(Mode mode)
 {
 	QGraphicsItem* preViewItem;
+	gui->setDeleteEnable(false);
 	switch(mode)
 	{
 		case Pointer:
 			changeState(new ER_GUIPointerState(this));
-			break;
-		case Connecter:
-			changeState(new ER_GUIConnecterState(this));
+			gui->setDeleteEnable(true);
 			break;
 		case InsertAttribute:
 			preViewItem = new ER_ItemAttribute("");
@@ -140,6 +167,12 @@ void ER_DiagramScene::setMode(Mode mode)
 		case InsertRelationship:
 			preViewItem = new ER_ItemRelationship("");
 			changeState(new ER_GUIAddRelatiuonshipState(this, preViewItem));
+			break;
+		case Connecter:
+			changeState(new ER_GUIConnecterState(this));
+			break;
+		case SetPrimaryKey:
+			changeState(new ER_GUISetPrimaryKeyState(this));
 			break;
 	}
 }
@@ -173,8 +206,10 @@ void ER_DiagramScene::changeState(ER_GUIState* nextState)
 void ER_DiagramScene::addItemAttribute(QString entityName, QPointF position)
 {
 	ER_ItemComponent* item = itemFactory->createItemAttribute(entityName);
-	string id = presentationModel->addNode(ERD_Component::Attribute, entityName.toStdString());
-	item->setId(std::stoi(id));
+	string idString = presentationModel->addNode(ERD_Component::Attribute, entityName.toStdString());
+	int id = std::stoi(idString);
+	presentationModel->setComponentPos(id, position.x(), position.y());
+	item->setId(id);
 	item->setPos(position);
 	addItem(item);
 	gui->changeToPointerMode(); // 自動切換state
@@ -184,8 +219,10 @@ void ER_DiagramScene::addItemAttribute(QString entityName, QPointF position)
 void ER_DiagramScene::addItemEntity(QString entityName, QPointF position)
 {
 	ER_ItemComponent* item = itemFactory->createItemEntity(entityName);
-	string id = presentationModel->addNode(ERD_Component::Entity, entityName.toStdString());
-	item->setId(std::stoi(id));
+	string idString = presentationModel->addNode(ERD_Component::Entity, entityName.toStdString());
+	int id = std::stoi(idString);
+	presentationModel->setComponentPos(id, position.x(), position.y());
+	item->setId(id);
 	item->setPos(position);
 	addItem(item);
 	gui->changeToPointerMode(); // 自動切換state
@@ -195,8 +232,10 @@ void ER_DiagramScene::addItemEntity(QString entityName, QPointF position)
 void ER_DiagramScene::addItemRelationship(QString entityName, QPointF position)
 {
 	ER_ItemComponent* item = itemFactory->createItemRelationship(entityName);
-	string id = presentationModel->addNode(ERD_Component::Relationship, entityName.toStdString());
-	item->setId(std::stoi(id));
+	string idString = presentationModel->addNode(ERD_Component::Relationship, entityName.toStdString());
+	int id = std::stoi(idString);
+	presentationModel->setComponentPos(id, position.x(), position.y());
+	item->setId(id);
 	item->setPos(position);
 	addItem(item);
 	gui->changeToPointerMode(); // 自動切換state
@@ -259,4 +298,28 @@ void ER_DiagramScene::clearItems()
 		componentItems.pop_back();
 		delete delData;
 	}
+}
+
+// undo
+void ER_DiagramScene::undo()
+{
+	string message = presentationModel->undo();
+	qDebug() << QString(QString::fromLocal8Bit(message.c_str()));
+}
+
+// redo
+void ER_DiagramScene::redo()
+{
+	string message = presentationModel->redo();
+	qDebug() << QString(QString::fromLocal8Bit(message.c_str()));
+}
+
+void ER_DiagramScene::deleteItem()
+{
+	presentationModel->testNotify();
+}
+
+void ER_DiagramScene::observerUpdate()
+{
+	qDebug() << "observerUpdate()";
 }

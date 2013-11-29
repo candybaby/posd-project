@@ -84,6 +84,7 @@ public:
 	string getGuiNodes();
 	string getGuiConnections();
 	bool isStoreFileFail;
+	void setComponentText(int, string);
 
 private:
 	vector<ERD_Component *> components;

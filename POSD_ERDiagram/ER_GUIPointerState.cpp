@@ -32,6 +32,7 @@ void ER_GUIPointerState::mouseMoveEvent(QGraphicsSceneMouseEvent* moveEvent)
 	if (item != NULL)
 	{
 		scene->sendEvent(item, moveEvent);
+		qDebug() << "mouse Pos: " << moveEvent->scenePos();
 	}
 }
 

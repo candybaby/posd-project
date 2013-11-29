@@ -47,6 +47,12 @@
     <Filter Include="Source Files\State">
       <UniqueIdentifier>{e9f6cca3-9db0-4588-a0cd-dceba6144d05}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Observer">
+      <UniqueIdentifier>{60d7e7c2-ca3d-42f1-8d6e-88de484fd0ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Observer">
+      <UniqueIdentifier>{f7a4ebdd-420f-4e01-87d1-c8214e0a9137}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -118,9 +124,6 @@
     <ClCompile Include="ER_GUI.cpp">
       <Filter>Source Files\UI</Filter>
     </ClCompile>
-    <ClCompile Include="ER_MessageBoxManager.cpp">
-      <Filter>Source Files\UI</Filter>
-    </ClCompile>
     <ClCompile Include="ER_TextUI.cpp">
       <Filter>Source Files\UI</Filter>
     </ClCompile>
@@ -165,6 +168,21 @@
     </ClCompile>
     <ClCompile Include="ER_GUIAddRelatiuonsipState.cpp">
       <Filter>Source Files\State</Filter>
+    </ClCompile>
+    <ClCompile Include="ER_GUISetPrimaryKeyState.cpp">
+      <Filter>Source Files\State</Filter>
+    </ClCompile>
+    <ClCompile Include="ER_EditTextCommand.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ER_SetPrimaryKeyCommand.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ER_Subject.cpp">
+      <Filter>Source Files\Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="ER_Observer.cpp">
+      <Filter>Source Files\Observer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -219,9 +237,6 @@
     <ClInclude Include="ER_TextUI.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
-    <ClInclude Include="ER_MessageBoxManager.h">
-      <Filter>Header Files\UI</Filter>
-    </ClInclude>
     <ClInclude Include="ER_ItemEntity.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
@@ -263,6 +278,21 @@
     </ClInclude>
     <ClInclude Include="ER_GUIAddRelatiuonshipState.h">
       <Filter>Header Files\State</Filter>
+    </ClInclude>
+    <ClInclude Include="ER_GUISetPrimaryKeyState.h">
+      <Filter>Header Files\State</Filter>
+    </ClInclude>
+    <ClInclude Include="ER_EditTextCommand.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ER_SetPrimaryKeyCommand.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ER_Observer.h">
+      <Filter>Header Files\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="ER_Subject.h">
+      <Filter>Header Files\Observer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

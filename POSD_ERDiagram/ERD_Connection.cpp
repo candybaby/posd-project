@@ -1,17 +1,15 @@
 #include "ERD_Connection.h"
 
 ERD_Connection::ERD_Connection(void)
+	: ERD_Component()
 {
 	type = Connection;
 }
 
 // clone«Øºc¤l
 ERD_Connection::ERD_Connection(ERD_Connection* connectionClone)
+	: ERD_Component(connectionClone)
 {
-	this->id = connectionClone->getId();
-	this->type = connectionClone->getType();
-	this->text = connectionClone->getText();
-	this->connections = connectionClone->getConnections();
 	this->cardinality = connectionClone->getCardinality();
 	this->nodeId = connectionClone->getNodeId();
 	this->otherNodeId = connectionClone->getOtherNodeId();

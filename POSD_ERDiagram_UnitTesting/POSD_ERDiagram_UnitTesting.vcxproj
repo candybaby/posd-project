@@ -103,9 +103,12 @@
     <ClCompile Include="..\POSD_ERDiagram\ER_ComponentFactory.cpp" />
     <ClCompile Include="..\POSD_ERDiagram\ER_ConnectCommand.cpp" />
     <ClCompile Include="..\POSD_ERDiagram\ER_DeleteCommand.cpp" />
+    <ClCompile Include="..\POSD_ERDiagram\ER_EditTextCommand.cpp" />
     <ClCompile Include="..\POSD_ERDiagram\ER_FileManager.cpp" />
     <ClCompile Include="..\POSD_ERDiagram\ER_Model.cpp" />
     <ClCompile Include="..\POSD_ERDiagram\ER_PresentationModel.cpp" />
+    <ClCompile Include="..\POSD_ERDiagram\ER_SetPrimaryKeyCommand.cpp" />
+    <ClCompile Include="..\POSD_ERDiagram\ER_Subject.cpp" />
     <ClCompile Include="..\POSD_ERDiagram\ER_TextUI.cpp" />
     <ClCompile Include="..\POSD_ERDiagram\Tool_Function.cpp" />
     <ClCompile Include="ERD_AttributeTest.cpp" />

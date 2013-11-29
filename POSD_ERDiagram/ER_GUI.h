@@ -4,7 +4,6 @@
 #include <QtGui/QMainWindow>
 #include <QFileDialog>
 #include <QMenu>
-#include "ER_MessageBoxManager.h"
 #include "ER_DiagramScene.h"
 #include "ER_PresentationModel.h"
 
@@ -21,6 +20,7 @@ public:
 	ER_GUI(ER_PresentationModel*);
 	~ER_GUI(void);
 	void changeToPointerMode();
+	void setDeleteEnable(bool);
 
 private slots:
 	void browse();
@@ -28,6 +28,9 @@ private slots:
 	void changeToAddAttributeMode();
 	void changeToAddEntityMode();
 	void changeToAddRelationShipMode();
+	void undo();
+	void redo();
+	void deleteItem();
 
 private:
 	void createActions();
@@ -52,6 +55,9 @@ private:
 	QAction* addAttributeAction;
 	QAction* addEntityAction;
 	QAction* addRelationshipAction;
+	QAction* undoAction;
+	QAction* redoAction;
+	QAction* deleteItemAction;
 
 	ER_PresentationModel *presentationModel;
 };

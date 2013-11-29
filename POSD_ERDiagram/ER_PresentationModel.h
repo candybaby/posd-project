@@ -6,8 +6,11 @@
 #include "ER_AddCommand.h"
 #include "ER_ConnectCommand.h"
 #include "ER_DeleteCommand.h"
+#include "ER_EditTextCommand.h"
+#include "ER_SetPrimaryKeyCommand.h"
+#include "ER_Subject.h"
 
-class ER_PresentationModel
+class ER_PresentationModel : public ER_Subject
 {
 public:
 	enum EntityOptionType
@@ -70,6 +73,11 @@ public:
 	bool getHasModify();
 	string getGuiNodes();
 	string getGuiConnections();
+	void setComponentPos(int, int ,int);
+	int getComponentPosXById(int);
+	int getComponentPosYById(int);
+	void setComponentText(int, string);
+	void testNotify();
 
 private:
 	ER_Model model;

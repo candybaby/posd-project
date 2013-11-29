@@ -756,11 +756,14 @@ string ER_Model::getGuiNodes()
 	{
 		ERD_Component* component = findComponentById(*it);
 		int id = component->getId();
+		int posX = component->getPosX();
+		int posY = component->getPosY();
 		string name = component->getText();
 		string type = componentTypeMapNames[component->getType()];
+		result += Tool_Function::convertIntToString(id) + CAMMA_TEXT + name + CAMMA_TEXT + type + CAMMA_TEXT;
+		result += Tool_Function::convertIntToString(posX) + CAMMA_TEXT + Tool_Function::convertIntToString(posY);
 		if (type == componentTypeMapNames[ERD_Component::Attribute])
 		{
-			result += Tool_Function::convertIntToString(id) + CAMMA_TEXT + name + CAMMA_TEXT + type;
 			ERD_Attribute* attribute = (ERD_Attribute*)component;
 			string primaryString = ZERO_STRING;
 			if (attribute->getIsPrimaryKey())
@@ -771,7 +774,7 @@ string ER_Model::getGuiNodes()
 		}
 		else
 		{
-			result += Tool_Function::convertIntToString(id) + CAMMA_TEXT + name + CAMMA_TEXT + type + CHAR_ENDL;
+			result += CHAR_ENDL;
 		}
 	}
 	return result;
@@ -795,4 +798,11 @@ string ER_Model::getGuiConnections()
 		result += Tool_Function::convertIntToString(otherNode) + CHAR_ENDL;
 	}
 	return result;
+}
+
+// 設定特定component的text
+void ER_Model::setComponentText(int id, string text)
+{
+	ERD_Component* conponent = findComponentById(id);
+	conponent->setText(text);
 }

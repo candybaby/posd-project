@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ER_GUI.h'
 **
-** Created: Thu Nov 14 15:16:16 2013
+** Created: Fri Nov 29 16:51:39 2013
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_ER_GUI[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -36,6 +36,9 @@ static const uint qt_meta_data_ER_GUI[] = {
       42,    7,    7,    7, 0x08,
       69,    7,    7,    7, 0x08,
       93,    7,    7,    7, 0x08,
+     123,    7,    7,    7, 0x08,
+     130,    7,    7,    7, 0x08,
+     137,    7,    7,    7, 0x08,
 
        0        // eod
 };
@@ -44,7 +47,8 @@ static const char qt_meta_stringdata_ER_GUI[] = {
     "ER_GUI\0\0browse()\0pointerGroupClicked(int)\0"
     "changeToAddAttributeMode()\0"
     "changeToAddEntityMode()\0"
-    "changeToAddRelationShipMode()\0"
+    "changeToAddRelationShipMode()\0undo()\0"
+    "redo()\0deleteItem()\0"
 };
 
 void ER_GUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -58,6 +62,9 @@ void ER_GUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 2: _t->changeToAddAttributeMode(); break;
         case 3: _t->changeToAddEntityMode(); break;
         case 4: _t->changeToAddRelationShipMode(); break;
+        case 5: _t->undo(); break;
+        case 6: _t->redo(); break;
+        case 7: _t->deleteItem(); break;
         default: ;
         }
     }
@@ -95,9 +102,9 @@ int ER_GUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 8;
     }
     return _id;
 }
