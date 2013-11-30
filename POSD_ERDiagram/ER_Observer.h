@@ -14,6 +14,7 @@ public:
 	virtual void updateAddComponent(string) = 0;
 	virtual void updateConnectComponents(string) = 0;
 	virtual void updateSetPrimaryKey(int, bool) = 0;
+	virtual void updateDeleteComponents(string) = 0;
 };
 #endif
 

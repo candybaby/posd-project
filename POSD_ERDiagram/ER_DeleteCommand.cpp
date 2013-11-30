@@ -44,6 +44,7 @@ void ER_DeleteCommand::clearTempData()
 string ER_DeleteCommand::execute()
 {
 	bool result;
+	string deleteList;
 	vector<int> relatedConnectionId;
 	relatedConnectionId = model->findRelatedConnectionById(targetId);
 
@@ -51,6 +52,8 @@ string ER_DeleteCommand::execute()
 	{
 		relatedComponents.push_back(findComponentById(*it)->clone());
 		deleteComponentById(*it);
+		deleteList += Tool_Function::convertIntToString(*it);
+		deleteList += ',';
 	}
 	target = findComponentById(targetId);
 	if (target == NULL)
@@ -62,6 +65,8 @@ string ER_DeleteCommand::execute()
 		target = target->clone();
 		result = deleteComponentById(targetId);
 		model->setHasModify(true);
+		deleteList += Tool_Function::convertIntToString(targetId);
+		model->notifyDeleteComponents(deleteList);
 		return Tool_Function::convertIntToString(targetId);
 	}
 }
@@ -69,21 +74,27 @@ string ER_DeleteCommand::execute()
 // �Ͼާ@
 string ER_DeleteCommand::unexecute()
 {
+	string addConnectionList;
 	if (target->getType() != ERD_Component::Connection)
 	{
 		model->addComponent(target->clone());
+		model->notifyAddComponent(model->getNodeInfo(targetId));
 	}
 	else
 	{
 		ERD_Connection* connection = (ERD_Connection*)target;
 		model->addConnection(connection->getNodeId(), connection->getOtherNodeId(), connection->getId(), connection->getCardinality());
+		addConnectionList += model->getConnectionInfo(connection->getId());
 	}
 
 	for (vector<ERD_Component*>::iterator it = relatedComponents.begin(); it < relatedComponents.end(); it++)
 	{
 		ERD_Connection* connection = (ERD_Connection*)*it;
 		model->addConnection(connection->getNodeId(), connection->getOtherNodeId(), connection->getId(), connection->getCardinality());
+		addConnectionList += model->getConnectionInfo(connection->getId());
 	}
+
+	model->notifyConnectComponents(addConnectionList);
 
 	clearTempData();
 	model->setHasModify(true);

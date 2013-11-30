@@ -293,7 +293,20 @@ void ER_DiagramScene::redo()
 // deleteItem
 void ER_DiagramScene::deleteItem()
 {
-	
+	QList<QGraphicsItem*> itemList = selectedItems();
+	if (itemList.size() >= 2)
+	{
+		qDebug() << "Can Not Delete Mutiple Selected Items";
+	}
+	else // size = 1
+	{
+		for (int i = 0; i < itemList.size(); i++)
+		{
+			ER_ItemComponent* item = (ER_ItemComponent*)itemList.at(i);
+			qDebug() << item->getId();
+			presentationModel->deleteComponent(item->getId());
+		}
+	}
 }
 
 void ER_DiagramScene::observerUpdate()
@@ -326,6 +339,26 @@ void ER_DiagramScene::updateSetPrimaryKey(int id, bool flag)
 {
 	ER_ItemAttribute* item = (ER_ItemAttribute*)getItemComponentById(id);
 	item->setIsPrimaryKey(flag);
-	update(0, 0, width(), height());//更新畫面
+	update(0, 0, width(), height());
 	qDebug() << "id :" << id << ", flag : " << flag;
+}
+
+// 更新 Delete Components
+void ER_DiagramScene::updateDeleteComponents(string message)
+{
+	QString qMessage = QString::fromLocal8Bit(message.c_str());
+	QStringList itemIdList = qMessage.split(',');
+	for (int i = 0; i < itemIdList.size(); i++)
+	{
+		deleteItemById(itemIdList.at(i).toInt());
+	}
+	update(0, 0, width(), height());
+	qDebug() << "updateDeleteComponents :" << QString::fromLocal8Bit(message.c_str());
+}
+
+// 刪除特定id
+void ER_DiagramScene::deleteItemById(int id)
+{
+	ER_ItemComponent* item = getItemComponentById(id);
+	removeItem(item);
 }

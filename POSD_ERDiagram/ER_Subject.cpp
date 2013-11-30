@@ -53,3 +53,11 @@ void ER_Subject::notifySetPrimaryKey(int id, bool flag)
 		(*it)->updateSetPrimaryKey(id, flag);
 	}
 }
+
+void ER_Subject::notifyDeleteComponents(string message)
+{
+	for (vector<ER_Observer *>::iterator it = observers.begin(); it < observers.end(); it++)
+	{
+		(*it)->updateDeleteComponents(message);
+	}
+}

@@ -32,7 +32,6 @@ void ER_GUIPointerState::mouseMoveEvent(QGraphicsSceneMouseEvent* moveEvent)
 	if (item != NULL)
 	{
 		scene->sendEvent(item, moveEvent);
-		qDebug() << "mouse Pos: " << moveEvent->scenePos();
 	}
 }
 
@@ -45,6 +44,7 @@ void ER_GUIPointerState::mouseReleaseEvent(QGraphicsSceneMouseEvent* releaseEven
 			scene->sendEvent(item, releaseEvent);
 		}
 	}
+	item = NULL;
 }
 
 // 全部item設為未選取

@@ -40,5 +40,6 @@ string ER_AddCommand::unexecute()
 {
 	model->deleteComponent(targetId);
 	model->setHasModify(true);
+	model->notifyDeleteComponents(Tool_Function::convertIntToString(targetId));
 	return EMPTY_TEXT;
 }

@@ -57,6 +57,8 @@ public:
 	void updateConnectComponents(string);
 	void tryToSetPrimaryKey(int);
 	void updateSetPrimaryKey(int, bool);
+	void updateDeleteComponents(string);
+	void deleteItemById(int);
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent*);

@@ -17,6 +17,7 @@ public:
 	void notifyAddComponent(string);
 	void notifyConnectComponents(string);
 	void notifySetPrimaryKey(int, bool);
+	void notifyDeleteComponents(string);
 private:
 	vector<ER_Observer*> observers;
 };
