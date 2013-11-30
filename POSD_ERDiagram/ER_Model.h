@@ -84,7 +84,8 @@ public:
 	bool getHasModify();
 	string getGuiNodes();
 	string getGuiConnections();
-	string getComponentInfo(int);
+	string getNodeInfo(int);
+	string getConnectionInfo(int);
 	bool isStoreFileFail;
 	void setComponentText(int, string);
 	void setComponentPosition(int, int, int);

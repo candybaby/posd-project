@@ -29,6 +29,8 @@ string ER_ConnectCommand::execute()
 	model->addConnection(firstNodeId, secondNodeId, targetId, targetCardinality);
 	model->plusCurrentId();
 	model->setHasModify(true);
+	string message = model->getConnectionInfo(targetId);
+	model->notifyConnectComponents(message);
 	return EMPTY_TEXT;
 }
 

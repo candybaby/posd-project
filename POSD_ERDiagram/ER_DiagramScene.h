@@ -54,6 +54,7 @@ public:
 	void deleteItem();
 	void observerUpdate();
 	void updateAddComponent(string);
+	void updateConnectComponents(string);
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent*);

@@ -254,14 +254,14 @@ void ER_DiagramScene::addItemConnection(qreal targetId, qreal sourceId)
 		}
 	}
 	//qDebug() << QString(QString::fromLocal8Bit(message.c_str()));
-	if (message.find("has been connected to the node") != std::string::npos)
-	{
-		ER_ItemComponent* item = itemFactory->createItemConnection(cardinality);
-		ER_ItemConnection* connection = (ER_ItemConnection*)item;
-		connection->setConnection(getItemComponentById(targetId), getItemComponentById(sourceId));
-		connection->setId(tempId);
-		addItem(item);
-	}
+	//if (message.find("has been connected to the node") != std::string::npos)
+	//{
+	//	ER_ItemComponent* item = itemFactory->createItemConnection(cardinality);
+	//	ER_ItemConnection* connection = (ER_ItemConnection*)item;
+	//	connection->setConnection(getItemComponentById(targetId), getItemComponentById(sourceId));
+	//	connection->setId(tempId);
+	//	addItem(item);
+	//}
 }
 
 // 取消所有items選取
@@ -314,5 +314,11 @@ void ER_DiagramScene::observerUpdate()
 void ER_DiagramScene::updateAddComponent(string message)
 {
 	addItemNodes(QString(QString::fromLocal8Bit(message.c_str())));
-	qDebug() << "updateAddComponent()";
+	qDebug() << "updateAddComponent";
+}
+
+void ER_DiagramScene::updateConnectComponents(string message)
+{
+	addItemConnections(QString::fromLocal8Bit(message.c_str()));
+	qDebug() << "updateConnectComponents";
 }

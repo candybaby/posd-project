@@ -30,7 +30,7 @@ string ER_AddCommand::execute()
 	}
 	model->setHasModify(true);
 	model->setComponentPosition(targetId, posX, posY);
-	string message = model->getComponentInfo(targetId);
+	string message = model->getNodeInfo(targetId);
 	model->notifyAddComponent(message);
 	return Tool_Function::convertIntToString(targetId);
 }

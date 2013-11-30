@@ -754,7 +754,7 @@ string ER_Model::getGuiNodes()
 	vector<int> nodesVector = findNodes();
 	for (vector<int>::iterator it = nodesVector.begin(); it < nodesVector.end(); it++)
 	{
-		result += getComponentInfo(*it);
+		result += getNodeInfo(*it);
 	}
 	return result;
 }
@@ -766,15 +766,7 @@ string ER_Model::getGuiConnections()
 	vector<int> connectionsVector = findComponentsByType(ERD_Component::Connection);
 	for (vector<int>::iterator it = connectionsVector.begin(); it < connectionsVector.end(); it++)
 	{
-		ERD_Component* component = findComponentById(*it);
-		int id = component->getId();
-		string name = component->getText();
-		string type = componentTypeMapNames[component->getType()];
-		int node = component->getConnections().at(0)->getId();
-		int otherNode = component->getConnections().at(1)->getId();
-		result += Tool_Function::convertIntToString(id) + CAMMA_TEXT + name + CAMMA_TEXT + type;
-		result += CAMMA_TEXT + Tool_Function::convertIntToString(node) + CAMMA_TEXT;
-		result += Tool_Function::convertIntToString(otherNode) + CHAR_ENDL;
+		result += getConnectionInfo(*it);
 	}
 	return result;
 }
@@ -792,7 +784,7 @@ void ER_Model::setComponentPosition(int id, int posX, int posY)
 	component->setPos(posX, posY);
 }
 
-string ER_Model::getComponentInfo(int id)
+string ER_Model::getNodeInfo(int id)
 {
 	ERD_Component* component = findComponentById(id);
 	string result;
@@ -816,5 +808,21 @@ string ER_Model::getComponentInfo(int id)
 	{
 		result += CHAR_ENDL;
 	}
+	return result;
+}
+
+string ER_Model::getConnectionInfo(int id)
+{
+	string result;
+
+	ERD_Component* component = findComponentById(id);
+	string name = component->getText();
+	string type = componentTypeMapNames[component->getType()];
+	int node = component->getConnections().at(0)->getId();
+	int otherNode = component->getConnections().at(1)->getId();
+	result += Tool_Function::convertIntToString(id) + CAMMA_TEXT + name + CAMMA_TEXT + type;
+	result += CAMMA_TEXT + Tool_Function::convertIntToString(node) + CAMMA_TEXT;
+	result += Tool_Function::convertIntToString(otherNode) + CHAR_ENDL;
+	
 	return result;
 }
