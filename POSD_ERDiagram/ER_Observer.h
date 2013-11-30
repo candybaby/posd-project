@@ -15,6 +15,8 @@ public:
 	virtual void updateConnectComponents(string) = 0;
 	virtual void updateSetPrimaryKey(int, bool) = 0;
 	virtual void updateDeleteComponents(string) = 0;
+	virtual void updateUndoEnable(bool) = 0;
+	virtual void updateRedoEnable(bool) = 0;
 };
 #endif
 

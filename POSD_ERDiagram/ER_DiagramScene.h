@@ -59,6 +59,8 @@ public:
 	void updateSetPrimaryKey(int, bool);
 	void updateDeleteComponents(string);
 	void deleteItemById(int);
+	void updateRedoEnable(bool);
+	void updateUndoEnable(bool);
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent*);

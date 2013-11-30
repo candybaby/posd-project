@@ -61,11 +61,13 @@
 
 ER_PresentationModel::ER_PresentationModel(void)
 {
+	
 }
 
 ER_PresentationModel::ER_PresentationModel(ER_Model* model)
 {
 	this->model = *model;
+	cmdManager = new ER_CommandManager(&this->model);
 }
 
 ER_PresentationModel::~ER_PresentationModel(void)
@@ -91,7 +93,7 @@ int ER_PresentationModel::addNodeOptionMapping(string command)
 // 新增節點
 string ER_PresentationModel::addNode(ERD_Component::ComponentType componentType, string nodeName, int posX, int posY)
 {
-	return cmdManager.execute(new ER_AddCommand(&model, componentType, nodeName, posX, posY));
+	return cmdManager->execute(new ER_AddCommand(&model, componentType, nodeName, posX, posY));
 }
 
 // 取得現在的ID
@@ -149,7 +151,7 @@ string ER_PresentationModel::getAddConnectionMessage(int firstNodeId,int secondN
 	}
 	else
 	{
-		cmdManager.execute(new ER_ConnectCommand(&model, firstNodeId, secondNodeId, result));
+		cmdManager->execute(new ER_ConnectCommand(&model, firstNodeId, secondNodeId, result));
 		message = getNodeConnectedMessage(componentIdString, otherComponentIdString);
 	}
 	return message;
@@ -223,7 +225,7 @@ string ER_PresentationModel::addConnection(int firstNodeId,int secondNodeId, ERD
 	message	+= MESSAGE_NODE_8;
 	message += ERD_Connection::connectionCardinalityNames[cardinality];
 	message	+= MESSAGE_NODE_3;
-	cmdManager.execute(new ER_ConnectCommand(&model, firstNodeId, secondNodeId, connectionId, cardinality));
+	cmdManager->execute(new ER_ConnectCommand(&model, firstNodeId, secondNodeId, connectionId, cardinality));
 	return message;
 }
 
@@ -297,14 +299,14 @@ void ER_PresentationModel::setIsPrimaryKey(int id)
 	{
 		ERD_Attribute* attribute = (ERD_Attribute*) component;
 		bool keyFlag = attribute->getIsPrimaryKey();
-		cmdManager.execute(new ER_SetPrimaryKeyCommand(&model, id, !keyFlag));
+		cmdManager->execute(new ER_SetPrimaryKeyCommand(&model, id, !keyFlag));
 	}
 }
 
 // 設定id為PrimaryKey
 void ER_PresentationModel::setIsPrimaryKey(int id, bool flag)
 {
-	cmdManager.execute(new ER_SetPrimaryKeyCommand(&model, id, flag));
+	cmdManager->execute(new ER_SetPrimaryKeyCommand(&model, id, flag));
 }
 
 // 取得id是否為primaryKey
@@ -721,7 +723,7 @@ string ER_PresentationModel::redo()
 {
 	string message;
 	bool redoResult;
-	redoResult = cmdManager.redo();
+	redoResult = cmdManager->redo();
 	if (redoResult)
 	{
 		message += REDO_SUCCEED;
@@ -743,7 +745,7 @@ string ER_PresentationModel::undo()
 {
 	string message;
 	bool undoResult;
-	undoResult = cmdManager.undo();
+	undoResult = cmdManager->undo();
 	if (undoResult)
 	{
 		message += UNDO_SUCCEED;
@@ -763,7 +765,7 @@ string ER_PresentationModel::undo()
 // 刪除特定id的component
 string ER_PresentationModel::deleteComponent(int id)
 {
-	string cmdResult = cmdManager.execute(new ER_DeleteCommand(&model, id));
+	string cmdResult = cmdManager->execute(new ER_DeleteCommand(&model, id));
 	if (cmdResult != EMPTY_TEXT)
 	{
 		string message;
@@ -829,7 +831,7 @@ int ER_PresentationModel::getComponentPosYById(int id)
 // 設定某個component的text
 void ER_PresentationModel::setComponentText(int id, string text)
 {
-	string cmdResult = cmdManager.execute(new ER_EditTextCommand(&model, id, text));
+	string cmdResult = cmdManager->execute(new ER_EditTextCommand(&model, id, text));
 }
 
 void ER_PresentationModel::modelRegisterObserver(ER_Observer* observer)

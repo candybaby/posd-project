@@ -67,10 +67,12 @@ void ER_GUI::createActions()
 
 	undoAction = new QAction(QIcon("images/undo.png"), tr("U&ndo"), this);
 	undoAction->setShortcut(tr("Ctrl+Z"));
+	undoAction->setEnabled(false);
 	connect(undoAction, SIGNAL(triggered()), this, SLOT(undo()));
 
 	redoAction = new QAction(QIcon("images/redo.png"), tr("R&edo"), this);
 	redoAction->setShortcut(tr("Ctrl+Y"));
+	redoAction->setEnabled(false);
 	connect(redoAction, SIGNAL(triggered()), this, SLOT(redo()));
 
 	deleteItemAction = new QAction(QIcon("images/delete.png"), tr("D&elete"), this);
@@ -155,6 +157,16 @@ void ER_GUI::createToolbars()
 void ER_GUI::setDeleteEnable(bool flag)
 {
 	deleteItemAction->setEnabled(flag);
+}
+
+void ER_GUI::setUndoEnable(bool flag)
+{
+	undoAction->setEnabled(flag);
+}
+
+void ER_GUI::setRedoEnable(bool flag)
+{
+	redoAction->setEnabled(flag);
 }
 
 // ÂsÄıÀÉ®×Á`ºŞ

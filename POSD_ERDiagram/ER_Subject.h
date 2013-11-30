@@ -18,6 +18,8 @@ public:
 	void notifyConnectComponents(string);
 	void notifySetPrimaryKey(int, bool);
 	void notifyDeleteComponents(string);
+	void notifyUndoEnable(bool);
+	void notifyRedoEnable(bool);
 private:
 	vector<ER_Observer*> observers;
 };

@@ -1,7 +1,8 @@
 #include "ER_CommandManager.h"
 
-ER_CommandManager::ER_CommandManager(void)
+ER_CommandManager::ER_CommandManager(ER_Model* model)
 {
+	this->model = model;
 }
 
 ER_CommandManager::~ER_CommandManager(void)
@@ -34,6 +35,8 @@ string ER_CommandManager::execute(ER_Command* command)
 		redoCommands.pop();
 		delete command;
 	}
+	model->notifyUndoEnable(true);
+	model->notifyRedoEnable(false);
 	return result;
 }
 
@@ -50,6 +53,11 @@ bool ER_CommandManager::redo()
 		redoCommands.pop();
 		command->execute(); // redo the command
 		undoCommands.push(command);
+		model->notifyUndoEnable(true);
+		if (redoCommands.size() == 0)
+		{
+			model->notifyRedoEnable(false);
+		}
 		return true;
 	}
 }
@@ -67,6 +75,11 @@ bool ER_CommandManager::undo()
 		undoCommands.pop();
 		command->unexecute(); // undo the command
 		redoCommands.push(command);
+		model->notifyRedoEnable(true);
+		if (undoCommands.size() == 0)
+		{
+			model->notifyUndoEnable(false);
+		}
 		return true;
 	}
 }

@@ -82,6 +82,6 @@ public:
 
 private:
 	ER_Model model;
-	ER_CommandManager cmdManager;
+	ER_CommandManager* cmdManager;
 };
 #endif

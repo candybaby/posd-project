@@ -54,10 +54,29 @@ void ER_Subject::notifySetPrimaryKey(int id, bool flag)
 	}
 }
 
+// Invoke Delete Components
 void ER_Subject::notifyDeleteComponents(string message)
 {
 	for (vector<ER_Observer *>::iterator it = observers.begin(); it < observers.end(); it++)
 	{
 		(*it)->updateDeleteComponents(message);
+	}
+}
+
+// undo
+void ER_Subject::notifyUndoEnable(bool flag)
+{
+	for (vector<ER_Observer *>::iterator it = observers.begin(); it < observers.end(); it++)
+	{
+		(*it)->updateUndoEnable(flag);
+	}
+}
+
+// redo
+void ER_Subject::notifyRedoEnable(bool flag)
+{
+	for (vector<ER_Observer *>::iterator it = observers.begin(); it < observers.end(); it++)
+	{
+		(*it)->updateRedoEnable(flag);
 	}
 }

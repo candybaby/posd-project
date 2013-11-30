@@ -21,6 +21,8 @@ public:
 	~ER_GUI(void);
 	void changeToPointerMode();
 	void setDeleteEnable(bool);
+	void setUndoEnable(bool);
+	void setRedoEnable(bool);
 
 private slots:
 	void browse();

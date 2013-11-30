@@ -362,3 +362,15 @@ void ER_DiagramScene::deleteItemById(int id)
 	ER_ItemComponent* item = getItemComponentById(id);
 	removeItem(item);
 }
+
+void ER_DiagramScene::updateUndoEnable(bool flag)
+{
+	gui->setUndoEnable(flag);
+	qDebug() << "updateUndoEnable : " << flag;
+}
+
+void ER_DiagramScene::updateRedoEnable(bool flag)
+{
+	gui->setRedoEnable(flag);
+	qDebug() << "updateRedoEnable : " << flag;
+}
