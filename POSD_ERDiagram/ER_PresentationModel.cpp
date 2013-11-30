@@ -298,8 +298,11 @@ void ER_PresentationModel::setIsPrimaryKey(int id)
 	if (component->getType() == ERD_Component::Attribute)
 	{
 		ERD_Attribute* attribute = (ERD_Attribute*) component;
-		bool keyFlag = attribute->getIsPrimaryKey();
-		cmdManager->execute(new ER_SetPrimaryKeyCommand(&model, id, !keyFlag));
+		if (attribute->getIsConnected())
+		{
+			bool keyFlag = attribute->getIsPrimaryKey();
+			cmdManager->execute(new ER_SetPrimaryKeyCommand(&model, id, !keyFlag));
+		}
 	}
 }
 

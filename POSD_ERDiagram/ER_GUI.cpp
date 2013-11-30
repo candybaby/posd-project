@@ -77,6 +77,7 @@ void ER_GUI::createActions()
 
 	deleteItemAction = new QAction(QIcon("images/delete.png"), tr("D&elete"), this);
 	deleteItemAction->setShortcut(QKeySequence::Delete);
+	deleteItemAction->setEnabled(false);
 	connect(deleteItemAction, SIGNAL(triggered()), this, SLOT(deleteItem()));
 
 }

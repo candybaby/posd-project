@@ -61,11 +61,14 @@ public:
 	void deleteItemById(int);
 	void updateRedoEnable(bool);
 	void updateUndoEnable(bool);
+	void setDeleteButtonEnable(bool);
+	void checkCanDeleteStatus();
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent*);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent*);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent*);
+	void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *);
 
 private:
 	void clearItems();

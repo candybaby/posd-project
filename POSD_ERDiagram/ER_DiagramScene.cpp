@@ -154,7 +154,6 @@ void ER_DiagramScene::setMode(Mode mode)
 	{
 		case Pointer:
 			changeState(new ER_GUIPointerState(this));
-			gui->setDeleteEnable(true);
 			break;
 		case InsertAttribute:
 			preViewItem = new ER_ItemAttribute("");
@@ -193,6 +192,11 @@ void ER_DiagramScene::mouseMoveEvent(QGraphicsSceneMouseEvent* moveEvent)
 void ER_DiagramScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* releaseEvent)
 {
 	state->mouseReleaseEvent(releaseEvent);
+}
+
+void ER_DiagramScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* doubleClickEvent)
+{
+	state->mouseDoubleClickEvent(doubleClickEvent);
 }
 
 // 更換狀態
@@ -363,14 +367,37 @@ void ER_DiagramScene::deleteItemById(int id)
 	removeItem(item);
 }
 
+// 更新 undo enable
 void ER_DiagramScene::updateUndoEnable(bool flag)
 {
 	gui->setUndoEnable(flag);
 	qDebug() << "updateUndoEnable : " << flag;
 }
 
+// 更新 redo enable
 void ER_DiagramScene::updateRedoEnable(bool flag)
 {
 	gui->setRedoEnable(flag);
 	qDebug() << "updateRedoEnable : " << flag;
+}
+
+// 設定delete button enable
+void ER_DiagramScene::setDeleteButtonEnable(bool flag)
+{
+	gui->setDeleteEnable(flag);
+}
+
+// 檢查可以使用刪除的情況
+void ER_DiagramScene::checkCanDeleteStatus()
+{
+	QList<QGraphicsItem*> itemList = selectedItems();
+	if (itemList.size() == 1) // 多選不能刪 不支援
+	{
+		setDeleteButtonEnable(true);
+	}
+	else
+	{
+		setDeleteButtonEnable(false);
+	}
+	qDebug() << "checkCanDeleteStatus";
 }

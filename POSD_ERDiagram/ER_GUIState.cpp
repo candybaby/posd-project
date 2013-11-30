@@ -25,3 +25,8 @@ void ER_GUIState::mouseReleaseEvent(QGraphicsSceneMouseEvent* releaseEvent)
 {
 	// virtual
 }
+
+void ER_GUIState::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* doubleClickEvent)
+{
+	// virtual
+}
