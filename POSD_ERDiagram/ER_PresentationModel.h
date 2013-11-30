@@ -45,6 +45,7 @@ public:
 	string checkEntitySelectedValid(string);
 	string checkAttributesSelectedValid(string, int);
 	bool isAttributeBelongEntity(int, int);
+	void setIsPrimaryKey(int);
 	void setIsPrimaryKey(int, bool);
 	bool getIsPrimaryKey(int);
 	string getPrimaryKeyString(int);

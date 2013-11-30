@@ -55,6 +55,8 @@ public:
 	void observerUpdate();
 	void updateAddComponent(string);
 	void updateConnectComponents(string);
+	void tryToSetPrimaryKey(int);
+	void updateSetPrimaryKey(int, bool);
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent*);

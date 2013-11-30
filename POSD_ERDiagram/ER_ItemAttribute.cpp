@@ -56,3 +56,13 @@ void ER_ItemAttribute::paintText(QPainter *painter)
 	painter->setFont(font);
 	painter->drawText(boundingRect(), Qt::AlignCenter, componentName);
 }
+
+void ER_ItemAttribute::setIsPrimaryKey(bool flag)
+{
+	isPrimaryKey = flag;
+}
+
+bool ER_ItemAttribute::getIsPrimaryKey()
+{
+	return isPrimaryKey;
+}

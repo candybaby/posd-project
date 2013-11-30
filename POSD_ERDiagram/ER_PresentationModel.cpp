@@ -290,6 +290,18 @@ bool ER_PresentationModel::isAttributeBelongEntity(int attributeId, int entityId
 }
 
 // 設定id為PrimaryKey
+void ER_PresentationModel::setIsPrimaryKey(int id)
+{
+	ERD_Component* component = model.findComponentById(id);
+	if (component->getType() == ERD_Component::Attribute)
+	{
+		ERD_Attribute* attribute = (ERD_Attribute*) component;
+		bool keyFlag = attribute->getIsPrimaryKey();
+		cmdManager.execute(new ER_SetPrimaryKeyCommand(&model, id, !keyFlag));
+	}
+}
+
+// 設定id為PrimaryKey
 void ER_PresentationModel::setIsPrimaryKey(int id, bool flag)
 {
 	cmdManager.execute(new ER_SetPrimaryKeyCommand(&model, id, flag));

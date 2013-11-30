@@ -44,3 +44,12 @@ void ER_Subject::notifyConnectComponents(string message)
 		(*it)->updateConnectComponents(message);
 	}
 }
+
+// Invoke Set Primary Key
+void ER_Subject::notifySetPrimaryKey(int id, bool flag)
+{
+	for (vector<ER_Observer *>::iterator it = observers.begin(); it < observers.end(); it++)
+	{
+		(*it)->updateSetPrimaryKey(id, flag);
+	}
+}

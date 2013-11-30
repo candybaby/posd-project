@@ -253,15 +253,6 @@ void ER_DiagramScene::addItemConnection(qreal targetId, qreal sourceId)
 			}
 		}
 	}
-	//qDebug() << QString(QString::fromLocal8Bit(message.c_str()));
-	//if (message.find("has been connected to the node") != std::string::npos)
-	//{
-	//	ER_ItemComponent* item = itemFactory->createItemConnection(cardinality);
-	//	ER_ItemConnection* connection = (ER_ItemConnection*)item;
-	//	connection->setConnection(getItemComponentById(targetId), getItemComponentById(sourceId));
-	//	connection->setId(tempId);
-	//	addItem(item);
-	//}
 }
 
 // 取消所有items選取
@@ -310,15 +301,31 @@ void ER_DiagramScene::observerUpdate()
 	qDebug() << "observerUpdate()";
 }
 
-// 新增 更新
+// 更新 新增Component
 void ER_DiagramScene::updateAddComponent(string message)
 {
 	addItemNodes(QString(QString::fromLocal8Bit(message.c_str())));
 	qDebug() << "updateAddComponent";
 }
 
+// 更新 連線Component
 void ER_DiagramScene::updateConnectComponents(string message)
 {
 	addItemConnections(QString::fromLocal8Bit(message.c_str()));
 	qDebug() << "updateConnectComponents";
+}
+
+void ER_DiagramScene::tryToSetPrimaryKey(int id)
+{
+	presentationModel->setIsPrimaryKey(id);
+	qDebug() << "tryToSetPrimaryKey id : " << id;
+}
+
+// 更新 Set Primary Key
+void ER_DiagramScene::updateSetPrimaryKey(int id, bool flag)
+{
+	ER_ItemAttribute* item = (ER_ItemAttribute*)getItemComponentById(id);
+	item->setIsPrimaryKey(flag);
+	update(0, 0, width(), height());//更新畫面
+	qDebug() << "id :" << id << ", flag : " << flag;
 }

@@ -17,6 +17,7 @@ ER_SetPrimaryKeyCommand::~ER_SetPrimaryKeyCommand(void)
 string ER_SetPrimaryKeyCommand::execute()
 {
 	model->setIsPrimaryKey(id, flag);
+	model->notifySetPrimaryKey(id, flag);
 	return EMPTY_TEXT;
 }
 
@@ -24,5 +25,6 @@ string ER_SetPrimaryKeyCommand::execute()
 string ER_SetPrimaryKeyCommand::unexecute()
 {
 	model->setIsPrimaryKey(id, !flag);
+	model->notifySetPrimaryKey(id, !flag);
 	return EMPTY_TEXT;
 }

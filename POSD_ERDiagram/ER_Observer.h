@@ -13,6 +13,7 @@ public:
 	virtual void observerUpdate() = 0;
 	virtual void updateAddComponent(string) = 0;
 	virtual void updateConnectComponents(string) = 0;
+	virtual void updateSetPrimaryKey(int, bool) = 0;
 };
 #endif
 

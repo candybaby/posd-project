@@ -12,6 +12,8 @@ public:
 	ER_ItemAttribute(QString, bool);
 	~ER_ItemAttribute(void);
 	void initAttribute();
+	void setIsPrimaryKey(bool);
+	bool getIsPrimaryKey();
 
 protected:
 	void doPaint(QPainter*);
