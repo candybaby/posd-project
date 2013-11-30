@@ -26,3 +26,11 @@ void ER_Subject::notify()
 		(*it)->observerUpdate();
 	}
 }
+
+void ER_Subject::notifyAddComponent(string message)
+{
+	for (vector<ER_Observer *>::iterator it = observers.begin(); it < observers.end(); it++)
+	{
+		(*it)->updateAddComponent(message);
+	}
+}

@@ -6,7 +6,7 @@
 class ER_AddCommand : public ER_Command
 {
 public:
-	ER_AddCommand(ER_Model*, ERD_Component::ComponentType, string);
+	ER_AddCommand(ER_Model*, ERD_Component::ComponentType, string, int posX, int posY);
 	~ER_AddCommand(void);
 	string execute();
 	string unexecute();
@@ -16,5 +16,7 @@ private:
 	ERD_Component::ComponentType targetType;
 	string targetName;
 	int targetId;
+	int posX;
+	int posY;
 };
 #endif

@@ -27,11 +27,11 @@ TEST_F(ER_CommandManagerTest, execute)
 	// ¦^¶Ç:string(id)
 	// ªþµù:µL
 
-	cmdManager.execute(new ER_AddCommand(model, ERD_Component::Entity, "Engineer"));
+	cmdManager.execute(new ER_AddCommand(model, ERD_Component::Entity, "Engineer", 0, 0));
 	EXPECT_EQ(0, cmdManager.getRedoStackCount());
 	EXPECT_EQ(1, cmdManager.getUndoStackCount());
 
-	cmdManager.execute(new ER_AddCommand(model, ERD_Component::Attribute, "Name"));
+	cmdManager.execute(new ER_AddCommand(model, ERD_Component::Attribute, "Name", 0, 0));
 	EXPECT_EQ(0, cmdManager.getRedoStackCount());
 	EXPECT_EQ(2, cmdManager.getUndoStackCount());
 
@@ -39,7 +39,7 @@ TEST_F(ER_CommandManagerTest, execute)
 	EXPECT_EQ(1, cmdManager.getRedoStackCount());
 	EXPECT_EQ(1, cmdManager.getUndoStackCount());
 
-	cmdManager.execute(new ER_AddCommand(model, ERD_Component::Attribute, "Emp_Id"));
+	cmdManager.execute(new ER_AddCommand(model, ERD_Component::Attribute, "Emp_Id", 0, 0));
 	EXPECT_EQ(0, cmdManager.getRedoStackCount());
 	EXPECT_EQ(2, cmdManager.getUndoStackCount());
 
@@ -57,11 +57,11 @@ TEST_F(ER_CommandManagerTest, redo)
 	result = cmdManager.redo();
 	EXPECT_EQ(false, result);
 
-	cmdManager.execute(new ER_AddCommand(model, ERD_Component::Entity, "Engineer"));
+	cmdManager.execute(new ER_AddCommand(model, ERD_Component::Entity, "Engineer", 0, 0));
 	EXPECT_EQ(0, cmdManager.getRedoStackCount());
 	EXPECT_EQ(1, cmdManager.getUndoStackCount());
 
-	cmdManager.execute(new ER_AddCommand(model, ERD_Component::Attribute, "Name"));
+	cmdManager.execute(new ER_AddCommand(model, ERD_Component::Attribute, "Name", 0, 0));
 	EXPECT_EQ(0, cmdManager.getRedoStackCount());
 	EXPECT_EQ(2, cmdManager.getUndoStackCount());
 
@@ -91,11 +91,11 @@ TEST_F(ER_CommandManagerTest, undo)
 	result = cmdManager.undo();
 	EXPECT_EQ(false, result);
 
-	cmdManager.execute(new ER_AddCommand(model, ERD_Component::Entity, "Engineer"));
+	cmdManager.execute(new ER_AddCommand(model, ERD_Component::Entity, "Engineer", 0, 0));
 	EXPECT_EQ(0, cmdManager.getRedoStackCount());
 	EXPECT_EQ(1, cmdManager.getUndoStackCount());
 
-	cmdManager.execute(new ER_AddCommand(model, ERD_Component::Attribute, "Name"));
+	cmdManager.execute(new ER_AddCommand(model, ERD_Component::Attribute, "Name", 0, 0));
 	EXPECT_EQ(0, cmdManager.getRedoStackCount());
 	EXPECT_EQ(2, cmdManager.getUndoStackCount());
 

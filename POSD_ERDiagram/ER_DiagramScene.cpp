@@ -21,7 +21,7 @@ ER_DiagramScene::ER_DiagramScene(ER_PresentationModel* presentationModel, QObjec
 	positionManager = new ER_PositionManager(POSITION_MAX_WIDTH, POSITION_MAX_HEIGTH, POSITION_BLOCK_WIDTH, POSITION_BLOCK_HEIGTH);
 	this->state = new ER_GUIPointerState(this);
 	gui = (ER_GUI*)parent;
-	this->presentationModel->registerObserver(this);
+	this->presentationModel->modelRegisterObserver(this);
 }
 
 ER_DiagramScene::~ER_DiagramScene(void)
@@ -205,39 +205,24 @@ void ER_DiagramScene::changeState(ER_GUIState* nextState)
 // 新增Attribute
 void ER_DiagramScene::addItemAttribute(QString entityName, QPointF position)
 {
-	ER_ItemComponent* item = itemFactory->createItemAttribute(entityName);
-	string idString = presentationModel->addNode(ERD_Component::Attribute, entityName.toStdString());
-	int id = std::stoi(idString);
-	presentationModel->setComponentPos(id, position.x(), position.y());
-	item->setId(id);
-	item->setPos(position);
-	addItem(item);
+	string idString = presentationModel->addNode(ERD_Component::Attribute, entityName.toStdString(), position.x(), position.y());
+	
 	gui->changeToPointerMode(); // 自動切換state
 }
 
 // 新增Entity
 void ER_DiagramScene::addItemEntity(QString entityName, QPointF position)
 {
-	ER_ItemComponent* item = itemFactory->createItemEntity(entityName);
-	string idString = presentationModel->addNode(ERD_Component::Entity, entityName.toStdString());
-	int id = std::stoi(idString);
-	presentationModel->setComponentPos(id, position.x(), position.y());
-	item->setId(id);
-	item->setPos(position);
-	addItem(item);
+	string idString = presentationModel->addNode(ERD_Component::Entity, entityName.toStdString(), position.x(), position.y());
+
 	gui->changeToPointerMode(); // 自動切換state
 }
 
 // 新增Relatuionship
 void ER_DiagramScene::addItemRelationship(QString entityName, QPointF position)
 {
-	ER_ItemComponent* item = itemFactory->createItemRelationship(entityName);
-	string idString = presentationModel->addNode(ERD_Component::Relationship, entityName.toStdString());
-	int id = std::stoi(idString);
-	presentationModel->setComponentPos(id, position.x(), position.y());
-	item->setId(id);
-	item->setPos(position);
-	addItem(item);
+	string idString = presentationModel->addNode(ERD_Component::Relationship, entityName.toStdString(), position.x(), position.y());
+
 	gui->changeToPointerMode(); // 自動切換state
 }
 
@@ -314,12 +299,20 @@ void ER_DiagramScene::redo()
 	qDebug() << QString(QString::fromLocal8Bit(message.c_str()));
 }
 
+// deleteItem
 void ER_DiagramScene::deleteItem()
 {
-	presentationModel->testNotify();
+	
 }
 
 void ER_DiagramScene::observerUpdate()
 {
 	qDebug() << "observerUpdate()";
+}
+
+// 新增 更新
+void ER_DiagramScene::updateAddComponent(string message)
+{
+	addItemNodes(QString(QString::fromLocal8Bit(message.c_str())));
+	qDebug() << "updateAddComponent()";
 }

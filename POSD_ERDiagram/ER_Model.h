@@ -9,10 +9,11 @@
 #include "ER_ComponentFactory.h"
 #include "Tool_Function.h"
 #include "ER_FileManager.h"
+#include "ER_Subject.h"
 
 using namespace std;
 
-class ER_Model
+class ER_Model : public ER_Subject
 {
 public:
 	enum ComponentTypeMap
@@ -83,8 +84,11 @@ public:
 	bool getHasModify();
 	string getGuiNodes();
 	string getGuiConnections();
+	string getComponentInfo(int);
 	bool isStoreFileFail;
 	void setComponentText(int, string);
+	void setComponentPosition(int, int, int);
+	
 
 private:
 	vector<ERD_Component *> components;

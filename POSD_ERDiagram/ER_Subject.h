@@ -14,6 +14,7 @@ public:
 	void registerObserver(ER_Observer*);
 	void unregisterObserver(ER_Observer*);
 	void notify();
+	void notifyAddComponent(string);
 private:
 	vector<ER_Observer*> observers;
 };

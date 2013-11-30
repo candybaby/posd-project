@@ -1,12 +1,15 @@
 #include "ER_AddCommand.h"
 #define EMPTY_TEXT ""
+#define CAMMA_TEXT ","
 
-ER_AddCommand::ER_AddCommand(ER_Model* model, ERD_Component::ComponentType type, string name)
+ER_AddCommand::ER_AddCommand(ER_Model* model, ERD_Component::ComponentType type, string name, int posX, int posY)
 {
 	this->model = model;
 	this->targetType = type;
 	this->targetName = name;
 	this->targetId = -1;
+	this->posX = posX;
+	this->posY = posY;
 }
 
 ER_AddCommand::~ER_AddCommand(void)
@@ -26,6 +29,9 @@ string ER_AddCommand::execute()
 		model->sortComponents();
 	}
 	model->setHasModify(true);
+	model->setComponentPosition(targetId, posX, posY);
+	string message = model->getComponentInfo(targetId);
+	model->notifyAddComponent(message);
 	return Tool_Function::convertIntToString(targetId);
 }
 

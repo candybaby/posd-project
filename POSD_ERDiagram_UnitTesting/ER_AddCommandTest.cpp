@@ -9,7 +9,7 @@ protected:
 	virtual void SetUp()
 	{
 		model = new ER_Model;
-		addCommand = new ER_AddCommand(model, ERD_Component::Entity, "Engineer");
+		addCommand = new ER_AddCommand(model, ERD_Component::Entity, "Engineer", 0, 0);
 	}
 
 	virtual void TearDown()

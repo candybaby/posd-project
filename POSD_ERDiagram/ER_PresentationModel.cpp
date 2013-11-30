@@ -89,9 +89,9 @@ int ER_PresentationModel::addNodeOptionMapping(string command)
 }
 
 // 新增節點
-string ER_PresentationModel::addNode(ERD_Component::ComponentType componentType, string nodeName)
+string ER_PresentationModel::addNode(ERD_Component::ComponentType componentType, string nodeName, int posX, int posY)
 {
-	return cmdManager.execute(new ER_AddCommand(&model, componentType, nodeName));
+	return cmdManager.execute(new ER_AddCommand(&model, componentType, nodeName, posX, posY));
 }
 
 // 取得現在的ID
@@ -797,8 +797,7 @@ string ER_PresentationModel::getGuiConnections()
 // 設定某個component的位置
 void ER_PresentationModel::setComponentPos(int id, int posX, int posY)
 {
-	ERD_Component* component = model.findComponentById(id);
-	component->setPos(posX, posY);
+	model.setComponentPosition(id, posX, posY);
 }
 
 // 取得某個component的x座標
@@ -821,7 +820,7 @@ void ER_PresentationModel::setComponentText(int id, string text)
 	string cmdResult = cmdManager.execute(new ER_EditTextCommand(&model, id, text));
 }
 
-void ER_PresentationModel::testNotify()
+void ER_PresentationModel::modelRegisterObserver(ER_Observer* observer)
 {
-	this->notify();
+	model.registerObserver(observer);
 }

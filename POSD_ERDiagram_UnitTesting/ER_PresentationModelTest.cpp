@@ -19,14 +19,14 @@ protected:
 
 	void makeTestData()
 	{
-		presentationModel->addNode(ERD_Component::Entity, "Engineer");  //id=0
-		presentationModel->addNode(ERD_Component::Attribute, "EmpID");  //id=1
-		presentationModel->addNode(ERD_Component::Attribute, "Name");   //id=2
-		presentationModel->addNode(ERD_Component::Attribute, "Department");   //id=3
-		presentationModel->addNode(ERD_Component::Relationship, "Has");   //id=4
-		presentationModel->addNode(ERD_Component::Entity, "PC");  //id=5
-		presentationModel->addNode(ERD_Component::Attribute, "PC_ID");   //id=6
-		presentationModel->addNode(ERD_Component::Attribute, "Purchase_Date");   //id=7
+		presentationModel->addNode(ERD_Component::Entity, "Engineer", 0, 0);  //id=0
+		presentationModel->addNode(ERD_Component::Attribute, "EmpID", 0, 0);  //id=1
+		presentationModel->addNode(ERD_Component::Attribute, "Name", 0, 0);   //id=2
+		presentationModel->addNode(ERD_Component::Attribute, "Department", 0, 0);   //id=3
+		presentationModel->addNode(ERD_Component::Relationship, "Has", 0, 0);   //id=4
+		presentationModel->addNode(ERD_Component::Entity, "PC", 0, 0);  //id=5
+		presentationModel->addNode(ERD_Component::Attribute, "PC_ID", 0, 0);   //id=6
+		presentationModel->addNode(ERD_Component::Attribute, "Purchase_Date", 0, 0);   //id=7
 		presentationModel->addConnection(0, 4, ERD_Connection::one);
 		presentationModel->addConnection(4, 5, ERD_Connection::one);
 		presentationModel->addConnection(0, 1, ERD_Connection::SizeOfCardinality);
@@ -73,9 +73,9 @@ TEST_F(ER_PresentationModelTest, addNode)
 	// 回傳:string
 	// 附註:無
 	string result;
-	result = presentationModel->addNode(ERD_Component::Entity, "Engineer");
+	result = presentationModel->addNode(ERD_Component::Entity, "Engineer", 0, 0);
 	EXPECT_EQ("0", result);
-	result = presentationModel->addNode(ERD_Component::Entity, "PC");
+	result = presentationModel->addNode(ERD_Component::Entity, "PC", 0, 0);
 	EXPECT_EQ("1", result);
 	EXPECT_EQ(2, presentationModel->getCurrentId());
 }
@@ -90,12 +90,12 @@ TEST_F(ER_PresentationModelTest, getCurrentId)
 	int result;
 	result = presentationModel->getCurrentId();
 	EXPECT_EQ(0, result);
-	presentationModel->addNode(ERD_Component::Entity, "Engineer");
+	presentationModel->addNode(ERD_Component::Entity, "Engineer", 0, 0);
 
 	result = presentationModel->getCurrentId();
 	EXPECT_EQ(1, result);
 
-	presentationModel->addNode(ERD_Component::Entity, "PC");
+	presentationModel->addNode(ERD_Component::Entity, "PC", 0, 0);
 	result = presentationModel->getCurrentId();
 	EXPECT_EQ(2, result);
 }
@@ -216,14 +216,14 @@ TEST_F(ER_PresentationModelTest, getAddConnectionMessage)
 	// 參數:int,int
 	// 回傳:string(message)
 	// 附註:無
-	presentationModel->addNode(ERD_Component::Entity, "Engineer");  //id=0
-	presentationModel->addNode(ERD_Component::Attribute, "EmpID");  //id=1
-	presentationModel->addNode(ERD_Component::Attribute, "Name");   //id=2
-	presentationModel->addNode(ERD_Component::Attribute, "Department");   //id=3
-	presentationModel->addNode(ERD_Component::Relationship, "Has");   //id=4
-	presentationModel->addNode(ERD_Component::Entity, "PC");  //id=5
-	presentationModel->addNode(ERD_Component::Attribute, "PC_ID");   //id=6
-	presentationModel->addNode(ERD_Component::Attribute, "Purchase_Date");   //id=7
+	presentationModel->addNode(ERD_Component::Entity, "Engineer", 0, 0);  //id=0
+	presentationModel->addNode(ERD_Component::Attribute, "EmpID", 0, 0);  //id=1
+	presentationModel->addNode(ERD_Component::Attribute, "Name", 0, 0);   //id=2
+	presentationModel->addNode(ERD_Component::Attribute, "Department", 0, 0);   //id=3
+	presentationModel->addNode(ERD_Component::Relationship, "Has", 0, 0);   //id=4
+	presentationModel->addNode(ERD_Component::Entity, "PC", 0, 0);  //id=5
+	presentationModel->addNode(ERD_Component::Attribute, "PC_ID", 0, 0);   //id=6
+	presentationModel->addNode(ERD_Component::Attribute, "Purchase_Date", 0, 0);   //id=7
 	presentationModel->addConnection(0, 4, ERD_Connection::one);
 	string result;
 	result = presentationModel->getAddConnectionMessage(0, 4);  //已連線
@@ -312,14 +312,14 @@ TEST_F(ER_PresentationModelTest, addConnection)
 	// 參數:int, int, ConnectionCardinality
 	// 回傳:string(message)
 	// 附註:無
-	presentationModel->addNode(ERD_Component::Entity, "Engineer");  //id=0
-	presentationModel->addNode(ERD_Component::Attribute, "EmpID");  //id=1
-	presentationModel->addNode(ERD_Component::Attribute, "Name");   //id=2
-	presentationModel->addNode(ERD_Component::Attribute, "Department");   //id=3
-	presentationModel->addNode(ERD_Component::Relationship, "Has");   //id=4
-	presentationModel->addNode(ERD_Component::Entity, "PC");  //id=5
-	presentationModel->addNode(ERD_Component::Attribute, "PC_ID");   //id=6
-	presentationModel->addNode(ERD_Component::Attribute, "Purchase_Date");   //id=7
+	presentationModel->addNode(ERD_Component::Entity, "Engineer", 0, 0);  //id=0
+	presentationModel->addNode(ERD_Component::Attribute, "EmpID", 0, 0);  //id=1
+	presentationModel->addNode(ERD_Component::Attribute, "Name", 0, 0);   //id=2
+	presentationModel->addNode(ERD_Component::Attribute, "Department", 0, 0);   //id=3
+	presentationModel->addNode(ERD_Component::Relationship, "Has", 0, 0);   //id=4
+	presentationModel->addNode(ERD_Component::Entity, "PC", 0, 0);  //id=5
+	presentationModel->addNode(ERD_Component::Attribute, "PC_ID", 0, 0);   //id=6
+	presentationModel->addNode(ERD_Component::Attribute, "Purchase_Date", 0, 0);   //id=7
 	string result;
 	result = presentationModel->addConnection(0, 4, ERD_Connection::one);
 	EXPECT_EQ("The node '0' has been connected to the node '4'.\nIts cardinality of the relationship is '1'.", result);
@@ -848,7 +848,7 @@ TEST_F(ER_PresentationModelTest, getHasModify)
 	result = presentationModel->getHasModify();
 	EXPECT_EQ(false, result);
 
-	presentationModel->addNode(ERD_Component::Entity, "Entity");
+	presentationModel->addNode(ERD_Component::Entity, "Entity", 0, 0);
 	result = presentationModel->getHasModify();
 	EXPECT_EQ(true, result);
 

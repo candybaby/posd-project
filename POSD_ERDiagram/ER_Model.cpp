@@ -754,28 +754,7 @@ string ER_Model::getGuiNodes()
 	vector<int> nodesVector = findNodes();
 	for (vector<int>::iterator it = nodesVector.begin(); it < nodesVector.end(); it++)
 	{
-		ERD_Component* component = findComponentById(*it);
-		int id = component->getId();
-		int posX = component->getPosX();
-		int posY = component->getPosY();
-		string name = component->getText();
-		string type = componentTypeMapNames[component->getType()];
-		result += Tool_Function::convertIntToString(id) + CAMMA_TEXT + name + CAMMA_TEXT + type + CAMMA_TEXT;
-		result += Tool_Function::convertIntToString(posX) + CAMMA_TEXT + Tool_Function::convertIntToString(posY);
-		if (type == componentTypeMapNames[ERD_Component::Attribute])
-		{
-			ERD_Attribute* attribute = (ERD_Attribute*)component;
-			string primaryString = ZERO_STRING;
-			if (attribute->getIsPrimaryKey())
-			{
-				primaryString = ONE_STRING;
-			}
-			result += CAMMA_TEXT + primaryString + CHAR_ENDL;
-		}
-		else
-		{
-			result += CHAR_ENDL;
-		}
+		result += getComponentInfo(*it);
 	}
 	return result;
 }
@@ -803,6 +782,39 @@ string ER_Model::getGuiConnections()
 // 設定特定component的text
 void ER_Model::setComponentText(int id, string text)
 {
-	ERD_Component* conponent = findComponentById(id);
-	conponent->setText(text);
+	ERD_Component* component = findComponentById(id);
+	component->setText(text);
+}
+
+void ER_Model::setComponentPosition(int id, int posX, int posY)
+{
+	ERD_Component* component = findComponentById(id);
+	component->setPos(posX, posY);
+}
+
+string ER_Model::getComponentInfo(int id)
+{
+	ERD_Component* component = findComponentById(id);
+	string result;
+	int posX = component->getPosX();
+	int posY = component->getPosY();
+	string name = component->getText();
+	string type = componentTypeMapNames[component->getType()];
+	result += Tool_Function::convertIntToString(id) + CAMMA_TEXT + name + CAMMA_TEXT + type + CAMMA_TEXT;
+	result += Tool_Function::convertIntToString(posX) + CAMMA_TEXT + Tool_Function::convertIntToString(posY);
+	if (type == componentTypeMapNames[ERD_Component::Attribute])
+	{
+		ERD_Attribute* attribute = (ERD_Attribute*)component;
+		string primaryString = ZERO_STRING;
+		if (attribute->getIsPrimaryKey())
+		{
+			primaryString = ONE_STRING;
+		}
+		result += CAMMA_TEXT + primaryString + CHAR_ENDL;
+	}
+	else
+	{
+		result += CHAR_ENDL;
+	}
+	return result;
 }

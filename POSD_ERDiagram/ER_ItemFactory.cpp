@@ -24,19 +24,19 @@ ER_ItemComponent* ER_ItemFactory::createItemNodes(QStringList componentString)
 	if (componentString.at(TWO) == TYPE_ENTITY)
 	{
 		item = new ER_ItemEntity(componentString.at(1));
-		item->setId(componentString.at(0).toInt());
+		
 	}
 	else if (componentString.at(TWO) == TYPE_ATTRIBUTE)
 	{
 		bool primaryFlag = (componentString.at(FIVE) == ONE_STRING ? true : false);
 		item = new ER_ItemAttribute(componentString.at(1), primaryFlag);
-		item->setId(componentString.at(0).toInt());
 	}
 	else if (componentString.at(TWO) == TYPE_RELATIONSHIP)
 	{
 		item = new ER_ItemRelationship(componentString.at(1));
-		item->setId(componentString.at(0).toInt());
 	}
+	item->setId(componentString.at(0).toInt());
+	item->setPos(componentString.at(3).toInt(), componentString.at(4).toInt());
 	return item;
 }
 

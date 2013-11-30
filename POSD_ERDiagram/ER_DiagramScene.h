@@ -53,6 +53,7 @@ public:
 	void redo();
 	void deleteItem();
 	void observerUpdate();
+	void updateAddComponent(string);
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent*);

@@ -8,9 +8,9 @@
 #include "ER_DeleteCommand.h"
 #include "ER_EditTextCommand.h"
 #include "ER_SetPrimaryKeyCommand.h"
-#include "ER_Subject.h"
+#include "ER_Observer.h"
 
-class ER_PresentationModel : public ER_Subject
+class ER_PresentationModel
 {
 public:
 	enum EntityOptionType
@@ -28,7 +28,7 @@ public:
 	ER_PresentationModel(ER_Model*);
 	~ER_PresentationModel(void);
 	int addNodeOptionMapping(string);
-	string addNode(ERD_Component::ComponentType, string);
+	string addNode(ERD_Component::ComponentType, string, int, int);
 	int getCurrentId();
 	int getIdByIndex(int);
 	int getConnectionNodeById(int, int);
@@ -77,7 +77,7 @@ public:
 	int getComponentPosXById(int);
 	int getComponentPosYById(int);
 	void setComponentText(int, string);
-	void testNotify();
+	void modelRegisterObserver(ER_Observer*);
 
 private:
 	ER_Model model;

@@ -98,7 +98,7 @@ TEST_F(ER_IntegrationTest, testUndoDeleteComponent)
 
 	// Add an entity with text ¡§Test¡¨
 	EXPECT_EQ(15, presentationModel->findComponents().size());
-	presentationModel->addNode(ERD_Component::Entity, "Test");
+	presentationModel->addNode(ERD_Component::Entity, "Test", 0, 0);
 
 	// Assert the entity is added correctly
 	EXPECT_EQ(16, presentationModel->findComponents().size());
@@ -130,7 +130,7 @@ TEST_F(ER_IntegrationTest, testRedoConnectComponent)
 
 	// Add an entity with text ¡§Test¡¨
 	EXPECT_EQ(15, presentationModel->findComponents().size());
-	presentationModel->addNode(ERD_Component::Entity, "Test");
+	presentationModel->addNode(ERD_Component::Entity, "Test", 0, 0);
 
 	// Assert the entity is added correctly
 	EXPECT_EQ(16, presentationModel->findComponents().size());
@@ -138,7 +138,7 @@ TEST_F(ER_IntegrationTest, testRedoConnectComponent)
 
 	// Add an attribute with text ¡§Test Attr¡¨ 
 	EXPECT_EQ(16, presentationModel->findComponents().size());
-	presentationModel->addNode(ERD_Component::Attribute, "TestAttr");
+	presentationModel->addNode(ERD_Component::Attribute, "TestAttr", 0, 0);
 
 	// Assert the attribute is added correctly 
 	EXPECT_EQ(17, presentationModel->findComponents().size());
@@ -179,7 +179,7 @@ TEST_F(ER_IntegrationTest, testCommonUsage)
 
 	// Add an entity with text ¡§Work Diary¡¨
 	EXPECT_EQ(15, presentationModel->findComponents().size());
-	presentationModel->addNode(ERD_Component::Entity, "Work Diary");
+	presentationModel->addNode(ERD_Component::Entity, "Work Diary", 0, 0);
 
 	// Assert the entity is added correctly
 	EXPECT_EQ(16, presentationModel->findComponents().size());
@@ -187,7 +187,7 @@ TEST_F(ER_IntegrationTest, testCommonUsage)
 
 	// Add a Relationship with text "Write"  
 	EXPECT_EQ(16, presentationModel->findComponents().size());
-	presentationModel->addNode(ERD_Component::Relationship, "Write");
+	presentationModel->addNode(ERD_Component::Relationship, "Write", 0, 0);
 
 	// Assert the Relationship is added correctly  
 	EXPECT_EQ(17, presentationModel->findComponents().size());
@@ -211,7 +211,7 @@ TEST_F(ER_IntegrationTest, testCommonUsage)
 
 	// Add an Attribute with text "Content" 
 	EXPECT_EQ(19, presentationModel->findComponents().size());
-	presentationModel->addNode(ERD_Component::Attribute, "Content"); //id:19
+	presentationModel->addNode(ERD_Component::Attribute, "Content", 0, 0); //id:19
 
 	// Assert the Attribute is added correctly 
 	EXPECT_EQ(20, presentationModel->findComponents().size());
@@ -219,7 +219,7 @@ TEST_F(ER_IntegrationTest, testCommonUsage)
 
 	// Add an Attribute with text "WD_ID" 
 	EXPECT_EQ(20, presentationModel->findComponents().size());
-	presentationModel->addNode(ERD_Component::Attribute, "WD_ID"); //id:20
+	presentationModel->addNode(ERD_Component::Attribute, "WD_ID", 0, 0); //id:20
 
 	// Assert the Attribute is added correctly 
 	EXPECT_EQ(21, presentationModel->findComponents().size());
@@ -227,7 +227,7 @@ TEST_F(ER_IntegrationTest, testCommonUsage)
 
 	// Add an Attribute with text "WD_date" 
 	EXPECT_EQ(21, presentationModel->findComponents().size());
-	presentationModel->addNode(ERD_Component::Attribute, "WD_date"); //id:21
+	presentationModel->addNode(ERD_Component::Attribute, "WD_date", 0, 0); //id:21
 
 	// Assert the Attribute is added correctly 
 	EXPECT_EQ(22, presentationModel->findComponents().size());

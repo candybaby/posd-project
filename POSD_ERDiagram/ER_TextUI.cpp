@@ -154,7 +154,7 @@ void ER_TextUI::addNode()
 	cout << ADD_NODE_NAME_TEXT << endl;
 	cin.ignore();
 	getline(cin, addNodeName);
-	idString = presentationModel.addNode((ERD_Component::ComponentType)type, addNodeName);
+	idString = presentationModel.addNode((ERD_Component::ComponentType)type, addNodeName, 0, 0);
 	printAddNodeResult(type, idString, addNodeName);
 	cout << presentationModel.getNodesTable();
 }
