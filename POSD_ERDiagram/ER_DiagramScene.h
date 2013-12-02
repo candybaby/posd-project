@@ -36,6 +36,7 @@ public:
 	QVector<QGraphicsItem *> getComponentItems();
 	void addItemNodes(QString);
 	void addItemConnections(QString);
+	void updateModelComponentPosition();
 	ER_ItemComponent* getItemComponentById(qreal);
 	void updateItemPosition();
 	ER_PositionManager* positionManager;

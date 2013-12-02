@@ -94,6 +94,15 @@ void ER_DiagramScene::addItemConnections(QString message)
 	}
 }
 
+void ER_DiagramScene::updateModelComponentPosition()
+{
+	for (QVector<QGraphicsItem *>::iterator it = componentItems.begin(); it < componentItems.end(); it++)
+	{
+		ER_ItemComponent* itemComponent = ((ER_ItemComponent *)*it);
+		presentationModel->setComponentPos(itemComponent->getId(), itemComponent->pos().x(), itemComponent->pos().y());
+	}
+}
+
 // 更新Item的位置
 void ER_DiagramScene::updateItemPosition()
 {
@@ -119,6 +128,7 @@ void ER_DiagramScene::updateItemsFromFile()
 	addItemConnections(QString(QString::fromLocal8Bit(connectionsMessage.c_str())));
 
 	updateItemPosition();
+	updateModelComponentPosition();
 }
 
 // 設定mode
@@ -401,7 +411,7 @@ void ER_DiagramScene::updateMoveComponent(string message)
 		item->setPos(posX, posY);
 		qDebug()<< posX << "," << posY;
 	}
-	
+	updateItemPosition();
 	qDebug() << "updateMove" << QString(QString::fromLocal8Bit(message.c_str()));
 }
 
