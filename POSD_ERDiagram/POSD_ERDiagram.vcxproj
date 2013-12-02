@@ -112,6 +112,7 @@
     <ClCompile Include="ER_ItemFactory.cpp" />
     <ClCompile Include="ER_ItemRelationship.cpp" />
     <ClCompile Include="ER_Model.cpp" />
+    <ClCompile Include="ER_MoveCommand.cpp" />
     <ClCompile Include="ER_Observer.cpp" />
     <ClCompile Include="ER_PositionManager.cpp" />
     <ClCompile Include="ER_PresentationModel.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="ER_ItemFactory.h" />
     <ClInclude Include="ER_ItemRelationship.h" />
     <ClInclude Include="ER_Model.h" />
+    <ClInclude Include="ER_MoveCommand.h" />
     <ClInclude Include="ER_Observer.h" />
     <ClInclude Include="ER_PositionManager.h" />
     <ClInclude Include="ER_PresentationModel.h" />

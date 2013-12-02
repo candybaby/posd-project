@@ -184,20 +184,23 @@
     <ClCompile Include="ER_Observer.cpp">
       <Filter>Source Files\Observer</Filter>
     </ClCompile>
-    <ClCompile Include="ER_TableViewModel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ER_TableViewItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ER_TableView.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_ER_TableView.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_ER_TableView.cpp">
       <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ER_TableView.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ER_TableViewItem.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ER_TableViewModel.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ER_MoveCommand.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -309,10 +312,13 @@
     <ClInclude Include="ER_Subject.h">
       <Filter>Header Files\Observer</Filter>
     </ClInclude>
-    <ClInclude Include="ER_TableViewModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ER_TableViewItem.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ER_TableViewModel.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ER_MoveCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -324,7 +330,7 @@
       <Filter>Header Files\UI</Filter>
     </CustomBuild>
     <CustomBuild Include="ER_TableView.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\UI</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

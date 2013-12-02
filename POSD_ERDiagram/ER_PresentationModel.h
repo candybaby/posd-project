@@ -7,6 +7,7 @@
 #include "ER_ConnectCommand.h"
 #include "ER_DeleteCommand.h"
 #include "ER_EditTextCommand.h"
+#include "ER_MoveCommand.h"
 #include "ER_SetPrimaryKeyCommand.h"
 #include "ER_Observer.h"
 
@@ -78,7 +79,8 @@ public:
 	int getComponentPosXById(int);
 	int getComponentPosYById(int);
 	void setComponentText(int, string);
-	void modelRegisterObserver(ER_Observer*);
+	void registerModelObserver(ER_Observer*);
+	void moveComponent(string, int, int);
 
 private:
 	ER_Model model;

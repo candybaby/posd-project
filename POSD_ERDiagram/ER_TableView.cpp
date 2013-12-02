@@ -6,7 +6,7 @@
 ER_TableView::ER_TableView(ER_PresentationModel* presentationModel)
 {
 	this->presentationModel = presentationModel;
-	this->presentationModel->modelRegisterObserver(this);
+	this->presentationModel->registerModelObserver(this);
 	connect(this, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(doubleClickedEvent(const QModelIndex&)));
 }
 
@@ -86,4 +86,9 @@ void ER_TableView::updateEditText(int, string)
 void ER_TableView::updateEditTextReject()
 {
 	updateItems();
+}
+
+void ER_TableView::updateMoveComponent(string)
+{
+	// empty
 }

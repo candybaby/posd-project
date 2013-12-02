@@ -123,5 +123,8 @@
     <ClCompile Include="..\POSD_ERDiagram\ER_Subject.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\POSD_ERDiagram\ER_MoveCommand.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

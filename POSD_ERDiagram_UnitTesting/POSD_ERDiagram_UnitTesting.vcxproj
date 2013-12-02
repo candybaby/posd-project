@@ -106,6 +106,7 @@
     <ClCompile Include="..\POSD_ERDiagram\ER_EditTextCommand.cpp" />
     <ClCompile Include="..\POSD_ERDiagram\ER_FileManager.cpp" />
     <ClCompile Include="..\POSD_ERDiagram\ER_Model.cpp" />
+    <ClCompile Include="..\POSD_ERDiagram\ER_MoveCommand.cpp" />
     <ClCompile Include="..\POSD_ERDiagram\ER_PresentationModel.cpp" />
     <ClCompile Include="..\POSD_ERDiagram\ER_SetPrimaryKeyCommand.cpp" />
     <ClCompile Include="..\POSD_ERDiagram\ER_Subject.cpp" />

@@ -22,6 +22,7 @@ public:
 	void notifyRedoEnable(bool);
 	void notifyEditText(int, string);
 	void notifyEditTextReject();
+	void notifyMoveComponent(string);
 
 private:
 	vector<ER_Observer*> observers;

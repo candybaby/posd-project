@@ -62,6 +62,8 @@ public:
 	void checkCanDeleteStatus();
 	void updateEditText(int, string);
 	void updateEditTextReject();
+	void updateMoveComponent(string);
+	void moveSelectedItem(int, int);
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent*);

@@ -24,6 +24,7 @@ public:
 	void updateRedoEnable(bool);
 	void updateEditText(int, string);
 	void updateEditTextReject();
+	void updateMoveComponent(string);
 	
 protected slots:
 	void doubleClickedEvent(const QModelIndex&);

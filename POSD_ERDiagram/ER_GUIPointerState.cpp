@@ -18,6 +18,9 @@ void ER_GUIPointerState::mousePressEvent(QGraphicsSceneMouseEvent* pressEvent)
 		item = scene->itemAt(pressEvent->scenePos());
 		if (item != NULL)
 		{
+			qDebug() << "item Press pos" << item->pos();
+			pressPosX = item->pos().x();
+			pressPosY = item->pos().y();
 			scene->sendEvent(item, pressEvent);
 		}
 		else
@@ -41,6 +44,11 @@ void ER_GUIPointerState::mouseReleaseEvent(QGraphicsSceneMouseEvent* releaseEven
 	{
 		if (item != NULL)
 		{
+			qDebug() << "item Release pos" << item->pos();
+			int deltaX = item->pos().x() - pressPosX;
+			int deltaY = item->pos().y() - pressPosY;
+			qDebug() << "Delta pos (" << deltaX << ", " << deltaY << ")";
+			scene->moveSelectedItem(deltaX, deltaY);
 			scene->sendEvent(item, releaseEvent);
 		}
 	}

@@ -853,7 +853,12 @@ void ER_PresentationModel::setComponentText(int id, string text)
 	}
 }
 
-void ER_PresentationModel::modelRegisterObserver(ER_Observer* observer)
+void ER_PresentationModel::registerModelObserver(ER_Observer* observer)
 {
 	model.registerObserver(observer);
+}
+
+void ER_PresentationModel::moveComponent(string idString, int deltaX, int deltaY)
+{
+	cmdManager->execute(new ER_MoveCommand(&model, idString, deltaX, deltaY));
 }

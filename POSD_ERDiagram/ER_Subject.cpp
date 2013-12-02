@@ -96,3 +96,11 @@ void ER_Subject::notifyEditTextReject()
 		(*it)->updateEditTextReject();
 	}
 }
+
+void ER_Subject::notifyMoveComponent(string message)
+{
+	for (vector<ER_Observer *>::iterator it = observers.begin(); it < observers.end(); it++)
+	{
+		(*it)->updateMoveComponent(message);
+	}
+}

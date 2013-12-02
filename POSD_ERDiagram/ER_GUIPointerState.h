@@ -16,5 +16,7 @@ protected:
 	void resetAllItemsSelected();
 private:
 	QGraphicsItem* item;
+	int pressPosX;
+	int pressPosY;
 };
 #endif
