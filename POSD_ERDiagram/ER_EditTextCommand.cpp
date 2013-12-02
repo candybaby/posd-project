@@ -19,6 +19,7 @@ string ER_EditTextCommand::execute()
 {
 	this->preText = model->getNameById(id);
 	model->setComponentText(id, text);
+	model->notifyEditText(id, text);
 	return EMPTY_TEXT;
 }
 
@@ -26,5 +27,6 @@ string ER_EditTextCommand::execute()
 string ER_EditTextCommand::unexecute()
 {
 	model->setComponentText(id, preText);
+	model->notifyEditText(id, preText);
 	return EMPTY_TEXT;
 }

@@ -76,9 +76,15 @@ void ER_ItemComponent::setId(qreal value)
 	id = value;
 }
 
+void ER_ItemComponent::adjustNameSize()
+{
+
+}
+
 void ER_ItemComponent::setName(QString name)
 {
 	componentName = name;
+	adjustNameSize();
 }
 
 QVector<QPointF> ER_ItemComponent::getConnectionPointVector()

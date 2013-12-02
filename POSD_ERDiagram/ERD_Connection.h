@@ -20,8 +20,10 @@ public:
 	~ERD_Connection(void);
 	void connectTo(ERD_Component*);
 	ConnectionCardinality getCardinality();
+	void setText(string);
 	void setCardinality(ConnectionCardinality);
 	bool isConnectToId(int);
+	bool canChangeText(string);
 	int getNodeId();
 	int getOtherNodeId();
 	ERD_Component* clone();

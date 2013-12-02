@@ -39,7 +39,6 @@ public:
 	ER_ItemComponent* getItemComponentById(qreal);
 	void updateItemPosition();
 	ER_PositionManager* positionManager;
-	void addItemsFromModel();
 	void setMode(Mode);
 	void changeState(ER_GUIState*);
 	void addItemAttribute(QString, QPointF);
@@ -47,12 +46,10 @@ public:
 	void addItemRelationship(QString, QPointF);
 	void addItemConnection(qreal, qreal);
 	void cancelItemsSelected();
-	void updateItemsName();
-	void updateItems(QString);
 	void undo();
 	void redo();
 	void deleteItem();
-	void observerUpdate();
+	void updateItemsFromFile();
 	void updateAddComponent(string);
 	void updateConnectComponents(string);
 	void tryToSetPrimaryKey(int);
@@ -63,6 +60,8 @@ public:
 	void updateUndoEnable(bool);
 	void setDeleteButtonEnable(bool);
 	void checkCanDeleteStatus();
+	void updateEditText(int, string);
+	void updateEditTextReject();
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent*);

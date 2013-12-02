@@ -4,8 +4,11 @@
 #include <QtGui/QMainWindow>
 #include <QFileDialog>
 #include <QMenu>
+#include <QTableView>
 #include "ER_DiagramScene.h"
 #include "ER_PresentationModel.h"
+#include "ER_TableViewModel.h"
+#include "ER_TableView.h"
 
 QT_BEGIN_NAMESPACE
 class DiagramScene;
@@ -39,8 +42,10 @@ private:
 	void createMenus();
 	void createToolbars();
 
-	QGraphicsView *view;
-	ER_DiagramScene *scene;
+	QGraphicsView* view;
+	ER_DiagramScene* scene;
+	ER_TableView* tableView;
+	ER_TableViewModel* tableViewModel;
 
 	//bar
 	QMenu* fileMenu;

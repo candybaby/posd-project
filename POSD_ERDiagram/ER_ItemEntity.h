@@ -10,6 +10,7 @@ class ER_ItemEntity : public ER_ItemComponent
 public:
 	ER_ItemEntity(QString);
 	~ER_ItemEntity(void);
+	void adjustNameSize();
 
 protected:
 	void doPaint(QPainter*);

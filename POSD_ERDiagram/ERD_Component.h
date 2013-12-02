@@ -25,7 +25,7 @@ public:
 	int getId();
 	ComponentType getType();
 	string getText();
-	void setText(string);
+	virtual void setText(string);
 	virtual void connectTo(ERD_Component*);
 	virtual bool canConnectTo(ERD_Component*);
 	vector<ERD_Component*> getConnections();

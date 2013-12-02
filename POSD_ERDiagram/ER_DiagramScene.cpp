@@ -108,7 +108,7 @@ void ER_DiagramScene::updateItemPosition()
 }
 
 // 加入item 內容從檔案取得
-void ER_DiagramScene::addItemsFromModel()
+void ER_DiagramScene::updateItemsFromFile()
 {
 	gui->changeToPointerMode(); // 自動切換state
 	clearItems();
@@ -119,30 +119,6 @@ void ER_DiagramScene::addItemsFromModel()
 	addItemConnections(QString(QString::fromLocal8Bit(connectionsMessage.c_str())));
 
 	updateItemPosition();
-}
-
-void ER_DiagramScene::updateItems(QString message)
-{
-	qDebug() << "updateItems : " << message;
-	QStringList componentsList = message.split('\n');
-
-	for (int i = 0; i < componentsList.size() - 1; i++)
-	{
-		QStringList componentList = componentsList.at(i).split(',');
-		ER_ItemComponent* item = getItemComponentById(componentList.at(0).toInt());
-		item->setName(componentList.at(1));
-	}
-}
-
-// 主要更新name
-void ER_DiagramScene::updateItemsName()
-{
-	string nodesMessage = presentationModel->getGuiNodes();
-	updateItems(QString(QString::fromLocal8Bit(nodesMessage.c_str())));
-	string connectionsMessage = presentationModel->getGuiConnections();
-	updateItems(QString(QString::fromLocal8Bit(connectionsMessage.c_str())));
-	
-	update(0, 0, width(), height());//更新畫面
 }
 
 // 設定mode
@@ -284,14 +260,14 @@ void ER_DiagramScene::clearItems()
 void ER_DiagramScene::undo()
 {
 	string message = presentationModel->undo();
-	qDebug() << QString(QString::fromLocal8Bit(message.c_str()));
+	//qDebug() << QString(QString::fromLocal8Bit(message.c_str()));
 }
 
 // redo
 void ER_DiagramScene::redo()
 {
 	string message = presentationModel->redo();
-	qDebug() << QString(QString::fromLocal8Bit(message.c_str()));
+	//qDebug() << QString(QString::fromLocal8Bit(message.c_str()));
 }
 
 // deleteItem
@@ -307,35 +283,30 @@ void ER_DiagramScene::deleteItem()
 		for (int i = 0; i < itemList.size(); i++)
 		{
 			ER_ItemComponent* item = (ER_ItemComponent*)itemList.at(i);
-			qDebug() << item->getId();
+			//qDebug() << item->getId();
 			presentationModel->deleteComponent(item->getId());
 		}
 	}
-}
-
-void ER_DiagramScene::observerUpdate()
-{
-	qDebug() << "observerUpdate()";
 }
 
 // 更新 新增Component
 void ER_DiagramScene::updateAddComponent(string message)
 {
 	addItemNodes(QString(QString::fromLocal8Bit(message.c_str())));
-	qDebug() << "updateAddComponent";
+	//qDebug() << "updateAddComponent";
 }
 
 // 更新 連線Component
 void ER_DiagramScene::updateConnectComponents(string message)
 {
 	addItemConnections(QString::fromLocal8Bit(message.c_str()));
-	qDebug() << "updateConnectComponents";
+	//qDebug() << "updateConnectComponents";
 }
 
 void ER_DiagramScene::tryToSetPrimaryKey(int id)
 {
 	presentationModel->setIsPrimaryKey(id);
-	qDebug() << "tryToSetPrimaryKey id : " << id;
+	//qDebug() << "tryToSetPrimaryKey id : " << id;
 }
 
 // 更新 Set Primary Key
@@ -344,7 +315,7 @@ void ER_DiagramScene::updateSetPrimaryKey(int id, bool flag)
 	ER_ItemAttribute* item = (ER_ItemAttribute*)getItemComponentById(id);
 	item->setIsPrimaryKey(flag);
 	update(0, 0, width(), height());
-	qDebug() << "id :" << id << ", flag : " << flag;
+	//qDebug() << "id :" << id << ", flag : " << flag;
 }
 
 // 更新 Delete Components
@@ -357,7 +328,7 @@ void ER_DiagramScene::updateDeleteComponents(string message)
 		deleteItemById(itemIdList.at(i).toInt());
 	}
 	update(0, 0, width(), height());
-	qDebug() << "updateDeleteComponents :" << QString::fromLocal8Bit(message.c_str());
+	//qDebug() << "updateDeleteComponents :" << QString::fromLocal8Bit(message.c_str());
 }
 
 // 刪除特定id
@@ -371,14 +342,14 @@ void ER_DiagramScene::deleteItemById(int id)
 void ER_DiagramScene::updateUndoEnable(bool flag)
 {
 	gui->setUndoEnable(flag);
-	qDebug() << "updateUndoEnable : " << flag;
+	//qDebug() << "updateUndoEnable : " << flag;
 }
 
 // 更新 redo enable
 void ER_DiagramScene::updateRedoEnable(bool flag)
 {
 	gui->setRedoEnable(flag);
-	qDebug() << "updateRedoEnable : " << flag;
+	//qDebug() << "updateRedoEnable : " << flag;
 }
 
 // 設定delete button enable
@@ -399,5 +370,19 @@ void ER_DiagramScene::checkCanDeleteStatus()
 	{
 		setDeleteButtonEnable(false);
 	}
-	qDebug() << "checkCanDeleteStatus";
+	//qDebug() << "checkCanDeleteStatus";
+}
+
+// 更新 Edit Text
+void ER_DiagramScene::updateEditText(int id, string text)
+{
+	ER_ItemComponent* item = getItemComponentById(id);
+	item->setName(QString(QString::fromLocal8Bit(text.c_str())));
+	//qDebug() << "updateEditText id : " << id;
+	updateItemPosition();
+}
+
+void ER_DiagramScene::updateEditTextReject()
+{
+
 }

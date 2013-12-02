@@ -7,27 +7,34 @@
 ER_ItemRelationship::ER_ItemRelationship(QString name)
 	: ER_ItemComponent(name)
 {
+	adjustNameSize();
+}
+
+ER_ItemRelationship::~ER_ItemRelationship(void)
+{
+}
+
+void ER_ItemRelationship::adjustNameSize()
+{
 	defaultLength = WIDTH_LENGTH;
 	dynamicLength = componentName.length() * WORD_LENGTH; // 依name大小調整邊框寬度
-
+	pointVector.clear();
 	pointVector.push_back(QPointF(defaultLength + dynamicLength, 0));
 	pointVector.push_back(QPointF(0, -defaultLength));
 	pointVector.push_back(QPointF(-(defaultLength + dynamicLength), 0));
 	pointVector.push_back(QPointF(0, defaultLength));
 	pointVector.push_back(QPointF(defaultLength + dynamicLength, 0));
-
+	
+	componentPainterPath = QPainterPath();
 	componentPainterPath.addPolygon(QPolygonF(pointVector));
 	componentPen.setColor(Qt::black);
 	componentPen.setWidth(PEN_WIDTH);
 
+	originalConnectionPoint.clear();
 	originalConnectionPoint.push_back(QPointF(0, defaultLength - FOUR));
 	originalConnectionPoint.push_back(QPointF(defaultLength + dynamicLength - FOUR, 0));
 	originalConnectionPoint.push_back(QPointF(0, -(defaultLength - FOUR)));
 	originalConnectionPoint.push_back(QPointF(-(defaultLength + dynamicLength - FOUR), 0));
-}
-
-ER_ItemRelationship::~ER_ItemRelationship(void)
-{
 }
 
 // 畫(template method)

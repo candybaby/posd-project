@@ -13,9 +13,10 @@ public:
 	virtual QRectF boundingRect() const;
 	virtual QPainterPath shape() const;
 	virtual void paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*);
+	virtual void adjustNameSize();
 	qreal getId();
 	void setId(qreal);
-	void setName(QString);
+	virtual void setName(QString);
 	QVector<QPointF> getConnectionPointVector();
 	virtual void updatePosition();
 	void setDiagramScene(QGraphicsScene*);

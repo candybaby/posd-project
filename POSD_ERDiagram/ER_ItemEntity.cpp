@@ -7,8 +7,17 @@
 ER_ItemEntity::ER_ItemEntity(QString name)
 	: ER_ItemComponent(name)
 {
+	adjustNameSize();
+}
+
+ER_ItemEntity::~ER_ItemEntity(void)
+{
+}
+
+void ER_ItemEntity::adjustNameSize()
+{
 	qreal defaultLength = WIDTH_LENGTH, dynamicLength = componentName.length() * WORD_LENGTH; // 依name大小調整邊框寬度
-	
+
 	QVector<QPointF> pointVector;
 	pointVector.push_back(QPointF(defaultLength + dynamicLength, defaultLength));
 	pointVector.push_back(QPointF(defaultLength + dynamicLength, -defaultLength));
@@ -16,19 +25,17 @@ ER_ItemEntity::ER_ItemEntity(QString name)
 	pointVector.push_back(QPointF(-(defaultLength + dynamicLength), defaultLength));
 	pointVector.push_back(QPointF(defaultLength + dynamicLength, defaultLength));
 
+	componentPainterPath = QPainterPath();
 	componentPainterPath.addPolygon(QPolygonF(pointVector));
 
 	componentPen.setColor(Qt::black);
 	componentPen.setWidth(PEN_WIDTH);
 
+	originalConnectionPoint.clear();
 	originalConnectionPoint.push_back(QPointF(0, defaultLength - FOUR));
 	originalConnectionPoint.push_back(QPointF(defaultLength + dynamicLength - FOUR, 0));
 	originalConnectionPoint.push_back(QPointF(0, -(defaultLength - FOUR)));
 	originalConnectionPoint.push_back(QPointF(-(defaultLength + dynamicLength - FOUR), 0));
-}
-
-ER_ItemEntity::~ER_ItemEntity(void)
-{
 }
 
 // 畫(template method)

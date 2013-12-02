@@ -5,6 +5,7 @@
 #define TYPE_ENTITY "E"
 #define TYPE_ATTRIBUTE "A"
 #define TYPE_RELATIONSHIP "R"
+#define TYPE_CONNECTOR "C"
 #define ONE_STRING "1"
 
 
@@ -78,5 +79,29 @@ ER_ItemComponent* ER_ItemFactory::createItemConnection(QString cardinary)
 {
 	ER_ItemComponent *item;
 	item = new ER_ItemConnection(cardinary);
+	return item;
+}
+
+ER_TableViewItem* ER_ItemFactory::createTableItem(QStringList componentString)
+{
+	ER_TableViewItem *item;
+	QString itemType;
+	if (componentString.at(TWO) == TYPE_ENTITY)
+	{
+		itemType = "Entity";
+	}
+	else if (componentString.at(TWO) == TYPE_ATTRIBUTE)
+	{
+		itemType = "Attribute";
+	}
+	else if (componentString.at(TWO) == TYPE_RELATIONSHIP)
+	{
+		itemType = "Relation";
+	}
+	else if (componentString.at(TWO) == TYPE_CONNECTOR)
+	{
+		itemType = "Connector";
+	}
+	item = new ER_TableViewItem(componentString.at(0).toInt(), componentString.at(1), itemType);
 	return item;
 }

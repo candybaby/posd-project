@@ -33,6 +33,37 @@ ERD_Connection::ERD_Connection(int id, ConnectionCardinality cardinality)
 // 型態轉換
 const char* ERD_Connection::connectionCardinalityNames[SizeOfCardinality] = {"1", "N"};
 
+void ERD_Connection::setText(string text)
+{
+	if (cardinality != SizeOfCardinality)
+	{
+		if (text == connectionCardinalityNames[one])
+		{
+			setCardinality(one);
+		}
+		else if (text == connectionCardinalityNames[n])
+		{
+			setCardinality(n);
+		}
+	}
+}
+
+bool ERD_Connection::canChangeText(string text)
+{
+	if (cardinality != SizeOfCardinality)
+	{
+		if (text == connectionCardinalityNames[one])
+		{
+			return true;
+		}
+		else if (text == connectionCardinalityNames[n])
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 // 設定cardinality
 void ERD_Connection::setCardinality(ConnectionCardinality cardinality)
 {

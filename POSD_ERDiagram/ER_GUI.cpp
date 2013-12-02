@@ -1,5 +1,6 @@
 #include <QtGui>
 #include <QLabel>
+#include <QHeaderView>
 #include "ER_GUI.h"
 #include <QFileDialog>
 #include "ER_ItemEntity.h"
@@ -15,17 +16,39 @@ ER_GUI::ER_GUI(ER_PresentationModel* presentationModel)
 	createToolbars();
 	scene = new ER_DiagramScene(presentationModel, this);
 	scene->setSceneRect(QRectF(0, 0, 4000, 3000));
-	
-	
-	QHBoxLayout *layout = new QHBoxLayout;
 	view = new QGraphicsView(scene);
-	layout->addWidget(view);
 
-	QWidget *widget = new QWidget;
-	widget->setLayout(layout);
+	tableViewModel = new ER_TableViewModel();
+	tableView = new ER_TableView(this->presentationModel);
+	tableView->setModel(tableViewModel);
+	tableView->setAutoScroll(true);
+	QHeaderView* headerView = tableView->horizontalHeader();
+	headerView->setStretchLastSection(true);
 
-	setCentralWidget(widget);
+	QLabel* label = new QLabel;
+	label->setText("Components");
+	label->setStyleSheet("QLabel { background-color : #b3b3b3; qproperty-alignment: AlignCenter; }");
+	QFont font;
+	font.setPointSize(16);
+	font.setBold(true);
+	label->setFont(font);
+
+	QSplitter* tableViewBox = new QSplitter;
+	tableViewBox->setOrientation(Qt::Vertical);
+	tableViewBox->addWidget(label);
+	tableViewBox->addWidget(tableView);
+
+	QSplitter* splitter = new QSplitter;
+	splitter->addWidget(view);
+	splitter->addWidget(tableViewBox);
+	QList<int> sizes;
+	sizes.push_back(900);
+	sizes.push_back(300);
+	splitter->setSizes(sizes);
+	
+	setCentralWidget(splitter);
 	view->setMouseTracking(true);
+	
 }
 
 
@@ -43,6 +66,9 @@ ER_GUI::~ER_GUI(void)
 	delete addAttributeAction;
 	delete addEntityAction;
 	delete addRelationshipAction;
+	delete undoAction;
+	delete redoAction;
+	delete deleteItemAction;
 }
 
 // 創建Actions
@@ -178,7 +204,6 @@ void ER_GUI::browse()
 	{
 		presentationModel->readComponentsFile(directory.toStdString());
 	}
-	scene->addItemsFromModel();
 }
 
 // 處理點選pointerGroup事件

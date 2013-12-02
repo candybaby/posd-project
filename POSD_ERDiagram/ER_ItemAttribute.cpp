@@ -10,29 +10,31 @@ ER_ItemAttribute::ER_ItemAttribute(QString name)
 	: ER_ItemComponent(name)
 {
 	isPrimaryKey = false;
-	initAttribute();
+	adjustNameSize();
 }
 
 ER_ItemAttribute::ER_ItemAttribute(QString name, bool primaryKeyFlag)
 	: ER_ItemComponent(name)
 {
 	isPrimaryKey = primaryKeyFlag;
-	initAttribute();
+	adjustNameSize();
 }
 
 ER_ItemAttribute::~ER_ItemAttribute(void)
 {
 }
 
-// 初始化
-void ER_ItemAttribute::initAttribute()
+// 自動調整大小
+void ER_ItemAttribute::adjustNameSize()
 {
 	qreal defaultLength = WIDTH_LENGTH, dynamicLength = componentName.length() * WORD_LENGTH; // 依name大小調整邊框寬度
 	qreal ellipseWidth = defaultLength + MODIFY_LENGTH + dynamicLength;
 	qreal ellipseHeight = defaultLength;
+	componentPainterPath = QPainterPath();
 	componentPainterPath.addEllipse(QRectF(-(ellipseWidth / TWO), -(ellipseHeight / TWO), ellipseWidth, ellipseHeight));
 	componentPen.setColor(Qt::black);
 	componentPen.setWidth(PEN_WIDTH);
+	originalConnectionPoint.clear();
 	originalConnectionPoint.push_back(QPointF(0, ellipseHeight / TWO - FOUR));
 	originalConnectionPoint.push_back(QPointF(ellipseWidth / TWO - FOUR, 0));
 	originalConnectionPoint.push_back(QPointF(0, -(ellipseHeight / TWO - FOUR)));

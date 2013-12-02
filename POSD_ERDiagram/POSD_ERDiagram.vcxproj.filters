@@ -184,6 +184,21 @@
     <ClCompile Include="ER_Observer.cpp">
       <Filter>Source Files\Observer</Filter>
     </ClCompile>
+    <ClCompile Include="ER_TableViewModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ER_TableViewItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ER_TableView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ER_TableView.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ER_TableView.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tool_Function.h">
@@ -294,6 +309,12 @@
     <ClInclude Include="ER_Subject.h">
       <Filter>Header Files\Observer</Filter>
     </ClInclude>
+    <ClInclude Include="ER_TableViewModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ER_TableViewItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="ER_DiagramScene.h">
@@ -301,6 +322,9 @@
     </CustomBuild>
     <CustomBuild Include="ER_GUI.h">
       <Filter>Header Files\UI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ER_TableView.h">
+      <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

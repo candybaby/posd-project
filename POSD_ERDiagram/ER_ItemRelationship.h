@@ -10,6 +10,7 @@ class ER_ItemRelationship : public ER_ItemComponent
 public:
 	ER_ItemRelationship(QString);
 	~ER_ItemRelationship(void);
+	void adjustNameSize();
 
 protected:
 	void doPaint(QPainter*);

@@ -19,11 +19,11 @@ void ER_Subject::unregisterObserver(ER_Observer* observer)
 	observers.erase(find(observers.begin(), observers.end(), observer));
 }
 
-void ER_Subject::notify()
+void ER_Subject::notifyLoadFile()
 {
 	for (vector<ER_Observer *>::iterator it = observers.begin(); it < observers.end(); it++)
 	{
-		(*it)->observerUpdate();
+		(*it)->updateItemsFromFile();
 	}
 }
 
@@ -78,5 +78,21 @@ void ER_Subject::notifyRedoEnable(bool flag)
 	for (vector<ER_Observer *>::iterator it = observers.begin(); it < observers.end(); it++)
 	{
 		(*it)->updateRedoEnable(flag);
+	}
+}
+
+void ER_Subject::notifyEditText(int id, string text)
+{
+	for (vector<ER_Observer *>::iterator it = observers.begin(); it < observers.end(); it++)
+	{
+		(*it)->updateEditText(id, text);
+	}
+}
+
+void ER_Subject::notifyEditTextReject()
+{
+	for (vector<ER_Observer *>::iterator it = observers.begin(); it < observers.end(); it++)
+	{
+		(*it)->updateEditTextReject();
 	}
 }

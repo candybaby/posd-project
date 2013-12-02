@@ -459,6 +459,7 @@ string ER_Model::readComponentsFile(string path)
 	if (file.openFile(path, ER_FileManager::Read))
 	{
 		loadFileContent(file);
+		notifyLoadFile();
 		return MESSAGE_SUCCESS;
 	}
 	else

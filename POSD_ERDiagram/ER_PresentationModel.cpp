@@ -834,7 +834,23 @@ int ER_PresentationModel::getComponentPosYById(int id)
 // 設定某個component的text
 void ER_PresentationModel::setComponentText(int id, string text)
 {
-	string cmdResult = cmdManager->execute(new ER_EditTextCommand(&model, id, text));
+	ERD_Component* component = model.findComponentById(id);
+	if (component->getType() != ERD_Component::Connection)
+	{
+		cmdManager->execute(new ER_EditTextCommand(&model, id, text));
+	}
+	else
+	{
+		ERD_Connection* connection = (ERD_Connection*) component;
+		if (connection->canChangeText(text))
+		{
+			cmdManager->execute(new ER_EditTextCommand(&model, id, text));
+		}
+		else
+		{
+			model.notifyEditTextReject();
+		}
+	}
 }
 
 void ER_PresentationModel::modelRegisterObserver(ER_Observer* observer)

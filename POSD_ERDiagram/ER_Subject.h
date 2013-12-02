@@ -13,13 +13,16 @@ public:
 	virtual ~ER_Subject();
 	void registerObserver(ER_Observer*);
 	void unregisterObserver(ER_Observer*);
-	void notify();
+	void notifyLoadFile();
 	void notifyAddComponent(string);
 	void notifyConnectComponents(string);
 	void notifySetPrimaryKey(int, bool);
 	void notifyDeleteComponents(string);
 	void notifyUndoEnable(bool);
 	void notifyRedoEnable(bool);
+	void notifyEditText(int, string);
+	void notifyEditTextReject();
+
 private:
 	vector<ER_Observer*> observers;
 };

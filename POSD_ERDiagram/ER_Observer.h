@@ -10,13 +10,15 @@ class ER_Observer
 public:
 	ER_Observer();
 	virtual ~ER_Observer();
-	virtual void observerUpdate() = 0;
+	virtual void updateItemsFromFile() = 0;
 	virtual void updateAddComponent(string) = 0;
 	virtual void updateConnectComponents(string) = 0;
 	virtual void updateSetPrimaryKey(int, bool) = 0;
 	virtual void updateDeleteComponents(string) = 0;
 	virtual void updateUndoEnable(bool) = 0;
 	virtual void updateRedoEnable(bool) = 0;
+	virtual void updateEditText(int, string) = 0;
+	virtual void updateEditTextReject() = 0;
 };
 #endif
 

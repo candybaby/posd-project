@@ -5,6 +5,7 @@
 #include "ER_ItemAttribute.h"
 #include "ER_ItemRelationship.h"
 #include "ER_ItemConnection.h"
+#include "ER_TableViewItem.h"
 
 class ER_ItemFactory
 {
@@ -17,5 +18,7 @@ public:
 	ER_ItemComponent* createItemEntity(QString);
 	ER_ItemComponent* createItemRelationship(QString);
 	ER_ItemComponent* createItemConnection(QString);
+
+	ER_TableViewItem* createTableItem(QStringList);
 };
 #endif

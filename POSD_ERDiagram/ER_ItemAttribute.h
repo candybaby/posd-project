@@ -11,7 +11,7 @@ public:
 	ER_ItemAttribute(QString);
 	ER_ItemAttribute(QString, bool);
 	~ER_ItemAttribute(void);
-	void initAttribute();
+	void adjustNameSize();
 	void setIsPrimaryKey(bool);
 	bool getIsPrimaryKey();
 
