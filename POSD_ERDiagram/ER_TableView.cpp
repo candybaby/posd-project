@@ -18,14 +18,12 @@ ER_TableView::~ER_TableView(void)
 // 滑鼠連點事件
 void ER_TableView::doubleClickedEvent(const QModelIndex& index)
 {
-	qDebug() << "Index" << index.column() << ", " << index.row();
 	currentIndex = index;
 }
 
 // 關閉編輯器
 void ER_TableView::closeEditor(QWidget* editer, QAbstractItemDelegate::EndEditHint hint)
 {
-	qDebug() << "closeEditor" << editer;
 	ER_TableViewModel* model = (ER_TableViewModel*)this->model();
 	QString text = model->getEditedResultText(currentIndex);
 	int id = model->getIdByIndex(currentIndex);

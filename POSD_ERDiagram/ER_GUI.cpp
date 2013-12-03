@@ -235,19 +235,16 @@ void ER_GUI::changeToAddRelationShipMode()
 void ER_GUI::undo()
 {
 	scene->undo();
-	qDebug() << "undo triggered";
 }
 
 // action redo
 void ER_GUI::redo()
 {
 	scene->redo();
-	qDebug() << "redo triggered";
 }
 
 // action deleteItem
 void ER_GUI::deleteItem()
 {
 	scene->deleteItem();
-	qDebug() << "deleteItem triggered";
 }

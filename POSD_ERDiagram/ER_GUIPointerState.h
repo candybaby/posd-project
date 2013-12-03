@@ -13,7 +13,6 @@ protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent*);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent*);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent*);
-	void resetAllItemsSelected();
 
 private:
 	QGraphicsItem* item;

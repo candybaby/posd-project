@@ -65,6 +65,7 @@ public:
 	void updateEditTextReject();
 	void updateMoveComponents(string);
 	void moveSelectedItem(int, int);
+	void resetAllItemsSelected();
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent*);

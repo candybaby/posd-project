@@ -110,9 +110,7 @@ void ER_DiagramScene::updateItemPosition()
 	{
 		ER_ItemComponent* itemComponent = ((ER_ItemComponent *)*it);
 		itemComponent->updatePosition();
-		//presentationModel->setComponentPos(itemComponent->getId(), itemComponent->pos().x(), itemComponent->pos().y());
 	}
-	qDebug() << "Scene Update";
 	update(0, 0, width(), height());//更新畫面
 }
 
@@ -227,19 +225,16 @@ void ER_DiagramScene::addItemConnection(qreal targetId, qreal sourceId)
 		QStringList candidateChoose;
 		candidateChoose << "1" << "N";
 		bool ok;
-		while (!(message.find("has been connected to the node") != std::string::npos))
+		cardinality = QInputDialog::getItem(0, "Cardinality", "Choose:", candidateChoose, 0, false, &ok);
+		if (ok && !cardinality.isEmpty())
 		{
-			cardinality = QInputDialog::getItem(0, "Cardinality", "Choose:", candidateChoose, 0, false, &ok);
-			if (ok && !cardinality.isEmpty())
+			if (cardinality == candidateChoose.at(0))
 			{
-				if (cardinality == candidateChoose.at(0))
-				{
-					message = presentationModel->addConnection(targetId, sourceId, ERD_Connection::one);
-				}
-				else if (cardinality == candidateChoose.at(1))
-				{
-					message = presentationModel->addConnection(targetId, sourceId, ERD_Connection::n);
-				}
+				message = presentationModel->addConnection(targetId, sourceId, ERD_Connection::one);
+			}
+			else if (cardinality == candidateChoose.at(1))
+			{
+				message = presentationModel->addConnection(targetId, sourceId, ERD_Connection::n);
 			}
 		}
 	}
@@ -270,14 +265,14 @@ void ER_DiagramScene::clearItems()
 void ER_DiagramScene::undo()
 {
 	string message = presentationModel->undo();
-	//qDebug() << QString(QString::fromLocal8Bit(message.c_str()));
+	resetAllItemsSelected();
 }
 
 // redo
 void ER_DiagramScene::redo()
 {
 	string message = presentationModel->redo();
-	//qDebug() << QString(QString::fromLocal8Bit(message.c_str()));
+	resetAllItemsSelected();
 }
 
 // deleteItem
@@ -293,7 +288,6 @@ void ER_DiagramScene::deleteItem()
 		for (int i = 0; i < itemList.size(); i++)
 		{
 			ER_ItemComponent* item = (ER_ItemComponent*)itemList.at(i);
-			//qDebug() << item->getId();
 			presentationModel->deleteComponent(item->getId());
 		}
 	}
@@ -304,20 +298,17 @@ void ER_DiagramScene::deleteItem()
 void ER_DiagramScene::updateAddComponent(string message)
 {
 	addItemNodes(QString(QString::fromLocal8Bit(message.c_str())));
-	//qDebug() << "updateAddComponent";
 }
 
 // 更新 連線Component
 void ER_DiagramScene::updateConnectComponents(string message)
 {
 	addItemConnections(QString::fromLocal8Bit(message.c_str()));
-	//qDebug() << "updateConnectComponents";
 }
 
 void ER_DiagramScene::tryToSetPrimaryKey(int id)
 {
 	presentationModel->setIsPrimaryKey(id);
-	//qDebug() << "tryToSetPrimaryKey id : " << id;
 }
 
 // 更新 Set Primary Key
@@ -326,7 +317,6 @@ void ER_DiagramScene::updateSetPrimaryKey(int id, bool flag)
 	ER_ItemAttribute* item = (ER_ItemAttribute*)getItemComponentById(id);
 	item->setIsPrimaryKey(flag);
 	update(0, 0, width(), height());
-	//qDebug() << "id :" << id << ", flag : " << flag;
 }
 
 // 更新 Delete Components
@@ -339,7 +329,6 @@ void ER_DiagramScene::updateDeleteComponents(string message)
 		deleteItemById(itemIdList.at(i).toInt());
 	}
 	update(0, 0, width(), height());
-	//qDebug() << "updateDeleteComponents :" << QString::fromLocal8Bit(message.c_str());
 }
 
 // 刪除特定id
@@ -353,14 +342,12 @@ void ER_DiagramScene::deleteItemById(int id)
 void ER_DiagramScene::updateUndoEnable(bool flag)
 {
 	gui->setUndoEnable(flag);
-	//qDebug() << "updateUndoEnable : " << flag;
 }
 
 // 更新 redo enable
 void ER_DiagramScene::updateRedoEnable(bool flag)
 {
 	gui->setRedoEnable(flag);
-	//qDebug() << "updateRedoEnable : " << flag;
 }
 
 // 設定delete button enable
@@ -381,7 +368,6 @@ void ER_DiagramScene::checkCanDeleteStatus()
 	{
 		setDeleteButtonEnable(false);
 	}
-	//qDebug() << "checkCanDeleteStatus";
 }
 
 // 更新 Edit Text
@@ -389,7 +375,6 @@ void ER_DiagramScene::updateEditText(int id, string text)
 {
 	ER_ItemComponent* item = getItemComponentById(id);
 	item->setName(QString(QString::fromLocal8Bit(text.c_str())));
-	//qDebug() << "updateEditText id : " << id;
 	updateItemPosition();
 }
 
@@ -411,10 +396,8 @@ void ER_DiagramScene::updateMoveComponents(string message)
 		int posY = presentationModel->getComponentPosYById(id);
 		ER_ItemComponent* item = getItemComponentById(id);
 		item->setPos(posX, posY);
-		qDebug()<< posX << "," << posY;
 	}
 	updateItemPosition();
-	qDebug() << "updateMove" << QString(QString::fromLocal8Bit(message.c_str()));
 }
 
 // 移動選取物件
@@ -430,6 +413,15 @@ void ER_DiagramScene::moveSelectedItem(int deltaX, int deltaY)
 		}
 		idQString += QString::number(((ER_ItemComponent*)itemList.at(i))->getId());
 	}
-	qDebug() << idQString;
 	presentationModel->moveComponent(idQString.toStdString(), deltaX, deltaY);
+}
+
+// 取消選取
+void ER_DiagramScene::resetAllItemsSelected()
+{
+	for (int i = 0;i < items().size(); i++)
+	{
+		items().at(i)->setSelected(false);
+	}
+	checkCanDeleteStatus();
 }
