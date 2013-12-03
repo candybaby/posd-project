@@ -9,8 +9,10 @@ class ER_GUISetPrimaryKeyState : public ER_GUIState
 public:
 	ER_GUISetPrimaryKeyState(ER_DiagramScene*);
 	~ER_GUISetPrimaryKeyState();
+
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent*);
+
 private:
 	QGraphicsItem* item;
 };

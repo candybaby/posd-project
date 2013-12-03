@@ -18,7 +18,6 @@ public:
 	ER_ItemComponent* createItemEntity(QString);
 	ER_ItemComponent* createItemRelationship(QString);
 	ER_ItemComponent* createItemConnection(QString);
-
 	ER_TableViewItem* createTableItem(QStringList);
 };
 #endif

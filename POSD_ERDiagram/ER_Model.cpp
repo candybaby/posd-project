@@ -591,7 +591,6 @@ string ER_Model::storeComponents(string path)
 // 存檔第1部分 Components
 void ER_Model::storeFileAboutComponents(ER_FileManager &file)
 {
-	//int modifyId = 0;
 	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
 	{
 		string line, tmp;
@@ -603,8 +602,6 @@ void ER_Model::storeFileAboutComponents(ER_FileManager &file)
 			line += tmp;
 		}
 		file.writeLine(line);
-		//((ERD_Component *)*it)->setId(modifyId);
-		//modifyId++;
 	}
 }
 
@@ -779,12 +776,14 @@ void ER_Model::setComponentText(int id, string text)
 	component->setText(text);
 }
 
+// 設定指定component postition
 void ER_Model::setComponentPosition(int id, int posX, int posY)
 {
 	ERD_Component* component = findComponentById(id);
 	component->setPos(posX, posY);
 }
 
+// 取得指定Node的資訊
 string ER_Model::getNodeInfo(int id)
 {
 	ERD_Component* component = findComponentById(id);
@@ -812,6 +811,7 @@ string ER_Model::getNodeInfo(int id)
 	return result;
 }
 
+// 取得指定connection的資訊
 string ER_Model::getConnectionInfo(int id)
 {
 	string result;

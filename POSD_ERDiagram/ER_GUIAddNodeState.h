@@ -10,6 +10,7 @@ public:
 	~ER_GUIAddNodeState();
 	void mousePressEvent(QGraphicsSceneMouseEvent*);
 	void mouseMoveEvent(QGraphicsSceneMouseEvent*);
+
 protected:
 	QString nodeName;
 	QGraphicsItem* preViewItem;

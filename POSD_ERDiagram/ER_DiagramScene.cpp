@@ -393,12 +393,14 @@ void ER_DiagramScene::updateEditText(int id, string text)
 	updateItemPosition();
 }
 
+// 更新 Edit Text Reject
 void ER_DiagramScene::updateEditTextReject()
 {
 
 }
 
-void ER_DiagramScene::updateMoveComponent(string message)
+// 更新 Move Components
+void ER_DiagramScene::updateMoveComponents(string message)
 {
 	QString qMessage = QString(QString::fromLocal8Bit(message.c_str()));
 	QStringList idList = qMessage.split(',');
@@ -415,6 +417,7 @@ void ER_DiagramScene::updateMoveComponent(string message)
 	qDebug() << "updateMove" << QString(QString::fromLocal8Bit(message.c_str()));
 }
 
+// 移動選取物件
 void ER_DiagramScene::moveSelectedItem(int deltaX, int deltaY)
 {
 	QList<QGraphicsItem*> itemList = selectedItems();

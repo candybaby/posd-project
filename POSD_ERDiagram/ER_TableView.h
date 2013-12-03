@@ -12,7 +12,6 @@ class ER_TableView : public QTableView, public ER_Observer
 public:
 	ER_TableView(ER_PresentationModel*);
 	~ER_TableView(void);
-	
 	void closeEditor(QWidget*, QAbstractItemDelegate::EndEditHint);
 	void updateItems();
 	void updateItemsFromFile();
@@ -24,7 +23,7 @@ public:
 	void updateRedoEnable(bool);
 	void updateEditText(int, string);
 	void updateEditTextReject();
-	void updateMoveComponent(string);
+	void updateMoveComponents(string);
 	
 protected slots:
 	void doubleClickedEvent(const QModelIndex&);

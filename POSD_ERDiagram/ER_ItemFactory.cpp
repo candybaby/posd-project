@@ -82,6 +82,7 @@ ER_ItemComponent* ER_ItemFactory::createItemConnection(QString cardinary)
 	return item;
 }
 
+// »s§@table item
 ER_TableViewItem* ER_ItemFactory::createTableItem(QStringList componentString)
 {
 	ER_TableViewItem *item;

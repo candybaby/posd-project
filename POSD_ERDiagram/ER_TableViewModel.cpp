@@ -14,6 +14,7 @@ ER_TableViewModel::~ER_TableViewModel()
 	removeAllItems();
 }
 
+// 訊息對應到items
 void ER_TableViewModel::mappingItems(QString message)
 {
 	QStringList componentsList = message.split('\n');
@@ -45,11 +46,7 @@ void ER_TableViewModel::mappingItemsToTable()
 	}
 }
 
-void ER_TableViewModel::itemChanged(QStandardItem* changedItem)
-{
-	qDebug() << "column : " << changedItem->column() << "row : "<< changedItem->row();
-}
-
+// 更新物件來自File
 void ER_TableViewModel::updateItemFromFile(string nodeMessage, string connectionsMessage)
 {
 	mappingItems(QString(QString::fromLocal8Bit(nodeMessage.c_str())));
@@ -58,11 +55,13 @@ void ER_TableViewModel::updateItemFromFile(string nodeMessage, string connection
 	mappingItemsToTable();
 }
 
+// 取得根據Index所要的Text
 QString ER_TableViewModel::getTextByIndex(QModelIndex index)
 {
 	return item(index.row(), index.column())->text();
 }
 
+// 取得編輯完成後的結果文字
 QString ER_TableViewModel::getEditedResultText(QModelIndex index)
 {
 	QString result, itemText = getTextByIndex(index);
@@ -82,12 +81,14 @@ QString ER_TableViewModel::getEditedResultText(QModelIndex index)
 	return result;
 }
 
+// 取得根據Index所要的ID
 int ER_TableViewModel::getIdByIndex(QModelIndex index)
 {
 	int row = index.row();
 	return tableViewItems.at(row)->getId();
 }
 
+// 刪除全部的Items
 void ER_TableViewModel::removeAllItems()
 {
 	removeRows(0, rowCount());

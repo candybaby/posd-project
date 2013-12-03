@@ -9,6 +9,7 @@ public:
 	ER_GUIConnecterState(ER_DiagramScene*);
 	void mousePressEvent(QGraphicsSceneMouseEvent*);
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent*);
+
 private:
 	QGraphicsItem* pressSelectItem;
 	QGraphicsItem* releaseSelectItem;

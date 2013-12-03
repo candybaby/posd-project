@@ -13,6 +13,7 @@ public:
 	virtual void mouseMoveEvent(QGraphicsSceneMouseEvent*);
 	virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent*);
 	virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent*);
+
 protected:
 	ER_DiagramScene* scene;
 };

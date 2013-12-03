@@ -11,6 +11,7 @@ public:
 	~ER_SetPrimaryKeyCommand(void);
 	string execute();
 	string unexecute();
+
 private:
 	ER_Model* model;
 	int id;

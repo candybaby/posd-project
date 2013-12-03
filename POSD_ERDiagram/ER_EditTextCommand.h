@@ -11,6 +11,7 @@ public:
 	~ER_EditTextCommand(void);
 	string execute();
 	string unexecute();
+
 private:
 	ER_Model* model;
 	int id;

@@ -80,6 +80,81 @@ TEST_F(ERD_ConnectionTest, isConnectToId)
 
 }
 
+// 代刚 砞﹚ゅ
+TEST_F(ERD_ConnectionTest, setText)
+{
+	// 代刚
+	// 把计:礚
+	// 肚:礚
+	// 爹:礚
+	connection->connectTo(entityTest);
+	connection->connectTo(attributeTest);
+	connectionWithCardinality->connectTo(entityTest);
+	connectionWithCardinality->connectTo(relationshipTest);
+	string result, except;
+	except = "text";
+	connection->setText(except);
+	result = connection->getText();
+	EXPECT_EQ("", result);
+
+	except = "";
+	connection->setText(except);
+	result = connection->getText();
+	EXPECT_EQ("", result);
+
+	except = "1";
+	connection->setText(except);
+	result = connection->getText();
+	EXPECT_EQ("", result);
+
+	except = "N";
+	connection->setText(except);
+	result = connection->getText();
+	EXPECT_EQ("", result);
+
+	except = "text";
+	connectionWithCardinality->setText(except);
+	result = connectionWithCardinality->getText();
+	EXPECT_EQ("1", result);
+
+	except = "";
+	connectionWithCardinality->setText(except);
+	result = connectionWithCardinality->getText();
+	EXPECT_EQ("1", result);
+
+	except = "1";
+	connectionWithCardinality->setText(except);
+	result = connectionWithCardinality->getText();
+	EXPECT_EQ(except, result);
+
+	except = "N";
+	connectionWithCardinality->setText(except);
+	result = connectionWithCardinality->getText();
+	EXPECT_EQ(except, result);
+}
+
+// 代刚 эゅ
+TEST_F(ERD_ConnectionTest, canChangeText)
+{
+	// 代刚
+	// 把计:礚
+	// 肚:bool
+	// 爹:礚
+	connection->connectTo(entityTest);
+	connection->connectTo(attributeTest);
+	connectionWithCardinality->connectTo(entityTest);
+	connectionWithCardinality->connectTo(relationshipTest);
+	EXPECT_EQ(connection->canChangeText("text"), false);
+	EXPECT_EQ(connection->canChangeText(""), false);
+	EXPECT_EQ(connection->canChangeText("1"), false);
+	EXPECT_EQ(connection->canChangeText("N"), false);
+
+	EXPECT_EQ(connectionWithCardinality->canChangeText("text"), false);
+	EXPECT_EQ(connectionWithCardinality->canChangeText(""), false);
+	EXPECT_EQ(connectionWithCardinality->canChangeText("1"), true);
+	EXPECT_EQ(connectionWithCardinality->canChangeText("N"), true);
+}
+
 // 代刚 订
 TEST_F(ERD_ConnectionTest, clone)
 {
@@ -98,3 +173,4 @@ TEST_F(ERD_ConnectionTest, clone)
 	EXPECT_EQ(connection->getNodeId(), connectionClone->getNodeId());
 	EXPECT_EQ(connection->getOtherNodeId(), connectionClone->getOtherNodeId());
 }
+

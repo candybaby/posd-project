@@ -15,12 +15,14 @@ ER_TableView::~ER_TableView(void)
 {
 }
 
+// 滑鼠連點事件
 void ER_TableView::doubleClickedEvent(const QModelIndex& index)
 {
 	qDebug() << "Index" << index.column() << ", " << index.row();
 	currentIndex = index;
 }
 
+// 關閉編輯器
 void ER_TableView::closeEditor(QWidget* editer, QAbstractItemDelegate::EndEditHint hint)
 {
 	qDebug() << "closeEditor" << editer;
@@ -34,6 +36,7 @@ void ER_TableView::closeEditor(QWidget* editer, QAbstractItemDelegate::EndEditHi
 	QTableView::closeEditor(editer, hint);
 }
 
+// 更新物件
 void ER_TableView::updateItems()
 {
 	ER_TableViewModel* model = (ER_TableViewModel*)this->model();
@@ -43,52 +46,62 @@ void ER_TableView::updateItems()
 	model->updateItemFromFile(nodesMessage, connectionsMessage);
 }
 
+// 更新 物件來自file
 void ER_TableView::updateItemsFromFile()
 {
 	updateItems();
 }
 
+// 更新 新增Component
 void ER_TableView::updateAddComponent(string)
 {
 	updateItems();
 }
 
+// 更新 連線Component
 void ER_TableView::updateConnectComponents(string)
 {
 	updateItems();
 }
 
+// 更新 Set Primary Key
 void ER_TableView::updateSetPrimaryKey(int, bool)
 {
 	//updateItems();
 }
 
+// 更新 Delete Components
 void ER_TableView::updateDeleteComponents(string)
 {
 	updateItems();
 }
 
+// 更新 undo enable
 void ER_TableView::updateUndoEnable(bool)
 {
 	updateItems();
 }
 
+// 更新 redo enable
 void ER_TableView::updateRedoEnable(bool)
 {
 	updateItems();
 }
 
+// 更新 Edit Text
 void ER_TableView::updateEditText(int, string)
 {
 	updateItems();
 }
 
+// 更新 Edit Text Reject
 void ER_TableView::updateEditTextReject()
 {
 	updateItems();
 }
 
-void ER_TableView::updateMoveComponent(string)
+// 更新 Move Components
+void ER_TableView::updateMoveComponents(string)
 {
 	// empty
 }

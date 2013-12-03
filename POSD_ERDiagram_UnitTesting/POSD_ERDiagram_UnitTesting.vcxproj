@@ -121,10 +121,13 @@
     <ClCompile Include="ER_ComponentFactoryTest.cpp" />
     <ClCompile Include="ER_ConnectCommandTest.cpp" />
     <ClCompile Include="ER_DeleteCommandTest.cpp" />
+    <ClCompile Include="ER_EditTextCommandTest.cpp" />
     <ClCompile Include="ER_FileManagerTest.cpp" />
     <ClCompile Include="ER_IntegrationTest.cpp" />
     <ClCompile Include="ER_ModelTest.cpp" />
+    <ClCompile Include="ER_MoveCommandTest.cpp" />
     <ClCompile Include="ER_PresentationModelTest.cpp" />
+    <ClCompile Include="ER_SetPrimaryKeyCommandTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Tool_FunctionTest.cpp" />
   </ItemGroup>
@@ -137,6 +140,11 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ER_EditTextCommandTest.h" />
+    <ClInclude Include="ER_MoveCommandTest.h" />
+    <ClInclude Include="ER_SetPrimaryKeyCommandTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

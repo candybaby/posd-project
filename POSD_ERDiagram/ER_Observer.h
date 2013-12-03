@@ -19,7 +19,7 @@ public:
 	virtual void updateRedoEnable(bool) = 0;
 	virtual void updateEditText(int, string) = 0;
 	virtual void updateEditTextReject() = 0;
-	virtual void updateMoveComponent(string) = 0;
+	virtual void updateMoveComponents(string) = 0;
 };
 #endif
 

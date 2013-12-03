@@ -200,7 +200,7 @@
       <Filter>Source Files\UI</Filter>
     </ClCompile>
     <ClCompile Include="ER_MoveCommand.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -319,7 +319,7 @@
       <Filter>Header Files\UI</Filter>
     </ClInclude>
     <ClInclude Include="ER_MoveCommand.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

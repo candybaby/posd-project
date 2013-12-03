@@ -21,7 +21,6 @@ void ER_GUIConnecterState::mouseReleaseEvent(QGraphicsSceneMouseEvent* releaseEv
 		releaseSelectItem = scene->itemAt(releaseEvent->scenePos());
 		if (pressSelectItem != NULL && releaseSelectItem != NULL)
 		{
-			// do qDebug() << "Try Connect!";
 			scene->addItemConnection(((ER_ItemComponent*)pressSelectItem)->getId(), ((ER_ItemComponent*)releaseSelectItem)->getId());
 		}
 		else

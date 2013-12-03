@@ -48,6 +48,7 @@ void ERD_Connection::setText(string text)
 	}
 }
 
+// 可以更換文字
 bool ERD_Connection::canChangeText(string text)
 {
 	if (cardinality != SizeOfCardinality)

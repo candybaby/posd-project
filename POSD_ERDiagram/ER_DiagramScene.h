@@ -63,7 +63,7 @@ public:
 	void checkCanDeleteStatus();
 	void updateEditText(int, string);
 	void updateEditTextReject();
-	void updateMoveComponent(string);
+	void updateMoveComponents(string);
 	void moveSelectedItem(int, int);
 
 protected:

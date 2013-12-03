@@ -880,6 +880,30 @@ TEST_F(ER_ModelTest, enoughNodesToConnect)
 	EXPECT_EQ(true, model->enoughNodesToConnect());
 }
 
+// 代刚
+TEST_F(ER_ModelTest, getGuiNodes)
+{
+	// 代刚
+	// 把计:礚
+	// 肚:string
+	// 爹:
+	testDataInitWithConnection();
+	string result = model->getGuiNodes();
+	EXPECT_EQ(true, result.find("0,Engineer,E")!= std::string::npos);
+}
+
+// 代刚
+TEST_F(ER_ModelTest, getGuiConnections)
+{
+	// 代刚
+	// 把计:
+	// 肚:
+	// 爹:
+	testDataInitWithConnection();
+	string result = model->getGuiConnections();
+	EXPECT_EQ(true, result.find("8,1,C")!= std::string::npos);
+}
+
 /* 代刚
 TEST_F(ER_ModelTest, functionName)
 {

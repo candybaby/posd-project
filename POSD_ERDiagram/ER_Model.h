@@ -90,7 +90,6 @@ public:
 	void setComponentText(int, string);
 	void setComponentPosition(int, int, int);
 	
-
 private:
 	vector<ERD_Component *> components;
 	int currentId;

@@ -21,13 +21,10 @@ public:
 	void mappingItems(QString);
 	void sortItems();
 	void mappingItemsToTable();
-	void itemChanged(QStandardItem *);
 	QString getTextByIndex(QModelIndex);
 	QString getEditedResultText(QModelIndex);
 	int getIdByIndex(QModelIndex);
 	void removeAllItems();
-	
-	
 	void updateItemFromFile(string, string);
 
 private:

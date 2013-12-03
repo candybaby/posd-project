@@ -48,7 +48,6 @@ ER_GUI::ER_GUI(ER_PresentationModel* presentationModel)
 	
 	setCentralWidget(splitter);
 	view->setMouseTracking(true);
-	
 }
 
 
@@ -69,6 +68,7 @@ ER_GUI::~ER_GUI(void)
 	delete undoAction;
 	delete redoAction;
 	delete deleteItemAction;
+	delete presentationModel;
 }
 
 // 創建Actions
@@ -105,7 +105,6 @@ void ER_GUI::createActions()
 	deleteItemAction->setShortcut(QKeySequence::Delete);
 	deleteItemAction->setEnabled(false);
 	connect(deleteItemAction, SIGNAL(triggered()), this, SLOT(deleteItem()));
-
 }
 
 // 創建Menus

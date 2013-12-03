@@ -15,11 +15,11 @@ ER_MoveCommand::ER_MoveCommand(ER_Model* model, string idString, int deltaX, int
 	this->deltaY = deltaY;
 }
 
-
 ER_MoveCommand::~ER_MoveCommand(void)
 {
 }
 
+// move command
 void ER_MoveCommand::moveCommand(int localDeltaX, int localDeltaY)
 {
 	ERD_Component* component;

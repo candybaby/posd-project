@@ -9,16 +9,19 @@ ER_Subject::~ER_Subject()
 {
 }
 
+// µù¥U
 void ER_Subject::registerObserver(ER_Observer* observer)
 {
 	observers.push_back(observer);
 }
 
+// µù¥U®ø°£
 void ER_Subject::unregisterObserver(ER_Observer* observer)
 {
 	observers.erase(find(observers.begin(), observers.end(), observer));
 }
 
+// Invoke Load File
 void ER_Subject::notifyLoadFile()
 {
 	for (vector<ER_Observer *>::iterator it = observers.begin(); it < observers.end(); it++)
@@ -81,6 +84,7 @@ void ER_Subject::notifyRedoEnable(bool flag)
 	}
 }
 
+// Invoke Edit Text
 void ER_Subject::notifyEditText(int id, string text)
 {
 	for (vector<ER_Observer *>::iterator it = observers.begin(); it < observers.end(); it++)
@@ -89,6 +93,7 @@ void ER_Subject::notifyEditText(int id, string text)
 	}
 }
 
+// Invoke Edit Text Reject
 void ER_Subject::notifyEditTextReject()
 {
 	for (vector<ER_Observer *>::iterator it = observers.begin(); it < observers.end(); it++)
@@ -97,10 +102,11 @@ void ER_Subject::notifyEditTextReject()
 	}
 }
 
+// Invoke Move Components
 void ER_Subject::notifyMoveComponent(string message)
 {
 	for (vector<ER_Observer *>::iterator it = observers.begin(); it < observers.end(); it++)
 	{
-		(*it)->updateMoveComponent(message);
+		(*it)->updateMoveComponents(message);
 	}
 }
