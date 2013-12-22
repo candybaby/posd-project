@@ -6,6 +6,7 @@
 #include "ER_AddCommand.h"
 #include "ER_ConnectCommand.h"
 #include "ER_DeleteCommand.h"
+#include "ER_MultipleDeleteCommand.h"
 #include "ER_EditTextCommand.h"
 #include "ER_MoveCommand.h"
 #include "ER_SetPrimaryKeyCommand.h"
@@ -71,6 +72,7 @@ public:
 	string redo();
 	string undo();
 	string deleteComponent(int);
+	string deleteComponents(vector<int>);
 	bool enoughNodesToConnect();
 	bool getHasModify();
 	string getGuiNodes();

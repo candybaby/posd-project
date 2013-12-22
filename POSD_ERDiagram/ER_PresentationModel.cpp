@@ -787,6 +787,11 @@ string ER_PresentationModel::deleteComponent(int id)
 	}
 }
 
+string ER_PresentationModel::deleteComponents(vector<int> ids)
+{
+	return cmdManager->execute(new ER_MultipleDeleteCommand(&model, ids));
+}
+
 // 判斷是否有足夠的Node可以連接
 bool ER_PresentationModel::enoughNodesToConnect()
 {

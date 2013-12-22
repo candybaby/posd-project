@@ -135,6 +135,9 @@
     <ClCompile Include="ER_SetPrimaryKeyCommandTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\POSD_ERDiagram\ER_MultipleDeleteCommand.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ER_EditTextCommandTest.h">

@@ -279,18 +279,14 @@ void ER_DiagramScene::redo()
 void ER_DiagramScene::deleteItem()
 {
 	QList<QGraphicsItem*> itemList = selectedItems();
-	if (itemList.size() >= 2)
+	vector<int> ids;
+	for (int i = 0; i < itemList.size(); i++)
 	{
-		qDebug() << "Can Not Delete Mutiple Selected Items";
+		ER_ItemComponent* item = (ER_ItemComponent*)itemList.at(i);
+		ids.push_back(item->getId());
 	}
-	else // size = 1
-	{
-		for (int i = 0; i < itemList.size(); i++)
-		{
-			ER_ItemComponent* item = (ER_ItemComponent*)itemList.at(i);
-			presentationModel->deleteComponent(item->getId());
-		}
-	}
+	presentationModel->deleteComponents(ids);
+
 	checkCanDeleteStatus();
 }
 
@@ -360,7 +356,7 @@ void ER_DiagramScene::setDeleteButtonEnable(bool flag)
 void ER_DiagramScene::checkCanDeleteStatus()
 {
 	QList<QGraphicsItem*> itemList = selectedItems();
-	if (itemList.size() == 1) // 多選不能刪 不支援
+	if (itemList.size() > 0)
 	{
 		setDeleteButtonEnable(true);
 	}

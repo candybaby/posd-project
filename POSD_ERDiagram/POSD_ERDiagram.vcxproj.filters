@@ -202,6 +202,9 @@
     <ClCompile Include="ER_MoveCommand.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
+    <ClCompile Include="ER_MultipleDeleteCommand.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tool_Function.h">
@@ -319,6 +322,9 @@
       <Filter>Header Files\UI</Filter>
     </ClInclude>
     <ClInclude Include="ER_MoveCommand.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ER_MultipleDeleteCommand.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
   </ItemGroup>
