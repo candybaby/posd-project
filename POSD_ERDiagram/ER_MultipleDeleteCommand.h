@@ -12,15 +12,16 @@ public:
 	ERD_Component* findComponentById(int);
 	bool deleteComponentById(int);
 	void clearTempData();
-	string deleteConnectionsByTargetIds(vector<int>);
-	string deleteRelatedConnectionByTargetId(int);
-	string deleteNodeByTargetIds(vector<int>);
+	void deleteConnectionsByTargetIds(vector<int>);
+	void deleteRelatedConnectionByTargetId(int);
+	void deleteNodeByTargetIds(vector<int>);
 	string execute();
 	string unexecute();
 
 private:
 	ER_Model* model;
 	vector<int> targetIds;
+	vector<int> deleteIds;
 	vector<ERD_Component*> relatedComponents;
 	vector<ERD_Component*> targetNodes;
 };

@@ -18,9 +18,8 @@ ERD_Component* ER_MultipleDeleteCommand::findComponentById(int id)
 	return model->findComponentById(id);
 }
 
-string ER_MultipleDeleteCommand::deleteConnectionsByTargetIds(vector<int> ids)
+void ER_MultipleDeleteCommand::deleteConnectionsByTargetIds(vector<int> ids)
 {
-	string deleteList;
 	for (vector<int>::iterator it = ids.begin(); it < ids.end(); it++)
 	{
 		ERD_Component* target = findComponentById(*it);
@@ -28,16 +27,13 @@ string ER_MultipleDeleteCommand::deleteConnectionsByTargetIds(vector<int> ids)
 		{
 			relatedComponents.push_back(target->clone());
 			deleteComponentById(*it);
-			deleteList += Tool_Function::convertIntToString(*it);
-			deleteList += ',';
+			deleteIds.push_back(*it);
 		}
 	}
-	return deleteList;
 }
 
-string ER_MultipleDeleteCommand::deleteRelatedConnectionByTargetId(int id)
+void ER_MultipleDeleteCommand::deleteRelatedConnectionByTargetId(int id)
 {
-	string deleteList;
 	vector<int> relatedConnectionId;
 	relatedConnectionId = model->findRelatedConnectionById(id);
 
@@ -45,15 +41,12 @@ string ER_MultipleDeleteCommand::deleteRelatedConnectionByTargetId(int id)
 	{
 		relatedComponents.push_back(findComponentById(*it)->clone());
 		deleteComponentById(*it);
-		deleteList += Tool_Function::convertIntToString(*it);
-		deleteList += ',';
+		deleteIds.push_back(*it);
 	}
-	return deleteList;
 }
 
-string ER_MultipleDeleteCommand::deleteNodeByTargetIds(vector<int> ids)
+void ER_MultipleDeleteCommand::deleteNodeByTargetIds(vector<int> ids)
 {
-	string deleteList;
 	for (vector<int>::iterator it = ids.begin(); it < ids.end(); it++)
 	{
 		ERD_Component* target = findComponentById(*it);
@@ -61,15 +54,9 @@ string ER_MultipleDeleteCommand::deleteNodeByTargetIds(vector<int> ids)
 		{
 			targetNodes.push_back(target->clone());
 			deleteComponentById(*it);
-			deleteList += Tool_Function::convertIntToString(*it);
-			deleteList += ',';
+			deleteIds.push_back(*it);
 		}
 	}
-	if (deleteList.size() > 0)
-	{
-		deleteList = deleteList.substr(0,deleteList.size() - 1);
-	}
-	return deleteList;
 }
 
 // 刪除指定id的物件
@@ -102,20 +89,28 @@ string ER_MultipleDeleteCommand::execute()
 	string deleteList;
 
 	// 刪除給定陣列中的connection 紀錄刪了哪些
-	deleteList += deleteConnectionsByTargetIds(targetIds);
+	deleteConnectionsByTargetIds(targetIds);
 
 	// 刪除給定陣列中的node的相關connection 紀錄
 	for (vector<int>::iterator it = targetIds.begin(); it < targetIds.end(); it++)
 	{
-		deleteList += deleteRelatedConnectionByTargetId(*it);
+		deleteRelatedConnectionByTargetId(*it);
 	}
 
 	// 刪除給定陣列中的node
-	deleteList += deleteNodeByTargetIds(targetIds);
-	if (deleteList != EMPTY_TEXT)
+	deleteNodeByTargetIds(targetIds);
+
+	for (vector<int>::iterator it = deleteIds.begin(); it < deleteIds.end(); it++)
 	{
+		deleteList += Tool_Function::convertIntToString(*it);
+		deleteList += ",";
+	}
+	if (deleteList.size() > 0)
+	{
+		deleteList = deleteList.substr(0,deleteList.size() - 1);
 		model->setHasModify(true);
 	}
+
 	model->notifyDeleteComponents(deleteList);
 
 	return EMPTY_TEXT;
