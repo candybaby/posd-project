@@ -3,6 +3,7 @@
 #define _ERD_ATTRIBUTE_
 #include "ERD_Node.h"
 
+class ER_ComponentVisitor;
 class ERD_Attribute : public ERD_Node
 {
 public:
@@ -16,6 +17,7 @@ public:
 	bool getIsConnected();
 	void setConnected(bool);
 	ERD_Component* clone();
+	void accept(ER_ComponentVisitor*);
 
 private:
 	bool isPrimaryKey;

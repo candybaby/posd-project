@@ -1,4 +1,5 @@
 #include "ERD_Component.h"
+#include "ER_ComponentVisitor.h"
 
 ERD_Component::ERD_Component(void)
 {
@@ -99,4 +100,9 @@ int ERD_Component::getPosX()
 int ERD_Component::getPosY()
 {
 	return posY;
+}
+
+void ERD_Component::accept(ER_ComponentVisitor*)
+{
+	// virtual method
 }

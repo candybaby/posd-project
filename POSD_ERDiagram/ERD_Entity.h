@@ -3,6 +3,7 @@
 #define _ERD_ENTITY_
 #include "ERD_Node.h"
 
+class ER_ComponentVisitor;
 class ERD_Entity : public ERD_Node
 {
 public:
@@ -15,6 +16,7 @@ public:
 	void addForeignEntityId(int);
 	vector<int> getForeignEntityIdVector();
 	ERD_Component* clone();
+	void accept(ER_ComponentVisitor*);
 
 private:
 	vector<int> foreignEntityIdVector;

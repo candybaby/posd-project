@@ -1,4 +1,5 @@
 #include "ERD_Entity.h"
+#include "ER_ComponentVisitor.h"
 
 ERD_Entity::ERD_Entity(void)
 	: ERD_Node()
@@ -66,4 +67,9 @@ vector<int> ERD_Entity::getForeignEntityIdVector()
 ERD_Component* ERD_Entity::clone()
 {
 	return new ERD_Entity(*this);
+}
+
+void ERD_Entity::accept(ER_ComponentVisitor* componentVisitor)
+{
+	componentVisitor->visit(this);
 }

@@ -85,6 +85,7 @@
     <ClCompile Include="ERD_Component.cpp" />
     <ClCompile Include="ERD_Connection.cpp" />
     <ClCompile Include="ERD_Entity.cpp" />
+    <ClCompile Include="ER_ComponentVisitor.cpp" />
     <ClCompile Include="ER_EditTextCommand.cpp" />
     <ClCompile Include="ER_GUIAddAttributeState.cpp" />
     <ClCompile Include="ER_GUIAddEntityState.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="ERD_Component.h" />
     <ClInclude Include="ERD_Connection.h" />
     <ClInclude Include="ERD_Entity.h" />
+    <ClInclude Include="ER_ComponentVisitor.h" />
     <ClInclude Include="ER_EditTextCommand.h" />
     <ClInclude Include="ER_GUIAddAttributeState.h" />
     <ClInclude Include="ER_GUIAddEntityState.h" />

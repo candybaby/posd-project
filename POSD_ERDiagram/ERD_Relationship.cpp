@@ -1,4 +1,5 @@
 #include "ERD_Relationship.h"
+#include "ER_ComponentVisitor.h"
 
 ERD_Relationship::ERD_Relationship(void)
 	: ERD_Node()
@@ -40,4 +41,9 @@ bool ERD_Relationship::canConnectTo(ERD_Component* entity)
 ERD_Component* ERD_Relationship::clone()
 {
 	return new ERD_Relationship(*this);
+}
+
+void ERD_Relationship::accept(ER_ComponentVisitor* componentVisitor)
+{
+	componentVisitor->visit(this);
 }

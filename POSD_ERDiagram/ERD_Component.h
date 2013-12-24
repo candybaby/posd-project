@@ -6,6 +6,7 @@
 
 using namespace std;
 
+class ER_ComponentVisitor;
 class ERD_Component
 {
 public:
@@ -33,6 +34,7 @@ public:
 	int getPosX();
 	int getPosY();
 	virtual ERD_Component* clone();
+	virtual void accept(ER_ComponentVisitor*);
 	
 protected:
 	vector<ERD_Component*> connections;

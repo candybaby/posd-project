@@ -206,6 +206,9 @@
       <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="ER_PasteCommand.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ER_ComponentVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -331,6 +334,9 @@
       <Filter>Header Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="ER_PasteCommand.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ER_ComponentVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,4 +1,5 @@
 #include "ERD_Connection.h"
+#include "ER_ComponentVisitor.h"
 
 ERD_Connection::ERD_Connection(void)
 	: ERD_Component()
@@ -126,4 +127,9 @@ int ERD_Connection::getOtherNodeId()
 ERD_Component* ERD_Connection::clone()
 {
 	return new ERD_Connection(*this);
+}
+
+void ERD_Connection::accept(ER_ComponentVisitor* componentVisitor)
+{
+	componentVisitor->visit(this);
 }

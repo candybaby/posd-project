@@ -1,4 +1,5 @@
 #include "ERD_Attribute.h"
+#include "ER_ComponentVisitor.h"
 
 ERD_Attribute::ERD_Attribute(void)
 	: ERD_Node()
@@ -70,4 +71,9 @@ void ERD_Attribute::setConnected(bool flag)
 ERD_Component* ERD_Attribute::clone()
 {
 	return new ERD_Attribute(*this);
+}
+
+void ERD_Attribute::accept(ER_ComponentVisitor* componentVisitor)
+{
+	componentVisitor->visit(this);
 }

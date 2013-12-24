@@ -3,6 +3,7 @@
 #define _ERD_CONNECTION_
 #include "ERD_Component.h"
 
+class ER_ComponentVisitor;
 class ERD_Connection : public ERD_Component
 {
 public:
@@ -27,6 +28,7 @@ public:
 	int getNodeId();
 	int getOtherNodeId();
 	ERD_Component* clone();
+	void accept(ER_ComponentVisitor*);
 
 private:
 	ConnectionCardinality cardinality;
