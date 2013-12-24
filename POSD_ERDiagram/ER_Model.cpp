@@ -25,11 +25,13 @@ ER_Model::ER_Model(void)
 	currentId = 0;
 	hasModify = false;
 	isStoreFileFail = false;
+	pasteCount = 0;
 }
 
 ER_Model::~ER_Model(void)
 {
 	clearCurrentComponents();
+	clearClipboard();
 }
 
 // 清除components
@@ -194,6 +196,12 @@ void ER_Model::addConnection(int componentId, int otherComponentId, int id, stri
 	setAttributeConnected(otherComponentId, true);
 	components.push_back(component);
 	sortComponents();
+}
+
+// 設定目前id
+void ER_Model::setCurrentId(int id)
+{
+	currentId = id;
 }
 
 // 回傳目前的ID
@@ -826,4 +834,71 @@ string ER_Model::getConnectionInfo(int id)
 	result += Tool_Function::convertIntToString(otherNode) + CHAR_ENDL;
 	
 	return result;
+}
+
+void ER_Model::setClipboard(vector<int> ids)
+{
+	clearClipboard();
+	for (vector<int>::iterator it = ids.begin(); it < ids.end(); it++)
+	{
+		ERD_Component* component = findComponentById(*it);
+		clipboard.push_back(component->clone());
+	}
+
+	if (ids.size() > 0)
+	{
+		notifyCanPasteState(true);
+	}
+	// debug start
+	/*int cSize = clipboard.size();
+	string message = "(model)clipboard size:" + Tool_Function::convertIntToString(cSize);
+	for (vector<ERD_Component*>::iterator it = clipboard.begin(); it < clipboard.end(); it++)
+	{
+		int id = (*it)->getId();
+		message += " id : ";
+		message += Tool_Function::convertIntToString(id);
+	}
+	notifyDebugMessage(message);*/
+	// debug end
+}
+
+vector<ERD_Component *> ER_Model::getClipboard()
+{
+	return clipboard;
+}
+
+void ER_Model::clearClipboard()
+{
+	while (clipboard.size() > 0)
+	{
+		ERD_Component* delData = clipboard.back();
+		clipboard.pop_back();
+		delete delData;
+	}
+	notifyCanPasteState(false);
+	pasteCount = 0;
+}
+
+int ER_Model::getPasteCount()
+{
+	return pasteCount;
+}
+
+void ER_Model::addPasteCount()
+{
+	pasteCount++;
+}
+
+void ER_Model::minusPasteCount()
+{
+	pasteCount--;
+}
+
+void ER_Model::deDugFunction()
+{
+	string message;
+	message.append("CurrentId:");
+	message.append(Tool_Function::convertIntToString(currentId));
+
+	notifyDebugMessage(message);
 }

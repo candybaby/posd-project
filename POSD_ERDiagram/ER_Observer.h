@@ -20,6 +20,8 @@ public:
 	virtual void updateEditText(int, string) = 0;
 	virtual void updateEditTextReject() = 0;
 	virtual void updateMoveComponents(string) = 0;
+	virtual void updateCanPasteState(bool) = 0;
+	virtual void updateDebugMessage(string) = 0;
 };
 #endif
 

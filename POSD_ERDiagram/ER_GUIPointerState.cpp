@@ -52,6 +52,6 @@ void ER_GUIPointerState::mouseReleaseEvent(QGraphicsSceneMouseEvent* releaseEven
 			scene->sendEvent(item, releaseEvent);
 		}
 	}
-	scene->checkCanDeleteStatus();
+	scene->checkCanEditItemsStatus();
 	item = NULL;
 }

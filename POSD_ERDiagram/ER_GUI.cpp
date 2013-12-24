@@ -56,9 +56,11 @@ ER_GUI::~ER_GUI(void)
 	delete scene;
 	delete view;
 	delete fileMenu;
-	delete fileToolBar;
-	delete stateToolBar;
 	delete addItemMenu;
+	delete editMenu;
+	delete fileToolBar;
+	delete editorToolBar;
+	delete stateToolBar;
 	delete stateTypeButtonGroup;
 	delete exitAction;
 	delete openAction;
@@ -68,6 +70,9 @@ ER_GUI::~ER_GUI(void)
 	delete undoAction;
 	delete redoAction;
 	delete deleteItemAction;
+	delete cutAction;
+	delete copyAction;
+	delete pasteAction;
 	delete presentationModel;
 }
 
@@ -79,7 +84,7 @@ void ER_GUI::createActions()
 	connect(openAction, SIGNAL(triggered()), this, SLOT(browse()));
 
 	exitAction = new QAction(QIcon("images/exit.png"), tr("E&xit"), this);
-	exitAction->setShortcut(tr("Ctrl+X"));
+	exitAction->setShortcut(tr("Ctrl+Q"));
 	connect(exitAction, SIGNAL(triggered()), this, SLOT(close()));
 
 	addAttributeAction = new QAction(tr("A&ttribute"), this);
@@ -105,6 +110,24 @@ void ER_GUI::createActions()
 	deleteItemAction->setShortcut(QKeySequence::Delete);
 	deleteItemAction->setEnabled(false);
 	connect(deleteItemAction, SIGNAL(triggered()), this, SLOT(deleteItem()));
+
+	cutAction = new QAction(QIcon("images/cut.png"), tr("C&ut"), this);
+	cutAction->setShortcut(tr("Ctrl+X"));
+	cutAction->setEnabled(false);
+	connect(cutAction, SIGNAL(triggered()), this, SLOT(cut()));
+
+	copyAction = new QAction(QIcon("images/copy.png"), tr("C&opy"), this);
+	copyAction->setShortcut(tr("Ctrl+C"));
+	copyAction->setEnabled(false);
+	connect(copyAction, SIGNAL(triggered()), this, SLOT(copy()));
+
+	pasteAction = new QAction(QIcon("images/paste.png"), tr("P&aste"), this);
+	pasteAction->setShortcut(tr("Ctrl+V"));
+	pasteAction->setEnabled(false);
+	connect(pasteAction, SIGNAL(triggered()), this, SLOT(paste()));
+
+	aboutAction = new QAction(tr("A&bout"), this);
+	connect(aboutAction, SIGNAL(triggered()), this, SLOT(showAboutDialog()));
 }
 
 // 創建Menus
@@ -119,6 +142,17 @@ void ER_GUI::createMenus()
 	addItemMenu->addAction(addAttributeAction);
 	addItemMenu->addAction(addEntityAction);
 	addItemMenu->addAction(addRelationshipAction);
+
+	editMenu = menuBar()->addMenu(tr("&Edit"));
+	editMenu->addAction(undoAction);
+	editMenu->addAction(redoAction);
+	editMenu->addAction(deleteItemAction);
+	editMenu->addAction(cutAction);
+	editMenu->addAction(copyAction);
+	editMenu->addAction(pasteAction);
+
+	helpMenu = menuBar()->addMenu(tr("&Help"));
+	helpMenu->addAction(aboutAction);
 }
 
 // 創建Toolbars
@@ -128,12 +162,19 @@ void ER_GUI::createToolbars()
 	fileToolBar->addAction(openAction);
 	fileToolBar->addSeparator();
 	fileToolBar->addAction(exitAction);
-	fileToolBar->addSeparator();
-	fileToolBar->addAction(undoAction);
-	fileToolBar->addSeparator();
-	fileToolBar->addAction(redoAction);
-	fileToolBar->addSeparator();
-	fileToolBar->addAction(deleteItemAction);
+
+	editorToolBar = addToolBar(tr("edit"));
+	editorToolBar->addAction(undoAction);
+	editorToolBar->addSeparator();
+	editorToolBar->addAction(redoAction);
+	editorToolBar->addSeparator();
+	editorToolBar->addAction(deleteItemAction);
+	editorToolBar->addSeparator();
+	editorToolBar->addAction(cutAction);
+	editorToolBar->addSeparator();
+	editorToolBar->addAction(copyAction);
+	editorToolBar->addSeparator();
+	editorToolBar->addAction(pasteAction);
 
 	QToolButton* pointerButton = new QToolButton;
 	pointerButton->setCheckable(true);
@@ -195,6 +236,21 @@ void ER_GUI::setRedoEnable(bool flag)
 	redoAction->setEnabled(flag);
 }
 
+void ER_GUI::setCutEnable(bool flag)
+{
+	cutAction->setEnabled(flag);
+}
+
+void ER_GUI::setCopyEnable(bool flag)
+{
+	copyAction->setEnabled(flag);
+}
+
+void ER_GUI::setPasteEnable(bool flag)
+{
+	pasteAction->setEnabled(flag);
+}
+
 // 瀏覽檔案總管
 void ER_GUI::browse()
 {
@@ -247,4 +303,29 @@ void ER_GUI::redo()
 void ER_GUI::deleteItem()
 {
 	scene->deleteItem();
+}
+
+// action cut
+void ER_GUI::cut()
+{
+	scene->cut();
+}
+
+// action copy
+void ER_GUI::copy()
+{
+	scene->copy();
+}
+
+// action paste
+void ER_GUI::paste()
+{
+	scene->paste();
+}
+
+void ER_GUI::showAboutDialog()
+{
+	presentationModel->deDugFunction();
+	//QMessageBox::information(this, tr("About Entity Relation Diagramming Tool"), 
+	//	"<p>Entity Relation Diagramming Tool<p>Version : 1.0<p>Author : 102598006@ntut");
 }

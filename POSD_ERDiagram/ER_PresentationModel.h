@@ -10,6 +10,7 @@
 #include "ER_EditTextCommand.h"
 #include "ER_MoveCommand.h"
 #include "ER_SetPrimaryKeyCommand.h"
+#include "ER_PasteCommand.h"
 #include "ER_Observer.h"
 
 class ER_PresentationModel
@@ -83,6 +84,10 @@ public:
 	void setComponentText(int, string);
 	void registerModelObserver(ER_Observer*);
 	void moveComponent(string, int, int);
+	void cutComponents(vector<int>);
+	void copyComponents(vector<int>);
+	void pasteComponents();
+	void deDugFunction();
 
 private:
 	ER_Model model;

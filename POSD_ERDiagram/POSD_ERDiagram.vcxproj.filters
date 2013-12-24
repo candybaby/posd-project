@@ -205,6 +205,9 @@
     <ClCompile Include="ER_MultipleDeleteCommand.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
+    <ClCompile Include="ER_PasteCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tool_Function.h">
@@ -327,6 +330,9 @@
     <ClInclude Include="ER_MultipleDeleteCommand.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
+    <ClInclude Include="ER_PasteCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="ER_DiagramScene.h">
@@ -359,6 +365,15 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="Images\relationship.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Images\copy.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Images\cut.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Images\paste.png">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

@@ -8,6 +8,7 @@ ER_ConnectCommand::ER_ConnectCommand(ER_Model* model,int nodeId, int otherNodeId
 	this->secondNodeId = otherNodeId;
 	this->targetId = id;
 	this->targetCardinality = ERD_Connection::SizeOfCardinality;
+	model->plusCurrentId();
 }
 
 ER_ConnectCommand::ER_ConnectCommand(ER_Model* model,int nodeId, int otherNodeId, int id, ERD_Connection::ConnectionCardinality cardinality)
@@ -17,6 +18,7 @@ ER_ConnectCommand::ER_ConnectCommand(ER_Model* model,int nodeId, int otherNodeId
 	this->secondNodeId = otherNodeId;
 	this->targetId = id;
 	this->targetCardinality = cardinality;
+	model->plusCurrentId();
 }
 
 ER_ConnectCommand::~ER_ConnectCommand(void)
@@ -27,7 +29,6 @@ ER_ConnectCommand::~ER_ConnectCommand(void)
 string ER_ConnectCommand::execute()
 {
 	model->addConnection(firstNodeId, secondNodeId, targetId, targetCardinality);
-	model->plusCurrentId();
 	model->setHasModify(true);
 	string message = model->getConnectionInfo(targetId);
 	model->notifyConnectComponents(message);

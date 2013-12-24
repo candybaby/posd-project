@@ -869,3 +869,26 @@ void ER_PresentationModel::moveComponent(string idString, int deltaX, int deltaY
 {
 	cmdManager->execute(new ER_MoveCommand(&model, idString, deltaX, deltaY));
 }
+
+// cut
+void ER_PresentationModel::cutComponents(vector<int> ids)
+{
+	model.setClipboard(ids);
+	cmdManager->execute(new ER_MultipleDeleteCommand(&model, ids));
+}
+
+// copy
+void ER_PresentationModel::copyComponents(vector<int> ids)
+{
+	model.setClipboard(ids);
+}
+
+void ER_PresentationModel::pasteComponents()
+{
+	cmdManager->execute(new ER_PasteCommand(&model, model.getClipboard(), model.getPasteCount()));
+}
+
+void ER_PresentationModel::deDugFunction()
+{
+	model.deDugFunction();
+}

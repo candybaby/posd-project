@@ -9,6 +9,7 @@
 #include "ER_GUISetPrimaryKeyState.h"
 #include <QDebug>
 #include <QInputDialog>
+#include <algorithm>
 #define POSITION_MAX_WIDTH 4000
 #define POSITION_MAX_HEIGTH 3000
 #define POSITION_BLOCK_WIDTH 200
@@ -278,16 +279,10 @@ void ER_DiagramScene::redo()
 // deleteItem
 void ER_DiagramScene::deleteItem()
 {
-	QList<QGraphicsItem*> itemList = selectedItems();
-	vector<int> ids;
-	for (int i = 0; i < itemList.size(); i++)
-	{
-		ER_ItemComponent* item = (ER_ItemComponent*)itemList.at(i);
-		ids.push_back(item->getId());
-	}
+	vector<int> ids = getSelectedItemsId();
 	presentationModel->deleteComponents(ids);
 
-	checkCanDeleteStatus();
+	checkCanEditItemsStatus();
 }
 
 // 更新 新增Component
@@ -352,17 +347,39 @@ void ER_DiagramScene::setDeleteButtonEnable(bool flag)
 	gui->setDeleteEnable(flag);
 }
 
+// 設定cut button enable
+void ER_DiagramScene::setCutButtonEnable(bool flag)
+{
+	gui->setCutEnable(flag);
+}
+
+// 設定copy button enable
+void ER_DiagramScene::setCopyButtonEnable(bool flag)
+{
+	gui->setCopyEnable(flag);
+}
+
+// 設定paste button enable
+void ER_DiagramScene::setPasteButtonEnable(bool flag)
+{
+	gui->setPasteEnable(flag);
+}
+
 // 檢查可以使用刪除的情況
-void ER_DiagramScene::checkCanDeleteStatus()
+void ER_DiagramScene::checkCanEditItemsStatus()
 {
 	QList<QGraphicsItem*> itemList = selectedItems();
 	if (itemList.size() > 0)
 	{
 		setDeleteButtonEnable(true);
+		setCutButtonEnable(true);
+		setCopyButtonEnable(true);
 	}
 	else
 	{
 		setDeleteButtonEnable(false);
+		setCutButtonEnable(false);
+		setCopyButtonEnable(false);
 	}
 }
 
@@ -419,5 +436,52 @@ void ER_DiagramScene::resetAllItemsSelected()
 	{
 		items().at(i)->setSelected(false);
 	}
-	checkCanDeleteStatus();
+	checkCanEditItemsStatus();
+}
+
+// cut
+void ER_DiagramScene::cut()
+{
+	vector<int> ids = getSelectedItemsId();
+	presentationModel->cutComponents(ids);
+	checkCanEditItemsStatus();
+}
+
+// copy
+void ER_DiagramScene::copy()
+{
+	vector<int> ids = getSelectedItemsId();
+	presentationModel->copyComponents(ids);
+}
+
+// paste
+void ER_DiagramScene::paste()
+{
+	presentationModel->pasteComponents();
+}
+
+vector<int> ER_DiagramScene::getSelectedItemsId()
+{
+	QList<QGraphicsItem*> itemList = selectedItems();
+	vector<int> ids;
+	for (int i = 0; i < itemList.size(); i++)
+	{
+		ER_ItemComponent* item = (ER_ItemComponent*)itemList.at(i);
+		ids.push_back(item->getId());
+	}
+	sort(ids.begin(), ids.end());
+	return ids;
+}
+
+// 更新 Can Paste State
+void ER_DiagramScene::updateCanPasteState(bool flag)
+{
+	setPasteButtonEnable(flag);
+}
+
+// 更新 debug message
+void ER_DiagramScene::updateDebugMessage(string message)
+{
+	qDebug() << QString(QString::fromLocal8Bit(message.c_str()));
+	//addItemNodes(QString(QString::fromLocal8Bit(message.c_str())));
 }

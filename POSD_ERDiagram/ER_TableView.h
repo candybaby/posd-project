@@ -24,6 +24,8 @@ public:
 	void updateEditText(int, string);
 	void updateEditTextReject();
 	void updateMoveComponents(string);
+	void updateCanPasteState(bool);
+	void updateDebugMessage(string);
 	
 protected slots:
 	void doubleClickedEvent(const QModelIndex&);

@@ -26,6 +26,9 @@ public:
 	void setDeleteEnable(bool);
 	void setUndoEnable(bool);
 	void setRedoEnable(bool);
+	void setCutEnable(bool);
+	void setCopyEnable(bool);
+	void setPasteEnable(bool);
 
 private slots:
 	void browse();
@@ -36,6 +39,10 @@ private slots:
 	void undo();
 	void redo();
 	void deleteItem();
+	void cut();
+	void copy();
+	void paste();
+	void showAboutDialog();
 
 private:
 	void createActions();
@@ -47,11 +54,17 @@ private:
 	ER_TableView* tableView;
 	ER_TableViewModel* tableViewModel;
 
-	//bar
+	//menu
 	QMenu* fileMenu;
-	QToolBar* fileToolBar;
-	QToolBar* stateToolBar;
 	QMenu* addItemMenu;
+	QMenu* editMenu;
+	QMenu* helpMenu;
+
+	//bar
+	QToolBar* fileToolBar;
+	QToolBar* editorToolBar;
+	QToolBar* stateToolBar;
+	
 
 	//QButtonGroup
 	QButtonGroup *stateTypeButtonGroup;
@@ -65,6 +78,10 @@ private:
 	QAction* undoAction;
 	QAction* redoAction;
 	QAction* deleteItemAction;
+	QAction* cutAction;
+	QAction* copyAction;
+	QAction* pasteAction;
+	QAction* aboutAction;
 
 	ER_PresentationModel *presentationModel;
 };

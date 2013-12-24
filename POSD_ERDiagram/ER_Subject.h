@@ -23,6 +23,8 @@ public:
 	void notifyEditText(int, string);
 	void notifyEditTextReject();
 	void notifyMoveComponent(string);
+	void notifyCanPasteState(bool);
+	void notifyDebugMessage(string);
 
 private:
 	vector<ER_Observer*> observers;

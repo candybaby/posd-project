@@ -115,6 +115,7 @@
     <ClCompile Include="ER_MoveCommand.cpp" />
     <ClCompile Include="ER_MultipleDeleteCommand.cpp" />
     <ClCompile Include="ER_Observer.cpp" />
+    <ClCompile Include="ER_PasteCommand.cpp" />
     <ClCompile Include="ER_PositionManager.cpp" />
     <ClCompile Include="ER_PresentationModel.cpp" />
     <ClCompile Include="ER_SetPrimaryKeyCommand.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="ER_MoveCommand.h" />
     <ClInclude Include="ER_MultipleDeleteCommand.h" />
     <ClInclude Include="ER_Observer.h" />
+    <ClInclude Include="ER_PasteCommand.h" />
     <ClInclude Include="ER_PositionManager.h" />
     <ClInclude Include="ER_PresentationModel.h" />
     <ClInclude Include="ER_SetPrimaryKeyCommand.h" />
@@ -218,10 +220,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Images\attribute.png" />
+    <None Include="Images\copy.png" />
+    <None Include="Images\cut.png" />
     <None Include="Images\entity.png" />
     <None Include="Images\exit.png" />
     <None Include="Images\folder.png" />
     <None Include="Images\linepointer.png" />
+    <None Include="Images\paste.png" />
     <None Include="Images\pointer.png" />
     <None Include="Images\relationship.png" />
   </ItemGroup>

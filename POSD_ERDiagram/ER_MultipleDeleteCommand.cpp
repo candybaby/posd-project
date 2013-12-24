@@ -1,5 +1,6 @@
 #include "ER_MultipleDeleteCommand.h"
 #define EMPTY_TEXT ""
+#define CAMMA_TEXT ","
 
 ER_MultipleDeleteCommand::ER_MultipleDeleteCommand(ER_Model* model,vector<int> ids)
 {
@@ -103,7 +104,7 @@ string ER_MultipleDeleteCommand::execute()
 	for (vector<int>::iterator it = deleteIds.begin(); it < deleteIds.end(); it++)
 	{
 		deleteList += Tool_Function::convertIntToString(*it);
-		deleteList += ",";
+		deleteList += CAMMA_TEXT;
 	}
 	if (deleteList.size() > 0)
 	{

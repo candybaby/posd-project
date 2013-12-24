@@ -47,6 +47,7 @@ public:
 	void addConnection(int, int, int);
 	void addConnection(int, int, int, string);
 	void addConnection(int, int, int, ERD_Connection::ConnectionCardinality);
+	void setCurrentId(int);
 	int getCurrentId();
 	int getIdByIndex(int);
 	int getConnectionNodeById(int, int);
@@ -89,11 +90,20 @@ public:
 	bool isStoreFileFail;
 	void setComponentText(int, string);
 	void setComponentPosition(int, int, int);
+	void setClipboard(vector<int>);
+	vector<ERD_Component *> getClipboard();
+	void clearClipboard();
+	int getPasteCount();
+	void addPasteCount();
+	void minusPasteCount();
+	void deDugFunction();
 	
 private:
 	vector<ERD_Component *> components;
+	vector<ERD_Component *> clipboard;
 	int currentId;
 	ER_ComponentFactory factory;
 	bool hasModify;
+	int pasteCount;
 };
 #endif

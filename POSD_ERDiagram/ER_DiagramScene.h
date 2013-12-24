@@ -60,12 +60,21 @@ public:
 	void updateRedoEnable(bool);
 	void updateUndoEnable(bool);
 	void setDeleteButtonEnable(bool);
-	void checkCanDeleteStatus();
+	void setCutButtonEnable(bool);
+	void setCopyButtonEnable(bool);
+	void setPasteButtonEnable(bool);
+	void checkCanEditItemsStatus();
 	void updateEditText(int, string);
 	void updateEditTextReject();
 	void updateMoveComponents(string);
 	void moveSelectedItem(int, int);
 	void resetAllItemsSelected();
+	void cut();
+	void copy();
+	void paste();
+	vector<int> getSelectedItemsId();
+	void updateCanPasteState(bool);
+	void updateDebugMessage(string);
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent*);

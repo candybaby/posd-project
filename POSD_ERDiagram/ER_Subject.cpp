@@ -110,3 +110,21 @@ void ER_Subject::notifyMoveComponent(string message)
 		(*it)->updateMoveComponents(message);
 	}
 }
+
+// Invoke Can Paste State
+void ER_Subject::notifyCanPasteState(bool flag)
+{
+	for (vector<ER_Observer *>::iterator it = observers.begin(); it < observers.end(); it++)
+	{
+		(*it)->updateCanPasteState(flag);
+	}
+}
+
+// Invoke Paste Components
+void ER_Subject::notifyDebugMessage(string message)
+{
+	for (vector<ER_Observer *>::iterator it = observers.begin(); it < observers.end(); it++)
+	{
+		(*it)->updateDebugMessage(message);
+	}
+}

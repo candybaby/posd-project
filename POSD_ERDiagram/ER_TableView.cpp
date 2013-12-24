@@ -103,3 +103,15 @@ void ER_TableView::updateMoveComponents(string)
 {
 	// empty
 }
+
+// 更新 Can Paste State
+void ER_TableView::updateCanPasteState(bool)
+{
+	// empty
+}
+
+// 更新 debug message
+void ER_TableView::updateDebugMessage(string)
+{
+	// empty
+}

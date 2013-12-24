@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ER_GUI.h'
 **
-** Created: Tue Dec 3 15:40:24 2013
+** Created: Tue Dec 24 11:46:28 2013
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_ER_GUI[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -39,6 +39,10 @@ static const uint qt_meta_data_ER_GUI[] = {
      123,    7,    7,    7, 0x08,
      130,    7,    7,    7, 0x08,
      137,    7,    7,    7, 0x08,
+     150,    7,    7,    7, 0x08,
+     156,    7,    7,    7, 0x08,
+     163,    7,    7,    7, 0x08,
+     171,    7,    7,    7, 0x08,
 
        0        // eod
 };
@@ -48,7 +52,8 @@ static const char qt_meta_stringdata_ER_GUI[] = {
     "changeToAddAttributeMode()\0"
     "changeToAddEntityMode()\0"
     "changeToAddRelationShipMode()\0undo()\0"
-    "redo()\0deleteItem()\0"
+    "redo()\0deleteItem()\0cut()\0copy()\0"
+    "paste()\0showAboutDialog()\0"
 };
 
 void ER_GUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -65,6 +70,10 @@ void ER_GUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 5: _t->undo(); break;
         case 6: _t->redo(); break;
         case 7: _t->deleteItem(); break;
+        case 8: _t->cut(); break;
+        case 9: _t->copy(); break;
+        case 10: _t->paste(); break;
+        case 11: _t->showAboutDialog(); break;
         default: ;
         }
     }
@@ -102,9 +111,9 @@ int ER_GUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 12;
     }
     return _id;
 }
