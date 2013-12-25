@@ -18,8 +18,5 @@ public:
 	void visit(ERD_Connection*);
 	void visit(ERD_Entity*);
 	void visit(ERD_Relationship*);
-	string getComponentInfo();
-private:
-	string componentInfo;
 };
 #endif

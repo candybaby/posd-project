@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ER_GUI.h'
 **
-** Created: Tue Dec 24 11:46:28 2013
+** Created: Wed Dec 25 19:46:59 2013
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_ER_GUI[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
+      14,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -33,22 +33,25 @@ static const uint qt_meta_data_ER_GUI[] = {
  // slots: signature, parameters, type, tag, flags
        8,    7,    7,    7, 0x08,
       17,    7,    7,    7, 0x08,
-      42,    7,    7,    7, 0x08,
-      69,    7,    7,    7, 0x08,
-      93,    7,    7,    7, 0x08,
-     123,    7,    7,    7, 0x08,
+      33,    7,    7,    7, 0x08,
+      54,    7,    7,    7, 0x08,
+      79,    7,    7,    7, 0x08,
+     106,    7,    7,    7, 0x08,
      130,    7,    7,    7, 0x08,
-     137,    7,    7,    7, 0x08,
-     150,    7,    7,    7, 0x08,
-     156,    7,    7,    7, 0x08,
-     163,    7,    7,    7, 0x08,
-     171,    7,    7,    7, 0x08,
+     160,    7,    7,    7, 0x08,
+     167,    7,    7,    7, 0x08,
+     174,    7,    7,    7, 0x08,
+     187,    7,    7,    7, 0x08,
+     193,    7,    7,    7, 0x08,
+     200,    7,    7,    7, 0x08,
+     208,    7,    7,    7, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_ER_GUI[] = {
-    "ER_GUI\0\0browse()\0pointerGroupClicked(int)\0"
+    "ER_GUI\0\0browse()\0saveComponent()\0"
+    "saveComponentAsXml()\0pointerGroupClicked(int)\0"
     "changeToAddAttributeMode()\0"
     "changeToAddEntityMode()\0"
     "changeToAddRelationShipMode()\0undo()\0"
@@ -63,17 +66,19 @@ void ER_GUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         ER_GUI *_t = static_cast<ER_GUI *>(_o);
         switch (_id) {
         case 0: _t->browse(); break;
-        case 1: _t->pointerGroupClicked((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 2: _t->changeToAddAttributeMode(); break;
-        case 3: _t->changeToAddEntityMode(); break;
-        case 4: _t->changeToAddRelationShipMode(); break;
-        case 5: _t->undo(); break;
-        case 6: _t->redo(); break;
-        case 7: _t->deleteItem(); break;
-        case 8: _t->cut(); break;
-        case 9: _t->copy(); break;
-        case 10: _t->paste(); break;
-        case 11: _t->showAboutDialog(); break;
+        case 1: _t->saveComponent(); break;
+        case 2: _t->saveComponentAsXml(); break;
+        case 3: _t->pointerGroupClicked((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 4: _t->changeToAddAttributeMode(); break;
+        case 5: _t->changeToAddEntityMode(); break;
+        case 6: _t->changeToAddRelationShipMode(); break;
+        case 7: _t->undo(); break;
+        case 8: _t->redo(); break;
+        case 9: _t->deleteItem(); break;
+        case 10: _t->cut(); break;
+        case 11: _t->copy(); break;
+        case 12: _t->paste(); break;
+        case 13: _t->showAboutDialog(); break;
         default: ;
         }
     }
@@ -111,9 +116,9 @@ int ER_GUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 14)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 14;
     }
     return _id;
 }

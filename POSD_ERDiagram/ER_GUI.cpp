@@ -73,6 +73,8 @@ ER_GUI::~ER_GUI(void)
 	delete cutAction;
 	delete copyAction;
 	delete pasteAction;
+	delete saveAction;
+	delete saveAsXmlAction;
 	delete presentationModel;
 }
 
@@ -82,6 +84,13 @@ void ER_GUI::createActions()
 	openAction = new QAction(QIcon("images/folder.png"), tr("O&pen..."), this);
 	openAction->setShortcut(tr("Ctrl+O"));
 	connect(openAction, SIGNAL(triggered()), this, SLOT(browse()));
+
+	saveAction = new QAction(QIcon("images/save.png"), tr("S&ave"), this);
+	saveAction->setShortcut(tr("Ctrl+S"));
+	connect(saveAction, SIGNAL(triggered()), this, SLOT(saveComponent()));
+
+	saveAsXmlAction = new QAction(tr("S&ave as xml"), this);
+	connect(saveAsXmlAction, SIGNAL(triggered()), this, SLOT(saveComponentAsXml()));
 
 	exitAction = new QAction(QIcon("images/exit.png"), tr("E&xit"), this);
 	exitAction->setShortcut(tr("Ctrl+Q"));
@@ -136,6 +145,9 @@ void ER_GUI::createMenus()
 	fileMenu = menuBar()->addMenu(tr("&File"));
 	fileMenu->addAction(openAction);
 	fileMenu->addSeparator();
+	fileMenu->addAction(saveAction);
+	fileMenu->addAction(saveAsXmlAction);
+	fileMenu->addSeparator();
 	fileMenu->addAction(exitAction);
 
 	addItemMenu = menuBar()->addMenu(tr("&Add"));
@@ -160,6 +172,8 @@ void ER_GUI::createToolbars()
 {
 	fileToolBar = addToolBar(tr("File"));
 	fileToolBar->addAction(openAction);
+	fileToolBar->addSeparator();
+	fileToolBar->addAction(saveAction);
 	fileToolBar->addSeparator();
 	fileToolBar->addAction(exitAction);
 
@@ -258,6 +272,26 @@ void ER_GUI::browse()
 	if (directory != "")
 	{
 		presentationModel->readComponentsFile(directory.toStdString());
+	}
+}
+
+// 存檔
+void ER_GUI::saveComponent()
+{
+	QString directory = QFileDialog::getSaveFileName(this, tr("Save File"), "C://", tr("ERD File (*.erd)"));
+	if (directory != "")
+	{
+		presentationModel->storeComponents(directory.toStdString());
+	}
+}
+
+// 存檔 XML格式
+void ER_GUI::saveComponentAsXml()
+{
+	QString directory = QFileDialog::getSaveFileName(this, tr("Save File"), "C://", tr("XML File (*.xml)"));
+	if (directory != "")
+	{
+		qDebug() << "saveComponentAsXml path : " << directory;
 	}
 }
 

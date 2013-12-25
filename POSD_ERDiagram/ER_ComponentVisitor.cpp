@@ -13,3 +13,18 @@ ER_ComponentVisitor::ER_ComponentVisitor()
 ER_ComponentVisitor::~ER_ComponentVisitor()
 {
 }
+
+string ER_ComponentVisitor::getComponentInfo()
+{
+	return componentInfo;
+}
+
+string ER_ComponentVisitor::getConnectionInfo()
+{
+	return connectionInfo;
+}
+
+string ER_ComponentVisitor::getPositionInfo()
+{
+	return positionInfo;
+}

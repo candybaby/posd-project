@@ -32,6 +32,8 @@ public:
 
 private slots:
 	void browse();
+	void saveComponent();
+	void saveComponentAsXml();
 	void pointerGroupClicked(int);
 	void changeToAddAttributeMode();
 	void changeToAddEntityMode();
@@ -82,6 +84,8 @@ private:
 	QAction* copyAction;
 	QAction* pasteAction;
 	QAction* aboutAction;
+	QAction* saveAction;
+	QAction* saveAsXmlAction;
 
 	ER_PresentationModel *presentationModel;
 };

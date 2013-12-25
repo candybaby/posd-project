@@ -1,4 +1,5 @@
 #include "ER_Model.h"
+#include "ER_SaveComponentVisitor.h"
 #define EMPTY_TEXT ""
 #define FIND_ENTITY "Find Right Entity"
 #define NOT_ENTITY "Not an Entity"
@@ -17,6 +18,7 @@
 #define CANNOT_CONNECT -4
 #define ZERO_STRING "0";
 #define ONE_STRING "1";
+#define POS_FILE_TYPE ".pos";
 
 using namespace std;
 
@@ -579,18 +581,29 @@ void ER_Model::loadPrinaryKey(vector<string>::iterator lineIt)
 // 存檔
 string ER_Model::storeComponents(string path)
 {
-	string result;
-	ER_FileManager file;
-	if (file.openFile(path, ER_FileManager::Write)&&!isStoreFileFail)
+	string result, posPath = path.substr(0,path.size() - 4);
+	ER_FileManager file, posFile;
+	posPath += POS_FILE_TYPE;
+	if (file.openFile(path, ER_FileManager::Write)&&posFile.openFile(posPath, ER_FileManager::Write)&&!isStoreFileFail)
 	{
-		storeFileAboutComponents(file);
-		file.writeLine(EMPTY_TEXT);
+		string componentsInfo, connectionsInfo, positionInfo;
+		ER_SaveComponentVisitor* saveVisitor = new ER_SaveComponentVisitor;
+		for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
+		{
+			(*it)->accept(saveVisitor);
+			componentsInfo.append(saveVisitor->getComponentInfo());
+			connectionsInfo.append(saveVisitor->getConnectionInfo());
+			positionInfo.append(saveVisitor->getPositionInfo());
+		}
 
-		storeFileAboutConnections(file);
-		file.writeLine(EMPTY_TEXT);
-
+		file.writeLine(componentsInfo);
+		file.writeLine(connectionsInfo);
 		storeFileAboutPrimaryKey(file);
 		file.closeFile();
+
+		posFile.writeLine(positionInfo);
+		posFile.closeFile();
+
 		result = MESSAGE_SUCCESS;
 		hasModify = false;
 	}
@@ -602,40 +615,40 @@ string ER_Model::storeComponents(string path)
 }
 
 // 存檔第1部分 Components
-void ER_Model::storeFileAboutComponents(ER_FileManager &file)
-{
-	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
-	{
-		string line, tmp;
-		line = componentTypeMapNames[((ERD_Component *)*it)->getType()];
-		tmp = ((ERD_Component *)*it)->getText();
-		if (tmp.size() > 0)
-		{
-			line += CAMMA;
-			line += tmp;
-		}
-		file.writeLine(line);
-	}
-}
+//void ER_Model::storeFileAboutComponents(ER_FileManager &file)
+//{
+//	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
+//	{
+//		string line, tmp;
+//		line = componentTypeMapNames[((ERD_Component *)*it)->getType()];
+//		tmp = ((ERD_Component *)*it)->getText();
+//		if (tmp.size() > 0)
+//		{
+//			line += CAMMA;
+//			line += tmp;
+//		}
+//		file.writeLine(line);
+//	}
+//}
 
 // 存檔第2部分 Connections
-void ER_Model::storeFileAboutConnections(ER_FileManager &file)
-{
-	vector<int> connections = findComponentsByType(ERD_Component::Connection);
-	for (vector<int>::iterator it = connections.begin(); it < connections.end(); it++)
-	{
-		string line, tmp;
-		int node, otherNode;
-		node = getConnectionNodeById(*it, 0);
-		otherNode = getConnectionNodeById(*it, 1);
-		line = Tool_Function::convertIntToString((int)*it);
-		line += SPACE;
-		line += Tool_Function::convertIntToString(node);
-		line += CAMMA_TEXT;
-		line += Tool_Function::convertIntToString(otherNode);
-		file.writeLine(line);
-	}
-}
+//void ER_Model::storeFileAboutConnections(ER_FileManager &file)
+//{
+//	vector<int> connections = findComponentsByType(ERD_Component::Connection);
+//	for (vector<int>::iterator it = connections.begin(); it < connections.end(); it++)
+//	{
+//		string line, tmp;
+//		int node, otherNode;
+//		node = getConnectionNodeById(*it, 0);
+//		otherNode = getConnectionNodeById(*it, 1);
+//		line = Tool_Function::convertIntToString((int)*it);
+//		line += SPACE;
+//		line += Tool_Function::convertIntToString(node);
+//		line += CAMMA_TEXT;
+//		line += Tool_Function::convertIntToString(otherNode);
+//		file.writeLine(line);
+//	}
+//}
 
 // 存檔第3部分 PrimaryKey
 void ER_Model::storeFileAboutPrimaryKey(ER_FileManager &file)

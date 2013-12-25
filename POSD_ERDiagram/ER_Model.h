@@ -73,8 +73,8 @@ public:
 	void loadConnections(vector<string>::iterator, map<int, string> &);
 	void loadPrinaryKey(vector<string>::iterator);
 	string storeComponents(string);
-	void storeFileAboutComponents(ER_FileManager &);
-	void storeFileAboutConnections(ER_FileManager &);
+	//void storeFileAboutComponents(ER_FileManager &);
+	//void storeFileAboutConnections(ER_FileManager &);
 	void storeFileAboutPrimaryKey(ER_FileManager &);
 	bool isExistComponentId(string);
 	string checkEntitySelectedValid(string);

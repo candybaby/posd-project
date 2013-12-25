@@ -141,6 +141,12 @@
     <ClCompile Include="..\POSD_ERDiagram\ER_PasteCommand.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\POSD_ERDiagram\ER_SaveComponentVisitor.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\POSD_ERDiagram\ER_ComponentVisitor.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ER_EditTextCommandTest.h">
