@@ -3,6 +3,7 @@
 #define _ER_SAVE_COMPONENT_VISITOR_
 #include "ER_ComponentVisitor.h"
 #include <string>
+#include <map>
 using namespace std;
 
 class ER_Model;
@@ -30,5 +31,7 @@ private:
 	string primaryKeyInfo;
 	string positionInfo;
 	ER_Model* model;
+	map<int, int> mappingSaveId;
+	int newId;
 };
 #endif

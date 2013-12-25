@@ -586,23 +586,18 @@ string ER_Model::storeComponents(string path)
 	posPath += POS_FILE_TYPE;
 	if (file.openFile(path, ER_FileManager::Write)&&posFile.openFile(posPath, ER_FileManager::Write)&&!isStoreFileFail)
 	{
-		string componentsInfo, connectionsInfo, primaryKeyInfo, positionInfo;
 		ER_SaveComponentVisitor* saveVisitor = new ER_SaveComponentVisitor(this);
 		for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
 		{
 			(*it)->accept(saveVisitor);
-			componentsInfo.append(saveVisitor->getComponentInfo());
-			connectionsInfo.append(saveVisitor->getConnectionInfo());
-			primaryKeyInfo.append(saveVisitor->getPrimaryKeyInfo());
-			positionInfo.append(saveVisitor->getPositionInfo());
 		}
 
-		file.writeLine(componentsInfo);
-		file.writeLine(connectionsInfo);
-		file.write(primaryKeyInfo);
+		file.writeLine(saveVisitor->getComponentInfo());
+		file.writeLine(saveVisitor->getConnectionInfo());
+		file.write(saveVisitor->getPrimaryKeyInfo());
 		file.closeFile();
 
-		posFile.write(positionInfo);
+		posFile.write(saveVisitor->getPositionInfo());
 		posFile.closeFile();
 
 		result = MESSAGE_SUCCESS;
