@@ -1,6 +1,7 @@
 #pragma once
 #ifndef _ER_COMPONENT_VISITOR_ 
 #define _ER_COMPONENT_VISITOR_
+#include <string>
 
 class ERD_Attribute;
 class ERD_Connection;

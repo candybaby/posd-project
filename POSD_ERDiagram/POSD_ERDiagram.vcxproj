@@ -119,6 +119,7 @@
     <ClCompile Include="ER_PasteCommand.cpp" />
     <ClCompile Include="ER_PositionManager.cpp" />
     <ClCompile Include="ER_PresentationModel.cpp" />
+    <ClCompile Include="ER_SaveComponentVisitor.cpp" />
     <ClCompile Include="ER_SetPrimaryKeyCommand.cpp" />
     <ClCompile Include="ER_Subject.cpp" />
     <ClCompile Include="ER_TableView.cpp" />
@@ -203,6 +204,7 @@
     <ClInclude Include="ER_PasteCommand.h" />
     <ClInclude Include="ER_PositionManager.h" />
     <ClInclude Include="ER_PresentationModel.h" />
+    <ClInclude Include="ER_SaveComponentVisitor.h" />
     <ClInclude Include="ER_SetPrimaryKeyCommand.h" />
     <ClInclude Include="ER_Subject.h" />
     <CustomBuild Include="ER_TableView.h">
