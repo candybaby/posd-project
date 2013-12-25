@@ -13,6 +13,7 @@
 
 using namespace std;
 
+class ER_SaveComponentVisitor;
 class ER_Model : public ER_Subject
 {
 public:
@@ -73,9 +74,6 @@ public:
 	void loadConnections(vector<string>::iterator, map<int, string> &);
 	void loadPrinaryKey(vector<string>::iterator);
 	string storeComponents(string);
-	//void storeFileAboutComponents(ER_FileManager &);
-	//void storeFileAboutConnections(ER_FileManager &);
-	void storeFileAboutPrimaryKey(ER_FileManager &);
 	bool isExistComponentId(string);
 	string checkEntitySelectedValid(string);
 	bool deleteComponent(int);

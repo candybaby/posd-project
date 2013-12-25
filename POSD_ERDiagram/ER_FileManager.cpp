@@ -55,6 +55,11 @@ void ER_FileManager::writeLine(string content)
 	fout << content.c_str() << endl;
 }
 
+void ER_FileManager::write(string content)
+{
+	fout << content.c_str();
+}
+
 // Ãö³¬ÀÉ®×
 void ER_FileManager::closeFile()
 {

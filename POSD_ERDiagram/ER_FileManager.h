@@ -23,6 +23,7 @@ public:
 	~ER_FileManager(void);
 	bool openFile(string, FileType);
 	void writeLine(string);
+	void write(string);
 	string readFile();
 	void closeFile();
 	bool isTestCantWrite;

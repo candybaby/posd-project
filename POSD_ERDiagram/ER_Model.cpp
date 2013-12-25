@@ -586,22 +586,23 @@ string ER_Model::storeComponents(string path)
 	posPath += POS_FILE_TYPE;
 	if (file.openFile(path, ER_FileManager::Write)&&posFile.openFile(posPath, ER_FileManager::Write)&&!isStoreFileFail)
 	{
-		string componentsInfo, connectionsInfo, positionInfo;
-		ER_SaveComponentVisitor* saveVisitor = new ER_SaveComponentVisitor;
+		string componentsInfo, connectionsInfo, primaryKeyInfo, positionInfo;
+		ER_SaveComponentVisitor* saveVisitor = new ER_SaveComponentVisitor(this);
 		for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
 		{
 			(*it)->accept(saveVisitor);
 			componentsInfo.append(saveVisitor->getComponentInfo());
 			connectionsInfo.append(saveVisitor->getConnectionInfo());
+			primaryKeyInfo.append(saveVisitor->getPrimaryKeyInfo());
 			positionInfo.append(saveVisitor->getPositionInfo());
 		}
 
 		file.writeLine(componentsInfo);
 		file.writeLine(connectionsInfo);
-		storeFileAboutPrimaryKey(file);
+		file.write(primaryKeyInfo);
 		file.closeFile();
 
-		posFile.writeLine(positionInfo);
+		posFile.write(positionInfo);
 		posFile.closeFile();
 
 		result = MESSAGE_SUCCESS;
@@ -612,65 +613,6 @@ string ER_Model::storeComponents(string path)
 		result = MESSAGE_FAIL;
 	}
 	return result;
-}
-
-// 存檔第1部分 Components
-//void ER_Model::storeFileAboutComponents(ER_FileManager &file)
-//{
-//	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
-//	{
-//		string line, tmp;
-//		line = componentTypeMapNames[((ERD_Component *)*it)->getType()];
-//		tmp = ((ERD_Component *)*it)->getText();
-//		if (tmp.size() > 0)
-//		{
-//			line += CAMMA;
-//			line += tmp;
-//		}
-//		file.writeLine(line);
-//	}
-//}
-
-// 存檔第2部分 Connections
-//void ER_Model::storeFileAboutConnections(ER_FileManager &file)
-//{
-//	vector<int> connections = findComponentsByType(ERD_Component::Connection);
-//	for (vector<int>::iterator it = connections.begin(); it < connections.end(); it++)
-//	{
-//		string line, tmp;
-//		int node, otherNode;
-//		node = getConnectionNodeById(*it, 0);
-//		otherNode = getConnectionNodeById(*it, 1);
-//		line = Tool_Function::convertIntToString((int)*it);
-//		line += SPACE;
-//		line += Tool_Function::convertIntToString(node);
-//		line += CAMMA_TEXT;
-//		line += Tool_Function::convertIntToString(otherNode);
-//		file.writeLine(line);
-//	}
-//}
-
-// 存檔第3部分 PrimaryKey
-void ER_Model::storeFileAboutPrimaryKey(ER_FileManager &file)
-{
-	vector<int> entities = findComponentsByType(ERD_Component::Entity);
-	for (vector<int>::iterator it = entities.begin(); it < entities.end(); it++)
-	{
-		string line;
-		vector<int> primaryKeys = findPrimaryKeyByEntityId(*it);
-		if (primaryKeys.size() > 0)
-		{
-			line = Tool_Function::convertIntToString((int)*it);
-			line += SPACE;
-			for (vector<int>::iterator pit = primaryKeys.begin(); pit < primaryKeys.end(); pit++)
-			{
-				line +=  Tool_Function::convertIntToString((int)*pit);
-				line += CAMMA_TEXT;
-			}
-			line = line.substr(0,line.size() - 1);
-			file.writeLine(line);
-		}
-	}
 }
 
 // 判斷idStr是不是已存在的componentId

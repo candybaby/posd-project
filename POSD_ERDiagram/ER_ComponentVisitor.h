@@ -17,13 +17,5 @@ public:
 	virtual void visit(ERD_Connection*) = 0;
 	virtual void visit(ERD_Entity*) = 0;
 	virtual void visit(ERD_Relationship*) = 0;
-	virtual string getComponentInfo();
-	virtual string getConnectionInfo();
-	virtual string getPositionInfo();
-
-protected:
-	string componentInfo;
-	string connectionInfo;
-	string positionInfo;
 };
 #endif
