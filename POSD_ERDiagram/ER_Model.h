@@ -43,6 +43,7 @@ public:
 	void setAttributeConnected(int, bool);
 	int checkAddConnection(int, int);
 	void plusCurrentId();
+	void minusCurrentId();
 	string addConnection(int, int, ERD_Connection::ConnectionCardinality);
 	void addConnection(int, int, int);
 	void addConnection(int, int, int, string);

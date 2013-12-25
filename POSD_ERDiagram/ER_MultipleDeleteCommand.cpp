@@ -113,7 +113,7 @@ string ER_MultipleDeleteCommand::execute()
 	}
 
 	model->notifyDeleteComponents(deleteList);
-
+	deleteIds.clear();
 	return EMPTY_TEXT;
 }
 

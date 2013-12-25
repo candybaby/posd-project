@@ -2,6 +2,8 @@
 #ifndef _ER_SAVE_COMPONENT_VISITOR_ 
 #define _ER_SAVE_COMPONENT_VISITOR_
 #include "ER_ComponentVisitor.h"
+#include <string>
+using namespace std;
 
 class ERD_Attribute;
 class ERD_Connection;
@@ -16,5 +18,8 @@ public:
 	void visit(ERD_Connection*);
 	void visit(ERD_Entity*);
 	void visit(ERD_Relationship*);
+	string getComponentInfo();
+private:
+	string componentInfo;
 };
 #endif

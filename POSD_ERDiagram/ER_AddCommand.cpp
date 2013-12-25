@@ -26,6 +26,7 @@ string ER_AddCommand::execute()
 	else
 	{
 		model->addNode(targetType, targetName, targetId);
+		model->plusCurrentId();
 		model->sortComponents();
 	}
 	model->setHasModify(true);
@@ -41,5 +42,6 @@ string ER_AddCommand::unexecute()
 	model->deleteComponent(targetId);
 	model->setHasModify(true);
 	model->notifyDeleteComponents(Tool_Function::convertIntToString(targetId));
+	model->minusCurrentId();
 	return EMPTY_TEXT;
 }

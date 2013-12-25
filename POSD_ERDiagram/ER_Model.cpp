@@ -104,7 +104,7 @@ void ER_Model::addNode(ERD_Component::ComponentType type, string nodeName, int i
 void ER_Model::setAttributeConnected(int componentId, bool flag)
 {
 	ERD_Component* component = findComponentById(componentId);
-	if (component->getType() == ERD_Component::Attribute)
+	if (component != NULL && component->getType() == ERD_Component::Attribute)//debug
 	{
 		ERD_Attribute* attribute = (ERD_Attribute*)component;
 		attribute->setConnected(flag);
@@ -149,6 +149,11 @@ int ER_Model::checkAddConnection(int componentId, int otherComponentId)
 void ER_Model::plusCurrentId()
 {
 	currentId++;
+}
+
+void ER_Model::minusCurrentId()
+{
+	currentId--;
 }
 
 // 新增連線 特定ID位置的新增 主要用於讀檔時的新增
@@ -694,12 +699,19 @@ string ER_Model::checkEntitySelectedValid(string entityId)
 bool ER_Model::deleteComponent(int id)
 {
 	ERD_Component* delData = findComponentById(id);
+	
 	if (delData == NULL)
 	{
 		return false;
 	}
 	else
 	{
+		if (delData->getType() == ERD_Component::Connection)
+		{
+			ERD_Connection* delConnection = (ERD_Connection*) delData;
+			setAttributeConnected(delConnection->getNodeId(), false);
+			setAttributeConnected(delConnection->getOtherNodeId(), false);
+		}
 		components.erase(find(components.begin(), components.end(), delData));
 		delete delData;
 		return true;

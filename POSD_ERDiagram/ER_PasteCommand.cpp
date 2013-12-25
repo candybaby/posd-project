@@ -41,18 +41,9 @@ bool ER_PasteCommand::isExistNode(int id)
 // °õ¦æ
 string ER_PasteCommand::execute()
 {
-	if (pasteComponentCount == 0)
-	{
-		pasteNodes();
-		pasteConnections();
-		model->setCurrentId(modelCurrentId + pasteComponentCount);
-	}
-	else
-	{
-		pasteComponentCount = 0;
-		pasteNodes();
-		pasteConnections();
-	}
+	pasteNodes();
+	pasteConnections();
+	model->setCurrentId(modelCurrentId + pasteComponentCount);
 	
 	model->setHasModify(true);
 	model->addPasteCount();
@@ -72,6 +63,8 @@ string ER_PasteCommand::unexecute()
 	mappingCloneId.clear();
 	model->minusPasteCount();
 	model->setHasModify(true);
+	model->setCurrentId(modelCurrentId);
+	pasteComponentCount = 0;
 	return "";
 }
 
