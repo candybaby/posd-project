@@ -91,6 +91,7 @@ public:
 	void deDugFunction();
 	string getTableHtml();
 	string getAttributeForTableHtml(int);
+	string getForeignKeyHtmlResult(int);
 
 private:
 	ER_Model model;

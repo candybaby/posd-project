@@ -415,5 +415,8 @@
     <None Include="Images\undo.png">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Images\foreignKey.png">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

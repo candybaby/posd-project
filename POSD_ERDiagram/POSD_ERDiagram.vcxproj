@@ -234,6 +234,7 @@
     <None Include="Images\entity.png" />
     <None Include="Images\exit.png" />
     <None Include="Images\folder.png" />
+    <None Include="Images\foreignKey.png" />
     <None Include="Images\key.png" />
     <None Include="Images\linepointer.png" />
     <None Include="Images\paste.png" />

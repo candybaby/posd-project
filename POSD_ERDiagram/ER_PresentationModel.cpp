@@ -921,6 +921,7 @@ string ER_PresentationModel::getTableHtml()
 			message.append(getAttributeForTableHtml(*it));
 			message.append("</p>");
 		}
+		model.notifyDebugMessage(getTable());
 	}
 	else
 	{
@@ -944,16 +945,36 @@ string ER_PresentationModel::getAttributeForTableHtml(int id)
 		if (getIsPrimaryKey(*it))
 		{
 			result.append("<td>")
-				  .append("<img src=\"images/key.png\" width=\"18\" height=\"18\">")
-				  .append(getNameById(*it))
-				  .append("</td>");
+				.append("<img src=\"images/key.png\" width=\"18\" height=\"18\">")
+				.append(getNameById(*it))
+				.append("</td>");
 		}
 		else
 		{
 			result.append("<td>").append(getNameById(*it)).append("</td>");
 		}
 	}
-	//result += getForeignKeyResult(id);
+	result.append(getForeignKeyHtmlResult(id));
 	result.append("</tr></table>");
+	return result;
+}
+
+string ER_PresentationModel::getForeignKeyHtmlResult(int id)
+{
+	string result;
+	vector<vector<int>> foreignKeysVector = model.findForeignKeyByEntityId(id);
+	if (foreignKeysVector.size() != 0) // ¦³foreignkeyªº¸Ü
+	{
+		for (vector<vector<int>>::size_type u = 0; u < foreignKeysVector.size(); u++) 
+		{ 
+			for (vector<int>::size_type v = 0; v < foreignKeysVector[u].size(); v++) 
+			{
+				result.append("<td>")
+					.append("<img src=\"images/foreignKey.png\" width=\"18\" height=\"18\">")
+				    .append(getNameById(foreignKeysVector[u][v]))
+					.append("</td>");
+			}
+		}
+	}
 	return result;
 }
