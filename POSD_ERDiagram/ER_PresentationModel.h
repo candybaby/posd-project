@@ -65,6 +65,7 @@ public:
 	string getTable();
 	string readComponentsFile(string);
 	string storeComponents(string);
+	string storeComponentsAsXml(string);
 	string getConnectionsTable();
 	string getNodesTable();
 	string getComponentsTable();

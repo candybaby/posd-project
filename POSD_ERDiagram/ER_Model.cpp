@@ -1,5 +1,6 @@
 #include "ER_Model.h"
 #include "ER_SaveComponentVisitor.h"
+#include "ER_SaveXmlComponentVisitor.h"
 #define EMPTY_TEXT ""
 #define FIND_ENTITY "Find Right Entity"
 #define NOT_ENTITY "Not an Entity"
@@ -16,9 +17,10 @@
 #define ASK_CARDINALITY -2
 #define SAME_NODE -3
 #define CANNOT_CONNECT -4
-#define ZERO_STRING "0";
-#define ONE_STRING "1";
-#define POS_FILE_TYPE ".pos";
+#define ZERO_STRING "0"
+#define ONE_STRING "1"
+#define POS_FILE_TYPE ".pos"
+#define ENDL "\n"
 
 using namespace std;
 
@@ -599,6 +601,36 @@ string ER_Model::storeComponents(string path)
 
 		posFile.write(saveVisitor->getPositionInfo());
 		posFile.closeFile();
+
+		result = MESSAGE_SUCCESS;
+		hasModify = false;
+	}
+	else
+	{
+		result = MESSAGE_FAIL;
+	}
+	return result;
+}
+
+// ¶s¿…as xml
+string ER_Model::storeComponentsAsXml(string path)
+{
+	string result;
+	ER_FileManager file;
+	if (file.openFile(path, ER_FileManager::Write)&&!isStoreFileFail)
+	{
+		ER_SaveXmlComponentVisitor* saveXmlVisitor = new ER_SaveXmlComponentVisitor(this);
+		string xmlContent;
+		xmlContent.append("<?xml version=\"1.0\"?>").append(ENDL);
+		xmlContent.append("<ERDiagram>").append(ENDL);
+		for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
+		{
+			(*it)->accept(saveXmlVisitor);
+		}
+		xmlContent.append(saveXmlVisitor->getComponentXmlInfo());
+		xmlContent.append("</ERDiagram>");
+		file.write(xmlContent);
+		file.closeFile();
 
 		result = MESSAGE_SUCCESS;
 		hasModify = false;

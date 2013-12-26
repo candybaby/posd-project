@@ -214,6 +214,9 @@
     <ClCompile Include="ER_SaveComponentVisitor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ER_SaveXmlComponentVisitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tool_Function.h">
@@ -343,6 +346,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ER_SaveComponentVisitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ER_SaveXmlComponentVisitor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -569,6 +569,20 @@ string ER_PresentationModel::storeComponents(string path)
 	}
 }
 
+// ¶s¿… as xml
+string ER_PresentationModel::storeComponentsAsXml(string path)
+{
+	string message = model.storeComponentsAsXml(path);
+	if (message.find(MESSAGE_SUCCESS) != std::string::npos)
+	{
+		return EMPTY_TEXT;
+	}
+	else
+	{
+		return FAIL_TO_SAVE;
+	}
+}
+
 // ¶^∂«connection¶r¶Í
 string ER_PresentationModel::getConnectionsTable()
 {

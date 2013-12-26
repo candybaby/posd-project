@@ -291,7 +291,7 @@ void ER_GUI::saveComponentAsXml()
 	QString directory = QFileDialog::getSaveFileName(this, tr("Save File"), "C://", tr("XML File (*.xml)"));
 	if (directory != "")
 	{
-		qDebug() << "saveComponentAsXml path : " << directory;
+		presentationModel->storeComponentsAsXml(directory.toStdString());
 	}
 }
 

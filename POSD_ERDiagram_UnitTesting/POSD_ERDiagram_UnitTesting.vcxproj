@@ -112,6 +112,7 @@
     <ClCompile Include="..\POSD_ERDiagram\ER_PasteCommand.cpp" />
     <ClCompile Include="..\POSD_ERDiagram\ER_PresentationModel.cpp" />
     <ClCompile Include="..\POSD_ERDiagram\ER_SaveComponentVisitor.cpp" />
+    <ClCompile Include="..\POSD_ERDiagram\ER_SaveXmlComponentVisitor.cpp" />
     <ClCompile Include="..\POSD_ERDiagram\ER_SetPrimaryKeyCommand.cpp" />
     <ClCompile Include="..\POSD_ERDiagram\ER_Subject.cpp" />
     <ClCompile Include="..\POSD_ERDiagram\ER_TextUI.cpp" />

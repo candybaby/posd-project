@@ -74,6 +74,7 @@ public:
 	void loadConnections(vector<string>::iterator, map<int, string> &);
 	void loadPrinaryKey(vector<string>::iterator);
 	string storeComponents(string);
+	string storeComponentsAsXml(string);
 	bool isExistComponentId(string);
 	string checkEntitySelectedValid(string);
 	bool deleteComponent(int);
