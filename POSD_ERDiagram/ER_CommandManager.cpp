@@ -7,6 +7,11 @@ ER_CommandManager::ER_CommandManager(ER_Model* model)
 
 ER_CommandManager::~ER_CommandManager(void)
 {
+	clear();
+}
+
+void ER_CommandManager::clear()
+{
 	while (!undoCommands.empty()) 
 	{
 		ER_Command* command = undoCommands.top();
@@ -19,6 +24,13 @@ ER_CommandManager::~ER_CommandManager(void)
 		redoCommands.pop();
 		delete command;
 	}
+}
+
+void ER_CommandManager::reset()
+{
+	clear();
+	model->notifyUndoEnable(false);
+	model->notifyRedoEnable(false);
 }
 
 // °õ¦æ

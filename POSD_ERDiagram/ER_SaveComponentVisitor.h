@@ -4,9 +4,12 @@
 #include "ER_ComponentVisitor.h"
 #include <string>
 #include <map>
+#include <vector>
+
 using namespace std;
 
 class ER_Model;
+class ERD_Component;
 class ERD_Attribute;
 class ERD_Connection;
 class ERD_Entity;
@@ -20,6 +23,7 @@ public:
 	void visit(ERD_Connection*);
 	void visit(ERD_Entity*);
 	void visit(ERD_Relationship*);
+	void visitAllComponents();
 	string getComponentInfo();
 	string getConnectionInfo();
 	string getPrimaryKeyInfo();
@@ -33,5 +37,6 @@ private:
 	ER_Model* model;
 	map<int, int> mappingSaveId;
 	int newId;
+	vector<ERD_Component*> components;
 };
 #endif

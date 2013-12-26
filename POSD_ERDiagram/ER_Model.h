@@ -73,6 +73,7 @@ public:
 	void loadComponents(vector<string>::iterator, map<int, string> &);
 	void loadConnections(vector<string>::iterator, map<int, string> &);
 	void loadPrinaryKey(vector<string>::iterator);
+	void loadPosFileContent(ER_FileManager &);
 	string storeComponents(string);
 	string storeComponentsAsXml(string);
 	bool isExistComponentId(string);

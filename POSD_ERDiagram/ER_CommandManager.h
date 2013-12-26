@@ -17,6 +17,8 @@ public:
 	bool undo();
 	int getUndoStackCount();
 	int getRedoStackCount();
+	void reset();
+	void clear();
 
 private:
 	stack<ER_Command*> undoCommands;

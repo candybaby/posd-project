@@ -547,6 +547,7 @@ string ER_PresentationModel::readComponentsFile(string path)
 		result += getComponentsTable();
 		result += ENDL;
 		result += getConnectionsTable();
+		cmdManager->reset();
 		return result;
 	}
 	else

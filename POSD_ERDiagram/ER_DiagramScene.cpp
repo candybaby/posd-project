@@ -457,6 +457,7 @@ void ER_DiagramScene::copy()
 // paste
 void ER_DiagramScene::paste()
 {
+	resetAllItemsSelected();
 	presentationModel->pasteComponents();
 }
 

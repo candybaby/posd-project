@@ -472,10 +472,16 @@ vector<int> ER_Model::findOneByOneRelationEntityId(int targetId)
 // À|¸ÕÅªÀÉ
 string ER_Model::readComponentsFile(string path)
 {
-	ER_FileManager file;
+	string posPath = path.substr(0,path.size() - 4);
+	posPath.append(POS_FILE_TYPE);
+	ER_FileManager file, posFile;
 	if (file.openFile(path, ER_FileManager::Read))
 	{
 		loadFileContent(file);
+		if (posFile.openFile(posPath, ER_FileManager::Read))
+		{
+			loadPosFileContent(posFile);
+		}
 		notifyLoadFile();
 		return MESSAGE_SUCCESS;
 	}
@@ -580,12 +586,32 @@ void ER_Model::loadPrinaryKey(vector<string>::iterator lineIt)
 	}
 }
 
+// Åªpos fileÀÉ
+void ER_Model::loadPosFileContent(ER_FileManager &file)
+{
+	vector<string> lines;
+	string content = file.readFile();
+	lines = Tool_Function::split(content, CHAR_ENDL);
+	vector<int> nodesId = findNodes();
+	int count = 0;
+	for (vector<int>::iterator it = nodesId.begin(); it < nodesId.end(); it++)
+	{
+		ERD_Component* component = findComponentById(*it);
+		int posX, posY;
+		vector<string> posStringVector = Tool_Function::split(lines[count], ' ');
+		posX = stoi(posStringVector[0]);
+		posY = stoi(posStringVector[1]);
+		component->setPos(posX, posY);
+		count++;
+	}
+}
+
 // ¦sÀÉ
 string ER_Model::storeComponents(string path)
 {
 	string result, posPath = path.substr(0,path.size() - 4);
 	ER_FileManager file, posFile;
-	posPath += POS_FILE_TYPE;
+	posPath.append(POS_FILE_TYPE);
 	if (file.openFile(path, ER_FileManager::Write)&&posFile.openFile(posPath, ER_FileManager::Write)&&!isStoreFileFail)
 	{
 		ER_SaveComponentVisitor* saveVisitor = new ER_SaveComponentVisitor(this);
@@ -593,7 +619,7 @@ string ER_Model::storeComponents(string path)
 		{
 			(*it)->accept(saveVisitor);
 		}
-
+		saveVisitor->visitAllComponents();
 		file.writeLine(saveVisitor->getComponentInfo());
 		file.writeLine(saveVisitor->getConnectionInfo());
 		file.write(saveVisitor->getPrimaryKeyInfo());
