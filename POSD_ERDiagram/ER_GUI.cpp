@@ -269,7 +269,7 @@ void ER_GUI::checkWannaSave()
 {
 	QMessageBox::StandardButton reply;
 	reply = QMessageBox::question(this, tr("Entity Relation Diagramming Tool"),
-		"<p>Save the diagram?",
+		"The diagram has been modified.<br />Do you want to save your changes?",
 		QMessageBox::Yes | QMessageBox::No);
 	if (reply == QMessageBox::Yes)
 	{
@@ -381,6 +381,6 @@ void ER_GUI::paste()
 void ER_GUI::showAboutDialog()
 {
 	presentationModel->deDugFunction();
-	//QMessageBox::information(this, tr("About Entity Relation Diagramming Tool"), 
-	//	"<p>Entity Relation Diagramming Tool<p>Version : 1.0<p>Author : 102598006@ntut");
+	QMessageBox::information(this, tr("About Entity Relation Diagramming Tool"), 
+		"<p>Entity Relation Diagramming Tool</p><p>Version : 1.0</p><p>Author : 102598006@ntut</p>");
 }
