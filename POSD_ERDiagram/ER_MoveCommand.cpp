@@ -35,6 +35,7 @@ void ER_MoveCommand::moveCommand(int localDeltaX, int localDeltaY)
 string ER_MoveCommand::execute()
 {
 	moveCommand(deltaX, deltaY);
+	model->setHasModify(true);
 	return EMPTY_TEXT;
 }
 
@@ -42,5 +43,6 @@ string ER_MoveCommand::execute()
 string ER_MoveCommand::unexecute()
 {
 	moveCommand(-deltaX, -deltaY);
+	model->setHasModify(true);
 	return EMPTY_TEXT;
 }

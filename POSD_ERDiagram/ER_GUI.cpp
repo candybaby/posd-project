@@ -265,6 +265,27 @@ void ER_GUI::setPasteEnable(bool flag)
 	pasteAction->setEnabled(flag);
 }
 
+void ER_GUI::checkWannaSave()
+{
+	QMessageBox::StandardButton reply;
+	reply = QMessageBox::question(this, tr("Entity Relation Diagramming Tool"),
+		"<p>Save the diagram?",
+		QMessageBox::Yes | QMessageBox::No);
+	if (reply == QMessageBox::Yes)
+	{
+		saveComponent();
+	}
+}
+
+void ER_GUI::closeEvent(QCloseEvent* event)
+{
+	if (presentationModel->getHasModify())
+	{
+		checkWannaSave();
+	}
+	QMainWindow::closeEvent(event);
+}
+
 // ÂsÄýÀÉ®×Á`ºÞ
 void ER_GUI::browse()
 {

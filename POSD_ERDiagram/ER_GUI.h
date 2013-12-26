@@ -29,6 +29,8 @@ public:
 	void setCutEnable(bool);
 	void setCopyEnable(bool);
 	void setPasteEnable(bool);
+	void checkWannaSave();
+	void closeEvent(QCloseEvent* event);
 
 private slots:
 	void browse();
