@@ -1,19 +1,15 @@
 #pragma once
 #ifndef _ER_TABLE_VIEWL_ 
 #define _ER_TABLE_VIEW_
-#include "QTableView"
+#include <QTextEdit>
 #include "ER_PresentationModel.h"
 #include "ER_Observer.h"
-#include <QObject>
 
-class ER_TableView : public QTableView, public ER_Observer
+class ER_TextView : public QTextEdit, public ER_Observer
 {
-	Q_OBJECT
 public:
-	ER_TableView(ER_PresentationModel*);
-	~ER_TableView(void);
-	void closeEditor(QWidget*, QAbstractItemDelegate::EndEditHint);
-	void updateItems();
+	ER_TextView(ER_PresentationModel*);
+	~ER_TextView(void);
 	void updateItemsFromFile();
 	void updateAddComponent(string);
 	void updateConnectComponents(string);
@@ -26,12 +22,9 @@ public:
 	void updateMoveComponents(string);
 	void updateCanPasteState(bool);
 	void updateDebugMessage(string);
-	
-protected slots:
-	void doubleClickedEvent(const QModelIndex&);
+	void updateHtml();
 
 private:
 	ER_PresentationModel* presentationModel;
-	QModelIndex currentIndex;
 };
 #endif

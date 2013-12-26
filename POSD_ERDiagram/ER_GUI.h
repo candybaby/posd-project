@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QMenu>
 #include <QTableView>
+#include "ER_TextView.h"
 #include "ER_DiagramScene.h"
 #include "ER_PresentationModel.h"
 #include "ER_TableViewModel.h"
@@ -57,6 +58,7 @@ private:
 	ER_DiagramScene* scene;
 	ER_TableView* tableView;
 	ER_TableViewModel* tableViewModel;
+	ER_TextView* textViewer;
 
 	//menu
 	QMenu* fileMenu;

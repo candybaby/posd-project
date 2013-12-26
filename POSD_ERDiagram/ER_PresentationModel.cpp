@@ -907,3 +907,53 @@ void ER_PresentationModel::deDugFunction()
 {
 	model.deDugFunction();
 }
+
+string ER_PresentationModel::getTableHtml()
+{
+	string message;
+	if (isExistTable())
+	{
+		vector<int> entitiesId = findOneByOneEntity();
+		for (vector<int>::iterator it = entitiesId.begin(); it < entitiesId.end(); it++)
+		{
+			message.append("<p>");
+			message.append(getNameById(*it));
+			message.append(getAttributeForTableHtml(*it));
+			message.append("</p>");
+		}
+	}
+	else
+	{
+		message += NO_TABLE;
+	}
+	return message;
+}
+
+// 回傳特定id的Attribute字串
+string ER_PresentationModel::getAttributeForTableHtml(int id)
+{
+	string result = "<table border=\"1\"><tr>";
+	vector<int> attributesId = findIdWithTypeByTargetId(ERD_Component::Attribute, id);
+	if (attributesId.size() == 0)
+	{
+		return result;
+	}
+
+	for (vector<int>::iterator it = attributesId.begin(); it < attributesId.end(); it++)
+	{
+		if (getIsPrimaryKey(*it))
+		{
+			result.append("<td>")
+				  .append("<img src=\"images/key.png\" width=\"18\" height=\"18\">")
+				  .append(getNameById(*it))
+				  .append("</td>");
+		}
+		else
+		{
+			result.append("<td>").append(getNameById(*it)).append("</td>");
+		}
+	}
+	//result += getForeignKeyResult(id);
+	result.append("</tr></table>");
+	return result;
+}

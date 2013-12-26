@@ -483,6 +483,7 @@ string ER_Model::readComponentsFile(string path)
 			loadPosFileContent(posFile);
 		}
 		notifyLoadFile();
+		setHasModify(false);
 		return MESSAGE_SUCCESS;
 	}
 	else

@@ -89,6 +89,8 @@ public:
 	void copyComponents(vector<int>);
 	void pasteComponents();
 	void deDugFunction();
+	string getTableHtml();
+	string getAttributeForTableHtml(int);
 
 private:
 	ER_Model model;

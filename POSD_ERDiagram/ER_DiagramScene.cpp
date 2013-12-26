@@ -484,5 +484,4 @@ void ER_DiagramScene::updateCanPasteState(bool flag)
 void ER_DiagramScene::updateDebugMessage(string message)
 {
 	qDebug() << QString(QString::fromLocal8Bit(message.c_str()));
-	//addItemNodes(QString(QString::fromLocal8Bit(message.c_str())));
 }

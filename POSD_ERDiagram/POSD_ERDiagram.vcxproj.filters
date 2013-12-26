@@ -209,12 +209,15 @@
       <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="ER_ComponentVisitor.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="ER_SaveComponentVisitor.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="ER_SaveXmlComponentVisitor.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="ER_TextView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -343,12 +346,15 @@
       <Filter>Header Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="ER_ComponentVisitor.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="ER_SaveComponentVisitor.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="ER_SaveXmlComponentVisitor.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ER_TextView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -392,6 +398,21 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="Images\paste.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Images\delete.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Images\key.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Images\redo.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Images\save.png">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Images\undo.png">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

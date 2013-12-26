@@ -127,6 +127,7 @@
     <ClCompile Include="ER_TableViewItem.cpp" />
     <ClCompile Include="ER_TableViewModel.cpp" />
     <ClCompile Include="ER_TextUI.cpp" />
+    <ClCompile Include="ER_TextView.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_ER_DiagramScene.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -222,19 +223,25 @@
     <ClInclude Include="ER_TableViewItem.h" />
     <ClInclude Include="ER_TableViewModel.h" />
     <ClInclude Include="ER_TextUI.h" />
+    <ClInclude Include="ER_TextView.h" />
     <ClInclude Include="Tool_Function.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Images\attribute.png" />
     <None Include="Images\copy.png" />
     <None Include="Images\cut.png" />
+    <None Include="Images\delete.png" />
     <None Include="Images\entity.png" />
     <None Include="Images\exit.png" />
     <None Include="Images\folder.png" />
+    <None Include="Images\key.png" />
     <None Include="Images\linepointer.png" />
     <None Include="Images\paste.png" />
     <None Include="Images\pointer.png" />
+    <None Include="Images\redo.png" />
     <None Include="Images\relationship.png" />
+    <None Include="Images\save.png" />
+    <None Include="Images\undo.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

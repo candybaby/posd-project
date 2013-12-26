@@ -38,8 +38,17 @@ ER_GUI::ER_GUI(ER_PresentationModel* presentationModel)
 	tableViewBox->addWidget(label);
 	tableViewBox->addWidget(tableView);
 
+	//
+	textViewer = new ER_TextView(this->presentationModel);
+	textViewer->setReadOnly(true);
+	QSplitter* sceneTableBox = new QSplitter;
+	sceneTableBox->setOrientation(Qt::Vertical);
+	sceneTableBox->addWidget(view);
+	sceneTableBox->addWidget(textViewer);
+	//
+
 	QSplitter* splitter = new QSplitter;
-	splitter->addWidget(view);
+	splitter->addWidget(sceneTableBox);
 	splitter->addWidget(tableViewBox);
 	QList<int> sizes;
 	sizes.push_back(900);
