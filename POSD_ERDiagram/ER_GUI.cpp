@@ -41,6 +41,7 @@ ER_GUI::ER_GUI(ER_PresentationModel* presentationModel)
 	//
 	textViewer = new ER_TextView(this->presentationModel);
 	textViewer->setReadOnly(true);
+	textViewer->setVisible(false);
 	QSplitter* sceneTableBox = new QSplitter;
 	sceneTableBox->setOrientation(Qt::Vertical);
 	sceneTableBox->addWidget(view);
@@ -233,6 +234,11 @@ void ER_GUI::createToolbars()
 	stateTypeButtonGroup->addButton(primaryKeySettingButton, ER_DiagramScene::SetPrimaryKey);
 	connect(stateTypeButtonGroup, SIGNAL(buttonClicked(int)), this, SLOT(pointerGroupClicked(int)));
 
+	QToolButton* tableViewButton = new QToolButton;
+	tableViewButton->setCheckable(true);
+	tableViewButton->setIcon(QIcon("images/tableView.png"));
+	connect(tableViewButton, SIGNAL(pressed()), this, SLOT(textViewSwitch()));
+
 	stateToolBar = addToolBar(tr("State"));
 	stateToolBar->addWidget(pointerButton);
 	stateToolBar->addWidget(attributeButton);
@@ -242,6 +248,8 @@ void ER_GUI::createToolbars()
 	stateToolBar->addWidget(connecterButton);
 	stateToolBar->addSeparator();
 	stateToolBar->addWidget(primaryKeySettingButton);
+	stateToolBar->addSeparator();
+	stateToolBar->addWidget(tableViewButton);
 }
 
 void ER_GUI::setDeleteEnable(bool flag)
@@ -392,4 +400,9 @@ void ER_GUI::showAboutDialog()
 	presentationModel->deDugFunction();
 	QMessageBox::information(this, tr("About Entity Relation Diagramming Tool"), 
 		"<p>Entity Relation Diagramming Tool</p><p>Version : 1.0</p><p>Author : 102598006@ntut</p>");
+}
+
+void ER_GUI::textViewSwitch()
+{
+	textViewer->setVisible(!textViewer->isVisible());
 }

@@ -916,12 +916,13 @@ string ER_PresentationModel::getTableHtml()
 		vector<int> entitiesId = findOneByOneEntity();
 		for (vector<int>::iterator it = entitiesId.begin(); it < entitiesId.end(); it++)
 		{
-			message.append("<p>");
-			message.append(getNameById(*it));
-			message.append(getAttributeForTableHtml(*it));
-			message.append("</p>");
+			message.append("<p>")
+				.append("<span style=\"font-size:18px;\">")
+				.append(getNameById(*it))
+				.append("</span>")
+				.append(getAttributeForTableHtml(*it))
+				.append("</p>");
 		}
-		model.notifyDebugMessage(getTable());
 	}
 	else
 	{
@@ -933,7 +934,7 @@ string ER_PresentationModel::getTableHtml()
 // 回傳特定id的Attribute字串
 string ER_PresentationModel::getAttributeForTableHtml(int id)
 {
-	string result = "<table border=\"1\"><tr>";
+	string result = "<table border=\"1\" width=\"100%\"><tr>";
 	vector<int> attributesId = findIdWithTypeByTargetId(ERD_Component::Attribute, id);
 	if (attributesId.size() == 0)
 	{
@@ -945,7 +946,7 @@ string ER_PresentationModel::getAttributeForTableHtml(int id)
 		if (getIsPrimaryKey(*it))
 		{
 			result.append("<td>")
-				.append("<img src=\"images/key.png\" width=\"18\" height=\"18\">")
+				.append("<img src=\"images/key.png\" width=\"12\" height=\"12\">")
 				.append(getNameById(*it))
 				.append("</td>");
 		}
@@ -970,7 +971,7 @@ string ER_PresentationModel::getForeignKeyHtmlResult(int id)
 			for (vector<int>::size_type v = 0; v < foreignKeysVector[u].size(); v++) 
 			{
 				result.append("<td>")
-					.append("<img src=\"images/foreignKey.png\" width=\"18\" height=\"18\">")
+					.append("<img src=\"images/foreignKey.png\" width=\"12\" height=\"12\">")
 				    .append(getNameById(foreignKeysVector[u][v]))
 					.append("</td>");
 			}

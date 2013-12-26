@@ -418,5 +418,8 @@
     <None Include="Images\foreignKey.png">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Images\tableView.png">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -242,6 +242,7 @@
     <None Include="Images\redo.png" />
     <None Include="Images\relationship.png" />
     <None Include="Images\save.png" />
+    <None Include="Images\tableView.png" />
     <None Include="Images\undo.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

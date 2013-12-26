@@ -48,6 +48,7 @@ private slots:
 	void copy();
 	void paste();
 	void showAboutDialog();
+	void textViewSwitch();
 
 private:
 	void createActions();

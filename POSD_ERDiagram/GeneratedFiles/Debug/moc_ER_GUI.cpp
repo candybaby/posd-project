@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ER_GUI.h'
 **
-** Created: Thu Dec 26 16:04:38 2013
+** Created: Thu Dec 26 20:50:27 2013
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_ER_GUI[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      14,   14, // methods
+      15,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -45,6 +45,7 @@ static const uint qt_meta_data_ER_GUI[] = {
      193,    7,    7,    7, 0x08,
      200,    7,    7,    7, 0x08,
      208,    7,    7,    7, 0x08,
+     226,    7,    7,    7, 0x08,
 
        0        // eod
 };
@@ -56,7 +57,7 @@ static const char qt_meta_stringdata_ER_GUI[] = {
     "changeToAddEntityMode()\0"
     "changeToAddRelationShipMode()\0undo()\0"
     "redo()\0deleteItem()\0cut()\0copy()\0"
-    "paste()\0showAboutDialog()\0"
+    "paste()\0showAboutDialog()\0textViewSwitch()\0"
 };
 
 void ER_GUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -79,6 +80,7 @@ void ER_GUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 11: _t->copy(); break;
         case 12: _t->paste(); break;
         case 13: _t->showAboutDialog(); break;
+        case 14: _t->textViewSwitch(); break;
         default: ;
         }
     }
@@ -116,9 +118,9 @@ int ER_GUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 14)
+        if (_id < 15)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 14;
+        _id -= 15;
     }
     return _id;
 }
