@@ -1,4 +1,5 @@
 #include "ER_PasteCommand.h"
+#include <algorithm>
 
 
 ER_PasteCommand::ER_PasteCommand(ER_Model* model, vector<ERD_Component*> components, int pasteCount)
@@ -24,6 +25,7 @@ ER_PasteCommand::~ER_PasteCommand(void)
 	}
 }
 
+// 在候選貼上物件中 是否存在給定ID的node
 bool ER_PasteCommand::isExistNode(int id)
 {
 	bool result = false;
@@ -53,6 +55,7 @@ string ER_PasteCommand::execute()
 // 反操作
 string ER_PasteCommand::unexecute()
 {
+	reverse(pastedComponentIds.begin(), pastedComponentIds.end());
 	for (vector<int>::iterator it = pastedComponentIds.begin(); it < pastedComponentIds.end(); it++) 
 	{
 		model->deleteComponent(*it);
@@ -68,6 +71,7 @@ string ER_PasteCommand::unexecute()
 	return "";
 }
 
+// 貼上nodes
 void ER_PasteCommand::pasteNodes()
 {
 	for (vector<ERD_Component*>::iterator it = candidatePasteComponents.begin(); it < candidatePasteComponents.end(); it++) 
@@ -97,6 +101,7 @@ void ER_PasteCommand::pasteNodes()
 	}
 }
 
+// 貼上 connections
 void ER_PasteCommand::pasteConnections()
 {
 	for (vector<ERD_Connection*>::iterator it = connections.begin(); it < connections.end(); it++) 
@@ -116,6 +121,7 @@ void ER_PasteCommand::pasteConnections()
 	}
 }
 
+// 清空connections
 void ER_PasteCommand::clearConnections()
 {
 	while (connections.size() > 0)

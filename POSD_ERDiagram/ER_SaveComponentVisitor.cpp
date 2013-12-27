@@ -27,6 +27,7 @@ ER_SaveComponentVisitor::~ER_SaveComponentVisitor()
 {
 }
 
+// visit attribute
 void ER_SaveComponentVisitor::visit(ERD_Attribute* attribute)
 {
 	if (mappingSaveId.find(attribute->getId()) == mappingSaveId.end())
@@ -48,6 +49,7 @@ void ER_SaveComponentVisitor::visit(ERD_Attribute* attribute)
 	}
 }
 
+// visit connection
 void ER_SaveComponentVisitor::visit(ERD_Connection* connection)
 {
 	if (mappingSaveId.find(connection->getId()) == mappingSaveId.end())
@@ -75,6 +77,7 @@ void ER_SaveComponentVisitor::visit(ERD_Connection* connection)
 	}
 }
 
+// visit entity
 void ER_SaveComponentVisitor::visit(ERD_Entity* entity)
 {
 	if (mappingSaveId.find(entity->getId()) == mappingSaveId.end())
@@ -112,6 +115,7 @@ void ER_SaveComponentVisitor::visit(ERD_Entity* entity)
 	}
 }
 
+// visit relationship
 void ER_SaveComponentVisitor::visit(ERD_Relationship* relationship)
 {
 	if (mappingSaveId.find(relationship->getId()) == mappingSaveId.end())
@@ -133,6 +137,7 @@ void ER_SaveComponentVisitor::visit(ERD_Relationship* relationship)
 	}
 }
 
+// visit all components
 void ER_SaveComponentVisitor::visitAllComponents()
 {
 	for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
@@ -141,21 +146,25 @@ void ER_SaveComponentVisitor::visitAllComponents()
 	}
 }
 
+// ¾켹component info
 string ER_SaveComponentVisitor::getComponentInfo()
 {
 	return componentInfo;
 }
 
+// ¾켹connection info
 string ER_SaveComponentVisitor::getConnectionInfo()
 {
 	return connectionInfo;
 }
 
+// ¾켹primary key info
 string ER_SaveComponentVisitor::getPrimaryKeyInfo()
 {
 	return primaryKeyInfo;
 }
 
+// ¾켹position info
 string ER_SaveComponentVisitor::getPositionInfo()
 {
 	return positionInfo;

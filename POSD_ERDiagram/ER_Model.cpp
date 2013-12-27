@@ -21,6 +21,9 @@
 #define ONE_STRING "1"
 #define POS_FILE_TYPE ".pos"
 #define ENDL "\n"
+#define XML_TAG "<?xml version=\"1.0\"?>"
+#define ERD_TAG "<ERDiagram>"
+#define ERD_TAG_END "<ERDiagram>"
 
 using namespace std;
 
@@ -648,14 +651,14 @@ string ER_Model::storeComponentsAsXml(string path)
 	{
 		ER_SaveXmlComponentVisitor* saveXmlVisitor = new ER_SaveXmlComponentVisitor(this);
 		string xmlContent;
-		xmlContent.append("<?xml version=\"1.0\"?>").append(ENDL);
-		xmlContent.append("<ERDiagram>").append(ENDL);
+		xmlContent.append(XML_TAG).append(ENDL);
+		xmlContent.append(ERD_TAG).append(ENDL);
 		for (vector<ERD_Component *>::iterator it = components.begin(); it < components.end(); it++)
 		{
 			(*it)->accept(saveXmlVisitor);
 		}
 		xmlContent.append(saveXmlVisitor->getComponentXmlInfo());
-		xmlContent.append("</ERDiagram>");
+		xmlContent.append(ERD_TAG_END);
 		file.write(xmlContent);
 		file.closeFile();
 
@@ -857,6 +860,7 @@ string ER_Model::getConnectionInfo(int id)
 	return result;
 }
 
+// 設定剪貼簿
 void ER_Model::setClipboard(vector<int> ids)
 {
 	clearClipboard();
@@ -870,24 +874,15 @@ void ER_Model::setClipboard(vector<int> ids)
 	{
 		notifyCanPasteState(true);
 	}
-	// debug start
-	/*int cSize = clipboard.size();
-	string message = "(model)clipboard size:" + Tool_Function::convertIntToString(cSize);
-	for (vector<ERD_Component*>::iterator it = clipboard.begin(); it < clipboard.end(); it++)
-	{
-		int id = (*it)->getId();
-		message += " id : ";
-		message += Tool_Function::convertIntToString(id);
-	}
-	notifyDebugMessage(message);*/
-	// debug end
 }
 
+// 取得剪貼簿
 vector<ERD_Component *> ER_Model::getClipboard()
 {
 	return clipboard;
 }
 
+// 清除剪貼簿
 void ER_Model::clearClipboard()
 {
 	while (clipboard.size() > 0)
@@ -900,26 +895,20 @@ void ER_Model::clearClipboard()
 	pasteCount = 0;
 }
 
+// 取得貼上次數
 int ER_Model::getPasteCount()
 {
 	return pasteCount;
 }
 
+// 增加貼上次數
 void ER_Model::addPasteCount()
 {
 	pasteCount++;
 }
 
+// 減少貼上次數
 void ER_Model::minusPasteCount()
 {
 	pasteCount--;
-}
-
-void ER_Model::deDugFunction()
-{
-	string message;
-	message.append("CurrentId:");
-	message.append(Tool_Function::convertIntToString(currentId));
-
-	notifyDebugMessage(message);
 }

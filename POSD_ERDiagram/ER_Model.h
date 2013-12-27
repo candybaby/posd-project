@@ -97,7 +97,6 @@ public:
 	int getPasteCount();
 	void addPasteCount();
 	void minusPasteCount();
-	void deDugFunction();
 	
 private:
 	vector<ERD_Component *> components;

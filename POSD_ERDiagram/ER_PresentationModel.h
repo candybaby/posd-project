@@ -88,7 +88,6 @@ public:
 	void cutComponents(vector<int>);
 	void copyComponents(vector<int>);
 	void pasteComponents();
-	void deDugFunction();
 	string getTableHtml();
 	string getAttributeForTableHtml(int);
 	string getForeignKeyHtmlResult(int);

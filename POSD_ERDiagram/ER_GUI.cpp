@@ -397,7 +397,6 @@ void ER_GUI::paste()
 
 void ER_GUI::showAboutDialog()
 {
-	presentationModel->deDugFunction();
 	QMessageBox::information(this, tr("About Entity Relation Diagramming Tool"), 
 		"<p>Entity Relation Diagramming Tool</p><p>Version : 1.0</p><p>Author : 102598006@ntut</p>");
 }

@@ -19,6 +19,7 @@ ERD_Component* ER_MultipleDeleteCommand::findComponentById(int id)
 	return model->findComponentById(id);
 }
 
+// 刪除給定ID中的connection
 void ER_MultipleDeleteCommand::deleteConnectionsByTargetIds(vector<int> ids)
 {
 	for (vector<int>::iterator it = ids.begin(); it < ids.end(); it++)
@@ -33,6 +34,7 @@ void ER_MultipleDeleteCommand::deleteConnectionsByTargetIds(vector<int> ids)
 	}
 }
 
+// 刪除與給定ID有關的connection
 void ER_MultipleDeleteCommand::deleteRelatedConnectionByTargetId(int id)
 {
 	vector<int> relatedConnectionId;
@@ -46,6 +48,7 @@ void ER_MultipleDeleteCommand::deleteRelatedConnectionByTargetId(int id)
 	}
 }
 
+// 刪除Node根據給定IDs
 void ER_MultipleDeleteCommand::deleteNodeByTargetIds(vector<int> ids)
 {
 	for (vector<int>::iterator it = ids.begin(); it < ids.end(); it++)

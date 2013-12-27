@@ -218,7 +218,7 @@
       <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="ER_TextView.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -355,7 +355,7 @@
       <Filter>Header Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="ER_TextView.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

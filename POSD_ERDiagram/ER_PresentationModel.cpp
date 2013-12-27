@@ -908,16 +908,13 @@ void ER_PresentationModel::copyComponents(vector<int> ids)
 	model.setClipboard(ids);
 }
 
+// paste
 void ER_PresentationModel::pasteComponents()
 {
 	cmdManager->execute(new ER_PasteCommand(&model, model.getClipboard(), model.getPasteCount()));
 }
 
-void ER_PresentationModel::deDugFunction()
-{
-	model.deDugFunction();
-}
-
+// 取得table的html格式
 string ER_PresentationModel::getTableHtml()
 {
 	string message;
@@ -974,6 +971,7 @@ string ER_PresentationModel::getAttributeForTableHtml(int id)
 	return result;
 }
 
+// 取得給定ID的foreign key資訊
 string ER_PresentationModel::getForeignKeyHtmlResult(int id)
 {
 	string result;
