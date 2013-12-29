@@ -42,10 +42,7 @@ void ER_TableViewModel::mappingItemsToTable()
 		QStandardItem* typeItem = new QStandardItem(tableViewItems.at(i)->getType());
 		typeItem->setEditable(false);
 		setItem(i, 0 , typeItem);
-		QString text = tableViewItems.at(i)->getText() + " id: ";
-		text.append(QString::number(tableViewItems.at(i)->getId()));
-		setItem(i, 1 , new QStandardItem(text));
-		//setItem(i, 1 , new QStandardItem(tableViewItems.at(i)->getText()));
+		setItem(i, 1 , new QStandardItem(tableViewItems.at(i)->getText()));
 	}
 }
 
